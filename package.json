@@ -1,0 +1,26 @@
+{
+  "name": "storyboard",
+  "version": "0.0.1",
+  "description": "A colourful, isomorphic, hierarchical logging solution",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guigrpa/storyboard.git"
+  },
+  "keywords": [
+    "log",
+    "logging",
+    "websockets",
+    "console",
+    "isomorphic"
+  ],
+  "author": "Guillermo Grau Panea",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/guigrpa/storyboard/issues"
+  },
+  "homepage": "https://github.com/guigrpa/storyboard#readme"
+}
