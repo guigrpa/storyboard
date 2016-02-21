@@ -19,11 +19,24 @@ LEVELS =
   40: 'WARN'
   50: 'ERROR'
   60: 'FATAL'
+  70: 'STORY'
+# TODO: create inverse map automatically
+MAP_LEVELS =
+  TRACE: 10
+  DEBUG: 20
+  INFO: 30
+  WARN: 40
+  ERROR: 50
+  FATAL: 60
+  STORY: 70
+MAIN_SRC = 'main'
+CHILD_TITLE = ''
 
 #-----------------------------------------------
 #- ### Helpers
 #-----------------------------------------------
 # A log message has:
+# * `parent: number`
 # * `t: date`
 # * `level: number`
 # * `src: string?`
@@ -31,32 +44,48 @@ LEVELS =
 # * `obj: object?
 _log = (data) ->
   data.t = new Date()
+  #- `log.info msg`
   if not data.msg?
     data.msg = data.src
-    data.src = undefined
+    data.src = MAIN_SRC
+  #- `log.info msg, obj`
   else if not _.isString data.msg
     data.obj = data.msg
     data.msg = data.src
-    data.src = undefined
+    data.src = MAIN_SRC
 
-  ## TODO
-  ## if process.env.NODE_ENV isnt 'production'
-  ## convert ansi colors to console.log styles
-  console.log arguments
+  # TODO: emit msg, instead of logging it...
+  console.log "#{data.parent} #{LEVELS[data.level]} #{data.t.toISOString()} #{data.src} #{data.msg}"
   return
 
 #-----------------------------------------------
 # ### Storyboard
 #-----------------------------------------------
-logger = ->
-  api = {tree}
+_id = 0
+_createStory = (parent) ->
+  story = {_id: _id++}
   _.each LEVELS, (levelStr, levelNum) ->
-    api[levelStr.toLowerCase()] = (src, msg, obj) -> _log {level: levelNum, src, msg, obj}
-  api
+    story[levelStr.toLowerCase()] = (src, msg, obj) -> _log {parent, level: levelNum, src, msg, obj}
+  story.tree = (src, node, options, prefix) -> 
+    #- `tree obj`
+    if _.isObject src
+      prefix = options
+      options = node
+      node = src
+      src = MAIN_SRC
+    options ?= {}
+    prefix ?= ''
+    level = (options.level ? 'INFO').toLowerCase()
+    options.log = (msg) -> story[level] src, msg
+    return _tree node, options, prefix, []
+  story.child = (src, title = CHILD_TITLE) -> 
+    childStory = _createStory story._id
+    _log {parent, level: 70, src, msg: title}
+    childStory
+  story
 
 # #### tree()
-tree = (node, options = {}, prefix = '', stack = []) ->
-  options.log ?= _log
+_tree = (node, options, prefix, stack) ->
   options.ignoreKeys ?= []
   stack.push node
   postponedArrayAttrs = []
@@ -102,13 +131,12 @@ tree = (node, options = {}, prefix = '', stack = []) ->
   stack.pop()
 
 _treeLine = (prefix, key, strVal, options) ->
-  fnLog = options.log
-  fnLog "#{prefix}#{key}: #{chalk.bold strVal}"
-
+  options.log "#{prefix}#{key}: #{chalk.bold strVal}"
 
 
 #-----------------------------------------------
 #- ### Public API
 #-----------------------------------------------
 module.exports = {
+  mainStory: _createStory(),
 }
