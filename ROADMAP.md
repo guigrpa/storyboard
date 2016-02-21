@@ -1,0 +1,2 @@
+- [ ] Client version (no-op in PRODUCTION)
+- [ ] Remove lodash dep
