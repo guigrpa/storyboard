@@ -15,4 +15,4 @@ node_modules
 /.extractedApi.md
 *.sublime-project
 *.sublime-workspace
-/chromeExtension/dist/app.js
+/chromeExtension/dist/*.js
