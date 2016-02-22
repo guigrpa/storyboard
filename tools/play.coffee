@@ -42,4 +42,4 @@ setTimeout ->
 , 1200
 setInterval ->
   story.info new Date().toISOString()
-, 2500
+, 10000

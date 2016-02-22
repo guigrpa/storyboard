@@ -4,13 +4,10 @@
   "description": "A colourful, isomorphic, hierarchical logging solution",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "testMinified": "TEST_MINIFIED_LIB=1 mocha",
     "compile": "rm -rf dist && coffee -o dist -c src",
-    "docs": "coffee tools/extractDocs.coffee",
-    "uglify": "NODE_ENV=production envify dist/storyboard.js | uglifyjs - -o dist/storyboard.min.js --mangle --compress --comments '/\\|/'",
-    "buildServerLogsApp": "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
-    "build": "npm test && npm run compile && npm run uglify && npm run testMinified && npm run docs"
+    "buildServerLogsApp":      "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --display-modules --display-chunks",
+    "buildServerLogsAppWatch": "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
+    "build": "npm run compile && npm run buildServerLogsApp"
   },
   "repository": {
     "type": "git",
@@ -44,7 +41,6 @@
     "envify": "^3.4.0",
     "mocha": "^2.4.5",
     "socket.io-client": "^1.4.5",
-    "uglifyjs": "^2.4.10",
     "webpack": "^1.12.13"
   }
 }
