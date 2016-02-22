@@ -1,2 +1,4 @@
-- [ ] Client version (no-op in PRODUCTION)
-- [ ] Remove lodash dep
+- [ ] consoleListener: implement level threshold
+- [ ] wsRelayListener
+- [ ] clientAggregator
+- [ ] Chrome extension

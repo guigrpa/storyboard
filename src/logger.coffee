@@ -14,7 +14,7 @@ _getId = -> if k.IS_BROWSER then "c#{_id++}" else "s#{_id++}"
 
 createStory = (parents, src, title = CHILD_TITLE) ->
   story = {
-    _id: _getId(),
+    id: _getId(),
     parents, src, title,
     fServer: not k.IS_BROWSER,
     t: new Date(),
@@ -39,11 +39,11 @@ createStory = (parents, src, title = CHILD_TITLE) ->
     if not title?
       title = src
       src = DEFAULT_SRC
-    return createStory [story._id], src, title
+    return createStory [story.id], src, title
 
   _.each k.LEVEL_NUM_TO_STR, (levelStr, levelNum) ->
     return if levelStr is 'STORY'
-    story[levelStr.toLowerCase()] = (src, msg, obj) -> _emit {parents: story._id, level: levelNum, src, msg, obj}
+    story[levelStr.toLowerCase()] = (src, msg, obj) -> _emit {parents: story.id, level: levelNum, src, msg, obj}
 
   story.tree = (src, node, options, prefix) -> 
     #- `tree obj`
@@ -76,7 +76,7 @@ _tree = (node, options, prefix, stack) ->
       strVal = chalk.yellow "[#{strVal}]"
       _treeLine prefix, key, strVal, options
     else if _.isDate(val)
-      _treeLine prefix, key, chalk.magenta(val), options
+      _treeLine prefix, key, chalk.magenta(val.toISOString()), options
     else if _.isObject(val) and Object.keys(val).length is 0
       _treeLine prefix, key, '{}', options
     else if _.isArray val
