@@ -3,12 +3,19 @@
 | (c) Guillermo Grau Panea 2016
 | License: MIT
 ###
-hub = require './hub'
-logger = require './logger'
-consoleListener = require './consoleListener'
+k = require './constants'
 
-mainStory = logger.createStory []
-hub.addListener consoleListener.create()
+# Enable chalk colors in the browser (we'll handle the conversion)
+if k.IS_BROWSER
+  process.env.COLORTERM = true
+
+hub = require './hub'
+stories = require './stories'
+consoleListener = require './listeners/console'
+
+mainStory = stories.createStory []
+hub.init {mainStory}
+hub.addListener consoleListener
 
 module.exports = {
   mainStory,

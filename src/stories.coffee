@@ -1,5 +1,5 @@
-_ = require './lodash'
 chalk = require 'chalk'
+_ = require './vendor/lodash'
 hub = require './hub'
 k = require './constants'
 

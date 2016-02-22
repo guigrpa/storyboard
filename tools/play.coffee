@@ -1,4 +1,6 @@
-{mainStory, getListeners} = require '../src/storyboard'
+{mainStory, addListener, getListeners} = require '../src/storyboard'
+wsServer = require '../src/listeners/wsServer'
+addListener wsServer #, {authenticate: (o) -> true}
 
 mainStory.trace 'Some traces:'
 mainStory.tree 
@@ -38,3 +40,6 @@ setTimeout ->
   story.info 'Checking relative time...'
   consoleListener.config relativeTime: false
 , 1200
+setInterval ->
+  story.info new Date().toISOString()
+, 2500

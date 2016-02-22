@@ -1,8 +1,7 @@
-_ = require './lodash'
+_ = require '../vendor/lodash'
 timm = require 'timm'
 chalk = require 'chalk'
-ansiHtml = require 'ansi-html'
-k = require './constants'
+k = require '../constants'
 
 DEFAULTS =
   moduleNameLength: 20
@@ -36,14 +35,44 @@ _getSrcColor = (src) ->
   _srcColorCache[src]
 
 if process.env.NODE_ENV isnt 'production'
+  ANSI_REGEX = /(?:(?:\u001b\[)|\u009b)(?:(?:[0-9]{1,3})?(?:(?:;[0-9]{0,3})*)?[A-M|f-m])|\u001b[A-M]/g
+  MAP_ADD_STYLE = 
+    30: 'color: black'
+    31: 'color: red'
+    32: 'color: green'
+    33: 'color: yellow'
+    34: 'color: blue'
+    35: 'color: magenta'
+    36: 'color: cyan'
+    37: 'color: lightgrey'
+    40: 'color: white;background-color: black'
+    41: 'color: white;background-color: red'
+    42: 'color: white;background-color: green'
+    43: 'color: white;background-color: yellow'
+    44: 'color: white;background-color: blue'
+    45: 'color: white;background-color: magenta'
+    46: 'color: white;background-color: cyan'
+    47: 'color: white;background-color: lightgrey'
+    1: 'font-weight: bold'
+    2: 'opacity: 0.8'
+    3: 'font-style: italic'
+    4: 'text-decoration: underline'
+    8: 'display: none'
+    9: 'text-decoration: line-through'
+  REMOVE_STYLE_LIST = [0, 21, 22, 23, 24, 27, 28, 29, 39, 49]
+
   _argsForBrowserConsole = (str) ->
-    str = ansiHtml str
-    startTagRe = /<span\s+style=(['"])([^'"]*)\1\s*>/gi
-    endTagRe = /<\/span>/gi
-    argArray = [str.replace(startTagRe, '%c').replace(endTagRe, '%c')]
-    while (reResultArray = startTagRe.exec str)
-      argArray.push reResultArray[2]
-      argArray.push ''
+    outStr = str.replace ANSI_REGEX, '%c'
+    argArray = [outStr]
+    curStyles = []
+    regex = /\u001b\[(\d+)*m/gi
+    while (res = regex.exec str)
+      code = Number res[1]
+      if code in REMOVE_STYLE_LIST
+        curStyles.pop()
+      else
+        curStyles.push(MAP_ADD_STYLE[code] ? '')
+      argArray.push curStyles.join(';')
     argArray
 
 _prevTime = 0
@@ -68,10 +97,9 @@ _getTimeStr = (record, options) ->
 _process = (record, options) ->
   {src, parents, level, msg, fStory, action} = record
   {timeStr, extraTimeStr} = _getTimeStr record, options
-  parentsStr = _.padEnd String(parents), 5
   srcStr = _getSrcColor(src) _.padStart(src, options.moduleNameLength)
   levelStr = if fStory then '-----' else LEVEL_NUM_TO_COLORED_STR[level]
-  msg = "#{parentsStr} #{timeStr} #{srcStr} #{levelStr} #{msg}"
+  msg = "#{timeStr} #{srcStr} #{levelStr} #{msg}"
   if action then msg += " [#{action}]"
   if k.IS_BROWSER and (process.env.NODE_ENV isnt 'production')
     args = _argsForBrowserConsole msg
@@ -87,7 +115,7 @@ _process = (record, options) ->
 #-------------------------------------------------
 # ## API
 #-------------------------------------------------
-create = (options = {}) ->
+create = (story, options = {}) ->
   _options = timm.addDefaults options, DEFAULTS
   listener =
     type: 'CONSOLE'
