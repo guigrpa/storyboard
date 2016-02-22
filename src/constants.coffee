@@ -1,6 +1,5 @@
-IS_BROWSER = typeof window isnt 'undefined'
+IS_BROWSER = window?
 LEVEL_NUM_TO_STR = 
-  5:  'STORY'
   10: 'TRACE'
   20: 'DEBUG'
   30: 'INFO'
@@ -8,7 +7,6 @@ LEVEL_NUM_TO_STR =
   50: 'ERROR'
   60: 'FATAL'
 LEVEL_STR_TO_NUM =
-  STORY: 5
   TRACE: 10
   DEBUG: 20
   INFO: 30

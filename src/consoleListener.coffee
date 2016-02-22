@@ -1,4 +1,4 @@
-_ = require 'lodash'
+_ = require './lodash'
 timm = require 'timm'
 chalk = require 'chalk'
 ansiHtml = require 'ansi-html'
@@ -24,7 +24,7 @@ _.each k.LEVEL_NUM_TO_STR, (str, num) ->
     col = if k.IS_BROWSER then chalk.reset.bold else chalk.white
   else if num is 40 then col = chalk.yellow
   else if num >= 50 then col = chalk.red
-  LEVEL_NUM_TO_COLORED_STR[num] = col _.padEnd(str, 8)
+  LEVEL_NUM_TO_COLORED_STR[num] = col _.padEnd(str, 5)
 
 #-------------------------------------------------
 # ## Helpers
@@ -66,11 +66,13 @@ _getTimeStr = (record, options) ->
 # ## Main processing function
 #-------------------------------------------------
 _process = (record, options) ->
-  {src} = record
+  {src, parents, level, msg, fStory, action} = record
   {timeStr, extraTimeStr} = _getTimeStr record, options
+  parentsStr = _.padEnd String(parents), 5
   srcStr = _getSrcColor(src) _.padStart(src, options.moduleNameLength)
-  levelStr = _.padEnd LEVEL_NUM_TO_COLORED_STR[record.level], 3
-  msg = "#{_.padEnd record.parent, 5} #{timeStr} #{srcStr} #{levelStr} #{record.msg}"
+  levelStr = if fStory then '-----' else LEVEL_NUM_TO_COLORED_STR[level]
+  msg = "#{parentsStr} #{timeStr} #{srcStr} #{levelStr} #{msg}"
+  if action then msg += " [#{action}]"
   if k.IS_BROWSER and (process.env.NODE_ENV isnt 'production')
     args = _argsForBrowserConsole msg
   else
@@ -88,7 +90,9 @@ _process = (record, options) ->
 create = (options = {}) ->
   _options = timm.addDefaults options, DEFAULTS
   listener =
+    type: 'CONSOLE'
     process: (record) -> _process record, _options
+    config: (options) -> _options = timm.merge _options, options
   listener
 
 module.exports = {

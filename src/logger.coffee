@@ -1,4 +1,4 @@
-_ = require 'lodash'
+_ = require './lodash'
 chalk = require 'chalk'
 hub = require './hub'
 k = require './constants'
@@ -12,23 +12,38 @@ CHILD_TITLE = ''
 _id = 0
 _getId = -> if k.IS_BROWSER then "c#{_id++}" else "s#{_id++}"
 
-createStory = (parents) ->
+createStory = (parents, src, title = CHILD_TITLE) ->
   story = {
-    parents,
     _id: _getId(),
+    parents, src, title,
+    fServer: not k.IS_BROWSER,
+    t: new Date(),
     fOpen: true,
+    status: undefined,
   }
+  _logStory = (action) ->
+    _emit {t: story.t, parents: story.parents, fStory: true, src: story.src, msg: story.title, action}
+  _logStory 'CREATED'
 
   story.addParent = (id) -> story.parents.push id
-  story.close = -> story.fOpen = false
-  story.child = (src, title = CHILD_TITLE) -> 
-    childStory = _createStory [story._id]
-    _log {parent: story._id, level: 70, src, msg: title}
-    childStory
+  story.close = -> 
+    story.fOpen = false
+    _logStory 'CLOSED'
+  story.changeTitle = (title) ->
+    story.title = title
+    _logStory 'TITLE_CHANGED'
+  story.changeStatus = (status) ->
+    story.status = status
+    _logStory 'STATUS_CHANGED'
+  story.child = (src, title) -> 
+    if not title?
+      title = src
+      src = DEFAULT_SRC
+    return createStory [story._id], src, title
 
   _.each k.LEVEL_NUM_TO_STR, (levelStr, levelNum) ->
     return if levelStr is 'STORY'
-    story[levelStr.toLowerCase()] = (src, msg, obj) -> _log {parent: story._id, level: levelNum, src, msg, obj}
+    story[levelStr.toLowerCase()] = (src, msg, obj) -> _emit {parents: story._id, level: levelNum, src, msg, obj}
 
   story.tree = (src, node, options, prefix) -> 
     #- `tree obj`
@@ -83,25 +98,27 @@ _tree = (node, options, prefix, stack) ->
   for key in postponedObjectAttrs
     val = node[key]
     _treeLine prefix, key, '', options
-    logTree val, options, "  #{prefix}", stack
+    _tree val, options, "  #{prefix}", stack
   for key in postponedArrayAttrs
     val = node[key]
     _treeLine prefix, key, '', options
-    logTree val, options, "  #{prefix}", stack
+    _tree val, options, "  #{prefix}", stack
   stack.pop()
 
 _treeLine = (prefix, key, strVal, options) ->
   options.log "#{prefix}#{key}: #{chalk.bold strVal}"
 
 # A log message has:
-# * `parent: number`
-# * `t: date`
+# * `parents: number | Array`
+# * `fStory: boolean`
+# * `action: string` (only for stories)
+# * `t: date` (provided here)
 # * `level: number`
 # * `src: string?`
 # * `msg: string`
 # * `obj: object?
-_log = (record) ->
-  record.t = new Date()
+_emit = (record) ->
+  record.t ?= new Date()
   #- `log.info msg`
   if not record.msg?
     record.msg = record.src

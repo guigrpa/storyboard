@@ -13,4 +13,5 @@ hub.addListener consoleListener.create()
 module.exports = {
   mainStory,
   addListener: hub.addListener,
+  getListeners: hub.getListeners,
 }
