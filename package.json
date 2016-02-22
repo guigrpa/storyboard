@@ -1,10 +1,11 @@
 {
   "name": "storyboard",
   "version": "0.0.1",
-  "description": "A colourful, isomorphic, hierarchical logging solution",
+  "description": "End-to-end, hierarchical, real-time, colorful stories",
   "main": "index.js",
   "scripts": {
     "compile": "rm -rf dist && coffee -o dist -c src",
+    "compileExtensionWatch": "rm -f chromeExtension/dist/*.js && coffee --watch --output chromeExtension/dist --compile chromeExtension/app",
     "buildServerLogsApp":      "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --display-modules --display-chunks",
     "buildServerLogsAppWatch": "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
     "build": "npm run compile && npm run buildServerLogsApp"

@@ -10,6 +10,9 @@ pids
 
 # Dependency directory
 node_modules
+
+# Others
 /.extractedApi.md
 *.sublime-project
 *.sublime-workspace
+/chromeExtension/dist/app.js
