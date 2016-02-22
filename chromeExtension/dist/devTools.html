@@ -5,5 +5,15 @@
     <script src='/devTools.js'></script>
   </head>
   <body>
+    <script>
+      chrome.devtools.panels.create(
+        "Storyboard", 
+        null, 
+        "devPanel.html",
+        function cb(panel){
+          panel.onShown.addListener(function(win){ console.log('panel shown!'); win.focus(); });
+        }
+      );
+    </script>
   </body>
 </html>
