@@ -4,6 +4,8 @@ webpack = require 'webpack'
 module.exports = 
 
   entry: 
+    background: ['./chromeExtension/app/background.coffee']
+    contentScript: ['./chromeExtension/app/contentScript.coffee']
     devTools: ['./chromeExtension/app/devTools.coffee']
     devPanel: ['./chromeExtension/app/devPanel.coffee']
 
