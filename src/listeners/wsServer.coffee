@@ -67,9 +67,9 @@ _emit = ->
 create = (story, options = {}) ->
   _options = timm.addDefaults options, DEFAULTS, {story}
   _throttledEmit = _.throttle _emit, _options.throttle
-  _ioInit _options
   listener =
     type: 'WS_SERVER'
+    init: -> _ioInit _options
     process: (record) -> _process record, _options, _throttledEmit
     config: (options) -> _options = timm.merge _options, options
   listener

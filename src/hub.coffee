@@ -9,6 +9,7 @@ init = (deps) ->
 addListener = (listenerFactory, options) -> 
   listener = listenerFactory.create mainStory, options
   _listeners.push listener
+  listener.init?()
 getListeners = -> _listeners
 emit = (record) ->
   for listener in _listeners
