@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "compile": "rm -rf dist && coffee -o dist -c src",
-    "compileExtensionWatch": "rm -f chromeExtension/dist/*.js && coffee --watch --output chromeExtension/dist --compile chromeExtension/app",
-    "buildServerLogsApp":      "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --display-modules --display-chunks",
+    "compileExtension": "webpack --config chromeExtension/webpackConfig.coffee --colors --progress --display-modules --display-chunks",
+    "compileExtensionWatch": "webpack --config chromeExtension/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
+    "buildServerLogsApp": "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --display-modules --display-chunks",
     "buildServerLogsAppWatch": "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
-    "build": "npm run compile && npm run buildServerLogsApp"
+    "build": "npm run compile && npm run compileExtension && npm run buildServerLogsApp"
   },
   "repository": {
     "type": "git",
@@ -37,11 +38,16 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chalk": "^1.1.1",
+    "cjsx-loader": "^2.1.0",
     "coffee-loader": "^0.7.2",
     "coffee-script": "^1.10.0",
+    "css-loader": "^0.23.1",
     "envify": "^3.4.0",
     "mocha": "^2.4.5",
+    "node-sass": "^3.4.2",
+    "sass-loader": "^3.1.2",
     "socket.io-client": "^1.4.5",
+    "style-loader": "^0.13.0",
     "webpack": "^1.12.13"
   }
 }

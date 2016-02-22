@@ -1,8 +1,4 @@
+# Create panel, attach event handlers
 chrome.devtools.panels.create 'Storyboard', null, 'devPanel.html', (panel) ->
-  console.log "Added panel"
-  panel.onShown.addListener ->
-    console.log 'Shown devPanel!'
-    node = document.getElementById 'app'
-    node.innerHTML = 'hello'
-  panel.onHidden.addListener ->
-    console.log 'Hidden!'
+  panel.onShown.addListener  -> console.log "Storyboard panel shown"
+  panel.onHidden.addListener -> console.log "Storyboard panel hidden"
