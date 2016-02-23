@@ -1,3 +1,6 @@
+# Connections hub. Each key corresponds is a tab ID, and the associated value
+# is an object with (eventually) `DT` (devtools) and `CS` (content-script) keys,
+# each of them holding the corresponding connection.
 _connections = {}
 
 console.log "[BG] Launching..."
@@ -14,6 +17,8 @@ chrome.runtime.onConnect.addListener (port) ->
   listener = (msg) ->
     {src, dst, type, data} = msg
     console.log "[BG] RX #{src}/#{type}", data
+
+    # Connection initialisation
     if type is 'INIT'
       tabId = switch src
         when 'DT' then data.tabId
@@ -24,12 +29,16 @@ chrome.runtime.onConnect.addListener (port) ->
       _connections[tabId] ?= {}
       _connections[tabId][src] = port
       _logConnections()
+
+    # Message relays: `PAGE` <-> `DT`
     else
       switch src
         when 'PAGE' then _connections[port.sender.tab.id]?.DT?.postMessage msg
         when 'DT'   then _connections[dst]?.CS?.postMessage msg
 
   port.onMessage.addListener listener
+
+  # Clean up when connections are closed
   port.onDisconnect.addListener ->
     port.onMessage.removeListener listener
     for tabId, connections of _connections
@@ -40,23 +49,5 @@ chrome.runtime.onConnect.addListener (port) ->
             delete _connections[tabId]
           break
 
-
     _logConnections()
     return
-
-# Messages from content script
-chrome.runtime.onMessage.addListener (msg, sender, sendResponse) ->
-  {src, dst, type, data} = msg
-  console.log "[BG] OTHER LISTENER RX #{src}/#{type}", data
-  ###
-  return if src isnt 'PAGE'
-  tab = sender.tab
-  if not tab?
-    console.error "[BG] Sender tab not defined"
-    return
-  connection = _connections[tab.id]
-  if not connection
-    console.error "[BG] Sender tab ID not defined"
-    return
-  _connections[sender.tab.id]?.postMessage msg
-  ###

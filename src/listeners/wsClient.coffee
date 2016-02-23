@@ -6,7 +6,6 @@ DEFAULTS = {}
 _sendMsgToExtension = (type, data) ->
   window.postMessage {src: 'PAGE', type, data}, '*'
 
-
 #-------------------------------------------------
 # ## I/O
 #-------------------------------------------------
@@ -21,14 +20,14 @@ _ioInit = (options) ->
     return if event.source isnt window
     {data: {src, type, data}} = event
     return if src is 'PAGE'
-    console.log "[PG] RX #{src}/#{type}", data
+    ## console.log "[PG] RX #{src}/#{type}", data
   _sendMsgToExtension 'INIT'
 
 #-------------------------------------------------
 # ## Main processing function
 #-------------------------------------------------
 _process = (record, options) ->
-  console.log "#{record.src} #{record.msg}"
+  ## console.log "[PG] RX PAGE/REC #{record.src} #{record.msg}"
   _sendMsgToExtension 'REC', record
 
 #-------------------------------------------------
