@@ -2,9 +2,28 @@
 <html>
   <head>
     <title>Server logs</title>
+    <style>
+      body { font-family: "Segoe", "Helvetica", sans-serif; }
+      .instructions { 
+        max-width: 400px; 
+        margin-left: auto; 
+        margin-right: auto;
+        border: 9px solid lightgray;
+        padding: 0px 25px 8px;
+      }
+      .instructions li { margin-bottom: 10px; }
+    </style>
   </head>
   <body>
-    <p>You will see the server logs in the Storyboard pane of the Chrome Devtools</p>
+    <div class="instructions">
+      <h1>Storyboard</h1>
+      <div>To see the server logs:</div>
+      <ol>
+        <li>Open the Developer Tools from the Chrome menu at the top-right of your browser
+        (<b>More Tools > Developer Tools</b>)</li>
+        <li>Navigate to the <b>Storyboard</b> tab</li>
+      </ol>
+    </div>
     <script src='/app.js'></script>
   </body>
 </html>
