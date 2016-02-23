@@ -1,4 +1,6 @@
 - [ ] consoleListener: implement level threshold
-- [ ] wsRelayListener
-- [ ] clientAggregator
 - [ ] Chrome extension
+    - [x] Page -> CS -> BG -> DT
+    - [ ] Survive page reloads
+    - [ ] Page <- CS <- BG <- DT
+    - [ ] 

@@ -4,16 +4,16 @@ webpack = require 'webpack'
 module.exports = 
 
   entry: 
-    background: ['./chromeExtension/app/background.coffee']
-    contentScript: ['./chromeExtension/app/contentScript.coffee']
-    devTools: ['./chromeExtension/app/devTools.coffee']
-    devPanel: ['./chromeExtension/app/devPanel.coffee']
+    background: ['./src/chromeExtension/background.coffee']
+    contentScript: ['./src/chromeExtension/contentScript.coffee']
+    devTools: ['./src/chromeExtension/devTools.coffee']
+    devPanel: ['./src/chromeExtension/devPanel.coffee']
 
   output:
     filename: '[name].js'
 
     # Where PRODUCTION bundles will be stored
-    path: path.resolve(process.cwd(), 'chromeExtension/dist')
+    path: path.resolve(process.cwd(), 'chromeExtension')
 
     # 
     publicPath: '/'

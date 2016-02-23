@@ -15,5 +15,5 @@ node_modules
 /.extractedApi.md
 *.sublime-project
 *.sublime-workspace
-/chromeExtension/dist/*.js
+/chromeExtension/*.js
 /serverLogsApp/*.js

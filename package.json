@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "compile": "rm -rf dist && coffee -o dist -c src",
-    "compileExtension": "webpack --config chromeExtension/webpackConfig.coffee --colors --progress --display-modules --display-chunks",
-    "compileExtensionWatch": "webpack --config chromeExtension/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
+    "compileExtension": "webpack --config src/chromeExtension/webpackConfig.coffee --colors --progress --display-modules --display-chunks",
+    "compileExtensionWatch": "webpack --config src/chromeExtension/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
     "buildServerLogsApp": "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --display-modules --display-chunks",
     "buildServerLogsAppWatch": "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
     "build": "npm run compile && npm run compileExtension && npm run buildServerLogsApp"

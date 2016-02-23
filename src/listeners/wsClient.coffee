@@ -3,6 +3,10 @@ timm = require 'timm'
 
 DEFAULTS = {}
 
+_sendMsgToExtension = (type, data) ->
+  window.postMessage {src: 'PAGE', type, data}, '*'
+
+
 #-------------------------------------------------
 # ## I/O
 #-------------------------------------------------
@@ -11,21 +15,21 @@ _ioInit = (options) ->
   story.info "Connecting to WebSocket server..."
   socket = socketio.connect()
   socket.on 'REC', _process
-  socket.on 'AUTH_REQUIRED', ->
-    window.postMessage {src: 'PAGE', type: 'AUTH_REQUIRED'}, '*'
+  socket.on 'AUTH_REQUIRED', -> _sendMsgToExtension 'AUTH_REQUIRED'
   socket.on 'connect', -> story.info "WebSocket connected"
   window.addEventListener 'message', (event) ->
     return if event.source isnt window
     {data: {src, type, data}} = event
     return if src is 'PAGE'
-    console.log "[PG] #{src}/#{type}", data
+    console.log "[PG] RX #{src}/#{type}", data
+  _sendMsgToExtension 'INIT'
 
 #-------------------------------------------------
 # ## Main processing function
 #-------------------------------------------------
 _process = (record, options) ->
   console.log "#{record.src} #{record.msg}"
-  window.postMessage {src: 'PAGE', type: 'REC', data: record}, '*'
+  _sendMsgToExtension 'REC', record
 
 #-------------------------------------------------
 # ## API
