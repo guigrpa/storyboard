@@ -6,7 +6,7 @@ addListener wsServer #, {authenticate: (o) -> true}
 
 _story = null
 _consoleListener = null
-Promise.delay 100
+Promise.delay 3000
 .then ->
   mainStory.trace 'Some traces:'
   mainStory.tree 

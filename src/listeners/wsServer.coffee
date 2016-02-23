@@ -7,7 +7,7 @@ Promise = require 'bluebird'
 chalk = require 'chalk'
 timm = require 'timm'
 
-DEFAULTS = 
+DEFAULT_CONFIG = 
   port: 8090
   throttle: 200
   authenticate: null
@@ -16,9 +16,9 @@ io = null
 #-------------------------------------------------
 # ## I/O
 #-------------------------------------------------
-_ioInit = (options) ->
+_initSocketIo = (config) ->
   return if io   # only one server
-  {authenticate, port, story} = options
+  {authenticate, port, story} = config
   expressApp = express()
   expressApp.use express.static path.join(__dirname, '../../serverLogsApp')
   httpServer = http.createServer expressApp
@@ -49,29 +49,30 @@ _ioInit = (options) ->
 # ## Main processing function
 #-------------------------------------------------
 _queue = []
-_process = (record, options, emit) ->
+_process = (record, config, emit) ->
   _queue.push record
   emit()
 
 _emit = ->
   ## console.log "#{new Date().toISOString()} Flushing..."
-  if io
-    for record in _queue
-      io.to('AUTHENTICATED').emit 'REC', record
+  io?.to('AUTHENTICATED').emit 'RECORDS', [].concat(_queue)
   _queue.length = 0
   return
 
 #-------------------------------------------------
 # ## API
 #-------------------------------------------------
-create = (story, options = {}) ->
-  _options = timm.addDefaults options, DEFAULTS, {story}
-  _throttledEmit = _.throttle _emit, _options.throttle
+create = (story, baseConfig = {}) ->
+  config = timm.addDefaults baseConfig, DEFAULT_CONFIG, {story}
+  if config.throttle
+    _finalEmit = _.throttle _emit, config.throttle
+  else
+    _finalEmit = _emit
   listener =
     type: 'WS_SERVER'
-    init: -> _ioInit _options
-    process: (record) -> _process record, _options, _throttledEmit
-    config: (options) -> _options = timm.merge _options, options
+    init: -> _initSocketIo config
+    process: (record) -> _process record, config, _finalEmit
+    config: (newConfig) -> config = timm.merge config, newConfig
   listener
 
 module.exports = {

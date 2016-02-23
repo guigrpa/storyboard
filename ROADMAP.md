@@ -1,6 +1,7 @@
 - [ ] consoleListener: implement level threshold
+- [ ] wsServer: process batched recs
 - [ ] Chrome extension
     - [x] Page -> CS -> BG -> DT
-    - [ ] Survive page reloads
-    - [ ] Page <- CS <- BG <- DT
-    - [ ] 
+    - [x] Survive page reloads
+    - [x] Page <- CS <- BG <- DT
+    - [ ] Build page

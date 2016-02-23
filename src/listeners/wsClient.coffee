@@ -1,21 +1,14 @@
 socketio = require 'socket.io-client'
 timm = require 'timm'
 
-DEFAULTS = {}
+DEFAULT_CONFIG = {}
 
+#-------------------------------------------------
+# ## Extension I/O
+#-------------------------------------------------
 _sendMsgToExtension = (type, data) ->
   window.postMessage {src: 'PAGE', type, data}, '*'
-
-#-------------------------------------------------
-# ## I/O
-#-------------------------------------------------
-_ioInit = (options) ->
-  {story} = options
-  story.info "Connecting to WebSocket server..."
-  socket = socketio.connect()
-  socket.on 'REC', _process
-  socket.on 'AUTH_REQUIRED', -> _sendMsgToExtension 'AUTH_REQUIRED'
-  socket.on 'connect', -> story.info "WebSocket connected"
+_initExtensionIo = (config) ->
   window.addEventListener 'message', (event) ->
     return if event.source isnt window
     {data: {src, type, data}} = event
@@ -24,22 +17,36 @@ _ioInit = (options) ->
   _sendMsgToExtension 'INIT'
 
 #-------------------------------------------------
+# ## Websocket I/O
+#-------------------------------------------------
+_initSocketIo = (config) ->
+  {story} = config
+  story.info "Connecting to WebSocket server..."
+  socket = socketio.connect()
+  socket.on 'RECORDS', _process
+  socket.on 'AUTH_REQUIRED', -> _sendMsgToExtension 'AUTH_REQUIRED'
+  socket.on 'connect', -> story.info "WebSocket connected"
+
+#-------------------------------------------------
 # ## Main processing function
 #-------------------------------------------------
-_process = (record, options) ->
-  ## console.log "[PG] RX PAGE/REC #{record.src} #{record.msg}"
-  _sendMsgToExtension 'REC', record
+# Relay records coming from local stories
+_process = (records, config) ->
+  ## console.log "[PG] RX PAGE/RECORDS #{records.length} records"
+  _sendMsgToExtension 'RECORDS', records
 
 #-------------------------------------------------
 # ## API
 #-------------------------------------------------
-create = (story, options = {}) ->
-  _options = timm.addDefaults options, DEFAULTS, {story}
+create = (story, baseConfig = {}) ->
+  config = timm.addDefaults baseConfig, DEFAULT_CONFIG, {story}
   listener =
     type: 'WS_CLIENT'
-    init: -> _ioInit _options
-    process: (record) -> _process record, _options
-    config: (options) -> _options = timm.merge _options, options
+    init: -> 
+      _initExtensionIo config
+      _initSocketIo config
+    process: (record) -> _process [record], config
+    config: (newConfig) -> config = timm.merge config, newConfig
   listener
 
 module.exports = {

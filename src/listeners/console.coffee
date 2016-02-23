@@ -3,7 +3,7 @@ timm = require 'timm'
 chalk = require 'chalk'
 k = require '../constants'
 
-DEFAULTS =
+DEFAULT_CONFIG =
   moduleNameLength: 20
   relativeTime:     k.IS_BROWSER
   minLevel:         10
@@ -76,10 +76,10 @@ if process.env.NODE_ENV isnt 'production'
     argArray
 
 _prevTime = 0
-_getTimeStr = (record, options) ->
+_getTimeStr = (record, config) ->
   timeStr = ''
   extraTimeStr = undefined
-  if not options.relativeTime
+  if not config.relativeTime
     timeStr = record.t.toISOString()
   else
     newTime = record.t
@@ -94,10 +94,10 @@ _getTimeStr = (record, options) ->
 #-------------------------------------------------
 # ## Main processing function
 #-------------------------------------------------
-_process = (record, options) ->
+_process = (record, config) ->
   {src, parents, level, msg, fStory, action} = record
-  {timeStr, extraTimeStr} = _getTimeStr record, options
-  srcStr = _getSrcColor(src) _.padStart(src, options.moduleNameLength)
+  {timeStr, extraTimeStr} = _getTimeStr record, config
+  srcStr = _getSrcColor(src) _.padStart(src, config.moduleNameLength)
   levelStr = if fStory then '-----' else LEVEL_NUM_TO_COLORED_STR[level]
   msg = "#{timeStr} #{srcStr} #{levelStr} #{msg}"
   if action then msg += " [#{action}]"
@@ -115,12 +115,13 @@ _process = (record, options) ->
 #-------------------------------------------------
 # ## API
 #-------------------------------------------------
-create = (story, options = {}) ->
-  _options = timm.addDefaults options, DEFAULTS
+create = (story, baseConfig = {}) ->
+  config = timm.addDefaults baseConfig, DEFAULT_CONFIG
   listener =
     type: 'CONSOLE'
-    process: (record) -> _process record, _options
-    config: (options) -> _options = timm.merge _options, options
+    init: ->
+    process: (record) -> _process record, config
+    config: (newConfig) -> config = timm.merge config, newConfig
   listener
 
 module.exports = {

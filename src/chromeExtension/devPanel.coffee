@@ -8,11 +8,12 @@ _bgConnection.postMessage {src: 'DT', type: 'INIT', data: {tabId: _tabId}}
 _bgConnection.onMessage.addListener (msg) ->
   {src, type, data} = msg
   console.log "[DT] RX #{src}/#{type}", data
-  node.innerHTML = data.msg
+  if type is 'RECORDS'
+    for record in data
+      node.innerHTML += "<br/>#{record.msg}"
   return
 
 # Pane application
-node.innerHTML = 'Uninitialised'
 btn = document.getElementById 'btn'
 btn.addEventListener 'click', ->
   console.log "[DT] Clicked"

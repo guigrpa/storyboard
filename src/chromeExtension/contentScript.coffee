@@ -1,5 +1,3 @@
-console.log 'Content script running...'
-
 _bgConnection = null
 
 # Connect to the actual page via DOM messaging

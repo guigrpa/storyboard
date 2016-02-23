@@ -6,8 +6,8 @@ init = (deps) ->
   if not(mainStory?)
     throw new Error 'MISSING_DEPENDENCIES'
 
-addListener = (listenerFactory, options) -> 
-  listener = listenerFactory.create mainStory, options
+addListener = (listenerFactory, config) -> 
+  listener = listenerFactory.create mainStory, config
   _listeners.push listener
   listener.init?()
 getListeners = -> _listeners
