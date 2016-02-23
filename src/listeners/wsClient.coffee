@@ -12,20 +12,20 @@ _ioInit = (options) ->
   socket = socketio.connect()
   socket.on 'REC', _process
   socket.on 'AUTH_REQUIRED', ->
-    story.warn "TODO: Authenticate the user when the server requires it"
+    window.postMessage {src: 'PAGE', type: 'AUTH_REQUIRED'}, '*'
   socket.on 'connect', -> story.info "WebSocket connected"
   window.addEventListener 'message', (event) ->
     return if event.source isnt window
-    {data: {type, subtype, data}} = event
-    return if type isnt 'FROM_CONTENT_SCRIPT'
-    console.log "#{type}/#{subtype}"
+    {data: {src, type, data}} = event
+    return if src is 'PAGE'
+    console.log "[PG] #{src}/#{type}", data
 
 #-------------------------------------------------
 # ## Main processing function
 #-------------------------------------------------
 _process = (record, options) ->
   console.log "#{record.src} #{record.msg}"
-  window.postMessage {type: 'FROM_PAGE', subtype: 'REC', data: record}, '*'
+  window.postMessage {src: 'PAGE', type: 'REC', data: record}, '*'
 
 #-------------------------------------------------
 # ## API
