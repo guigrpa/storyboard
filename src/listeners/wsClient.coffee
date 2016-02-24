@@ -6,10 +6,12 @@ DEFAULT_CONFIG = {}
 #-------------------------------------------------
 # ## Extension I/O
 #-------------------------------------------------
+_fExtensionInitialised = false
 _fExtensionReady = false
-_extensionMsgQueue = []
 
 _extensionInit = (config) ->
+  return if _fExtensionInitialised
+  _fExtensionInitialised = true
   window.addEventListener 'message', (event) ->
     {source, data: msg} = event
     return if source isnt window
@@ -30,6 +32,7 @@ _extensionRxMsg = (msg) ->
       _socketTxMsg {type, data}
   return
 
+_extensionMsgQueue = []
 _extensionTxMsg = (type, data) ->
   msg = {src: 'PAGE', type, data}
   if _fExtensionReady or (type is 'CONNECT_LINK')
@@ -49,10 +52,11 @@ _socket = null
 _socketInit = (config) ->
   {story} = config
   story.info "Connecting to WebSocket server..."
-  _socket = socketio.connect()
+  if not _socket
+    _socket = socketio.connect()
+    _socket.on 'connect', -> story.info "WebSocket connected"
+    _socket.on 'MSG', _socketRxMsg
   _socket.sbConfig = config
-  _socket.on 'connect', -> story.info "WebSocket connected"
-  _socket.on 'MSG', _socketRxMsg
 
 _socketRxMsg = (msg) ->
   {type, data} = msg
