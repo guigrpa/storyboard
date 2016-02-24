@@ -8,6 +8,7 @@ module.exports =
     contentScript: ['./src/chromeExtension/contentScript.coffee']
     devTools: ['./src/chromeExtension/devTools.coffee']
     devPanel: ['./src/chromeExtension/devPanel.coffee']
+    devToolsApp: ['./src/chromeExtension/devToolsApp.coffee']
 
   output:
     filename: '[name].js'
@@ -20,7 +21,7 @@ module.exports =
 
   resolve:
     # Add automatically the following extensions to required modules
-    extensions: ['', '.coffee', '.js']
+    extensions: ['', '.coffee', '.cjsx', '.js']
 
   module:
     loaders: [

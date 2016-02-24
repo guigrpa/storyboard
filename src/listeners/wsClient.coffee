@@ -6,15 +6,33 @@ DEFAULT_CONFIG = {}
 #-------------------------------------------------
 # ## Extension I/O
 #-------------------------------------------------
+_fExtensionReady = false
+_pendingMsgs = []
 _sendMsgToExtension = (type, data) ->
-  window.postMessage {src: 'PAGE', type, data}, '*'
+  msg = {src: 'PAGE', type, data}
+  if _fExtensionReady
+    _doSendMsg msg
+  else
+    _pendingMsgs.push msg
+_sendPendingMsgsToExtension = ->
+  return if not _fExtensionReady
+  _doSendMsg msg for msg in _pendingMsgs
+  _pendingMsgs.length = 0
+_doSendMsg = (msg) -> window.postMessage msg, '*'
+
 _initExtensionIo = (config) ->
   window.addEventListener 'message', (event) ->
     return if event.source isnt window
     {data: {src, type, data}} = event
-    return if src is 'PAGE'
-    ## console.log "[PG] RX #{src}/#{type}", data
-  _sendMsgToExtension 'INIT'
+    return if src isnt 'DT'
+    console.log "[PG] RX #{src}/#{type}", data
+    switch type
+      when 'INIT_E2E_REQ' 
+        _fExtensionReady = true
+        _sendMsgToExtension 'INIT_E2E_RSP'
+        _sendPendingMsgsToExtension()
+    return
+  _sendMsgToExtension 'CONNECT_LINK'
 
 #-------------------------------------------------
 # ## Websocket I/O
@@ -24,7 +42,7 @@ _initSocketIo = (config) ->
   story.info "Connecting to WebSocket server..."
   socket = socketio.connect()
   socket.on 'RECORDS', _process
-  socket.on 'AUTH_REQUIRED', -> _sendMsgToExtension 'AUTH_REQUIRED'
+  socket.on 'AUTH_REQUIRED', -> _sendMsgToExtension 'SERVER_REQUIRES_AUTH'
   socket.on 'connect', -> story.info "WebSocket connected"
 
 #-------------------------------------------------

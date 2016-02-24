@@ -3,7 +3,11 @@
   <head>
     <title>Server logs</title>
     <style>
-      body { font-family: "Segoe", "Helvetica", sans-serif; }
+      body { 
+        font-family: "Segoe", "Helvetica", sans-serif;
+        width: 100%;
+        height: 100%;
+      }
       .instructions { 
         max-width: 400px; 
         margin-left: auto; 
@@ -11,7 +15,12 @@
         border: 9px solid lightgray;
         padding: 0px 25px 14px;
       }
-      .instructions li { margin-bottom: 10px; }
+      .instructions li { 
+        margin-bottom: 10px; 
+      }
+      h1 {
+        opacity: 0;
+      }
     </style>
   </head>
   <body>
@@ -24,6 +33,7 @@
         <li>Navigate to the <b>Storyboard</b> tab</li>
       </ol>
     </div>
+    <div id="devToolsApp"></div>
     <script src='/app.js'></script>
   </body>
 </html>

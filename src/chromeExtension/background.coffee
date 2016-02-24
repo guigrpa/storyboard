@@ -19,7 +19,7 @@ chrome.runtime.onConnect.addListener (port) ->
     console.log "[BG] RX #{src}/#{type}", data
 
     # Connection initialisation
-    if type is 'INIT'
+    if type is 'CONNECT_LINK'
       tabId = switch src
         when 'DT' then data.tabId
         when 'CS' then port.sender.tab.id
