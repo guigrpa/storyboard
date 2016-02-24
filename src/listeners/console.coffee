@@ -35,54 +35,17 @@ _getSrcColor = (src) ->
   _srcColorCache[src]
 
 if process.env.NODE_ENV isnt 'production'
-  ANSI_REGEX = /(?:(?:\u001b\[)|\u009b)(?:(?:[0-9]{1,3})?(?:(?:;[0-9]{0,3})*)?[A-M|f-m])|\u001b[A-M]/g
-  MAP_ADD_STYLE = 
-    30: 'color: black'
-    31: 'color: red'
-    32: 'color: green'
-    33: 'color: yellow'
-    34: 'color: blue'
-    35: 'color: magenta'
-    36: 'color: cyan'
-    37: 'color: lightgrey'
-    40: 'color: white;background-color: black'
-    41: 'color: white;background-color: red'
-    42: 'color: white;background-color: green'
-    43: 'color: white;background-color: yellow'
-    44: 'color: white;background-color: blue'
-    45: 'color: white;background-color: magenta'
-    46: 'color: white;background-color: cyan'
-    47: 'color: white;background-color: lightgrey'
-    1: 'font-weight: bold'
-    2: 'opacity: 0.8'
-    3: 'font-style: italic'
-    4: 'text-decoration: underline'
-    8: 'display: none'
-    9: 'text-decoration: line-through'
-  REMOVE_STYLE_LIST = [0, 21, 22, 23, 24, 27, 28, 29, 39, 49]
-
-  _argsForBrowserConsole = (str) ->
-    outStr = str.replace ANSI_REGEX, '%c'
-    argArray = [outStr]
-    curStyles = []
-    regex = /\u001b\[(\d+)*m/gi
-    while (res = regex.exec str)
-      code = Number res[1]
-      if code in REMOVE_STYLE_LIST
-        curStyles.pop()
-      else
-        curStyles.push(MAP_ADD_STYLE[code] ? '')
-      argArray.push curStyles.join(';')
-    argArray
+  ansiColors = require '../gral/ansiColors'
+  _argsForBrowserConsole = (str) -> ansiColors.argsForBrowserConsole str
 
 _prevTime = 0
 _getTimeStr = (record, config) ->
   timeStr = ''
   extraTimeStr = undefined
   if not config.relativeTime
-    timeStr = record.t.toISOString()
+    timeStr = record.t
   else
-    newTime = record.t
+    newTime = new Date(record.t)
     dif = if _prevTime then (newTime - _prevTime)/1000 else 0
     _prevTime = newTime
     timeStr = if dif < 1 then dif.toFixed(3) else dif.toFixed(1)
@@ -95,16 +58,19 @@ _getTimeStr = (record, config) ->
 # ## Main processing function
 #-------------------------------------------------
 _process = (record, config) ->
-  {src, parents, level, msg, fStory, action} = record
+  {src, parents, level, msg, fStory, action, id} = record
   {timeStr, extraTimeStr} = _getTimeStr record, config
+  parentsStr = _.padEnd parents.join(', '), 5
   srcStr = _getSrcColor(src) _.padStart(src, config.moduleNameLength)
   levelStr = if fStory then '-----' else LEVEL_NUM_TO_COLORED_STR[level]
-  msg = "#{timeStr} #{srcStr} #{levelStr} #{msg}"
-  if action then msg += " [#{action}]"
+  storyId = if fStory then "#{id} - " else ''
+  actionStr = if action then " [#{action}]" else ''
+  finalMsg = "#{parentsStr} #{timeStr} #{srcStr} #{levelStr} #{storyId}#{msg}#{actionStr}"
+  if fStory then finalMsg = chalk.bold finalMsg
   if k.IS_BROWSER and (process.env.NODE_ENV isnt 'production')
-    args = _argsForBrowserConsole msg
+    args = _argsForBrowserConsole finalMsg
   else
-    args = [msg]
+    args = [finalMsg]
   if record.level >= 50
     if extraTimeStr? then console.log "      #{extraTimeStr}"
     console.error.apply console, args

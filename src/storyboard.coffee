@@ -17,6 +17,9 @@ mainStory = stories.createStory []
 hub.init {mainStory}
 hub.addListener consoleListener
 
+# Make sure a record is created
+mainStory.changeTitle 'ROOT STORY'
+
 module.exports = {
   mainStory,
   addListener: hub.addListener,

@@ -9,20 +9,29 @@ CHILD_TITLE = ''
 #-----------------------------------------------
 # ### Stories
 #-----------------------------------------------
-_id = 0
-_getId = -> if k.IS_BROWSER then "c#{_id++}" else "s#{_id++}"
+_storyId = 0
+_getStoryId = -> if k.IS_BROWSER then "c#{_storyId++}" else "s#{_storyId++}"
+_logId = 0
+_getLogId = -> if k.IS_BROWSER then "c#{_logId++}" else "s#{_logId++}"
 
 createStory = (parents, src, title = CHILD_TITLE) ->
   story = {
-    id: _getId(),
+    id: _getStoryId(),
     parents, src, title,
     fServer: not k.IS_BROWSER,
-    t: new Date(),
+    t: new Date().toISOString(),
     fOpen: true,
     status: undefined,
   }
   _logStory = (action) ->
-    _emit {t: story.t, parents: story.parents, fStory: true, src: story.src, msg: story.title, action}
+    _emit
+      t: story.t
+      parents: story.parents
+      id: story.id,
+      fStory: true
+      src: story.src
+      msg: story.title
+      action: action
   _logStory 'CREATED'
 
   story.addParent = (id) -> story.parents.push id
@@ -43,7 +52,13 @@ createStory = (parents, src, title = CHILD_TITLE) ->
 
   _.each k.LEVEL_NUM_TO_STR, (levelStr, levelNum) ->
     return if levelStr is 'STORY'
-    story[levelStr.toLowerCase()] = (src, msg, obj) -> _emit {parents: story.id, level: levelNum, src, msg, obj}
+    story[levelStr.toLowerCase()] = (src, msg, obj) -> 
+      _emit { 
+        parents: [story.id],
+        id: _getLogId(),
+        level: levelNum,
+        src, msg, obj
+      }
 
   story.tree = (src, node, options, prefix) -> 
     #- `tree obj`
@@ -108,17 +123,18 @@ _tree = (node, options, prefix, stack) ->
 _treeLine = (prefix, key, strVal, options) ->
   options.log "#{prefix}#{key}: #{chalk.bold strVal}"
 
-# A log message has:
-# * `parents: number | Array`
+# Records can be logs or stories:
 # * `fStory: boolean`
 # * `action: string` (only for stories)
-# * `t: date` (provided here)
+# * `id: string` (a story id or log id, depending on the case)
+# * `parents: Array`
+# * `t: string` (if not in the record, added here) (for stories, creation time)
 # * `level: number`
 # * `src: string?`
 # * `msg: string`
 # * `obj: object?
 _emit = (record) ->
-  record.t ?= new Date()
+  record.t ?= new Date().toISOString()
   #- `log.info msg`
   if not record.msg?
     record.msg = record.src

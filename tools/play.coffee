@@ -2,7 +2,7 @@ Promise = require 'bluebird'
 
 {mainStory, addListener, getListeners} = require '../src/storyboard'
 wsServer = require '../src/listeners/wsServer'
-addListener wsServer, {authenticate: ({login, password}) -> true}
+addListener wsServer #, {authenticate: ({login, password}) -> true}
 
 _story = null
 _consoleListener = null

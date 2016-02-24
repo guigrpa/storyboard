@@ -63,7 +63,7 @@ _process = (record, config, emit) ->
   emit()
 
 _emit = ->
-  console.log "#{new Date().toISOString()} Flushing #{_queue.length} records..."
+  ## console.log "#{new Date().toISOString()} Flushing #{_queue.length} records..."
   io?.to('AUTHENTICATED').emit 'MSG', 
     type: 'RECORDS'
     data: [].concat(_queue)

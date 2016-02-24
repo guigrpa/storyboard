@@ -1,6 +1,7 @@
 React             = require 'react'
 Login             = require './010-login'
 LargeMessage      = require './900-largeMessage'
+ansiColors        = require '../../gral/ansiColors'
 
 require './app.sass'
 
@@ -40,9 +41,9 @@ Root = React.createClass
       />
       <button onClick={=> @_txMsg 'CLICK', data: {t: new Date().toISOString()}}>Click me!</button>
       <div>Records:</div>
-      <ol>
-        {@state.rootStory.map (o, idx) -> <li key={idx}>{o.msg}</li>}
-      </ol>
+      <ul>
+        {@state.rootStory.map @_renderRecord}
+      </ul>
     </div>
 
   _renderConnecting: ->
@@ -54,6 +55,21 @@ Root = React.createClass
   _renderConnecting2: ->
     return if not @state.fWarnEstablishmentE2E 
     <div>If this seems to be taking a long time, please verify your URL</div>
+
+  _renderRecord: (record, idx) ->
+    <li key={idx} style={_style.record}>
+      {@_renderRecordSpans ansiColors.getStructured record.msg}
+    </li>
+
+  _renderRecordSpans: (spans) ->
+    return null if not spans
+    return null if not spans.length
+    return spans.map (span) =>
+      <span style={span.style}>
+        {span.txt}
+        {@_renderRecordSpans spans.children}
+      </span>
+
 
   #-----------------------------------------------------
   _txMsg: (type, data) ->
@@ -85,5 +101,7 @@ _style =
     backgroundColor: 'white'
     height: '100%'
     padding: 4
+  record:
+    whiteSpace: 'pre'
 
 module.exports = Root
