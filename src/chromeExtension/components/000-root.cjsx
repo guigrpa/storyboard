@@ -1,3 +1,4 @@
+_                 = require '../../vendor/lodash'
 React             = require 'react'
 Login             = require './010-login'
 LargeMessage      = require './900-largeMessage'
@@ -65,9 +66,10 @@ Root = React.createClass
     return null if not spans
     return null if not spans.length
     return spans.map (span) =>
+      if _.isString span
+        return span
       <span style={span.style}>
-        {span.txt}
-        {@_renderRecordSpans spans.children}
+        {@_renderRecordSpans span.children}
       </span>
 
 
