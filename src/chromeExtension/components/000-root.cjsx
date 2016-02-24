@@ -1,5 +1,6 @@
-React = require 'react'
-LargeMessage = require './900-largeMessage'
+React             = require 'react'
+Login             = require './010-login'
+LargeMessage      = require './900-largeMessage'
 
 require './app.sass'
 
@@ -14,13 +15,13 @@ Root = React.createClass
     rootStory:              []
     fEstablishedE2E:        false
     fWarnEstablishmentE2E:  false
-    fLoggedIn:              false
+    loginStatus:            'LOGGED_OUT'
     fLoginRequired:         false
 
   #-----------------------------------------------------
   componentDidMount: -> 
     @props.msgSubscribe @_rxMsg
-    @_txMsg 'INIT_E2E_REQ'
+    @_txMsg 'INIT_E2E_REQUEST'
     setTimeout =>
       if not @state.fEstablishedE2E
         @setState {fWarnEstablishmentE2E: true}
@@ -32,8 +33,11 @@ Root = React.createClass
   _renderContents: ->
     if not @state.fEstablishedE2E then return @_renderConnecting()
     <div>
-      <input type="text" value="abc"/>
-      <input type="password" value="abc"/>
+      <Login 
+        fLoginRequired={@state.fLoginRequired}
+        loginStatus={@state.loginStatus}
+        submit={@_handleSubmitLogin}
+      />
       <button onClick={=> @_txMsg 'CLICK', data: {t: new Date().toISOString()}}>Click me!</button>
       <div>Records:</div>
       <ol>
@@ -59,8 +63,9 @@ Root = React.createClass
     {src, type, data} = msg
     console.log "[DT] RX #{src}/#{type}", data
     switch type
-      when 'INIT_E2E_RSP' then @setState {fEstablishedE2E: true}
-      when 'SERVER_REQUIRES_AUTH' then @setState {fLoginRequired: true}
+      when 'INIT_E2E_RESPONSE' then @setState {fEstablishedE2E: true}
+      when 'LOGIN_REQUIRED' then @setState {fLoginRequired: true}
+      when 'LOGIN_SUCCEEDED' then @setState {loginStatus: 'LOGGED_IN'}
       when 'RECORDS' then @_rxRecords data
     return
 
@@ -69,10 +74,16 @@ Root = React.createClass
     rootStory = rootStory.concat records
     @setState {rootStory}
 
+  _handleSubmitLogin: (credentials) ->
+    return if @state.loginStatus isnt 'LOGGED_OUT'
+    @_txMsg 'LOGIN_REQUEST', credentials
+    @setState {loginStatus: 'LOGGING_IN'}
+
 #-----------------------------------------------------
 _style = 
   outer: 
     backgroundColor: 'white'
     height: '100%'
+    padding: 4
 
 module.exports = Root

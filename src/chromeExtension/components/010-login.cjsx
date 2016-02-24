@@ -1,31 +1,35 @@
-React = require 'react'
-LargeMessage = require './900-largeMessage'
-
-require './app.sass'
+React             = require 'react'
 
 Login = React.createClass
   displayName: 'Login'
 
   #-----------------------------------------------------
   propTypes:
-    submitLogin:            React.PropTypes.func.isRequired
-    fShow:                  React.PropTypes.bool.isRequired
-    fLoggingIn:             React.PropTypes.bool.isRequired
+    fLoginRequired:         React.PropTypes.bool.isRequired
+    loginStatus:            React.PropTypes.string.isRequired
+    submit:                 React.PropTypes.func.isRequired
   getInitialState: ->
     login:                  ''
     password:               ''
 
   #-----------------------------------------------------
   render: -> 
-    return if not @props.fShow
-    <div>
+    if (not @props.fLoginRequired) or (@props.loginStatus is 'LOGGED_IN')
+      return <div/>
+    btnMessage = switch @props.loginStatus
+      when 'LOGGED_OUT' then 'Submit'
+      when 'LOGGING_IN' then 'Logging in...'
+      else 'Logged in'
+    <div style={_style.outer}>
       The Storyboard server asks for your credentials:
+      {' '}
       <input ref="login"
         id="login"
         type="text"
         value={@state.login}
         placeholder="Login"
         onChange={@_handleChangeCredentials}
+        style={_style.field}
       />
       <input ref="password"
         id="password"
@@ -33,30 +37,31 @@ Login = React.createClass
         value={@state.password}
         placeholder="Password"
         onChange={@_handleChangeCredentials}
+        style={_style.field}
       />
-      <button onClick={@_handleClickSubmit} disabled={@props.fLoggingIn}>Submit</button>
+      <button 
+        onClick={@_handleClickSubmit} 
+        disabled={@props.loginStatus isnt 'LOGGED_OUT'}
+      >
+        {btnMessage}
+      </button>
     </div>
 
   #-----------------------------------------------------
   _handleClickSubmit: ->
+    @props.submit 
+      login: @refs.login.value
+      password: @refs.password.value
 
-    @props.msgSend {src: 'DT', type, data}
-
-  _rxMsg: (msg) ->
-    {src, type, data} = msg
-    console.log "[DT] RX #{src}/#{type}", data
-    switch type
-      when 'INIT_E2E_RSP' then @setState {fEstablishedE2E: true}
-      when 'SERVER_REQUIRES_AUTH' then @setState {fLoginRequired: true}
-      when 'RECORDS' then @_rxRecords data
-    return
-
-  _rxRecords: (records) ->
-    {rootStory} = @state
-    rootStory = rootStory.concat records
-    @setState {rootStory}
+  _handleChangeCredentials: (ev) -> @setState {"#{ev.target.id}": ev.target.value}
 
 #-----------------------------------------------------
-_style = {}
+_style = 
+  outer:
+    padding: 10
+    backgroundColor: 'lavender'
+    borderRadius: 5
+  field:
+    marginRight: 4
 
 module.exports = Login

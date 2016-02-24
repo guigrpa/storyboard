@@ -14,9 +14,9 @@ DEFAULT_CONFIG =
 io = null
 
 #-------------------------------------------------
-# ## I/O
+# ## WebSocket I/O
 #-------------------------------------------------
-_initSocketIo = (config) ->
+_socketInit = (config) ->
   return if io   # only one server
   {authenticate, port, story} = config
   expressApp = express()
@@ -25,25 +25,34 @@ _initSocketIo = (config) ->
   io = socketio httpServer
   io.on 'connection', (socket) ->
     socket.sbAuthenticated = not authenticate?
+    socket.sbConfig = config
     if socket.sbAuthenticated
       socket.join 'AUTHENTICATED'
     else
-      socket.emit 'AUTH_REQUIRED'
-    socket.on 'AUTH', ({login, password}, fnReply) ->
-      return if socket.sbAuthenticated
-      return if not authenticate?
-      Promise.resolve authenticate login, password
-      .then (fAuth) ->
-        if fAuth
-          fnReply {result: 'SUCCESS'}
-          socket.sbAuthenticated = true
-          socket.join 'AUTHENTICATED'
-        else
-          fnReply {result: 'ERROR', error: 'AUTH_FAILED'}
-      return
+      _socketTxMsg socket, {type: 'LOGIN_REQUIRED'}
+    socket.on 'MSG', (msg) -> _socketRxMsg socket, msg
   httpServer.listen port
   story.info "Listening on port #{chalk.cyan port}..."
   return
+
+_socketRxMsg = (socket, msg) ->
+  {type, data} = msg
+  switch type
+    when 'LOGIN_REQUEST'
+      authenticate = socket.sbConfig.authenticate
+      credentials = data
+      Promise.resolve (socket.sbAuthenticated) \
+        or (not authenticate?) or authenticate(credentials)
+      .then (fAuthValid) ->
+        if fAuthValid
+          _socketTxMsg socket, {type: 'LOGIN_SUCCEEDED'}
+          socket.sbAuthenticated = true
+          socket.join 'AUTHENTICATED'
+        else
+          _socketTxMsg socket, {type: 'LOGIN_FAILED'}
+      return
+
+_socketTxMsg = (socket, msg) -> socket.emit 'MSG', msg
 
 #-------------------------------------------------
 # ## Main processing function
@@ -54,8 +63,10 @@ _process = (record, config, emit) ->
   emit()
 
 _emit = ->
-  ## console.log "#{new Date().toISOString()} Flushing..."
-  io?.to('AUTHENTICATED').emit 'RECORDS', [].concat(_queue)
+  console.log "#{new Date().toISOString()} Flushing #{_queue.length} records..."
+  io?.to('AUTHENTICATED').emit 'MSG', 
+    type: 'RECORDS'
+    data: [].concat(_queue)
   _queue.length = 0
   return
 
@@ -70,7 +81,7 @@ create = (story, baseConfig = {}) ->
     _finalEmit = _emit
   listener =
     type: 'WS_SERVER'
-    init: -> _initSocketIo config
+    init: -> _socketInit config
     process: (record) -> _process record, config, _finalEmit
     config: (newConfig) -> config = timm.merge config, newConfig
   listener
