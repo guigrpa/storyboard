@@ -3,15 +3,16 @@ MAP_ADD_STYLE =
   30: 'color: black'
   31: 'color: red'
   32: 'color: green'
-  33: 'color: yellow'
+  33: 'color: orange'
   34: 'color: blue'
+  94: 'color: blue'
   35: 'color: magenta'
   36: 'color: cyan'
   37: 'color: lightgrey'
   40: 'color: white;background-color: black'
   41: 'color: white;background-color: red'
   42: 'color: white;background-color: green'
-  43: 'color: white;background-color: yellow'
+  43: 'color: white;background-color: orange'
   44: 'color: white;background-color: blue'
   45: 'color: white;background-color: magenta'
   46: 'color: white;background-color: cyan'
@@ -26,15 +27,16 @@ MAP_ADD_STYLE_REACT =
   30: {color: 'black'}
   31: {color: 'red'}
   32: {color: 'green'}
-  33: {color: 'yellow'}
+  33: {color: 'orange'}
   34: {color: 'blue'}
+  94: {color: 'blue'}
   35: {color: 'magenta'}
   36: {color: 'cyan'}
   37: {color: 'lightgrey'}
   40: {color: 'white', backgroundColor: 'black'}
   41: {color: 'white', backgroundColor: 'red'}
   42: {color: 'white', backgroundColor: 'green'}
-  43: {color: 'white', backgroundColor: 'yellow'}
+  43: {color: 'white', backgroundColor: 'orange'}
   44: {color: 'white', backgroundColor: 'blue'}
   45: {color: 'white', backgroundColor: 'magenta'}
   46: {color: 'white', backgroundColor: 'cyan'}
@@ -65,7 +67,7 @@ getStructured = (str) ->
   return null if not str?
   regex = /\u001b\[(\d+)*m/gi
   tokens = str.split regex
-  return '' if not tokens.length
+  return [str] if tokens.length <= 1
   lev = 0
   tmp = [{lev, style: '', txt: tokens[0]}]
   for idx in [1...tokens.length] by 2
@@ -75,7 +77,10 @@ getStructured = (str) ->
       style = {}
       lev--
     else
-      style = MAP_ADD_STYLE_REACT[code] ? {}
+      style = MAP_ADD_STYLE_REACT[code]
+      if not style?
+        console.warn "Unknown ANSI code #{code} in string #{str}"
+        style = {}
       lev++
     tmp.push {lev, style, txt}
   out = [
