@@ -1,8 +1,7 @@
-{mainStory, addListener} = require '../storyboard'
-wsClient = require '../listeners/wsClient'
-addListener wsClient
+chalk = require 'chalk'
+{mainStory} = require '../storyboard'
 
-mainStory.info 'startup', "Server logs app starting..."
+mainStory.info 'startup', "Server logs app #{chalk.green.bold 'starting up'}..."
 
 # Enable the following block to mount the developer tools 
 # in the main page (for faster development)

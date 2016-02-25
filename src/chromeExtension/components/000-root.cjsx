@@ -58,18 +58,19 @@ Root = React.createClass
     <div>If this seems to be taking a long time, please verify your URL</div>
 
   _renderRecord: (record, idx) ->
+    segments = ansiColors.getStructured record.msg
     <li key={idx} style={_style.record}>
-      {@_renderRecordSpans ansiColors.getStructured record.msg}
+      {@_renderMsgSegments segments}
     </li>
 
-  _renderRecordSpans: (spans) ->
-    return null if not spans
-    return null if not spans.length
-    return spans.map (span) =>
-      if _.isString span
-        return span
-      <span style={span.style}>
-        {@_renderRecordSpans span.children}
+  _renderMsgSegments: (segments) ->
+    return null if not segments
+    return null if not segments.length
+    return segments.map (segment) =>
+      if _.isString segment
+        return segment
+      <span style={segment.style}>
+        {@_renderMsgSegments segment.children}
       </span>
 
 
@@ -104,6 +105,7 @@ _style =
     height: '100%'
     padding: 4
   record:
+    fontFamily: 'monospace'
     whiteSpace: 'pre'
 
 module.exports = Root

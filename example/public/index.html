@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Server logs</title>
+    <title>Storyboard example</title>
     <style>
       body {
         font-family: "Helvetica", "Arial", sans-serif
@@ -11,27 +11,29 @@
         margin-left: auto; 
         margin-right: auto;
         border: 9px solid lightgray;
-        padding: 0px 25px 14px;
+        padding: 25px 25px 14px;
       }
       .instructions li { 
         margin-bottom: 10px; 
       }
-      h1 {
-        opacity: 0;
-      }
     </style>
   </head>
   <body>
+    <div>
+      Items:
+      <ul id="items">
+        <li>loading...</li>
+      </ul>
+      <button id="refresh">Refresh</button>
+    </div>
     <div class="instructions">
-      <h1>Storyboard</h1>
-      <div>To see the server logs:</div>
+      <div>To see client and server logs:</div>
       <ol>
         <li>Open the Developer Tools from the Chrome menu at the top-right of your browser
         (<b>More Tools > Developer Tools</b>)</li>
         <li>Navigate to the <b>Storyboard</b> tab</li>
       </ol>
     </div>
-    <div id="devToolsApp"></div>
     <script src='/app.js'></script>
   </body>
 </html>

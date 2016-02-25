@@ -4,7 +4,7 @@ hub = require './hub'
 k = require './constants'
 
 DEFAULT_SRC = 'main'
-CHILD_TITLE = ''
+DEFAULT_CHILD_TITLE = ''
 
 #-----------------------------------------------
 # ### Stories
@@ -14,16 +14,17 @@ _getStoryId = -> if k.IS_BROWSER then "c#{_storyId++}" else "s#{_storyId++}"
 _logId = 0
 _getLogId = -> if k.IS_BROWSER then "c#{_logId++}" else "s#{_logId++}"
 
-createStory = (parents, src, title = CHILD_TITLE) ->
+_createStory = (parents, src, title) ->
   story = {
     id: _getStoryId(),
     parents, src, title,
+    fRoot: not parents.length,
     fServer: not k.IS_BROWSER,
     t: new Date().toISOString(),
     fOpen: true,
     status: undefined,
   }
-  _logStory = (action) ->
+  story.logStory = (action) ->
     _emit
       t: story.t
       parents: story.parents
@@ -32,7 +33,7 @@ createStory = (parents, src, title = CHILD_TITLE) ->
       src: story.src
       msg: story.title
       action: action
-  _logStory 'CREATED'
+  story.logStory 'CREATED'
 
   story.addParent = (id) -> story.parents.push id
   story.close = -> 
@@ -46,9 +47,9 @@ createStory = (parents, src, title = CHILD_TITLE) ->
     _logStory 'STATUS_CHANGED'
   story.child = (src, title) -> 
     if not title?
-      title = src
+      title = src ? DEFAULT_CHILD_TITLE
       src = DEFAULT_SRC
-    return createStory [story.id], src, title
+    return _createStory [story.id], src, title
 
   _.each k.LEVEL_NUM_TO_STR, (levelStr, levelNum) ->
     return if levelStr is 'STORY'
@@ -148,7 +149,8 @@ _emit = (record) ->
   hub.emit record
   return
 
-
-module.exports = {
-  createStory,
-}
+#-----------------------------------------------
+# ### API
+#-----------------------------------------------
+mainStory = _createStory [], 'storyboard', 'ROOT STORY'
+module.exports = mainStory
