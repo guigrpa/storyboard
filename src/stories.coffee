@@ -38,18 +38,19 @@ _createStory = (parents, src, title) ->
   story.addParent = (id) -> story.parents.push id
   story.close = -> 
     story.fOpen = false
-    _logStory 'CLOSED'
+    story.logStory 'CLOSED'
   story.changeTitle = (title) ->
     story.title = title
-    _logStory 'TITLE_CHANGED'
+    story.logStory 'TITLE_CHANGED'
   story.changeStatus = (status) ->
     story.status = status
-    _logStory 'STATUS_CHANGED'
-  story.child = (src, title) -> 
-    if not title?
-      title = src ? DEFAULT_CHILD_TITLE
-      src = DEFAULT_SRC
-    return _createStory [story.id], src, title
+    story.logStory 'STATUS_CHANGED'
+  story.child = (options = {}) -> 
+    {src = DEFAULT_SRC, title = DEFAULT_CHILD_TITLE, extraParents} = options
+    parents = [story.id]
+    if extraParents?
+      parents = parents.concat extraParents
+    return _createStory parents, src, title
 
   _.each k.LEVEL_NUM_TO_STR, (levelStr, levelNum) ->
     return if levelStr is 'STORY'

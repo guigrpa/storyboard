@@ -27,7 +27,7 @@ Promise.delay 3000
   mainStory.info 'anotherSrc', 'Initialised'
   mainStory.info 'yetAnother', 'Initialised'
 
-  _story = mainStory.child 'Request from 192.168.1.3'
+  _story = mainStory.child {title: 'Request from 192.168.1.3'}
   _story.info 'Authenticating...'
   _story.debug 'Authenticated'
   _story.changeStatus 'ONGOING'

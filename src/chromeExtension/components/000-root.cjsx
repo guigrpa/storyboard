@@ -58,7 +58,10 @@ Root = React.createClass
     <div>If this seems to be taking a long time, please verify your URL</div>
 
   _renderRecord: (record, idx) ->
-    segments = ansiColors.getStructured record.msg
+    {msg, fStory, action} = record
+    if fStory and action?
+      msg += " [#{action}]"
+    segments = ansiColors.getStructured msg
     <li key={idx} style={_style.record}>
       {@_renderMsgSegments segments}
     </li>

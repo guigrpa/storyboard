@@ -38,6 +38,7 @@
   },
   "homepage": "https://github.com/guigrpa/storyboard#readme",
   "devDependencies": {
+    "body-parser": "^1.15.0",
     "chai": "^3.5.0",
     "chalk": "^1.1.1",
     "cjsx-loader": "^2.1.0",

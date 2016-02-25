@@ -1,4 +1,5 @@
 - [ ] consoleListener: implement level threshold
+- [ ] stories: add prototype
 - [ ] Chrome extension
     - [x] Page -> CS -> BG -> DT
     - [x] Survive page reloads
