@@ -5,20 +5,22 @@
 ###
 k = require './constants'
 
-# Enable chalk colors in the browser (we'll handle the conversion)
-if k.IS_BROWSER
-  process.env.COLORTERM = true
+# Chalk is disabled by default in the browser. Override
+# this default (we'll handle ANSI code conversion ourselves
+# when needed)
+chalk = require 'chalk'
+chalk.enabled = true
 
+mainStory = require './stories'
 hub = require './hub'
-stories = require './stories'
-consoleListener = require './listeners/console'
-
-mainStory = stories.createStory []
 hub.init {mainStory}
-hub.addListener consoleListener
 
-# Make sure a record is created
-mainStory.changeTitle 'ROOT STORY'
+hub.addListener require './listeners/console'
+if k.IS_BROWSER
+  hub.addListener require './listeners/wsClient'
+
+# Make sure a record is created for the root story
+mainStory.logStory 'CREATED'
 
 module.exports = {
   mainStory,
