@@ -11,6 +11,7 @@ DEFAULT_CONFIG =
   port: 8090
   throttle: 200
   authenticate: null
+  longTermBufferLength: 1000
 LOG_SRC = 'storyboard'
 _ioStandalone = null
 _ioServerAdaptor = null
@@ -66,39 +67,52 @@ _socketRxMsg = (socket, msg) ->
         else
           story.warn LOG_SRC, "User '#{login}' authentication failed"
           _socketTxMsg socket, {type: 'LOGIN_FAILED'}
-      return
+    when 'BUFFERED_RECORDS_REQUEST'
+      _socketTxMsg socket, {type: 'BUFFERED_RECORDS_RESPONSE', data: _longTermBuf}
+    else
+      story.warn LOG_SRC, "Unknown message type '#{type}'"
+  return
 
 _socketTxMsg = (socket, msg) -> socket.emit 'MSG', msg
+
+_longTermBuf = []
+_broadcastBuf = []
+_enqueueRecord = (record, config) ->
+  _longTermBuf.push record
+  maxLen = config.longTermBufferLength
+  if _longTermBuf.length > maxLen
+    _longTermBuf.splice 0, (_longTermBuf.length - maxLen)
+  _broadcastBuf.push record
+
+_socketBroadcast = ->
+  ## console.log "#{new Date().toISOString()} Flushing #{_broadcastBuf.length} records..."
+  msg = {type: 'RECORDS', data: _broadcastBuf}
+  _ioStandalone?.to('AUTHENTICATED').emit 'MSG', msg
+  _ioServerAdaptor?.to('AUTHENTICATED').emit 'MSG', msg
+  _broadcastBuf.length = 0
+  return
 
 #-------------------------------------------------
 # ## Main processing function
 #-------------------------------------------------
-_queue = []
-_process = (record, config, emit) ->
-  _queue.push record
-  emit()
-
-_emit = ->
-  ## console.log "#{new Date().toISOString()} Flushing #{_queue.length} records..."
-  msg = {type: 'RECORDS', data: [].concat(_queue)}
-  _ioStandalone?.to('AUTHENTICATED').emit 'MSG', msg
-  _ioServerAdaptor?.to('AUTHENTICATED').emit 'MSG', msg
-  _queue.length = 0
-  return
+_process = (config) -> 
+  if config.throttle
+    finalBroadcast = _.throttle _socketBroadcast, config.throttle
+  else
+    finalBroadcast = _socketBroadcast
+  return (record) ->
+    _enqueueRecord record, config
+    finalBroadcast()
 
 #-------------------------------------------------
 # ## API
 #-------------------------------------------------
 create = (story, baseConfig = {}) ->
   config = timm.addDefaults baseConfig, DEFAULT_CONFIG, {story}
-  if config.throttle
-    _finalEmit = _.throttle _emit, config.throttle
-  else
-    _finalEmit = _emit
   listener =
     type: 'WS_SERVER'
     init: -> _socketInit config
-    process: (record) -> _process record, config, _finalEmit
+    process: _process config
     config: (newConfig) -> config = timm.merge config, newConfig
   listener
 

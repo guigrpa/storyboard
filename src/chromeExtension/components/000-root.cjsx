@@ -40,7 +40,7 @@ Root = React.createClass
         loginStatus={@state.loginStatus}
         submit={@_handleSubmitLogin}
       />
-      <button onClick={=> @_txMsg 'CLICK', data: {t: new Date().toISOString()}}>Click me!</button>
+      {@_renderDownloadBuffered()}
       <div>Records:</div>
       <ul>
         {@state.rootStory.map @_renderRecord}
@@ -56,6 +56,11 @@ Root = React.createClass
   _renderConnecting2: ->
     return if not @state.fWarnEstablishmentE2E 
     <div>If this seems to be taking a long time, please verify your URL</div>
+
+  _renderDownloadBuffered: ->
+    <button onClick={@_handleDownloadBuffered}>
+      Download buffered logs
+    </button>
 
   _renderRecord: (record, idx) ->
     {msg, fStory, action} = record
@@ -76,7 +81,6 @@ Root = React.createClass
         {@_renderMsgSegments segment.children}
       </span>
 
-
   #-----------------------------------------------------
   _txMsg: (type, data) ->
     @props.msgSend {src: 'DT', type, data}
@@ -85,18 +89,17 @@ Root = React.createClass
     {src, type, data} = msg
     console.log "[DT] RX #{src}/#{type}", data
     switch type
-      when 'CONNECT_REQUEST' 
-        @setState {fEstablishedE2E: true}
-        @_txMsg 'CONNECT_RESPONSE'
-      when 'CONNECT_RESPONSE'
-        @setState {fEstablishedE2E: true}
+      when 'CONNECT_REQUEST', 'CONNECT_RESPONSE'
+        @setState {fEstablishedE2E: true, rootStory: []}
+        if type is 'CONNECT_REQUEST' then @_txMsg 'CONNECT_RESPONSE'
       when 'LOGIN_REQUIRED'
         if @_lastCredentials
           @_handleSubmitLogin @_lastCredentials
         else
           @setState {fLoginRequired: true, loginStatus: 'LOGGED_OUT'}
       when 'LOGIN_SUCCEEDED' then @setState {loginStatus: 'LOGGED_IN'}
-      when 'RECORDS' then @_rxRecords data
+      when 'RECORDS', 'BUFFERED_RECORDS_RESPONSE' 
+        @_rxRecords data
     return
 
   _rxRecords: (records) ->
@@ -108,6 +111,8 @@ Root = React.createClass
     @_lastCredentials = credentials
     @_txMsg 'LOGIN_REQUEST', credentials
     @setState {loginStatus: 'LOGGING_IN'}
+
+  _handleDownloadBuffered: -> @_txMsg 'BUFFERED_RECORDS_REQUEST'
 
 #-----------------------------------------------------
 _style = 

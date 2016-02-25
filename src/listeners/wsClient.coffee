@@ -24,14 +24,12 @@ _extensionRxMsg = (msg) ->
   return if src isnt 'DT'
   console.log "[PG] RX #{src}/#{type}", data
   switch type
-    when 'CONNECT_REQUEST'
+    when 'CONNECT_REQUEST', 'CONNECT_RESPONSE'
       _fExtensionReady = true
-      _extensionTxMsg 'CONNECT_RESPONSE'
+      if type is 'CONNECT_REQUEST' 
+        _extensionTxMsg 'CONNECT_RESPONSE'
       _extensionTxPendingMsgs()
-    when 'CONNECT_RESPONSE'
-      _fExtensionReady = true
-      _extensionTxPendingMsgs()
-    when 'LOGIN_REQUEST'
+    when 'LOGIN_REQUEST', 'BUFFERED_RECORDS_REQUEST'
       _socketTxMsg {type, data}
   return
 
@@ -65,7 +63,7 @@ _socketRxMsg = (msg) ->
   {type, data} = msg
   switch type
     when 'LOGIN_REQUIRED', 'LOGIN_SUCCEEDED', 'LOGIN_FAILED', \
-         'RECORDS'
+         'RECORDS', 'BUFFERED_RECORDS_RESPONSE'
       _extensionTxMsg type, data
     else
       console.warn "Unknown message from server: '#{type}'"
