@@ -153,5 +153,6 @@ _emit = (record) ->
 #-----------------------------------------------
 # ### API
 #-----------------------------------------------
-mainStory = _createStory [], 'storyboard', 'ROOT STORY'
+title = (if k.IS_BROWSER then 'BROWSER' else 'SERVER') + ' ROOT STORY'
+mainStory = _createStory [], 'storyboard', title
 module.exports = mainStory
