@@ -19,22 +19,22 @@ chrome.runtime.onConnect.addListener (port) ->
     console.log "[BG] RX #{src}/#{type}", data
 
     # Connection initialisation
-    if type is 'CONNECT_LINK'
+    if type is 'CONNECT_REQUEST'
       tabId = switch src
-        when 'DT' then data.tabId
-        when 'CS' then port.sender.tab.id
+        when 'DT' then dst
+        when 'PAGE' then port.sender.tab.id
       if not tabId?
         console.error "[BG] Could not determine the tab ID associated to the connection"
         return
       _connections[tabId] ?= {}
-      _connections[tabId][src] = port
+      cxType = if src is 'PAGE' then 'CS' else 'DT'
+      _connections[tabId][cxType] = port
       _logConnections()
 
     # Message relays: `PAGE` <-> `DT`
-    else
-      switch src
-        when 'PAGE' then _connections[port.sender.tab.id]?.DT?.postMessage msg
-        when 'DT'   then _connections[dst]?.CS?.postMessage msg
+    switch src
+      when 'PAGE' then _connections[port.sender.tab.id]?.DT?.postMessage msg
+      when 'DT'   then _connections[dst]?.CS?.postMessage msg
 
   port.onMessage.addListener listener
 

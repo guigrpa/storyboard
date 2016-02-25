@@ -5,7 +5,6 @@ devToolsApp = require './devToolsApp'
 # messages are relayed to the devtools application
 _tabId = chrome.devtools.inspectedWindow.tabId
 _bgConnection = chrome.runtime.connect()
-_bgConnection.postMessage {src: 'DT', type: 'CONNECT_LINK', data: {tabId: _tabId}}
 _bgConnection.onMessage.addListener devToolsApp.processMsg
 
 # Initialise application

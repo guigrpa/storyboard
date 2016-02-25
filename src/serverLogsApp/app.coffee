@@ -13,7 +13,6 @@ if true
     return if event.source isnt window
     {data: {src, type, data}} = event
     return if src isnt 'PAGE'
-    return if type is 'CONNECT_LINK'
     devToolsApp.processMsg event.data
 
   # Emulate the content script for devtools -> page messages

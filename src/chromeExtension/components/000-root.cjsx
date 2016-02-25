@@ -23,7 +23,7 @@ Root = React.createClass
   #-----------------------------------------------------
   componentDidMount: -> 
     @props.msgSubscribe @_rxMsg
-    @_txMsg 'INIT_E2E_REQUEST'
+    @_txMsg 'CONNECT_REQUEST'
     setTimeout =>
       if not @state.fEstablishedE2E
         @setState {fWarnEstablishmentE2E: true}
@@ -85,8 +85,16 @@ Root = React.createClass
     {src, type, data} = msg
     console.log "[DT] RX #{src}/#{type}", data
     switch type
-      when 'INIT_E2E_RESPONSE' then @setState {fEstablishedE2E: true}
-      when 'LOGIN_REQUIRED' then @setState {fLoginRequired: true}
+      when 'CONNECT_REQUEST' 
+        @setState {fEstablishedE2E: true}
+        @_txMsg 'CONNECT_RESPONSE'
+      when 'CONNECT_RESPONSE'
+        @setState {fEstablishedE2E: true}
+      when 'LOGIN_REQUIRED'
+        if @_lastCredentials
+          @_handleSubmitLogin @_lastCredentials
+        else
+          @setState {fLoginRequired: true, loginStatus: 'LOGGED_OUT'}
       when 'LOGIN_SUCCEEDED' then @setState {loginStatus: 'LOGGED_IN'}
       when 'RECORDS' then @_rxRecords data
     return
@@ -97,7 +105,7 @@ Root = React.createClass
     @setState {rootStory}
 
   _handleSubmitLogin: (credentials) ->
-    return if @state.loginStatus isnt 'LOGGED_OUT'
+    @_lastCredentials = credentials
     @_txMsg 'LOGIN_REQUEST', credentials
     @setState {loginStatus: 'LOGGING_IN'}
 

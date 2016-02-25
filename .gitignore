@@ -17,4 +17,4 @@ node_modules
 *.sublime-workspace
 /chromeExtension/*.js
 /serverLogsApp/*.js
-/example/public/*.js
+/example/*.js

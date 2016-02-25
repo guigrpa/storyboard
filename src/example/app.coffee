@@ -7,6 +7,7 @@ nodeButton.addEventListener 'click', -> _refresh 'Click on Refresh'
 
 _refresh = (storyTitle) ->
   story = mainStory.child {title: storyTitle}
+  story.info 'serverInterface', "Fetching items from server..."
   fetch '/items',
     method: 'post'
     headers:
@@ -16,6 +17,7 @@ _refresh = (storyTitle) ->
   .then (response) -> response.json()
   .then (items) ->
     if Array.isArray items
+      story.info 'serverInterface', "Fetched items from server: #{items.length}"
       nodeItems.innerHTML = items.map((o) -> "<li>#{o}</li>").join('')
     story.close()
 

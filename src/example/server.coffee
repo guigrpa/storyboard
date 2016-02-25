@@ -2,8 +2,8 @@ http = require 'http'
 path = require 'path'
 chalk = require 'chalk'
 bodyParser = require 'body-parser'
-storyboard = require '../src/storyboard'        # you'd write: `'storyboard'`
-wsServer = require '../src/listeners/wsServer'  # you'd write: `'storyboard/listeners/wsServer'`
+storyboard = require '../storyboard'        # you'd write: `'storyboard'`
+wsServer = require '../listeners/wsServer'  # you'd write: `'storyboard/listeners/wsServer'`
 {mainStory} = storyboard
 
 PORT = 3000
@@ -14,7 +14,7 @@ express = require 'express'
 app = express()
 app.use bodyParser.json()
 app.use bodyParser.urlencoded {extended: true}
-app.use express.static path.join(__dirname, 'public')
+app.use express.static path.join(process.cwd(), 'example')
 app.post '/items', (req, res, next) ->
   {storyId} = req.body
   if storyId? then extraParents = [storyId]

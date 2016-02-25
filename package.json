@@ -11,7 +11,7 @@
     "buildServerLogsAppWatch": "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
     "buildExampleWatch": "webpack --config src/example/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
     "build": "npm run compile && npm run buildExtension && npm run buildServerLogsApp",
-    "start": "coffee example/server.coffee"
+    "start": "coffee src/example/server.coffee"
   },
   "repository": {
     "type": "git",

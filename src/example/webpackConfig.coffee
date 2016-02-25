@@ -6,5 +6,5 @@ module.exports = timm.merge webpackConfig,
     app: ['./src/example/app.coffee']
   output:
     filename: 'app.js'
-    path: path.resolve(process.cwd(), 'example/public')
+    path: path.resolve(process.cwd(), 'example')
     publicPath: '/'

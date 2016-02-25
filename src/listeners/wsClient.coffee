@@ -17,16 +17,19 @@ _extensionInit = (config) ->
     return if source isnt window
     {data: {src, type, data}} = event
     _extensionRxMsg msg
-  _extensionTxMsg 'CONNECT_LINK'
+  _extensionTxMsg 'CONNECT_REQUEST'
 
 _extensionRxMsg = (msg) ->
   {src, type, data} = msg
   return if src isnt 'DT'
   console.log "[PG] RX #{src}/#{type}", data
   switch type
-    when 'INIT_E2E_REQUEST' 
+    when 'CONNECT_REQUEST'
       _fExtensionReady = true
-      _extensionTxMsg 'INIT_E2E_RESPONSE'
+      _extensionTxMsg 'CONNECT_RESPONSE'
+      _extensionTxPendingMsgs()
+    when 'CONNECT_RESPONSE'
+      _fExtensionReady = true
       _extensionTxPendingMsgs()
     when 'LOGIN_REQUEST'
       _socketTxMsg {type, data}
@@ -35,7 +38,7 @@ _extensionRxMsg = (msg) ->
 _extensionMsgQueue = []
 _extensionTxMsg = (type, data) ->
   msg = {src: 'PAGE', type, data}
-  if _fExtensionReady or (type is 'CONNECT_LINK')
+  if _fExtensionReady or (type is 'CONNECT_REQUEST')
     _extensionDoTxMsg msg
   else
     _extensionMsgQueue.push msg

@@ -1,5 +1,5 @@
 # This module simulates database access
-{mainStory} = require '../src/storyboard'  # you'd write: `'storyboard'`
+{mainStory} = require '../storyboard'  # you'd write: `'storyboard'`
 chalk = require 'chalk'
 
 LOG_MODULE = 'db'
