@@ -1,6 +1,7 @@
 _                 = require '../../vendor/lodash'
 React             = require 'react'
 Login             = require './010-login'
+Story             = require './020-story'
 LargeMessage      = require './900-largeMessage'
 ansiColors        = require '../../gral/ansiColors'
 
@@ -14,13 +15,14 @@ Root = React.createClass
     msgSubscribe:           React.PropTypes.func.isRequired
     msgSend:                React.PropTypes.func.isRequired
   getInitialState: ->
-    rootStory:              []
     fEstablishedE2E:        false
     fWarnEstablishmentE2E:  false
     loginStatus:            'LOGGED_OUT'
     fLoginRequired:         false
 
   #-----------------------------------------------------
+  componentWillMount: -> @_initStories()
+
   componentDidMount: -> 
     @props.msgSubscribe @_rxMsg
     @_txMsg 'CONNECT_REQUEST'
@@ -42,9 +44,7 @@ Root = React.createClass
       />
       {@_renderDownloadBuffered()}
       <div>Records:</div>
-      <ul>
-        {@state.rootStory.map @_renderRecord}
-      </ul>
+      <Story records={@_rootStory}/>
     </div>
 
   _renderConnecting: ->
@@ -62,25 +62,6 @@ Root = React.createClass
       Download buffered logs
     </button>
 
-  _renderRecord: (record, idx) ->
-    {msg, fStory, action} = record
-    if fStory and action?
-      msg += " [#{action}]"
-    segments = ansiColors.getStructured msg
-    <li key={idx} style={_style.record}>
-      {@_renderMsgSegments segments}
-    </li>
-
-  _renderMsgSegments: (segments) ->
-    return null if not segments
-    return null if not segments.length
-    return segments.map (segment) =>
-      if _.isString segment
-        return segment
-      <span style={segment.style}>
-        {@_renderMsgSegments segment.children}
-      </span>
-
   #-----------------------------------------------------
   _txMsg: (type, data) ->
     @props.msgSend {src: 'DT', type, data}
@@ -90,7 +71,8 @@ Root = React.createClass
     console.log "[DT] RX #{src}/#{type}", data
     switch type
       when 'CONNECT_REQUEST', 'CONNECT_RESPONSE'
-        @setState {fEstablishedE2E: true, rootStory: []}
+        @setState {fEstablishedE2E: true}
+        @_rootStory = []
         if type is 'CONNECT_REQUEST' then @_txMsg 'CONNECT_RESPONSE'
       when 'LOGIN_REQUIRED'
         if @_lastCredentials
@@ -104,11 +86,6 @@ Root = React.createClass
       when 'RECORDS' then @_rxRecords data
     return
 
-  _rxRecords: (records) ->
-    {rootStory} = @state
-    rootStory = rootStory.concat records
-    @setState {rootStory}
-
   _handleSubmitLogin: (credentials) ->
     @_lastCredentials = credentials
     @_txMsg 'LOGIN_REQUEST', credentials
@@ -116,14 +93,23 @@ Root = React.createClass
 
   _handleDownloadBuffered: -> @_txMsg 'BUFFERED_RECORDS_REQUEST'
 
+  #-----------------------------------------------------
+  # ### Record management
+  #-----------------------------------------------------
+  _initStories: -> 
+    @_openStories = []
+    @_rootStory = []
+
+  _rxRecords: (records) ->
+    @_rootStory = @_rootStory.concat records
+    @forceUpdate()
+
+
 #-----------------------------------------------------
 _style = 
   outer: 
     backgroundColor: 'white'
     height: '100%'
     padding: 4
-  record:
-    fontFamily: 'monospace'
-    whiteSpace: 'pre'
 
 module.exports = Root
