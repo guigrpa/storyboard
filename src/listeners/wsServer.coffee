@@ -21,7 +21,7 @@ _ioServerAdaptor = null
 #-------------------------------------------------
 _socketInit = (config) ->
   return if _ioStandalone   # only one server
-  {port, story} = config
+  {port, mainStory: story} = config
 
   # Launch stand-alone log server
   expressApp = express()
@@ -52,9 +52,10 @@ _socketOnConnection = (socket, config) ->
 
 _socketRxMsg = (socket, msg) ->
   {type, data} = msg
+  {mainStory: story} = socket.sbConfig
   switch type
     when 'LOGIN_REQUEST'
-      {authenticate, story} = socket.sbConfig
+      {authenticate} = socket.sbConfig
       {login} = credentials = data
       Promise.resolve (socket.sbAuthenticated) \
         or (not authenticate?) or authenticate(credentials)
@@ -68,21 +69,19 @@ _socketRxMsg = (socket, msg) ->
           story.warn LOG_SRC, "User '#{login}' authentication failed"
           _socketTxMsg socket, {type: 'LOGIN_FAILED'}
     when 'BUFFERED_RECORDS_REQUEST'
-      _socketTxMsg socket, {type: 'BUFFERED_RECORDS_RESPONSE', data: _longTermBuf}
+      if not socket.sbAuthenticated
+        _socketTxMsg socket, {type: 'BUFFERED_RECORDS_RESPONSE', error: 'AUTH_REQUIRED'}
+        return
+      {hub} = socket.sbConfig
+      _socketTxMsg socket, {type: 'BUFFERED_RECORDS_RESPONSE', data: hub.getBufferedRecords()}
     else
       story.warn LOG_SRC, "Unknown message type '#{type}'"
   return
 
 _socketTxMsg = (socket, msg) -> socket.emit 'MSG', msg
 
-_longTermBuf = []
 _broadcastBuf = []
-_enqueueRecord = (record, config) ->
-  _longTermBuf.push record
-  maxLen = config.longTermBufferLength
-  if _longTermBuf.length > maxLen
-    _longTermBuf.splice 0, (_longTermBuf.length - maxLen)
-  _broadcastBuf.push record
+_enqueueRecord = (record, config) -> _broadcastBuf.push record
 
 _socketBroadcast = ->
   ## console.log "#{new Date().toISOString()} Flushing #{_broadcastBuf.length} records..."
@@ -107,8 +106,8 @@ _process = (config) ->
 #-------------------------------------------------
 # ## API
 #-------------------------------------------------
-create = (story, baseConfig = {}) ->
-  config = timm.addDefaults baseConfig, DEFAULT_CONFIG, {story}
+create = (baseConfig) ->
+  config = timm.addDefaults baseConfig, DEFAULT_CONFIG
   listener =
     type: 'WS_SERVER'
     init: -> _socketInit config

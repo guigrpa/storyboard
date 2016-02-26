@@ -12,9 +12,9 @@ chalk = require 'chalk'
 chalk.enabled = true
 
 mainStory = require './stories'
+
 hub = require './hub'
 hub.init {mainStory}
-
 hub.addListener require './listeners/console'
 if k.IS_BROWSER
   hub.addListener require './listeners/wsClient'

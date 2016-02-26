@@ -81,7 +81,7 @@ _process = (record, config) ->
 #-------------------------------------------------
 # ## API
 #-------------------------------------------------
-create = (story, baseConfig = {}) ->
+create = (baseConfig) ->
   config = timm.addDefaults baseConfig, DEFAULT_CONFIG
   listener =
     type: 'CONSOLE'

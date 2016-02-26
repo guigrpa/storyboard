@@ -51,7 +51,7 @@ _extensionDoTxMsg = (msg) -> window.postMessage msg, '*'
 #-------------------------------------------------
 _socket = null
 _socketInit = (config) ->
-  {story} = config
+  {mainStory: story} = config
   story.info "Connecting to WebSocket server..."
   if not _socket
     _socket = socketio.connect()
@@ -77,8 +77,8 @@ _socketTxMsg = (msg) ->
 #-------------------------------------------------
 # ## API
 #-------------------------------------------------
-create = (story, baseConfig = {}) ->
-  config = timm.addDefaults baseConfig, DEFAULT_CONFIG, {story}
+create = (baseConfig) ->
+  config = timm.addDefaults baseConfig, DEFAULT_CONFIG
   listener =
     type: 'WS_CLIENT'
     init: -> 
