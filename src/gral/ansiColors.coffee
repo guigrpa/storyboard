@@ -9,6 +9,7 @@ MAP_ADD_STYLE =
   35: 'color: magenta'
   36: 'color: cyan'
   37: 'color: lightgrey'
+  90: 'color: grey'
   40: 'color: white;background-color: black'
   41: 'color: white;background-color: red'
   42: 'color: white;background-color: green'
@@ -33,6 +34,7 @@ MAP_ADD_STYLE_REACT =
   35: {color: 'magenta'}
   36: {color: 'cyan'}
   37: {color: 'lightgrey'}
+  90: {color: 'grey'}
   40: {color: 'white', backgroundColor: 'black'}
   41: {color: 'white', backgroundColor: 'red'}
   42: {color: 'white', backgroundColor: 'green'}
