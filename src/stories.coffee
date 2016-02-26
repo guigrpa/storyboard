@@ -7,75 +7,88 @@ DEFAULT_SRC = 'main'
 DEFAULT_CHILD_TITLE = ''
 
 #-----------------------------------------------
-# ### Stories
+# ### Helpers
 #-----------------------------------------------
 _storyId = 0
 _getStoryId = -> if k.IS_BROWSER then "c#{_storyId++}" else "s#{_storyId++}"
 _logId = 0
 _getLogId = -> if k.IS_BROWSER then "c#{_logId++}" else "s#{_logId++}"
 
-_createStory = (parents, src, title) ->
-  story = {
-    id: _getStoryId(),
-    parents, src, title,
-    fRoot: not parents.length,
-    fServer: not k.IS_BROWSER,
-    t: new Date().toISOString(),
-    fOpen: true,
-    status: undefined,
-  }
-  story.logStory = (action) ->
-    _emit
-      t: story.t
-      parents: story.parents
-      id: story.id,
-      fStory: true
-      src: story.src
-      msg: story.title
-      action: action
-  story.logStory 'CREATED'
+#-----------------------------------------------
+# ## Story
+#-----------------------------------------------
+Story = (parents, src, title) ->
+  @id = _getStoryId()
+  @parents = parents
+  @src = src
+  @title = title
+  @fRoot = not parents.length
+  @fServer = not k.IS_BROWSER
+  @t = new Date().toISOString()
+  @fOpen = true
+  @status = undefined
+  @logStory 'CREATED'
 
-  story.addParent = (id) -> story.parents.push id
-  story.close = -> 
-    story.fOpen = false
-    story.logStory 'CLOSED'
-  story.changeTitle = (title) ->
-    story.title = title
-    story.logStory 'TITLE_CHANGED'
-  story.changeStatus = (status) ->
-    story.status = status
-    story.logStory 'STATUS_CHANGED'
-  story.child = (options = {}) -> 
-    {src = DEFAULT_SRC, title = DEFAULT_CHILD_TITLE, extraParents} = options
-    parents = [story.id]
-    if extraParents?
-      parents = parents.concat extraParents
-    return _createStory parents, src, title
+#-----------------------------------------------
+# ### Story lifecycle
+#-----------------------------------------------
+Story::close = -> 
+  @fOpen = false
+  @logStory 'CLOSED'
+Story::changeTitle = (title) ->
+  @title = title
+  @logStory 'TITLE_CHANGED'
+Story::changeStatus = (status) ->
+  @status = status
+  @logStory 'STATUS_CHANGED'
 
-  _.each k.LEVEL_NUM_TO_STR, (levelStr, levelNum) ->
-    return if levelStr is 'STORY'
-    story[levelStr.toLowerCase()] = (src, msg, obj) -> 
-      _emit { 
-        parents: [story.id],
-        id: _getLogId(),
-        level: levelNum,
-        src, msg, obj
-      }
+Story::addParent = (id) -> @parents.push id
+Story::child = (options = {}) -> 
+  {src = DEFAULT_SRC, title = DEFAULT_CHILD_TITLE, extraParents} = options
+  parents = [@id]
+  if extraParents?
+    parents = parents.concat extraParents
+  return new Story parents, src, title
 
-  story.tree = (src, node, options, prefix) -> 
-    #- `tree obj`
-    if _.isObject src
-      prefix = options
-      options = node
-      node = src
-      src = DEFAULT_SRC
-    options ?= {}
-    prefix ?= ''
-    level = (options.level ? 'INFO').toLowerCase()
-    options.log = (msg) -> story[level] src, msg
-    return _tree node, options, prefix, []
+#-----------------------------------------------
+# ### Logs
+#-----------------------------------------------
+_.each k.LEVEL_NUM_TO_STR, (levelStr, levelNum) ->
+  return if levelStr is 'STORY'
+  Story::[levelStr.toLowerCase()] = (src, msg, obj) -> 
+    _emit { 
+      parents: [@id],
+      id: _getLogId(),
+      level: levelNum,
+      src, msg, obj
+    }
 
-  story
+Story::tree = (src, node, options, prefix) -> 
+  #- `tree obj`
+  if _.isObject src
+    prefix = options
+    options = node
+    node = src
+    src = DEFAULT_SRC
+  options ?= {}
+  prefix ?= ''
+  level = (options.level ? 'INFO').toLowerCase()
+  story = @
+  options.log = (msg) -> story[level] src, msg
+  return _tree node, options, prefix, []
+
+#-----------------------------------------------
+# ### Story helpers
+#-----------------------------------------------
+Story::logStory = (action) ->
+  _emit
+    t: @t
+    parents: @parents
+    id: @id
+    fStory: true
+    src: @src
+    msg: @title
+    action: action
 
 _tree = (node, options, prefix, stack) ->
   options.ignoreKeys ?= []
@@ -154,5 +167,5 @@ _emit = (record) ->
 # ### API
 #-----------------------------------------------
 title = (if k.IS_BROWSER then 'BROWSER' else 'SERVER') + ' ROOT STORY'
-mainStory = _createStory [], 'storyboard', title
+mainStory = new Story [], 'storyboard', title
 module.exports = mainStory
