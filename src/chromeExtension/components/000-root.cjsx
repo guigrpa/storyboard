@@ -86,7 +86,7 @@ Root = React.createClass
     @props.msgSend {src: 'DT', type, data}
 
   _rxMsg: (msg) ->
-    {src, type, data} = msg
+    {src, type, result, data} = msg
     console.log "[DT] RX #{src}/#{type}", data
     switch type
       when 'CONNECT_REQUEST', 'CONNECT_RESPONSE'
@@ -97,9 +97,11 @@ Root = React.createClass
           @_handleSubmitLogin @_lastCredentials
         else
           @setState {fLoginRequired: true, loginStatus: 'LOGGED_OUT'}
-      when 'LOGIN_SUCCEEDED' then @setState {loginStatus: 'LOGGED_IN'}
-      when 'RECORDS', 'BUFFERED_RECORDS_RESPONSE' 
-        @_rxRecords data
+      when 'LOGIN_RESPONSE' 
+        if result is 'SUCCESS' then @setState {loginStatus: 'LOGGED_IN'}
+      when 'BUFFERED_RECORDS_RESPONSE' 
+        if result is 'SUCCESS' then @_rxRecords data
+      when 'RECORDS' then @_rxRecords data
     return
 
   _rxRecords: (records) ->

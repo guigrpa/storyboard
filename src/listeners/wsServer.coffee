@@ -60,20 +60,26 @@ _socketRxMsg = (socket, msg) ->
       Promise.resolve (socket.sbAuthenticated) \
         or (not authenticate?) or authenticate(credentials)
       .then (fAuthValid) ->
+        rsp = {type: 'LOGIN_RESPONSE'}
         if fAuthValid
-          _socketTxMsg socket, {type: 'LOGIN_SUCCEEDED'}
+          rsp.result = 'SUCCESS'
           story.info LOG_SRC, "User '#{login}' authenticated successfully"
           socket.sbAuthenticated = true
           socket.join 'AUTHENTICATED'
         else
+          rsp.result = 'ERROR'
           story.warn LOG_SRC, "User '#{login}' authentication failed"
-          _socketTxMsg socket, {type: 'LOGIN_FAILED'}
+        _socketTxMsg socket, rsp
     when 'BUFFERED_RECORDS_REQUEST'
+      rsp = {type: 'BUFFERED_RECORDS_RESPONSE'}
       if not socket.sbAuthenticated
-        _socketTxMsg socket, {type: 'BUFFERED_RECORDS_RESPONSE', error: 'AUTH_REQUIRED'}
-        return
-      {hub} = socket.sbConfig
-      _socketTxMsg socket, {type: 'BUFFERED_RECORDS_RESPONSE', data: hub.getBufferedRecords()}
+        rsp.result = 'ERROR'
+        rsp.error = 'AUTH_REQUIRED'
+      else
+        {hub} = socket.sbConfig
+        rsp.result = 'SUCCESS'
+        rsp.data = hub.getBufferedRecords()
+      _socketTxMsg socket, rsp
     else
       story.warn LOG_SRC, "Unknown message type '#{type}'"
   return

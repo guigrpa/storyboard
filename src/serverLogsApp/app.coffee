@@ -11,9 +11,9 @@ if true
   # Emulate the content script for page -> devtools messages
   window.addEventListener 'message', (event) ->
     return if event.source isnt window
-    {data: {src, type, data}} = event
-    return if src isnt 'PAGE'
-    devToolsApp.processMsg event.data
+    msg = event.data
+    return if msg.src isnt 'PAGE'
+    devToolsApp.processMsg msg
 
   # Emulate the content script for devtools -> page messages
   devToolsApp.init
