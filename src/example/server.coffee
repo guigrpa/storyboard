@@ -19,8 +19,10 @@ app.post '/items', (req, res, next) ->
   {storyId} = req.body
   if storyId? then extraParents = [storyId]
   story = mainStory.child {src: 'server', title: "HTTP request #{chalk.green req.url}", extraParents}
-  res.json db.getItems {story}
-  story.close()
+  db.getItems {story}
+  .then (result) -> 
+    res.json result
+    story.close()
 httpServer = http.createServer app
 httpServer.listen PORT
 mainStory.info 'server', "Listening on port #{chalk.cyan PORT}..."

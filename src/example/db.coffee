@@ -1,5 +1,6 @@
 # This module simulates database access
 {mainStory} = require '../storyboard'  # you'd write: `'storyboard'`
+Promise = require 'bluebird'
 chalk = require 'chalk'
 
 LOG_MODULE = 'db'
@@ -13,8 +14,10 @@ init = ->
 getItems = (options = {}) -> 
   {story = mainStory} = options
   story.debug LOG_MODULE, "Retrieving items..."
-  story.debug LOG_MODULE, "Items found: #{chalk.cyan _items.length}"
-  _items
+  Promise.delay 2500
+  .then -> 
+    story.debug LOG_MODULE, "Items found: #{chalk.cyan _items.length}"
+    return _items
 
 module.exports = {
   init,
