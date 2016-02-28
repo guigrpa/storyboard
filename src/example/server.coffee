@@ -53,4 +53,4 @@ db.init()
 
 setInterval -> 
   mainStory.debug 'server', "t: #{chalk.blue new Date().toISOString()}"
-, 10000
+, 60000
