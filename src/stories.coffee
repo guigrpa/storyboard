@@ -2,6 +2,7 @@ chalk = require 'chalk'
 _ = require './vendor/lodash'
 hub = require './hub'
 k = require './constants'
+uuid = require 'node-uuid'
 
 DEFAULT_SRC = 'main'
 DEFAULT_CHILD_TITLE = ''
@@ -10,7 +11,7 @@ DEFAULT_CHILD_TITLE = ''
 # ### Helpers
 #-----------------------------------------------
 _storyId = 0
-_getStoryId = -> if k.IS_BROWSER then "cs#{_storyId++}" else "ss#{_storyId++}"
+_getStoryId = -> (if k.IS_BROWSER then "cs/" else "ss/") + uuid.v4()
 _recordId = 0
 _getRecordId = -> if k.IS_BROWSER then "c#{_recordId++}" else "s#{_recordId++}"
 
@@ -97,7 +98,7 @@ _tree = (node, options, prefix, stack) ->
   for key, val of node
     continue if key in options.ignoreKeys
     if _.isObject(val) and _.includes(stack, val)  # Avoid circular dependencies
-      _treeLine prefix, key, chalk.gray('[CIRCULAR]'), options
+      _treeLine prefix, key, chalk.green('[CIRCULAR]'), options
     else if _.isArray(val) and val.length is 0
       _treeLine prefix, key, '[]', options
     else if _.isArray(val) and val.length and _.isString(val[0])

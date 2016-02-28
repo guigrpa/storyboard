@@ -3,7 +3,7 @@
     - [x] Page -> CS -> BG -> DT
     - [x] Survive page reloads
     - [x] Page <- CS <- BG <- DT
-    - [ ] Sort records chronologically (and calibrate clock difference server-client)
     - [x] Dedupe logs
     - [ ] Dedupe stories
+    - [ ] Sort records chronologically (and calibrate clock difference server-client)
     - [ ] Check perf and optimise if needed

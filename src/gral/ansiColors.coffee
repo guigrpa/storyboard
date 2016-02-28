@@ -7,7 +7,7 @@ MAP_ADD_STYLE =
   34: 'color: blue'
   94: 'color: blue'
   35: 'color: magenta'
-  36: 'color: cyan'
+  36: 'color: darkturquoise'
   37: 'color: lightgrey'
   90: 'color: grey'
   40: 'color: white;background-color: black'
@@ -16,7 +16,7 @@ MAP_ADD_STYLE =
   43: 'color: white;background-color: orange'
   44: 'color: white;background-color: blue'
   45: 'color: white;background-color: magenta'
-  46: 'color: white;background-color: cyan'
+  46: 'color: white;background-color: darkturquoise'
   47: 'color: white;background-color: lightgrey'
   1: 'font-weight: bold'
   2: 'opacity: 0.8'
@@ -32,7 +32,7 @@ MAP_ADD_STYLE_REACT =
   34: {color: 'blue'}
   94: {color: 'blue'}
   35: {color: 'magenta'}
-  36: {color: 'cyan'}
+  36: {color: 'darkturquoise'}
   37: {color: 'lightgrey'}
   90: {color: 'grey'}
   40: {color: 'white', backgroundColor: 'black'}
@@ -41,7 +41,7 @@ MAP_ADD_STYLE_REACT =
   43: {color: 'white', backgroundColor: 'orange'}
   44: {color: 'white', backgroundColor: 'blue'}
   45: {color: 'white', backgroundColor: 'magenta'}
-  46: {color: 'white', backgroundColor: 'cyan'}
+  46: {color: 'white', backgroundColor: 'darkturquoise'}
   47: {color: 'white', backgroundColor: 'lightgrey'}
   1: {fontWeight: 'bold'}
   2: {opacity: 0.8}
