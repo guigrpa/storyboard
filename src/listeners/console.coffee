@@ -58,12 +58,13 @@ _getTimeStr = (record, config) ->
 # ## Main processing function
 #-------------------------------------------------
 _process = (record, config) ->
-  {src, parents, level, msg, fStory, action, id} = record
+  {src, storyId, parents, level, msg, fStory, action, id} = record
   {timeStr, extraTimeStr} = _getTimeStr record, config
+  parents = if fStory then parents else [storyId]
   parentsStr = _.padEnd parents.join(', '), 8
   srcStr = _getSrcColor(src) _.padStart(src, config.moduleNameLength)
   levelStr = if fStory then '-----' else LEVEL_NUM_TO_COLORED_STR[level]
-  storyId = if fStory then "#{id} - " else ''
+  storyId = if fStory then "#{storyId} - " else ''
   actionStr = if action then " [#{action}]" else ''
   finalMsg = "#{parentsStr} #{timeStr} #{srcStr} #{levelStr} #{storyId}#{msg}#{actionStr}"
   if fStory then finalMsg = chalk.bold finalMsg

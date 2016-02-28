@@ -10,19 +10,19 @@ DEFAULT_CHILD_TITLE = ''
 # ### Helpers
 #-----------------------------------------------
 _storyId = 0
-_getStoryId = -> if k.IS_BROWSER then "c#{_storyId++}" else "s#{_storyId++}"
-_logId = 0
-_getLogId = -> if k.IS_BROWSER then "c#{_logId++}" else "s#{_logId++}"
+_getStoryId = -> if k.IS_BROWSER then "cs#{_storyId++}" else "ss#{_storyId++}"
+_recordId = 0
+_getRecordId = -> if k.IS_BROWSER then "c#{_recordId++}" else "s#{_recordId++}"
 
 #-----------------------------------------------
 # ## Story
 #-----------------------------------------------
 Story = (parents, src, title) ->
-  @id = _getStoryId()
+  @fRoot = not parents.length
+  @id = if @fRoot then '*' else _getStoryId()
   @parents = parents
   @src = src
   @title = title
-  @fRoot = not parents.length
   @fServer = not k.IS_BROWSER
   @t = new Date().toISOString()
   @fOpen = true
@@ -55,10 +55,9 @@ Story::child = (options = {}) ->
 #-----------------------------------------------
 _.each k.LEVEL_NUM_TO_STR, (levelStr, levelNum) ->
   return if levelStr is 'STORY'
-  Story::[levelStr.toLowerCase()] = (src, msg, obj) -> 
-    _emit { 
-      parents: [@id],
-      id: _getLogId(),
+  Story::[levelStr.toLowerCase()] = (src, msg, obj) ->
+    _emit {
+      storyId: @id,
       level: levelNum,
       src, msg, obj
     }
@@ -83,8 +82,8 @@ Story::tree = (src, node, options, prefix) ->
 Story::logStory = (action) ->
   _emit
     t: @t
+    storyId: @id
     parents: @parents
-    id: @id
     fStory: true
     src: @src
     msg: @title
@@ -140,16 +139,20 @@ _treeLine = (prefix, key, strVal, options) ->
 
 # Records can be logs or stories:
 # * `fStory: boolean`
+# * `fServer: boolean`
+# * `storyId: string`
 # * `action: string` (only for stories)
-# * `id: string` (a story id or log id, depending on the case)
-# * `parents: Array`
+# * `parents: Array` (only for stories)
+# * `id: string` (a unique record id)
 # * `t: string` (if not in the record, added here) (for stories, creation time)
-# * `level: number`
+# * `level: number` (only for logs)
 # * `src: string?`
 # * `msg: string`
 # * `obj: object?
 _emit = (record) ->
+  record.id = _getRecordId()
   record.t ?= new Date().toISOString()
+  record.fServer = not k.IS_BROWSER
   #- `log.info msg`
   if not record.msg?
     record.msg = record.src

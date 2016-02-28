@@ -1,11 +1,15 @@
 _                 = require '../../vendor/lodash'
+timm              = require 'timm'
 React             = require 'react'
+moment            = require 'moment'
 Login             = require './010-login'
 Story             = require './020-story'
 LargeMessage      = require './900-largeMessage'
 ansiColors        = require '../../gral/ansiColors'
 
 require './app.sass'
+
+_storyId = 0
 
 Root = React.createClass
   displayName: 'Root'
@@ -44,7 +48,9 @@ Root = React.createClass
       />
       {@_renderDownloadBuffered()}
       <div>Records:</div>
-      <Story records={@_rootStory}/>
+      <ul>
+        <Story story={@_rootStory}/>
+      </ul>
     </div>
 
   _renderConnecting: ->
@@ -58,6 +64,7 @@ Root = React.createClass
     <div>If this seems to be taking a long time, please verify your URL</div>
 
   _renderDownloadBuffered: ->
+    return if @state.fLoginRequired and @state.loginStatus isnt 'LOGGED_IN'
     <button onClick={@_handleDownloadBuffered}>
       Download buffered logs
     </button>
@@ -72,7 +79,7 @@ Root = React.createClass
     switch type
       when 'CONNECT_REQUEST', 'CONNECT_RESPONSE'
         @setState {fEstablishedE2E: true}
-        @_rootStory = []
+        @_initStories()
         if type is 'CONNECT_REQUEST' then @_txMsg 'CONNECT_RESPONSE'
       when 'LOGIN_REQUIRED'
         if @_lastCredentials
@@ -86,6 +93,7 @@ Root = React.createClass
       when 'RECORDS' then @_rxRecords data
     return
 
+  #-----------------------------------------------------
   _handleSubmitLogin: (credentials) ->
     @_lastCredentials = credentials
     @_txMsg 'LOGIN_REQUEST', credentials
@@ -97,13 +105,89 @@ Root = React.createClass
   # ### Record management
   #-----------------------------------------------------
   _initStories: -> 
-    @_openStories = []
-    @_rootStory = []
+    @_rootStory = 
+      fWrapper: true
+      records: []
+    @_openStories = {}
+    @_clientMainStoryPath = @_addMainStory {msg: 'Client main story', fServer: false}
+    @_serverMainStoryPath = @_addMainStory {msg: 'Server main story', fServer: true}
+    return
+
+  _addMainStory: (story) ->
+    story.fStory = true
+    story.action = 'CREATED'
+    story.id = story.storyId = "main_#{_storyId++}"
+    story.src = 'main'
+    return @_addStory [], story
 
   _rxRecords: (records) ->
-    @_rootStory = @_rootStory.concat records
-    @forceUpdate()
+    prevRootStory = @_rootStory
+    for record in records
+      if record.fStory then @_rxStory record else @_rxLog record
+    #newRecords = timm.addLast @_rootStory.records, records
+    #@_rootStory = timm.set @_rootStory, 'records', newRecords
+    if @_rootStory isnt prevRootStory
+      @forceUpdate()
+    return
 
+  _rxStory: (record) ->
+    {storyId} = record
+    return if storyId is '*'
+    path = @_openStories[storyId]
+    if path?
+      @_updateStory path, record
+    else
+      {parents, fServer} = record
+      for parent in parents
+        if (not path?) or (parent[0] is 'c')
+          candidate = @_openStories[parent]
+          if candidate? then path = candidate
+      path ?= @_getMainStoryPath fServer
+      @_addStory path, record
+    return
+
+  _rxLog: (record) ->
+    {storyId, fServer} = record
+    if storyId is '*'
+      path = @_getMainStoryPath fServer
+    else
+      path = @_openStories[storyId] ? @_getMainStoryPath fServer
+    @_addLog path, record
+    return
+
+  _getMainStoryPath: (fServer) ->
+    return (if fServer then @_serverMainStoryPath else @_clientMainStoryPath)
+
+  # Mutates `record`
+  _addStory: (parentStoryPath, record) ->
+    story = record
+    story.t = if story.t? then moment(story.t) else moment()
+    story.records = []
+    story.fOpen ?= true
+    story.status ?= undefined
+    story.title = story.msg
+    parentRecordsPath = parentStoryPath.concat 'records'
+    nextRecords = null
+    @_rootStory = timm.updateIn @_rootStory, parentRecordsPath, (prevRecords) ->
+      nextRecords = timm.addLast prevRecords, story
+      nextRecords
+    newStoryPath = parentRecordsPath.concat String(nextRecords.length - 1)
+    @_openStories[story.storyId] = newStoryPath
+    newStoryPath
+
+  _updateStory: (path, record) ->
+    {fOpen, msg: title, status, action} = record
+    prevStory = timm.getIn @_rootStory, path
+    newStory = timm.merge prevStory, {fOpen, title, status, action}
+    @_rootStory = timm.setIn @_rootStory, path, newStory
+    if not newStory.fOpen then delete @_openStories[path]
+    return
+
+  _addLog: (path, record) ->
+    recordsPath = path.concat 'records'
+    @_rootStory = timm.updateIn @_rootStory, recordsPath, (prevRecords) ->
+      return timm.addLast prevRecords, record
+    return
 
 #-----------------------------------------------------
 _style = 

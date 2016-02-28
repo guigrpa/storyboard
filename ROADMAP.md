@@ -3,5 +3,6 @@
     - [x] Page -> CS -> BG -> DT
     - [x] Survive page reloads
     - [x] Page <- CS <- BG <- DT
-    - [ ] Dedupe records
-    - [ ] Sort records chronologically
+    - [ ] Sort records chronologically (and calibrate clock difference server-client)
+    - [ ] Dedupe records (needed?)
+    - [ ] Check perf and optimise if needed

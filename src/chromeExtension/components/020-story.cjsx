@@ -1,7 +1,6 @@
-_                 = require '../../vendor/lodash'
 React             = require 'react'
 PureRenderMixin   = require 'react-addons-pure-render-mixin'
-ansiColors        = require '../../gral/ansiColors'
+ColoredText       = require './030-coloredText'
 
 Story = React.createClass
   displayName: 'Story'
@@ -9,40 +8,32 @@ Story = React.createClass
 
   #-----------------------------------------------------
   propTypes:
-    records:                React.PropTypes.array.isRequired
+    story:                  React.PropTypes.object.isRequired
   getInitialState: ->
     fHierarchical:          true
 
   #-----------------------------------------------------
   render: -> 
+    {fWrapper, title, records} = @props.story
+    if fWrapper then return @_renderRecords records
+    <li>
+      <ColoredText text={title}/>
+      {@_renderRecords records}
+    </li>
+
+  _renderRecords: (records) ->
     <ul>
-      {@props.records.map @_renderRecord}
+      {records.map @_renderRecord}
     </ul>
 
   _renderRecord: (record, idx) ->
-    {msg, fStory, action} = record
-    if fStory and action?
-      msg += " [#{action}]"
-    segments = ansiColors.getStructured msg
-    <li key={idx} style={_style.record}>
-      {@_renderMsgSegments segments}
+    {id, msg} = record
+    if record.fStory then return <Story key={id} story={record}/>
+    <li key={id}>
+      <ColoredText text={msg}/>
     </li>
 
-  _renderMsgSegments: (segments) ->
-    return null if not segments
-    return null if not segments.length
-    return segments.map (segment) =>
-      if _.isString segment
-        return segment
-      <span style={segment.style}>
-        {@_renderMsgSegments segment.children}
-      </span>
-
-
 #-----------------------------------------------------
-_style =
-  record:
-    fontFamily: 'monospace'
-    whiteSpace: 'pre'
+_style = {}
 
 module.exports = Story
