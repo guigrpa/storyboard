@@ -10,7 +10,7 @@ window.addEventListener 'message', (event) ->
   # discard messages with wrong `src`
   {data: {src, type, data}} = event
   return if src isnt 'PAGE'
-  console.log "[CS] RX #{src}/#{type}", data
+  ## console.log "[CS] RX #{src}/#{type}", data
 
   # A `CONNECT_REQUEST` message causes a bidirectional connection to be established 
   # with the background page and is then relayed

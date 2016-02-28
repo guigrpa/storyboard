@@ -89,7 +89,7 @@ Root = React.createClass
       when 'LOGIN_RESPONSE' 
         if result is 'SUCCESS' then @setState {loginStatus: 'LOGGED_IN'}
       when 'BUFFERED_RECORDS_RESPONSE' 
-        if result is 'SUCCESS' then @_rxRecords data
+        if result is 'SUCCESS' then @_rxRecords data, {fDedupe: true}
       when 'RECORDS' then @_rxRecords data
     return
 
@@ -120,16 +120,18 @@ Root = React.createClass
     story.src = 'main'
     return @_addStory [], story
 
-  _rxRecords: (records) ->
+  _rxRecords: (records, options) ->
     prevRootStory = @_rootStory
     for record in records
-      if record.fStory then @_rxStory record else @_rxLog record
-    #newRecords = timm.addLast @_rootStory.records, records
-    #@_rootStory = timm.set @_rootStory, 'records', newRecords
+      if record.fStory 
+        @_rxStory record, options 
+      else 
+        @_rxLog record, options
     if @_rootStory isnt prevRootStory
       @forceUpdate()
     return
 
+  ## TODO: dedupe stories
   _rxStory: (record) ->
     {storyId} = record
     return if storyId is '*'
@@ -146,13 +148,13 @@ Root = React.createClass
       @_addStory path, record
     return
 
-  _rxLog: (record) ->
+  _rxLog: (record, options) ->
     {storyId, fServer} = record
     if storyId is '*'
       path = @_getMainStoryPath fServer
     else
       path = @_openStories[storyId] ? @_getMainStoryPath fServer
-    @_addLog path, record
+    @_addLog path, record, options
     return
 
   _getMainStoryPath: (fServer) ->
@@ -183,9 +185,11 @@ Root = React.createClass
     if not newStory.fOpen then delete @_openStories[path]
     return
 
-  _addLog: (path, record) ->
+  _addLog: (path, record, options = {}) ->
     recordsPath = path.concat 'records'
     @_rootStory = timm.updateIn @_rootStory, recordsPath, (prevRecords) ->
+      if options.fDedupe
+        return prevRecords if _.find prevRecords, (o) -> o.id is record.id
       return timm.addLast prevRecords, record
     return
 

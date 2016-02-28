@@ -4,5 +4,6 @@
     - [x] Survive page reloads
     - [x] Page <- CS <- BG <- DT
     - [ ] Sort records chronologically (and calibrate clock difference server-client)
-    - [ ] Dedupe records (needed?)
+    - [x] Dedupe logs
+    - [ ] Dedupe stories
     - [ ] Check perf and optimise if needed

@@ -1,7 +1,7 @@
 {
   "name": "storyboard",
   "version": "0.0.1",
-  "description": "End-to-end, hierarchical, real-time, colorful stories",
+  "description": "End-to-end, hierarchical, real-time, colorful logs & stories",
   "main": "index.js",
   "scripts": {
     "compile": "rm -rf dist && coffee -o dist -c src",
