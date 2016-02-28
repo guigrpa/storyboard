@@ -14,8 +14,10 @@ Story = React.createClass
 
   #-----------------------------------------------------
   render: -> 
-    {fWrapper, title, records} = @props.story
+    {fWrapper, title, fServer, fOpen, records} = @props.story
     if fWrapper then return @_renderRecords records
+    title += if fServer then ' (server)' else ' (client)'
+    if not fOpen then title += ' - CLOSED'
     <li>
       <ColoredText text={title}/>
       {@_renderRecords records}
@@ -27,8 +29,9 @@ Story = React.createClass
     </ul>
 
   _renderRecord: (record, idx) ->
-    {id, msg} = record
+    {id, msg, fServer} = record
     if record.fStory then return <Story key={id} story={record}/>
+    msg += if fServer then ' (server)' else ' (client)'
     <li key={id}>
       <ColoredText text={msg}/>
     </li>
