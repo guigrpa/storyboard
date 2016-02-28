@@ -52,10 +52,10 @@ _extensionDoTxMsg = (msg) -> window.postMessage msg, '*'
 _socket = null
 _socketInit = (config) ->
   {mainStory: story} = config
-  story.info "Connecting to WebSocket server..."
+  story.info 'storyboard', "Connecting to WebSocket server..."
   if not _socket
     _socket = socketio.connect()
-    _socket.on 'connect', -> story.info "WebSocket connected"
+    _socket.on 'connect', -> story.info 'storyboard', "WebSocket connected"
     _socket.on 'MSG', _socketRxMsg
   _socket.sbConfig = config
 
