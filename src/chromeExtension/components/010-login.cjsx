@@ -59,6 +59,7 @@ Login = React.createClass
 _style = 
   outer:
     padding: 10
+    marginBottom: 10
     backgroundColor: 'lavender'
     borderRadius: 5
   field:

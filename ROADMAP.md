@@ -4,6 +4,9 @@
     - [x] Survive page reloads
     - [x] Page <- CS <- BG <- DT
     - [x] Dedupe logs
+    - [ ] Compress/expand
+    - [ ] Flat/hierarchical
+    - [ ] Add time
     - [ ] Handle scrolling somehow
     - [ ] Forget logs and (closed) stories...
     - [ ] Check perf and optimise if needed

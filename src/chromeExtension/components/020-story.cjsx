@@ -22,26 +22,25 @@ Story = React.createClass
     if @props.story.fWrapper then return @_renderRecords()
     if @props.level is 1 then return @_renderRootStory()
     return @_renderNormalStory()
-    {story, level} = @props
-    {title, fOpen, records} = story
-    if not fOpen then title += ' - CLOSED'
 
   _renderRootStory: ->
     {level, story} = @props
-    <div style={timm.merge _style.rootStory.main, _style.storyOuter(level, story)}>
-      <div style={_style.rootStory.title}>{story.title.toUpperCase()}</div>
+    <div style={_style.outer level, story}>
+      <div style={_style.rootStoryTitle}>{story.title.toUpperCase()}</div>
       {@_renderRecords()}
     </div>
 
   _renderNormalStory: ->
     {level, story} = @props
     {title, fOpen} = story
-    if not fOpen then lock = <Icon icon="lock"/>
-    <div style={_style.storyOuter(level, story)}>
-      <div style={_style.indent(level - 1)}>
+    if fOpen then icon = <Icon icon="circle-o-notch"/>
+    <div style={_style.outer(level, story)}>
+      <div style={_style.title level}>
+        {@_getTimeStr story}
+        {' '}
         <ColoredText text={title}/>
         {' '}
-        {lock}
+        {icon}
       </div>
       {@_renderRecords()}
     </div>
@@ -55,24 +54,41 @@ Story = React.createClass
   _renderRecord: (record, idx) ->
     {id, storyId, msg, fServer} = record
     if record.fStory then return <Story key={id} story={record} level={@props.level + 1}/>
-    msg += if fServer then ' (server)' else ' (client)'
-    <div key={id} style={_style.indent @props.level}>
+    <div key={id} style={_style.log @props.level}>
+      {@_getTimeStr record}
+      {' '}
       <ColoredText text={msg}/>
     </div>
 
+  _getTimeStr: (record) ->
+    {fStory, t} = record
+    fRoot = (fStory and @props.level <= 2) or (@props.level <= 1)
+    if fRoot 
+      tStr = t.format('YYYY-MM-DD HH:mm:ss.SSS')
+    else
+      tStr = '           ' + t.format('HH:mm:ss.SSS')
+    tStr
+
 #-----------------------------------------------------
 _style = 
-  storyOuter: (level, story) ->
+  outer: (level, story) ->
     bgColor = 'aliceblue'
     if story.fServer then bgColor = tinycolor(bgColor).darken(5).toHexString()
     backgroundColor: bgColor # if story.fServer then '#f5f5f5' else '#e8e8e8'
-  rootStory:
-    main:
-      marginBottom: 5
-    title: 
-      fontWeight: 900
-      textAlign: 'center'
-  indent: (level) ->
+    marginBottom: if level <= 1 then 10
+    padding: if level <= 1 then 2
+  rootStoryTitle:
+    fontWeight: 900
+    textAlign: 'center'
+    letterSpacing: "3px"
+  title: (level) ->
+    fontWeight: 900
+    paddingLeft: 20 * (level - 2)
+    fontFamily: 'monospace'
+    whiteSpace: 'pre'
+  log: (level) ->
     paddingLeft: 20 * (level - 1)
+    fontFamily: 'monospace'
+    whiteSpace: 'pre'
 
 module.exports = Story

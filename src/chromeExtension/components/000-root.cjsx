@@ -117,13 +117,14 @@ Root = React.createClass
       records: []
     @_openStories = {}
     @_closedStories = {}
-    @_clientMainStoryPath = @_addMainStory {title: 'Client main story', fServer: false}
-    @_serverMainStoryPath = @_addMainStory {title: 'Server main story', fServer: true}
+    @_clientMainStoryPath = @_addMainStory {title: 'Client', fServer: false}
+    @_serverMainStoryPath = @_addMainStory {title: 'Server', fServer: true}
     return
 
   _addMainStory: (story) ->
     story.fStory = true
     story.action = 'CREATED'
+    story.t = moment()
     story.id = story.storyId = "main_#{_storyId++}"
     story.src = 'main'
     return @_addStory [], story
@@ -180,7 +181,7 @@ Root = React.createClass
   # Mutates `record`
   _addStory: (parentStoryPath, record) ->
     story = record
-    story.t = if story.t? then moment(story.t) else moment()
+    story.t = moment story.t
     story.records = []
     story.fOpen ?= true
     story.status ?= undefined
@@ -208,6 +209,7 @@ Root = React.createClass
     @_rootStory = timm.updateIn @_rootStory, recordsPath, (prevRecords) ->
       if options.fDedupe
         return prevRecords if _.find prevRecords, (o) -> o.id is record.id
+      record.t = moment(record.t)
       return timm.addLast prevRecords, record
     return
 

@@ -14,7 +14,7 @@ ColoredText = React.createClass
   #-----------------------------------------------------
   render: -> 
     segments = ansiColors.getStructured @props.text
-    <span style={_style}>{@_renderMsgSegments segments}</span>
+    <span>{@_renderMsgSegments segments}</span>
 
   # Recursive
   _renderMsgSegments: (segments) ->
@@ -26,11 +26,5 @@ ColoredText = React.createClass
       <span key={idx} style={segment.style}>
         {@_renderMsgSegments segment.children}
       </span>
-
-
-#-----------------------------------------------------
-_style =
-  fontFamily: 'monospace'
-  whiteSpace: 'pre'
 
 module.exports = ColoredText
