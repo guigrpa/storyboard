@@ -8,8 +8,10 @@ LargeMessage      = require './900-largeMessage'
 ansiColors        = require '../../gral/ansiColors'
 
 require './app.sass'
+require 'font-awesome/css/font-awesome.css'
 
 _storyId = 0
+_seqCalibration = 0
 
 Root = React.createClass
   displayName: 'Root'
@@ -25,11 +27,18 @@ Root = React.createClass
     fLoginRequired:         false
 
   #-----------------------------------------------------
-  componentWillMount: -> @_initStories()
-
   componentDidMount: -> 
+    @_initStories()
     @props.msgSubscribe @_rxMsg
-    @_txMsg 'CONNECT_REQUEST'
+
+    # Allow a few ms for the other party to establish connection;
+    # if not, try ourselves
+    setTimeout => 
+      return if @state.fEstablishedE2E
+      @_txMsg 'CONNECT_REQUEST'
+    , 30
+
+    # Provide user feedback
     setTimeout =>
       if not @state.fEstablishedE2E
         @setState {fWarnEstablishmentE2E: true}
@@ -46,11 +55,7 @@ Root = React.createClass
         loginStatus={@state.loginStatus}
         submit={@_handleSubmitLogin}
       />
-      {@_renderDownloadBuffered()}
-      <div>Records:</div>
-      <ul>
-        <Story story={@_rootStory}/>
-      </ul>
+      <Story story={@_rootStory} level={0}/>
     </div>
 
   _renderConnecting: ->
@@ -63,11 +68,11 @@ Root = React.createClass
     return if not @state.fWarnEstablishmentE2E 
     <div>If this seems to be taking a long time, please verify your URL</div>
 
-  _renderDownloadBuffered: ->
-    return if @state.fLoginRequired and @state.loginStatus isnt 'LOGGED_IN'
-    <button onClick={@_handleDownloadBuffered}>
-      Download buffered logs
-    </button>
+  ## _renderDownloadBuffered: ->
+  ##   return if @state.fLoginRequired and @state.loginStatus isnt 'LOGGED_IN'
+  ##   <button onClick={@_handleDownloadBuffered}>
+  ##     Download buffered logs
+  ##   </button>
 
   #-----------------------------------------------------
   _txMsg: (type, data) ->
@@ -78,18 +83,20 @@ Root = React.createClass
     console.log "[DT] RX #{src}/#{type}", data
     switch type
       when 'CONNECT_REQUEST', 'CONNECT_RESPONSE'
+        if type is 'CONNECT_REQUEST' then @_txMsg 'CONNECT_RESPONSE'
         @setState {fEstablishedE2E: true}
         @_initStories()
-        if type is 'CONNECT_REQUEST' then @_txMsg 'CONNECT_RESPONSE'
       when 'LOGIN_REQUIRED'
         if @_lastCredentials
           @_handleSubmitLogin @_lastCredentials
         else
           @setState {fLoginRequired: true, loginStatus: 'LOGGED_OUT'}
       when 'LOGIN_RESPONSE' 
-        if result is 'SUCCESS' then @setState {loginStatus: 'LOGGED_IN'}
-      when 'BUFFERED_RECORDS_RESPONSE' 
-        if result is 'SUCCESS' then @_rxRecords data, {fDedupe: true}
+        if result is 'SUCCESS' 
+          @setState {loginStatus: 'LOGGED_IN'}
+          if data? then @_rxRecords data, {fIncludeClosedStories: true}
+      ## when 'BUFFERED_RECORDS_RESPONSE' 
+      ##   if result is 'SUCCESS' then @_rxRecords data, {fDedupe: true}
       when 'RECORDS' then @_rxRecords data
     return
 
@@ -99,7 +106,7 @@ Root = React.createClass
     @_txMsg 'LOGIN_REQUEST', credentials
     @setState {loginStatus: 'LOGGING_IN'}
 
-  _handleDownloadBuffered: -> @_txMsg 'BUFFERED_RECORDS_REQUEST'
+  ## _handleDownloadBuffered: -> @_txMsg 'BUFFERED_RECORDS_REQUEST'
 
   #-----------------------------------------------------
   # ### Record management
@@ -109,8 +116,9 @@ Root = React.createClass
       fWrapper: true
       records: []
     @_openStories = {}
-    @_clientMainStoryPath = @_addMainStory {msg: 'Client main story', fServer: false}
-    @_serverMainStoryPath = @_addMainStory {msg: 'Server main story', fServer: true}
+    @_closedStories = {}
+    @_clientMainStoryPath = @_addMainStory {title: 'Client main story', fServer: false}
+    @_serverMainStoryPath = @_addMainStory {title: 'Server main story', fServer: true}
     return
 
   _addMainStory: (story) ->
@@ -122,20 +130,27 @@ Root = React.createClass
 
   _rxRecords: (records, options) ->
     prevRootStory = @_rootStory
+    fAnyServerLog = false
     for record in records
+      fAnyServerLog or= record.fServer
+      console.groupCollapsed "#{if record.fStory then record.title else record.msg}#{if record.action then ' - '+record.action else ''}"
+      console.log "Story ID: #{record.storyId}"
+      console.log "Current open stories:   #{Object.keys(@_openStories).map((o) -> o.slice 0, 7).join()}"
+      console.log "Current closed stories: #{Object.keys(@_closedStories).map((o) -> o.slice 0, 7).join()}"
       if record.fStory 
         @_rxStory record, options 
       else 
         @_rxLog record, options
-    if @_rootStory isnt prevRootStory
-      @forceUpdate()
+      console.groupEnd()
+    if @_rootStory isnt prevRootStory then @forceUpdate()
     return
 
-  ## TODO: dedupe stories
-  _rxStory: (record) ->
+  _rxStory: (record, options = {}) ->
     {storyId} = record
     return if storyId is '*'
     path = @_openStories[storyId]
+    if (not path?) and options.fIncludeClosedStories
+      path = @_closedStories[storyId]
     if path?
       @_updateStory path, record
     else
@@ -143,6 +158,8 @@ Root = React.createClass
       for parent in parents
         if (not path?) or (parent[0] is 'c')
           candidate = @_openStories[parent]
+          if (not candidate?) and options.fIncludeClosedStories
+            candidate = @_closedStories[parent]
           if candidate? then path = candidate
       path ?= @_getMainStoryPath fServer
       @_addStory path, record
@@ -167,7 +184,6 @@ Root = React.createClass
     story.records = []
     story.fOpen ?= true
     story.status ?= undefined
-    story.title = story.msg
     parentRecordsPath = parentStoryPath.concat 'records'
     nextRecords = null
     @_rootStory = timm.updateIn @_rootStory, parentRecordsPath, (prevRecords) ->
@@ -178,11 +194,13 @@ Root = React.createClass
     newStoryPath
 
   _updateStory: (path, record) ->
-    {fOpen, msg: title, status, action} = record
+    {fOpen, title, status, action, storyId} = record
     prevStory = timm.getIn @_rootStory, path
     newStory = timm.merge prevStory, {fOpen, title, status, action}
     @_rootStory = timm.setIn @_rootStory, path, newStory
-    if not newStory.fOpen then delete @_openStories[path]
+    if not newStory.fOpen 
+      delete @_openStories[storyId]
+      @_closedStories[storyId] = path
     return
 
   _addLog: (path, record, options = {}) ->

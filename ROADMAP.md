@@ -4,9 +4,6 @@
     - [x] Survive page reloads
     - [x] Page <- CS <- BG <- DT
     - [x] Dedupe logs
-    - [ ] Dedupe stories
-    - [ ] Sort records chronologically (and calibrate clock difference server-client)
     - [ ] Handle scrolling somehow
-    - [ ] Timm story updates: merge with fOpen: undefined --> undefined????
     - [ ] Forget logs and (closed) stories...
     - [ ] Check perf and optimise if needed

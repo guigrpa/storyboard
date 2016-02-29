@@ -11,6 +11,9 @@ module.exports =
       test: /\.coffee$/
       loader: 'coffee'
     ,
+      test: /\.(otf|eot|svg|ttf|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/
+      loader: 'file'
+    ,
       test: /\.css$/
       loader: 'style!css'
     ,

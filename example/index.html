@@ -16,6 +16,14 @@
       .instructions li { 
         margin-bottom: 10px; 
       }
+      #devToolsWrapper {
+        display: none;
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        left: 200px;
+        right: 0px;
+      }
     </style>
   </head>
   <body>
@@ -33,6 +41,9 @@
         (<b>More Tools > Developer Tools</b>)</li>
         <li>Navigate to the <b>Storyboard</b> tab</li>
       </ol>
+    </div>
+    <div id="devToolsWrapper">
+      <div id="devToolsApp"></div>
     </div>
     <script src='/app.js'></script>
   </body>

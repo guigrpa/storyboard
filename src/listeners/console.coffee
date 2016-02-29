@@ -1,7 +1,7 @@
 _ = require '../vendor/lodash'
 timm = require 'timm'
 chalk = require 'chalk'
-k = require '../constants'
+k = require '../gral/constants'
 
 DEFAULT_CONFIG =
   moduleNameLength: 20
@@ -58,16 +58,24 @@ _getTimeStr = (record, config) ->
 # ## Main processing function
 #-------------------------------------------------
 _process = (record, config) ->
-  {src, storyId, parents, level, msg, fStory, action, id} = record
+  {src, storyId, level, fStory} = record
   {timeStr, extraTimeStr} = _getTimeStr record, config
-  ## parents = if fStory then parents else [storyId]
-  ## parentsStr = _.padEnd parents.join(', '), 8
+  if fStory
+    parents = record.parents
+    msgStr = record.title
+    levelStr = '-----'
+    storyIdStr = "#{storyId.slice 0, 8} - "
+    actionStr = " [#{record.action}]"
+  else
+    parents = [storyId]
+    msgStr = record.msg
+    levelStr = LEVEL_NUM_TO_COLORED_STR[level]
+    storyIdStr = ''
+    actionStr = ''
+  parentsStr = _.padEnd parents.map((o) -> o.slice 0, 7).join(', '), 10
   srcStr = _getSrcColor(src) _.padStart(src, config.moduleNameLength)
-  levelStr = if fStory then '-----' else LEVEL_NUM_TO_COLORED_STR[level]
-  ## storyId = if fStory then "#{storyId} - " else ''
-  actionStr = if action then " [#{action}]" else ''
-  ## finalMsg = "#{parentsStr} #{timeStr} #{srcStr} #{levelStr} #{storyId}#{msg}#{actionStr}"
-  finalMsg = "#{timeStr} #{srcStr} #{levelStr} #{msg}#{actionStr}"
+  finalMsg = "#{parentsStr} #{timeStr} #{srcStr} #{levelStr} #{storyIdStr}#{msgStr}#{actionStr}"
+  ## finalMsg = "#{timeStr} #{srcStr} #{levelStr} #{storyIdStr}#{msgStr}#{actionStr}"
   if fStory then finalMsg = chalk.bold finalMsg
   if k.IS_BROWSER and (process.env.NODE_ENV isnt 'production')
     args = _argsForBrowserConsole finalMsg

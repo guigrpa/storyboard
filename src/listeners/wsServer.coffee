@@ -52,7 +52,7 @@ _socketOnConnection = (socket, config) ->
 
 _socketRxMsg = (socket, msg) ->
   {type, data} = msg
-  {mainStory: story} = socket.sbConfig
+  {mainStory: story, hub} = socket.sbConfig
   switch type
     when 'LOGIN_REQUEST'
       {authenticate} = socket.sbConfig
@@ -66,19 +66,19 @@ _socketRxMsg = (socket, msg) ->
           story.info LOG_SRC, "User '#{login}' authenticated successfully"
           socket.sbAuthenticated = true
           socket.join 'AUTHENTICATED'
+          rsp.data = hub.getBufferedRecords()
         else
           rsp.result = 'ERROR'
           story.warn LOG_SRC, "User '#{login}' authentication failed"
         _socketTxMsg socket, rsp
     when 'BUFFERED_RECORDS_REQUEST'
       rsp = {type: 'BUFFERED_RECORDS_RESPONSE'}
-      if not socket.sbAuthenticated
-        rsp.result = 'ERROR'
-        rsp.error = 'AUTH_REQUIRED'
-      else
-        {hub} = socket.sbConfig
+      if socket.sbAuthenticated
         rsp.result = 'SUCCESS'
         rsp.data = hub.getBufferedRecords()
+      else
+        rsp.result = 'ERROR'
+        rsp.error = 'AUTH_REQUIRED'
       _socketTxMsg socket, rsp
     else
       story.warn LOG_SRC, "Unknown message type '#{type}'"

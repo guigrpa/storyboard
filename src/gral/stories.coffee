@@ -1,8 +1,8 @@
+uuid = require 'node-uuid'
 chalk = require 'chalk'
-_ = require './vendor/lodash'
+_ = require '../vendor/lodash'
 hub = require './hub'
 k = require './constants'
-uuid = require 'node-uuid'
 
 DEFAULT_SRC = 'main'
 DEFAULT_CHILD_TITLE = ''
@@ -19,9 +19,9 @@ _getRecordId = -> if k.IS_BROWSER then "c#{_recordId++}" else "s#{_recordId++}"
 # ## Story
 #-----------------------------------------------
 Story = (parents, src, title) ->
-  @fRoot = not parents.length
-  @id = if @fRoot then '*' else _getStoryId()
   @parents = parents
+  @fRoot = not parents.length
+  @storyId = if @fRoot then '*' else _getStoryId()
   @src = src
   @title = title
   @fServer = not k.IS_BROWSER
@@ -46,9 +46,8 @@ Story::changeStatus = (status) ->
 Story::addParent = (id) -> @parents.push id
 Story::child = (options = {}) -> 
   {src = DEFAULT_SRC, title = DEFAULT_CHILD_TITLE, extraParents} = options
-  parents = [@id]
-  if extraParents?
-    parents = parents.concat extraParents
+  parents = [@storyId]
+  if extraParents? then parents = parents.concat extraParents
   return new Story parents, src, title
 
 #-----------------------------------------------
@@ -57,8 +56,17 @@ Story::child = (options = {}) ->
 _.each k.LEVEL_NUM_TO_STR, (levelStr, levelNum) ->
   return if levelStr is 'STORY'
   Story::[levelStr.toLowerCase()] = (src, msg, obj) ->
+    #- `log.info msg`
+    if arguments.length <= 1
+      msg = arguments[0] ? ''
+      src = DEFAULT_SRC
+    #- `log.info msg, obj`
+    else if _.isObject arguments[1]
+      obj = arguments[1]
+      msg = arguments[0] ? ''
+      src = DEFAULT_SRC
     _emit {
-      storyId: @id,
+      storyId: @storyId,
       level: levelNum,
       src, msg, obj
     }
@@ -82,12 +90,16 @@ Story::tree = (src, node, options, prefix) ->
 #-----------------------------------------------
 Story::logStory = (action) ->
   _emit
-    t: @t
-    storyId: @id
     parents: @parents
-    fStory: true
+    fRoot: @fRoot
+    storyId: @storyId
     src: @src
-    msg: @title
+    title: @title
+    fServer: @fServer
+    t: @t
+    fOpen: @fOpen
+    status: @status
+    fStory: true
     action: action
 
 _tree = (node, options, prefix, stack) ->
@@ -139,31 +151,22 @@ _treeLine = (prefix, key, strVal, options) ->
   options.log "#{prefix}#{key}: #{chalk.bold strVal}"
 
 # Records can be logs or stories:
+# * `id: string` (a unique record id)
 # * `fStory: boolean`
 # * `fServer: boolean`
 # * `storyId: string`
-# * `action: string` (only for stories)
-# * `parents: Array` (only for stories)
-# * `id: string` (a unique record id)
 # * `t: string` (if not in the record, added here) (for stories, creation time)
 # * `level: number` (only for logs)
 # * `src: string?`
 # * `msg: string`
-# * `obj: object?
+# * `action: string` (only for stories)
+# * `parents: Array` (only for stories)
+# * `title: string?` (only for stories)
+# * `obj: object?`
 _emit = (record) ->
   record.id = _getRecordId()
   record.t ?= new Date().toISOString()
   record.fServer = not k.IS_BROWSER
-  #- `log.info msg`
-  if not record.msg?
-    record.msg = record.src
-    record.src = DEFAULT_SRC
-  #- `log.info msg, obj`
-  else if not _.isString record.msg
-    record.obj = record.msg
-    record.msg = record.src
-    record.src = DEFAULT_SRC
-
   hub.emit record
   return
 

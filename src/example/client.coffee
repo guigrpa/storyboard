@@ -6,14 +6,15 @@ nodeItems  = document.getElementById 'items'
 nodeButton.addEventListener 'click', -> _refresh 'Click on Refresh'
 
 _refresh = (storyTitle) ->
-  story = mainStory.child {title: storyTitle}
+  seq = Math.floor(Math.random() * 100)
+  story = mainStory.child {title: storyTitle + " (seq=#{seq})"}
   story.info 'serverInterface', "Fetching items from server..."
-  fetch '/items',
+  fetch "/items?seq=#{seq}",
     method: 'post'
     headers:
       'Accept': 'application/json'
       'Content-Type': 'application/json'
-    body: JSON.stringify {storyId: story.id}
+    body: JSON.stringify {storyId: story.storyId}
   .then (response) -> response.json()
   .then (items) ->
     if Array.isArray items
@@ -22,3 +23,21 @@ _refresh = (storyTitle) ->
     story.close()
 
 _refresh 'Initial fetch'
+
+
+
+# Enable the following block to mount the developer tools 
+# in the main page (for faster development)
+if true
+  devToolsApp = require '../chromeExtension/devToolsApp'
+
+  # Emulate the content script for page -> devtools messages
+  window.addEventListener 'message', (event) ->
+    return if event.source isnt window
+    msg = event.data
+    return if msg.src isnt 'PAGE'
+    devToolsApp.processMsg msg
+
+  # Emulate the content script for devtools -> page messages
+  devToolsApp.init
+    sendMsg: (msg) -> window.postMessage msg, '*'
