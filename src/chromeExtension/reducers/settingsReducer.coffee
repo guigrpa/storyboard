@@ -2,6 +2,8 @@ timm = require 'timm'
 
 INITIAL_STATE =
   fRelativeTime: false
+  fShowSrc: true
+  fShowLevel: true
 
 reducer = (state = INITIAL_STATE, action) ->
   switch action.type

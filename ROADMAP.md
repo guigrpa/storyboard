@@ -10,3 +10,4 @@
     - [ ] Check perf and optimise if needed
     - [ ] Remove language-related moment modules
     - [ ] Show attached object (somehow)
+    - [ ] Show src, level

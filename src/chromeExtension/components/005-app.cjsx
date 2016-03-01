@@ -36,8 +36,8 @@ App = React.createClass
 
   #-----------------------------------------------------
   componentDidMount: -> 
-    @_setUpFullRefreshes()
     @_initStories()
+    @_timerFullRefresh = setInterval @_fullRefresh, 30e3
     @props.msgSubscribe @_rxMsg
 
     # Allow a few ms for the other party to establish connection;
@@ -53,18 +53,13 @@ App = React.createClass
         @setState {fWarnEstablishmentE2E: true}
     , 2000
 
-  componentDidUpdate: (prevProps) -> @_setUpFullRefreshes prevProps
+  componentWillUnmount: ->
+    clearInterval @_timerFullRefresh
+    @_timerFullRefresh = null
 
-  _setUpFullRefreshes: (prevProps) ->
-    return if @props.settings is prevProps?.settings
-    {fRelativeTime} = @props.settings
-    if fRelativeTime
-      @_timerFullRefresh ?= setInterval @_fullRefresh, 30e3
-    else
-      if @_timerFullRefresh? then clearInterval @_timerFullRefresh
-      @_timerFullRefresh = null
-
-  _fullRefresh: -> @setState {seqFullRefresh: @state.seqFullRefresh + 1}
+  _fullRefresh: -> 
+    return if not @props.settings.fRelativeTime
+    @setState {seqFullRefresh: @state.seqFullRefresh + 1}
 
   #-----------------------------------------------------
   render: -> 

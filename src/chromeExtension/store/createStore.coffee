@@ -8,7 +8,9 @@ DevTools              = require '../components/990-reduxDevTools'
 ## DONT_LOG_ACTIONS = ['EFFECT_RESOLVED', 'EFFECT_TRIGGERED']
 
 createStore = ->
-  allSagas = _.flatten []
+  allSagas = _.flatten [
+    require('../actions/serverSaga').sagaWatchMsgReceived
+  ]
   saga = Saga allSagas...
   addMiddlewares = Redux.applyMiddleware thunk, saga
   storeEnhancers = addMiddlewares

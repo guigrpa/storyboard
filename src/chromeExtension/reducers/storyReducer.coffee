@@ -46,6 +46,7 @@ reducer = (state = INITIAL_STATE, action) ->
 
     when 'RECORDS_RECEIVED'
       {records, fPastRecords} = action
+      return state
 
     else return state
 
