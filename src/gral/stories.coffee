@@ -25,7 +25,7 @@ Story = (parents, src, title) ->
   @src = src
   @title = title
   @fServer = not k.IS_BROWSER
-  @t = new Date().toISOString()
+  @t = new Date().getTime()
   @fOpen = true
   @status = undefined
   @logStory 'CREATED'
@@ -165,7 +165,7 @@ _treeLine = (prefix, key, strVal, options) ->
 # * `obj: object?`
 _emit = (record) ->
   record.id = _getRecordId()
-  record.t ?= new Date().toISOString()
+  record.t ?= new Date().getTime()
   record.fServer = not k.IS_BROWSER
   hub.emit record
   return

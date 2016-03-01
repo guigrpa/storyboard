@@ -2,6 +2,7 @@ React             = require 'react'
 PureRenderMixin   = require 'react-addons-pure-render-mixin'
 timm              = require 'timm'
 tinycolor         = require 'tinycolor2'
+moment            = require 'moment'
 ColoredText       = require './030-coloredText'
 Icon              = require './910-icon'
 
@@ -14,8 +15,8 @@ Story = React.createClass
     story:                  React.PropTypes.object.isRequired
     level:                  React.PropTypes.number.isRequired
     fRelativeTime:          React.PropTypes.bool.isRequired
-    onClickTime:            React.PropTypes.func.isRequired
-    seqForceUpdate:         React.PropTypes.number.isRequired
+    onToggleRelativeTime:   React.PropTypes.func.isRequired
+    seqFullRefresh:         React.PropTypes.number.isRequired
   getInitialState: ->
     fHierarchical:          true
     fExpanded:              @props.story.fOpen
@@ -69,8 +70,8 @@ Story = React.createClass
         story={record} 
         level={@props.level + 1}
         fRelativeTime={@props.fRelativeTime}
-        onClickTime={@props.onClickTime}
-        seqForceUpdate={@props.seqForceUpdate}
+        onToggleRelativeTime={@props.onToggleRelativeTime}
+        seqFullRefresh={@props.seqFullRefresh}
       />
     level = @props.level
     <div key={id} 
@@ -87,13 +88,13 @@ Story = React.createClass
     {fStory, t} = record
     {level, fRelativeTime} = @props
     if fRelativeTime
-      relTime = t.fromNow()
+      relTime = moment(t).fromNow()
     if (fStory and level <= 2) or (level <= 1)
-      absTime = t.format('YYYY-MM-DD HH:mm:ss.SSS')
+      absTime = moment(t).format('YYYY-MM-DD HH:mm:ss.SSS')
     else
-      absTime = '           ' + t.format('HH:mm:ss.SSS')
+      absTime = '           ' + moment(t).format('HH:mm:ss.SSS')
     <span 
-      onClick={@props.onClickTime}
+      onClick={@props.onToggleRelativeTime}
       style={_style.time fRelativeTime}
       title={if fRelativeTime then absTime}
     >
@@ -136,7 +137,7 @@ _style =
     whiteSpace: 'pre'
   time: (fRelativeTime) ->
     display: 'inline-block'
-    width: 155
+    width: 170
     cursor: 'pointer'
     fontStyle: if fRelativeTime then 'italic'
   indent: (level) ->

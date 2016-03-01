@@ -19,8 +19,13 @@ init = (deps) ->
   if not(_sendMsg?)
     throw new Error "MISSING_DEPS"
   console.log "[DT] Starting up..."
+
+  createStore = require './store/createStore'
+  store = createStore()
+
   RootComponent = require './components/000-root'
   RootElement = React.createElement RootComponent,
+    store: store
     msgSend: _sendMsg
     msgSubscribe: _subscribe
   ReactDOM.render RootElement, document.getElementById 'devToolsApp'

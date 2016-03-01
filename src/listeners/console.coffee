@@ -42,9 +42,7 @@ _prevTime = 0
 _getTimeStr = (record, config) ->
   timeStr = ''
   extraTimeStr = undefined
-  if not config.relativeTime
-    timeStr = record.t
-  else
+  if config.relativeTime
     newTime = new Date(record.t)
     dif = if _prevTime then (newTime - _prevTime)/1000 else 0
     _prevTime = newTime
@@ -52,6 +50,8 @@ _getTimeStr = (record, config) ->
     timeStr = _.padStart timeStr, 7
     if dif > 1 then extraTimeStr = '    ...'
     if dif < 0.010 then timeStr = '       '
+  else
+    timeStr = new Date(record.t).toISOString()
   return {timeStr, extraTimeStr}
 
 #-------------------------------------------------
