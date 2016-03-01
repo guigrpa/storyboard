@@ -1,22 +1,33 @@
 React             = require 'react'
-PureRenderMixin   = require 'react-addons-pure-render-mixin'
+ReactRedux        = require 'react-redux'
 timm              = require 'timm'
 tinycolor         = require 'tinycolor2'
 moment            = require 'moment'
 ColoredText       = require './030-coloredText'
 Icon              = require './910-icon'
+actions           = require '../actions/actions'
 
-Story = React.createClass
+mapStateToProps = ({settings: {fRelativeTime}}) -> {fRelativeTime}
+mapDispatchToProps = (dispatch) ->
+  onToggleRelativeTime: -> dispatch actions.toggleRelativeTime()
+  onToggleExpanded: (pathStr) -> dispatch actions.toggleExpanded pathStr
+  onToggleHierarchical: (pathStr) -> dispatch actions.toggleHierarchical pathStr
+
+_Story = React.createClass
   displayName: 'Story'
-  mixins: [PureRenderMixin]
 
   #-----------------------------------------------------
   propTypes:
     story:                  React.PropTypes.object.isRequired
     level:                  React.PropTypes.number.isRequired
+    seqFullRefresh:         React.PropTypes.number.isRequired
+    # From Redux.connect
     fRelativeTime:          React.PropTypes.bool.isRequired
     onToggleRelativeTime:   React.PropTypes.func.isRequired
-    seqFullRefresh:         React.PropTypes.number.isRequired
+    onToggleExpanded:       React.PropTypes.func.isRequired
+    onToggleHierarchical:   React.PropTypes.func.isRequired
+
+  ## DELETE!
   getInitialState: ->
     fHierarchical:          true
     fExpanded:              @props.story.fOpen
@@ -69,8 +80,6 @@ Story = React.createClass
       return <Story key={id} 
         story={record} 
         level={@props.level + 1}
-        fRelativeTime={@props.fRelativeTime}
-        onToggleRelativeTime={@props.onToggleRelativeTime}
         seqFullRefresh={@props.seqFullRefresh}
       />
     level = @props.level
@@ -111,7 +120,7 @@ Story = React.createClass
     </span>
 
   #-----------------------------------------------------
-  _toggleExpanded: -> @setState {fExpanded: not @state.fExpanded}
+  _toggleExpanded: -> @props.onToggleExpanded @props.story.pathStr
 
 #-----------------------------------------------------
 _style = 
@@ -149,4 +158,7 @@ _style =
     paddingLeft: 10
     cursor: 'pointer'
 
+#-----------------------------------------------------
+connect = ReactRedux.connect mapStateToProps, mapDispatchToProps
+Story = connect _Story
 module.exports = Story

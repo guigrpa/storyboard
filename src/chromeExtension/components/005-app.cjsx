@@ -6,7 +6,6 @@ moment            = require 'moment'
 Login             = require './010-login'
 Story             = require './020-story'
 LargeMessage      = require './900-largeMessage'
-actions           = require '../actions/actions'
 ansiColors        = require '../../gral/ansiColors'
 if process.env.NODE_ENV isnt 'production'
   ReduxDevTools   = require '../components/990-reduxDevTools'
@@ -17,8 +16,6 @@ require 'font-awesome/css/font-awesome.css'
 _storyId = 0
 
 mapStateToProps = ({settings, cx, stories: {mainStory}}) -> {settings, cx, mainStory}
-mapDispatchToProps = (dispatch) ->
-  onToggleRelativeTime: -> dispatch actions.toggleRelativeTime()
 
 App = React.createClass
   displayName: 'App'
@@ -30,7 +27,6 @@ App = React.createClass
     # From Redux.connect
     settings:               React.PropTypes.object.isRequired
     mainStory:              React.PropTypes.object.isRequired
-    onToggleRelativeTime:   React.PropTypes.func.isRequired
   getInitialState: ->
     fEstablishedE2E:        false
     fWarnEstablishmentE2E:  false
@@ -91,8 +87,6 @@ App = React.createClass
       <Story 
         story={@_rootStory} 
         level={0} 
-        fRelativeTime={@props.settings.fRelativeTime}
-        onToggleRelativeTime={@props.onToggleRelativeTime}
         seqFullRefresh={@state.seqFullRefresh}
       />
     </div>
@@ -260,5 +254,5 @@ _style =
     padding: 4
 
 #-----------------------------------------------------
-connect = ReactRedux.connect mapStateToProps, mapDispatchToProps
+connect = ReactRedux.connect mapStateToProps
 module.exports = connect App

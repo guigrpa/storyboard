@@ -34,13 +34,18 @@ reducer = (state = INITIAL_STATE, action) ->
 
     when 'TOGGLE_EXPANDED'
       {pathStr} = action
+      return state if not pathStr?
       path = "mainStory/#{pathStr}/fExpanded".split '/'
       return timm.updateIn state, path, (fExpanded) -> not fExpanded
 
     when 'TOGGLE_HIERARCHICAL'
       {pathStr} = action
+      return state if not pathStr?
       path = "mainStory/#{pathStr}/fHierarchical".split '/'
       return timm.updateIn state, path, (fHierarchical) -> not fHierarchical
+
+    when 'RECORDS_RECEIVED'
+      {records, fPastRecords} = action
 
     else return state
 

@@ -1,6 +1,7 @@
 _               = require 'lodash'
 actionGroups = [
   require './settingsActions'
+  require './storyActions'
 ]
 
 actions = {}
