@@ -10,11 +10,18 @@ ColoredText = React.createClass
   #-----------------------------------------------------
   propTypes:
     text:                   React.PropTypes.string.isRequired
+    onClick:                React.PropTypes.func
+    style:                  React.PropTypes.object
 
   #-----------------------------------------------------
   render: -> 
     segments = ansiColors.getStructured @props.text
-    <span>{@_renderMsgSegments segments}</span>
+    <span 
+      onClick={@props.onClick}
+      style={@props.style}
+    >
+      {@_renderMsgSegments segments}
+    </span>
 
   # Recursive
   _renderMsgSegments: (segments) ->

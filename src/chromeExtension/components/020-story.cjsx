@@ -13,6 +13,9 @@ Story = React.createClass
   propTypes:
     story:                  React.PropTypes.object.isRequired
     level:                  React.PropTypes.number.isRequired
+    fRelativeTime:          React.PropTypes.bool.isRequired
+    onClickTime:            React.PropTypes.func.isRequired
+    seqForceUpdate:         React.PropTypes.number.isRequired
   getInitialState: ->
     fHierarchical:          true
     fExpanded:              @props.story.fOpen
@@ -25,49 +28,89 @@ Story = React.createClass
 
   _renderRootStory: ->
     {level, story} = @props
-    <div style={_style.outer level, story}>
-      <div style={_style.rootStoryTitle}>{story.title.toUpperCase()}</div>
+    <div className="rootStory" style={_style.outer level, story}>
+      <div className="rootStoryTitle" style={_style.rootStoryTitle}>
+        {story.title.toUpperCase()}
+      </div>
       {@_renderRecords()}
     </div>
 
   _renderNormalStory: ->
     {level, story} = @props
     {title, fOpen} = story
-    if fOpen then icon = <Icon icon="circle-o-notch"/>
-    <div style={_style.outer(level, story)}>
-      <div style={_style.title level}>
-        {@_getTimeStr story}
-        {' '}
-        <ColoredText text={title}/>
-        {' '}
-        {icon}
+    if fOpen then spinner = <Icon icon="circle-o-notch"/>
+    <div className="story" style={_style.outer(level, story)}>
+      <div 
+        className="storyTitle" 
+        style={_style.titleRow level}
+      >
+        {@_renderTime story}
+        {@_renderIndent level-1}
+        {@_renderCaretOrSpace true}
+        <ColoredText 
+          text={title} 
+          onClick={@_toggleExpanded}
+          style={_style.title}
+        />
+        {spinner}
       </div>
       {@_renderRecords()}
     </div>
 
   _renderRecords: ->
+    return if not @state.fExpanded
     records = @props.story.records
-    <div>
-      {records.map @_renderRecord}
-    </div>
+    <div>{records.map @_renderRecord}</div>
 
   _renderRecord: (record, idx) ->
     {id, storyId, msg, fServer} = record
-    if record.fStory then return <Story key={id} story={record} level={@props.level + 1}/>
-    <div key={id} style={_style.log @props.level}>
-      {@_getTimeStr record}
-      {' '}
+    if record.fStory 
+      return <Story key={id} 
+        story={record} 
+        level={@props.level + 1}
+        fRelativeTime={@props.fRelativeTime}
+        onClickTime={@props.onClickTime}
+        seqForceUpdate={@props.seqForceUpdate}
+      />
+    level = @props.level
+    <div key={id} 
+      className="log"
+      style={_style.log level}
+    >
+      {@_renderTime record}
+      {@_renderIndent level}
+      {@_renderCaretOrSpace false}
       <ColoredText text={msg}/>
     </div>
 
-  _getTimeStr: (record) ->
+  _renderTime: (record) ->
     {fStory, t} = record
-    fRoot = (fStory and @props.level <= 2) or (@props.level <= 1)
-    if fRoot 
-      tStr = t.format('YYYY-MM-DD HH:mm:ss.SSS')
+    {level, fRelativeTime} = @props
+    if fRelativeTime
+      relTime = t.fromNow()
+    if (fStory and level <= 2) or (level <= 1)
+      absTime = t.format('YYYY-MM-DD HH:mm:ss.SSS')
     else
-      tStr = '           ' + t.format('HH:mm:ss.SSS')
-    tStr
+      absTime = '           ' + t.format('HH:mm:ss.SSS')
+    <span 
+      onClick={@props.onClickTime}
+      style={_style.time fRelativeTime}
+      title={if fRelativeTime then absTime}
+    >
+      {if fRelativeTime then relTime else absTime}
+    </span>
+
+  _renderIndent: (level) -> <div style={_style.indent level}/>
+  _renderCaretOrSpace: (fCaret) ->
+    if fCaret
+      iconType = if @state.fExpanded then 'caret-down' else 'caret-right'
+      icon = <Icon icon={iconType} onClick={@_toggleExpanded}/>
+    <span style={_style.caretOrSpace}>
+      {icon}
+    </span>
+
+  #-----------------------------------------------------
+  _toggleExpanded: -> @setState {fExpanded: not @state.fExpanded}
 
 #-----------------------------------------------------
 _style = 
@@ -80,15 +123,29 @@ _style =
   rootStoryTitle:
     fontWeight: 900
     textAlign: 'center'
-    letterSpacing: "3px"
-  title: (level) ->
+    letterSpacing: 3
+    marginBottom: 5
+  titleRow: (level) ->
     fontWeight: 900
-    paddingLeft: 20 * (level - 2)
     fontFamily: 'monospace'
     whiteSpace: 'pre'
+  title:
+    cursor: 'pointer'
   log: (level) ->
-    paddingLeft: 20 * (level - 1)
     fontFamily: 'monospace'
     whiteSpace: 'pre'
+  time: (fRelativeTime) ->
+    display: 'inline-block'
+    width: 155
+    cursor: 'pointer'
+    fontStyle: if fRelativeTime then 'italic'
+  indent: (level) ->
+    display: 'inline-block'
+    width: 20 * (level - 1)
+  caretOrSpace:
+    display: 'inline-block'
+    width: 30
+    paddingLeft: 10
+    cursor: 'pointer'
 
 module.exports = Story

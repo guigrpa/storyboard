@@ -11,7 +11,6 @@ require './app.sass'
 require 'font-awesome/css/font-awesome.css'
 
 _storyId = 0
-_seqCalibration = 0
 
 Root = React.createClass
   displayName: 'Root'
@@ -25,6 +24,8 @@ Root = React.createClass
     fWarnEstablishmentE2E:  false
     loginStatus:            'LOGGED_OUT'
     fLoginRequired:         false
+    fRelativeTime:          false
+    seqForceUpdate:         0
 
   #-----------------------------------------------------
   componentDidMount: -> 
@@ -44,6 +45,8 @@ Root = React.createClass
         @setState {fWarnEstablishmentE2E: true}
     , 2000
 
+
+
   #-----------------------------------------------------
   render: -> <div style={_style.outer}>{@_renderContents()}</div>
 
@@ -55,7 +58,13 @@ Root = React.createClass
         loginStatus={@state.loginStatus}
         submit={@_handleSubmitLogin}
       />
-      <Story story={@_rootStory} level={0}/>
+      <Story 
+        story={@_rootStory} 
+        level={0} 
+        fRelativeTime={@state.fRelativeTime}
+        onClickTime={@_toggleRelativeTime}
+        seqForceUpdate={@state.seqForceUpdate}
+      />
     </div>
 
   _renderConnecting: ->
@@ -108,12 +117,26 @@ Root = React.createClass
 
   ## _handleDownloadBuffered: -> @_txMsg 'BUFFERED_RECORDS_REQUEST'
 
+  _toggleRelativeTime: -> 
+    fRelativeTime = not @state.fRelativeTime
+    @setState {fRelativeTime}
+    if fRelativeTime
+      @_timerForceUpdate ?= setInterval @_forceUpdate, 30e3
+    else
+      if @_timerForceUpdate? then clearInterval @_timerForceUpdate
+      @_timerForceUpdate = null
+
+  _forceUpdate: -> 
+    console.log 'force updating...'
+    @setState {seqForceUpdate: @state.seqForceUpdate + 1}
+
   #-----------------------------------------------------
   # ### Record management
   #-----------------------------------------------------
   _initStories: -> 
     @_rootStory = 
       fWrapper: true
+      fOpen: true
       records: []
     @_openStories = {}
     @_closedStories = {}

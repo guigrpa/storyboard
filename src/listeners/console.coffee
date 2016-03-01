@@ -61,21 +61,21 @@ _process = (record, config) ->
   {src, storyId, level, fStory} = record
   {timeStr, extraTimeStr} = _getTimeStr record, config
   if fStory
-    parents = record.parents
+    ## parents = record.parents
     msgStr = record.title
     levelStr = '-----'
     storyIdStr = "#{storyId.slice 0, 8} - "
     actionStr = " [#{record.action}]"
   else
-    parents = [storyId]
+    ## parents = [storyId]
     msgStr = record.msg
     levelStr = LEVEL_NUM_TO_COLORED_STR[level]
     storyIdStr = ''
     actionStr = ''
-  parentsStr = _.padEnd parents.map((o) -> o.slice 0, 7).join(', '), 10
+  ## parentsStr = _.padEnd parents.map((o) -> o.slice 0, 7).join(', '), 10
   srcStr = _getSrcColor(src) _.padStart(src, config.moduleNameLength)
-  finalMsg = "#{parentsStr} #{timeStr} #{srcStr} #{levelStr} #{storyIdStr}#{msgStr}#{actionStr}"
-  ## finalMsg = "#{timeStr} #{srcStr} #{levelStr} #{storyIdStr}#{msgStr}#{actionStr}"
+  ## finalMsg = "#{parentsStr} #{timeStr} #{srcStr} #{levelStr} #{storyIdStr}#{msgStr}#{actionStr}"
+  finalMsg = "#{timeStr} #{srcStr} #{levelStr} #{storyIdStr}#{msgStr}#{actionStr}"
   if fStory then finalMsg = chalk.bold finalMsg
   if k.IS_BROWSER and (process.env.NODE_ENV isnt 'production')
     args = _argsForBrowserConsole finalMsg

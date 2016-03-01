@@ -1,12 +1,12 @@
-- [ ] consoleListener: implement level threshold
+- [ ] Library:
+    + [ ] Implement level threshold: at which level: emitter? hub? listener? Env-variable-based?
+    + [ ] Console listener: show attached object somehow
 - [ ] Chrome extension
-    - [x] Page -> CS -> BG -> DT
-    - [x] Survive page reloads
-    - [x] Page <- CS <- BG <- DT
-    - [x] Dedupe logs
-    - [ ] Compress/expand
+    - [ ] Add Redux
     - [ ] Flat/hierarchical
-    - [ ] Add time
+    - [ ] Remember collapsed/expand
     - [ ] Handle scrolling somehow
     - [ ] Forget logs and (closed) stories...
     - [ ] Check perf and optimise if needed
+    - [ ] Remove language-related moment modules
+    - [ ] Show attached object (somehow)
