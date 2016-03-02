@@ -27,11 +27,6 @@ _Story = React.createClass
     onToggleExpanded:       React.PropTypes.func.isRequired
     onToggleHierarchical:   React.PropTypes.func.isRequired
 
-  ## DELETE!
-  getInitialState: ->
-    fHierarchical:          true
-    fExpanded:              @props.story.fOpen
-
   #-----------------------------------------------------
   render: -> 
     if @props.story.fWrapper then return @_renderRecords()
@@ -70,7 +65,7 @@ _Story = React.createClass
     </div>
 
   _renderRecords: ->
-    return if not @state.fExpanded
+    return if not @props.story.fExpanded
     records = @props.story.records
     <div>{records.map @_renderRecord}</div>
 
@@ -113,7 +108,7 @@ _Story = React.createClass
   _renderIndent: (level) -> <div style={_style.indent level}/>
   _renderCaretOrSpace: (fCaret) ->
     if fCaret
-      iconType = if @state.fExpanded then 'caret-down' else 'caret-right'
+      iconType = if @props.story.fExpanded then 'caret-down' else 'caret-right'
       icon = <Icon icon={iconType} onClick={@_toggleExpanded}/>
     <span style={_style.caretOrSpace}>
       {icon}

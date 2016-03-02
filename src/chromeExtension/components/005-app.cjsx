@@ -1,64 +1,44 @@
 _                 = require '../../vendor/lodash'
-timm              = require 'timm'
 React             = require 'react'
 ReactRedux        = require 'react-redux'
-moment            = require 'moment'
 Login             = require './010-login'
 Story             = require './020-story'
 LargeMessage      = require './900-largeMessage'
-ansiColors        = require '../../gral/ansiColors'
 if process.env.NODE_ENV isnt 'production'
   ReduxDevTools   = require '../components/990-reduxDevTools'
 
 require './app.sass'
 require 'font-awesome/css/font-awesome.css'
 
-_storyId = 0
-
-mapStateToProps = ({settings, cx, stories: {mainStory}}) -> {settings, cx, mainStory}
+mapStateToProps = (state) -> 
+  fRelativeTime:  state.settings.fRelativeTime
+  cxState:        state.cx.cxState
+  fTakingLong:    state.cx.fTakingLong
+  mainStory:      state.stories.mainStory
 
 App = React.createClass
   displayName: 'App'
 
   #-----------------------------------------------------
   propTypes:
-    msgSubscribe:           React.PropTypes.func.isRequired
-    msgSend:                React.PropTypes.func.isRequired
     # From Redux.connect
-    settings:               React.PropTypes.object.isRequired
+    fRelativeTime:          React.PropTypes.bool.isRequired
+    cxState:                React.PropTypes.string.isRequired
+    fTakingLong:            React.PropTypes.bool.isRequired
     mainStory:              React.PropTypes.object.isRequired
   getInitialState: ->
-    fEstablishedE2E:        false
-    fWarnEstablishmentE2E:  false
-    loginStatus:            'LOGGED_OUT'
-    fLoginRequired:         false
     seqFullRefresh:         0
 
   #-----------------------------------------------------
   componentDidMount: -> 
-    @_initStories()
     @_timerFullRefresh = setInterval @_fullRefresh, 30e3
-    @props.msgSubscribe @_rxMsg
-
-    # Allow a few ms for the other party to establish connection;
-    # if not, try ourselves
-    setTimeout => 
-      return if @state.fEstablishedE2E
-      @_txMsg 'CONNECT_REQUEST'
-    , 30
-
-    # Provide user feedback
-    setTimeout =>
-      if not @state.fEstablishedE2E
-        @setState {fWarnEstablishmentE2E: true}
-    , 2000
 
   componentWillUnmount: ->
     clearInterval @_timerFullRefresh
     @_timerFullRefresh = null
 
   _fullRefresh: -> 
-    return if not @props.settings.fRelativeTime
+    return if not @props.fRelativeTime
     @setState {seqFullRefresh: @state.seqFullRefresh + 1}
 
   #-----------------------------------------------------
@@ -72,73 +52,31 @@ App = React.createClass
     </div>
 
   _renderContents: ->
-    if not @state.fEstablishedE2E then return @_renderConnecting()
+    {cxState, fTakingLong, mainStory} = @props
+    if cxState isnt 'CONNECTED' then return @_renderConnecting fTakingLong
     <div>
-      <Login 
-        fLoginRequired={@state.fLoginRequired}
-        loginStatus={@state.loginStatus}
-        submit={@_handleSubmitLogin}
-      />
+      <Login/>
       <Story 
-        story={@_rootStory} 
+        story={mainStory} 
         level={0} 
         seqFullRefresh={@state.seqFullRefresh}
       />
     </div>
 
-  _renderConnecting: ->
+  _renderConnecting: (fTakingLong) ->
+    extra = if fTakingLong then \
+      <div>If this seems to be taking a long time, please verify your URL</div>
     <LargeMessage>
       Connecting to Storyboard...
-      {@_renderConnecting2()}
+      {extra}
     </LargeMessage>
 
-  _renderConnecting2: ->
-    return if not @state.fWarnEstablishmentE2E 
-    <div>If this seems to be taking a long time, please verify your URL</div>
-
-  ## _renderDownloadBuffered: ->
-  ##   return if @state.fLoginRequired and @state.loginStatus isnt 'LOGGED_IN'
-  ##   <button onClick={@_handleDownloadBuffered}>
-  ##     Download buffered logs
-  ##   </button>
-
-  #-----------------------------------------------------
-  _txMsg: (type, data) ->
-    @props.msgSend {src: 'DT', type, data}
-
+  ###
   _rxMsg: (msg) ->
     {src, type, result, data} = msg
-    console.log "[DT] RX #{src}/#{type}", data
-    switch type
-      when 'CONNECT_REQUEST', 'CONNECT_RESPONSE'
-        if type is 'CONNECT_REQUEST' then @_txMsg 'CONNECT_RESPONSE'
-        @setState {fEstablishedE2E: true}
-        @_initStories()
-      when 'LOGIN_REQUIRED'
-        if @_lastCredentials
-          @_handleSubmitLogin @_lastCredentials
-        else
-          @setState {fLoginRequired: true, loginStatus: 'LOGGED_OUT'}
-      when 'LOGIN_RESPONSE' 
-        if result is 'SUCCESS' 
-          @setState {loginStatus: 'LOGGED_IN'}
-          if data? then @_rxRecords data, {fIncludeClosedStories: true}
-      ## when 'BUFFERED_RECORDS_RESPONSE' 
-      ##   if result is 'SUCCESS' then @_rxRecords data, {fDedupe: true}
-      when 'RECORDS' then @_rxRecords data
+    console.log "[DT005] RX #{src}/#{type}", data
     return
 
-  #-----------------------------------------------------
-  _handleSubmitLogin: (credentials) ->
-    @_lastCredentials = credentials
-    @_txMsg 'LOGIN_REQUEST', credentials
-    @setState {loginStatus: 'LOGGING_IN'}
-
-  ## _handleDownloadBuffered: -> @_txMsg 'BUFFERED_RECORDS_REQUEST'
-
-  #-----------------------------------------------------
-  # ### Record management
-  #-----------------------------------------------------
   _initStories: -> 
     @_rootStory = 
       fWrapper: true
@@ -160,9 +98,7 @@ App = React.createClass
 
   _rxRecords: (records, options) ->
     prevRootStory = @_rootStory
-    fAnyServerLog = false
     for record in records
-      fAnyServerLog or= record.fServer
       console.groupCollapsed "#{if record.fStory then record.title else record.msg}#{if record.action then ' - '+record.action else ''}"
       console.log "Story ID: #{record.storyId}"
       console.log "Current open stories:   #{Object.keys(@_openStories).map((o) -> o.slice 0, 7).join()}"
@@ -240,6 +176,7 @@ App = React.createClass
       record.t = moment(record.t)
       return timm.addLast prevRecords, record
     return
+  ###
 
 #-----------------------------------------------------
 _style = 

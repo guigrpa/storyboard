@@ -1,11 +1,15 @@
 _               = require 'lodash'
-actionGroups = [
-  require './settingsActions'
-  require './storyActions'
-]
+settingsActions = require './settingsActions'
+storyActions    = require './storyActions'
+cxActions       = require './cxActions'
 
-actions = {}
-for actionGroup in actionGroups
-  _.extend actions, (actionGroup.actions ? {})
+init = (deps) ->
+  {sendMsg} = deps
+  if not(sendMsg?)
+    throw new Error "MISSING_DEPS"
+  cxActions.init {sendMsg}
 
-module.exports = actions
+module.exports = _.merge {init}, 
+  settingsActions.actions,
+  storyActions.actions,
+  cxActions.actions

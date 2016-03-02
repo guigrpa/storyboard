@@ -2,9 +2,8 @@
     + [ ] Implement level threshold: at which level: emitter? hub? listener? Env-variable-based?
     + [ ] Console listener: show attached object somehow
 - [ ] Chrome extension
-    - [ ] Add Redux
+    - [ ] Log out
     - [ ] Flat/hierarchical
-    - [ ] Remember collapsed/expand
     - [ ] Handle scrolling somehow
     - [ ] Forget logs and (closed) stories...
     - [ ] Check perf and optimise if needed

@@ -2,18 +2,28 @@ timm = require 'timm'
 
 INITIAL_STATE =
   cxState: 'DISCONNECTED'
-  fShowExtraInstructions: false
+  fTakingLong: false
+  fLoginRequired: false
   loginState: 'LOGGED_OUT'
   login: null
 
 reducer = (state = INITIAL_STATE, action) ->
   switch action.type
 
+    #-------------------------------------------------
+    # ## Connection-related actions
+    #-------------------------------------------------
     when 'CX_SUCCEEDED'
       return timm.set state, 'cxState', 'CONNECTED'
 
-    when 'SHOW_EXTRA_INSTRUCTIONS'
-      return timm.set state, 'fShowExtraInstructions', true
+    when 'CX_TAKING_LONG'
+      return timm.set state, 'fTakingLong', true
+
+    #-------------------------------------------------
+    # ## Login-related actions
+    #-------------------------------------------------
+    when 'LOGIN_REQUIRED'
+      return timm.set state, 'fLoginRequired', true
 
     when 'LOGIN_STARTED'
       return timm.set state, 'loginState', 'LOGGING_IN'

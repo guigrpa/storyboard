@@ -66,7 +66,9 @@ _socketRxMsg = (socket, msg) ->
           story.info LOG_SRC, "User '#{login}' authenticated successfully"
           socket.sbAuthenticated = true
           socket.join 'AUTHENTICATED'
-          rsp.data = hub.getBufferedRecords()
+          rsp.data = 
+            login: login
+            bufferedRecords: hub.getBufferedRecords()
         else
           rsp.result = 'ERROR'
           story.warn LOG_SRC, "User '#{login}' authentication failed"
