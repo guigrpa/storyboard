@@ -67,24 +67,33 @@ reducer = (state = INITIAL_STATE, action) ->
 #-------------------------------------------------
 _rxRecords = (state, action) ->
   {records, fPastRecords} = action
+  newStories = []
   for record in records
-    console.groupCollapsed "#{if record.fStory then record.title else record.msg}#{if record.action then ' - '+record.action else ''}"
-    console.log "Story ID: #{record.storyId}"
-    console.log "Current open stories:   #{Object.keys(state.openStories).map((o) -> o.slice 0, 7).join()}"
-    console.log "Current closed stories: #{Object.keys(state.closedStories).map((o) -> o.slice 0, 7).join()}"
+    ## console.groupCollapsed "#{if record.fStory then record.title else record.msg}#{if record.action then ' - '+record.action else ''}"
+    ## console.log "Story ID: #{record.storyId}"
+    ## console.log "Current open stories:   #{Object.keys(state.openStories).map((o) -> o.slice 0, 7).join()}"
+    ## console.log "Current closed stories: #{Object.keys(state.closedStories).map((o) -> o.slice 0, 7).join()}"
     if record.fStory 
-      state = _rxStory state, record, fPastRecords
+      [state, pathStr] = _rxStory state, record, fPastRecords
+      if pathStr then newStories.push pathStr
     else 
       state = _rxLog state, record
-    console.groupEnd()
+    ## console.groupEnd()
+
+  # Don't expand stories that are already closed upon reception
+  for pathStr in newStories
+    fOpen = timm.getIn state, "mainStory/#{pathStr}/fOpen".split('/')
+    continue if fOpen
+    state = timm.setIn state, "mainStory/#{pathStr}/fExpanded".split('/'), false
   state
 
 _rxStory = (state, record, fPastRecords) ->
   {storyId} = record
+  newStoryPathStr = null
 
   # We ignore root stories, both client- and server-side
   # (we have our own root stories)
-  return state if storyId is '*'
+  return [state, newStoryPathStr] if storyId is '*'
 
   # Check if we already have a story object for this `storyId`
   # and update it with this record. Normally we only
@@ -110,16 +119,16 @@ _rxStory = (state, record, fPastRecords) ->
       if (not pathStr?) and fPastRecords
         pathStr = state.closedStories[parentStoryId]
     pathStr ?= _mainStoryPathStr fServer
-    state = _addStory state, pathStr, record
-  state
+    [state, newStoryPathStr] = _addStory state, pathStr, record
+  return [state, newStoryPathStr]
 
 _updateStory = (state, pathStr, record) ->
   {fOpen, title, status, action, storyId} = record
   path = "mainStory/#{pathStr}".split '/'
   prevStory = timm.getIn state, path
-  newStory = timm.merge prevStory, {fOpen, title, status, action}
-  state = timm.setIn state, path, newStory
-  if not newStory.fOpen 
+  nextStory = timm.merge prevStory, {fOpen, title, status, action}
+  state = timm.setIn state, path, nextStory
+  if not nextStory.fOpen
     state = timm.setIn state, ['openStories',   storyId], undefined
     state = timm.setIn state, ['closedStories', storyId], pathStr
   state
@@ -137,7 +146,7 @@ _addStory = (state, parentStoryPathStr, record) ->
   state = timm.setIn state, path, story
   pathSeg = if story.fOpen then 'openStories' else 'closedStories'
   state = timm.setIn state, [pathSeg, story.storyId], pathStr
-  state
+  return [state, pathStr]
 
 _rxLog = (state, record) ->
   {storyId, fServer} = record

@@ -1,3 +1,7 @@
+_ = require '../vendor/lodash'
+chalk = require 'chalk'
+k = require './constants'
+
 ANSI_REGEX = /(?:(?:\u001b\[)|\u009b)(?:(?:[0-9]{1,3})?(?:(?:;[0-9]{0,3})*)?[A-M|f-m])|\u001b[A-M]/g
 MAP_ADD_STYLE = 
   30: 'color: black'
@@ -50,6 +54,28 @@ MAP_ADD_STYLE_REACT =
   8: {display: 'none'}
   9: {textDecoration: 'line-through'}
 REMOVE_STYLE_LIST = [0, 21, 22, 23, 24, 27, 28, 29, 39, 49]
+
+LEVEL_NUM_TO_COLORED_STR = {}
+_.each k.LEVEL_NUM_TO_STR, (str, num) ->
+  num = Number num
+  col = chalk.grey
+  if num is 30
+    col = if k.IS_BROWSER then chalk.bold else chalk.white
+  else if num is 40 then col = chalk.yellow
+  else if num >= 50 then col = chalk.red
+  LEVEL_NUM_TO_COLORED_STR[num] = col _.padEnd(str, 5)
+
+COLORS = []
+BASE_COLORS = ['cyan', 'yellow', 'red', 'green', 'blue', 'magenta']
+_.each BASE_COLORS, (col) -> COLORS.push chalk[col].bold
+_.each BASE_COLORS, (col) -> COLORS.push chalk[col]
+NUM_COLORS = COLORS.length
+
+_srcColorCache = {}
+_srcCnt = 0
+getSrcChalkColor = (src) ->
+  _srcColorCache[src] ?= COLORS[_srcCnt++ % NUM_COLORS]
+  _srcColorCache[src]
 
 argsForBrowserConsole = (str) ->
   outStr = str.replace ANSI_REGEX, '%c'
@@ -108,4 +134,6 @@ getStructured = (str) ->
 module.exports = {
   argsForBrowserConsole,
   getStructured,
+  getSrcChalkColor,
+  LEVEL_NUM_TO_COLORED_STR,
 }

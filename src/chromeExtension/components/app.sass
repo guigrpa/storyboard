@@ -2,14 +2,33 @@
   -moz-box-sizing: #{$value}
   -webkit-box-sizing: #{$value}
   box-sizing: #{$value}
+
+=animation($value)
+  -webkit-animation: #{$value}
+  -moz-animation: #{$value}
+  -ms-animation: #{$value}
+  -o-animation: #{$value}
+  animation: #{$value}
+
+=keyframes($value)
+  @-webkit-keyframes #{$value}
+  @-moz-keyframes #{$value}
+  @-ms-keyframes #{$value}
+  @-o-keyframes #{$value}
+  @keyframes #{$value}
+
++keyframes('fadein {from {opacity: 0;} to {opacity: 1;}}')
+
 *, 
 *:before, 
 *:after
   +box-sizing(border-box)
+
 body
   padding: 0
   margin: 0
   height: 100%
+
 #devToolsApp
   position: absolute
   top: 0
@@ -18,6 +37,9 @@ body
   right: 0
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif
   font-size: 12px
+
+.fadeIn
+  +animation(fadein 0.2s)
 
 // Fast development
 #devToolsWrapper

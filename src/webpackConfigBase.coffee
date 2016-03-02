@@ -1,7 +1,17 @@
+webpack = require 'webpack'
+
+LANGS = ['en_gb']
+
 module.exports =
   resolve:
     # Add automatically the following extensions to required modules
     extensions: ['', '.coffee', '.cjsx', '.js']
+
+  plugins: [
+    new webpack.ContextReplacementPlugin /moment[\\\/]locale$/, new RegExp ".[\\\/](#{LANGS.join '|'})"
+  ]
+
+  devtool: if process.env.NODE_ENV isnt 'production' then 'eval'
 
   module:
     loaders: [

@@ -42,7 +42,7 @@ module.exports =
   ## set:          require 'lodash/set'
   ## size:         require 'lodash/size'
   ## some:         require 'lodash/some'
-  ## sortBy:       require 'lodash/sortBy'
+  sortBy:       require 'lodash/sortBy'
   throttle:     require 'lodash/throttle'
   ## trim:         require 'lodash/trim'
   ## upperFirst:   require 'lodash/upperFirst'

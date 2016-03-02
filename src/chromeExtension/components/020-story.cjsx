@@ -1,3 +1,4 @@
+_                 = require '../../vendor/lodash'
 React             = require 'react'
 ReactRedux        = require 'react-redux'
 timm              = require 'timm'
@@ -6,11 +7,14 @@ moment            = require 'moment'
 ColoredText       = require './030-coloredText'
 Icon              = require './910-icon'
 actions           = require '../actions/actions'
+k                 = require '../../gral/constants'
+ansiColors        = require '../../gral/ansiColors'
 
-mapStateToProps = ({settings: {fRelativeTime}}) -> {fRelativeTime}
+mapStateToProps = (state) -> 
+  timeType:             state.settings.timeType
 mapDispatchToProps = (dispatch) ->
-  onToggleRelativeTime: -> dispatch actions.toggleRelativeTime()
-  onToggleExpanded: (pathStr) -> dispatch actions.toggleExpanded pathStr
+  onToggleTimeType:     -> dispatch actions.toggleTimeType()
+  onToggleExpanded:     (pathStr) -> dispatch actions.toggleExpanded pathStr
   onToggleHierarchical: (pathStr) -> dispatch actions.toggleHierarchical pathStr
 
 _Story = React.createClass
@@ -21,101 +25,166 @@ _Story = React.createClass
     story:                  React.PropTypes.object.isRequired
     level:                  React.PropTypes.number.isRequired
     seqFullRefresh:         React.PropTypes.number.isRequired
+    fFlatAscendant:         React.PropTypes.bool.isRequired
     # From Redux.connect
-    fRelativeTime:          React.PropTypes.bool.isRequired
-    onToggleRelativeTime:   React.PropTypes.func.isRequired
+    timeType:               React.PropTypes.string.isRequired
+    onToggleTimeType:       React.PropTypes.func.isRequired
     onToggleExpanded:       React.PropTypes.func.isRequired
     onToggleHierarchical:   React.PropTypes.func.isRequired
+  getInitialState: ->
+    fHoveredTitle:          false
 
   #-----------------------------------------------------
   render: -> 
-    if @props.story.fWrapper then return @_renderRecords()
-    if @props.level is 1 then return @_renderRootStory()
-    return @_renderNormalStory()
+    if @props.story.fWrapper then return @renderRecords()
+    if @props.level is 1 then return @renderRootStory()
+    return @renderNormalStory()
 
-  _renderRootStory: ->
+  renderRootStory: ->
     {level, story} = @props
     <div className="rootStory" style={_style.outer level, story}>
-      <div className="rootStoryTitle" style={_style.rootStoryTitle}>
+      <div 
+        className="rootStoryTitle" 
+        style={_style.rootStoryTitle}
+        onClick={@toggleHierarchical}
+      >
         {story.title.toUpperCase()}
       </div>
-      {@_renderRecords()}
+      {@renderRecords()}
     </div>
 
-  _renderNormalStory: ->
+  renderNormalStory: ->
     {level, story} = @props
     {title, fOpen} = story
     if fOpen then spinner = <Icon icon="circle-o-notch"/>
     <div className="story" style={_style.outer(level, story)}>
       <div 
-        className="storyTitle" 
+        className="storyTitle fadeIn" 
         style={_style.titleRow level}
+        onMouseEnter={@onMouseEnterTitle}
+        onMouseLeave={@onMouseLeaveTitle}
       >
-        {@_renderTime story}
-        {@_renderIndent level-1}
-        {@_renderCaretOrSpace true}
+        {@renderTime story}
+        {@renderLevel story}
+        {@renderSrc story}
+        {@renderIndent level-1}
+        {@renderCaretOrSpace story}
         <ColoredText 
           text={title} 
-          onClick={@_toggleExpanded}
+          onClick={@toggleExpanded}
           style={_style.title}
         />
+        {@renderToggleHierarchical story}
         {spinner}
       </div>
-      {@_renderRecords()}
+      {@renderRecords()}
     </div>
 
-  _renderRecords: ->
+  renderRecords: ->
     return if not @props.story.fExpanded
     records = @props.story.records
-    <div>{records.map @_renderRecord}</div>
+    if not @props.story.fHierarchical
+      records = @flatten records
+    <div>{records.map @renderRecord}</div>
 
-  _renderRecord: (record, idx) ->
+  renderRecord: (record, idx) ->
     {id, storyId, msg, fServer} = record
     if record.fStory 
       return <Story key={id} 
         story={record} 
         level={@props.level + 1}
         seqFullRefresh={@props.seqFullRefresh}
+        fFlatAscendant={@props.fFlatAscendant or not @props.story.fHierarchical}
       />
     level = @props.level
     <div key={id} 
-      className="log"
-      style={_style.log level}
+      className="log fadeIn"
+      style={_style.log record}
     >
-      {@_renderTime record}
-      {@_renderIndent level}
-      {@_renderCaretOrSpace false}
+      {@renderTime record}
+      {@renderLevel record}
+      {@renderSrc record}
+      {@renderIndent level}
+      {@renderCaretOrSpace record}
       <ColoredText text={msg}/>
     </div>
 
-  _renderTime: (record) ->
+  renderTime: (record) ->
     {fStory, t} = record
-    {level, fRelativeTime} = @props
-    if fRelativeTime
-      relTime = moment(t).fromNow()
-    if (fStory and level <= 2) or (level <= 1)
-      absTime = moment(t).format('YYYY-MM-DD HH:mm:ss.SSS')
+    {level, timeType} = @props
+    fRelativeTime = false
+    m = moment t
+    localTime = m.format('YYYY-MM-DD HH:mm:ss.SSS')
+    if timeType is 'RELATIVE'
+      shownTime = m.fromNow()
+      fRelativeTime = true
     else
-      absTime = '           ' + moment(t).format('HH:mm:ss.SSS')
+      if timeType is 'UTC' then m.utc()
+      if (fStory and level <= 2) or (level <= 1)
+        shownTime = m.format('YYYY-MM-DD HH:mm:ss.SSS')
+      else
+        shownTime = '           ' + m.format('HH:mm:ss.SSS')
+      if timeType is 'UTC' then shownTime += 'Z'
+    shownTime = _.padEnd shownTime, 24
     <span 
-      onClick={@props.onToggleRelativeTime}
+      onClick={@props.onToggleTimeType}
       style={_style.time fRelativeTime}
-      title={if fRelativeTime then absTime}
+      title={if timeType isnt 'LOCAL' then localTime}
     >
-      {if fRelativeTime then relTime else absTime}
+      {shownTime}
     </span>
 
-  _renderIndent: (level) -> <div style={_style.indent level}/>
-  _renderCaretOrSpace: (fCaret) ->
-    if fCaret
+  renderLevel: (record) ->
+    {fStory, level} = record
+    if fStory
+      return <span style={_style.storyLevel}> -----</span>
+    levelStr = ' ' + ansiColors.LEVEL_NUM_TO_COLORED_STR[level]
+    <ColoredText text={levelStr}/>
+
+  renderSrc: (record) ->
+    {src} = record
+    srcStr = ' ' + ansiColors.getSrcChalkColor(src) _.padEnd(src, 15)
+    <ColoredText text={srcStr}/>
+
+  renderIndent: (level) -> <div style={_style.indent level}/>
+  renderCaretOrSpace: (record) ->
+    {fStory} = record
+    if fStory and record.records.length
       iconType = if @props.story.fExpanded then 'caret-down' else 'caret-right'
-      icon = <Icon icon={iconType} onClick={@_toggleExpanded}/>
-    <span style={_style.caretOrSpace}>
-      {icon}
+      icon = <Icon icon={iconType} onClick={@toggleExpanded}/>
+    <span style={_style.caretOrSpace}>{icon}</span>
+
+  renderToggleHierarchical: (story) ->
+    return if not @state.fHoveredTitle
+    {fHierarchical} = story
+    text = if fHierarchical then 'flat' else 'hierarchical'
+    <span 
+      onClick={@toggleHierarchical}
+      style={_style.toggleHierarchical}
+    >
+      {text}
     </span>
 
   #-----------------------------------------------------
-  _toggleExpanded: -> @props.onToggleExpanded @props.story.pathStr
+  toggleExpanded: -> @props.onToggleExpanded @props.story.pathStr
+  toggleHierarchical: -> @props.onToggleHierarchical @props.story.pathStr
+  onMouseEnterTitle: -> if not @props.fFlatAscendant then @setState {fHoveredTitle: true}
+  onMouseLeaveTitle: -> if not @props.fFlatAscendant then @setState {fHoveredTitle: false}
+
+  #-----------------------------------------------------
+  flatten: (records, level = 0) ->
+    out = []
+    for record in records
+      if record.fStory
+        titleRecord = _.omit(record, ['records'])
+        titleRecord.records = []
+        out.push titleRecord
+        out = out.concat @flatten(record.records, level + 1)
+      else
+        out.push record
+    if level is 0
+      out = _.sortBy out, 't'
+    out
 
 #-----------------------------------------------------
 _style = 
@@ -130,27 +199,38 @@ _style =
     textAlign: 'center'
     letterSpacing: 3
     marginBottom: 5
+    cursor: 'pointer'
   titleRow: (level) ->
     fontWeight: 900
     fontFamily: 'monospace'
     whiteSpace: 'pre'
   title:
     cursor: 'pointer'
-  log: (level) ->
+  log: (record) ->
+    bgColor = 'aliceblue'
+    if record.fServer then bgColor = tinycolor(bgColor).darken(5).toHexString()
+    backgroundColor: bgColor # if story.fServer then '#f5f5f5' else '#e8e8e8'
     fontFamily: 'monospace'
     whiteSpace: 'pre'
   time: (fRelativeTime) ->
     display: 'inline-block'
-    width: 170
     cursor: 'pointer'
     fontStyle: if fRelativeTime then 'italic'
   indent: (level) ->
     display: 'inline-block'
     width: 20 * (level - 1)
+  storyLevel: 
+    color: 'gray'
   caretOrSpace:
     display: 'inline-block'
     width: 30
     paddingLeft: 10
+    cursor: 'pointer'
+  toggleHierarchical:
+    display: 'inline-block'
+    marginLeft: 10
+    color: 'darkgrey'
+    textDecoration: 'underline'
     cursor: 'pointer'
 
 #-----------------------------------------------------

@@ -1,6 +1,6 @@
-toggleRelativeTime = -> {type: 'TOGGLE_RELATIVE_TIME'}
+toggleTimeType = -> {type: 'TOGGLE_TIME_TYPE'}
 
 module.exports =
   actions: {
-    toggleRelativeTime,
+    toggleTimeType,
   }

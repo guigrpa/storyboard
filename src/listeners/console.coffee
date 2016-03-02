@@ -2,6 +2,7 @@ _ = require '../vendor/lodash'
 timm = require 'timm'
 chalk = require 'chalk'
 k = require '../gral/constants'
+ansiColors = require '../gral/ansiColors'
 
 DEFAULT_CONFIG =
   moduleNameLength: 20
@@ -10,33 +11,10 @@ DEFAULT_CONFIG =
 
   # TODO: implement minLevel
 
-COLORS = []
-BASE_COLORS = ['cyan', 'yellow', 'red', 'green', 'blue', 'magenta']
-_.each BASE_COLORS, (col) -> COLORS.push chalk[col].bold
-_.each BASE_COLORS, (col) -> COLORS.push chalk[col]
-NUM_COLORS = COLORS.length
-LEVEL_NUM_TO_COLORED_STR = {}
-_.each k.LEVEL_NUM_TO_STR, (str, num) ->
-  num = Number num
-  col = chalk.grey
-  if num is 30
-    col = if k.IS_BROWSER then chalk.reset.bold else chalk.white
-  else if num is 40 then col = chalk.yellow
-  else if num >= 50 then col = chalk.red
-  LEVEL_NUM_TO_COLORED_STR[num] = col _.padEnd(str, 5)
-
 #-------------------------------------------------
 # ## Helpers
 #-------------------------------------------------
-_srcColorCache = {}
-_srcCnt = 0
-_getSrcColor = (src) ->
-  _srcColorCache[src] ?= COLORS[_srcCnt++ % NUM_COLORS]
-  _srcColorCache[src]
-
-if process.env.NODE_ENV isnt 'production'
-  ansiColors = require '../gral/ansiColors'
-  _argsForBrowserConsole = (str) -> ansiColors.argsForBrowserConsole str
+_argsForBrowserConsole = (str) -> ansiColors.argsForBrowserConsole str
 
 _prevTime = 0
 _getTimeStr = (record, config) ->
@@ -58,7 +36,7 @@ _getTimeStr = (record, config) ->
 # ## Main processing function
 #-------------------------------------------------
 _process = (record, config) ->
-  {src, storyId, level, fStory} = record
+  {src, storyId, level, fStory, obj} = record
   {timeStr, extraTimeStr} = _getTimeStr record, config
   if fStory
     ## parents = record.parents
@@ -69,15 +47,16 @@ _process = (record, config) ->
   else
     ## parents = [storyId]
     msgStr = record.msg
-    levelStr = LEVEL_NUM_TO_COLORED_STR[level]
+    levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[level]
     storyIdStr = ''
     actionStr = ''
   ## parentsStr = _.padEnd parents.map((o) -> o.slice 0, 7).join(', '), 10
-  srcStr = _getSrcColor(src) _.padStart(src, config.moduleNameLength)
+  srcStr = ansiColors.getSrcChalkColor(src) _.padStart(src, config.moduleNameLength)
+  objStr = if obj? then chalk.yellow " -- #{JSON.stringify obj}" else ''
   ## finalMsg = "#{parentsStr} #{timeStr} #{srcStr} #{levelStr} #{storyIdStr}#{msgStr}#{actionStr}"
-  finalMsg = "#{timeStr} #{srcStr} #{levelStr} #{storyIdStr}#{msgStr}#{actionStr}"
+  finalMsg = "#{timeStr} #{srcStr} #{levelStr} #{storyIdStr}#{msgStr}#{actionStr}#{objStr}"
   if fStory then finalMsg = chalk.bold finalMsg
-  if k.IS_BROWSER and (process.env.NODE_ENV isnt 'production')
+  if k.IS_BROWSER
     args = _argsForBrowserConsole finalMsg
   else
     args = [finalMsg]

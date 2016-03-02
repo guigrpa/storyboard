@@ -11,7 +11,7 @@ require './app.sass'
 require 'font-awesome/css/font-awesome.css'
 
 mapStateToProps = (state) -> 
-  fRelativeTime:  state.settings.fRelativeTime
+  fRelativeTime:  state.settings.timeType is 'RELATIVE'
   cxState:        state.cx.cxState
   fTakingLong:    state.cx.fTakingLong
   mainStory:      state.stories.mainStory
@@ -60,6 +60,7 @@ App = React.createClass
         story={mainStory} 
         level={0} 
         seqFullRefresh={@state.seqFullRefresh}
+        fFlatAscendant={false}
       />
     </div>
 

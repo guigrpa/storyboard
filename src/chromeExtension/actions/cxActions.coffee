@@ -41,7 +41,7 @@ rxMsg = ->
   while true
     {msg} = yield Saga.take 'MSG_RECEIVED'
     {src, type, result, data} = msg
-    console.log "[DT-SAGA] RX #{src}/#{type}", data
+    ## console.log "[DT-SAGA] RX #{src}/#{type}", data
     switch type
       when 'CONNECT_REQUEST', 'CONNECT_RESPONSE'
         if type is 'CONNECT_REQUEST' 

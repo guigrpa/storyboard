@@ -21,6 +21,7 @@ app.post '/items', (req, res, next) ->
   story = mainStory.child {src: 'server', title: "HTTP request #{chalk.green req.url}", extraParents}
   db.getItems {story}
   .then (result) -> 
+    story.debug 'server', "HTTP response: #{result.length} items", result
     res.json result
     story.close()
 httpServer = http.createServer app
