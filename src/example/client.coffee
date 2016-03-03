@@ -18,7 +18,7 @@ _refresh = (storyTitle) ->
   .then (response) -> response.json()
   .then (items) ->
     if Array.isArray items
-      story.info 'serverInterface', "Fetched items from server: #{items.length}"
+      story.info 'serverInterface', "Fetched items from server: #{items.length}", attach: items
       nodeItems.innerHTML = items.map((o) -> "<li>#{o}</li>").join('')
     story.close()
 

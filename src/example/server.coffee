@@ -21,7 +21,7 @@ app.post '/items', (req, res, next) ->
   story = mainStory.child {src: 'server', title: "HTTP request #{chalk.green req.url}", extraParents}
   db.getItems {story}
   .then (result) -> 
-    story.debug 'server', "HTTP response: #{result.length} items", result
+    story.debug 'server', "HTTP response: #{result.length} items", {attach: result}
     res.json result
     story.close()
 httpServer = http.createServer app
@@ -36,7 +36,6 @@ storyboard.addListener wsServer,
   authenticate: ({login, password}) -> true
 
 # Some example logs
-mainStory.debug 'server', "Server info (example):"
 someInfo = 
   appName: 'Storyboard example'
   upSince: new Date()
@@ -46,7 +45,8 @@ someInfo =
     bar: null
     values: [1, 2]
 someInfo.nested.configOptions.mainInfo = someInfo
-mainStory.tree 'server', someInfo, {level: 'TRACE'}, '  '
+mainStory.debug 'server', "Example info (expanded):", 
+  {attach: someInfo, attachExpanded: true, attachLevel: 'TRACE'}
 
 # Initialise our database
 db = require './db'

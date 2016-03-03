@@ -2,6 +2,10 @@ React = require 'react'
 ReactDOM = require 'react-dom'
 actions = require './actions/actions'
 
+if process.env.NODE_ENV isnt 'production'
+  window.ReactPerf = require 'react-addons-perf'
+  window.chalk = require 'chalk'
+
 #-------------------------------------------------
 # ## Internal
 #-------------------------------------------------

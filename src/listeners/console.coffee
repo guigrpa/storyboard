@@ -1,20 +1,19 @@
-_ = require '../vendor/lodash'
-timm = require 'timm'
-chalk = require 'chalk'
-k = require '../gral/constants'
-ansiColors = require '../gral/ansiColors'
+_           = require '../vendor/lodash'
+timm        = require 'timm'
+chalk       = require 'chalk'
+k           = require '../gral/constants'
+ansiColors  = require '../gral/ansiColors'
+treeLines   = require '../gral/treeLines'
 
 DEFAULT_CONFIG =
   moduleNameLength: 20
   relativeTime:     k.IS_BROWSER
   minLevel:         10
 
-  # TODO: implement minLevel
-
 #-------------------------------------------------
 # ## Helpers
 #-------------------------------------------------
-_argsForBrowserConsole = (str) -> ansiColors.argsForBrowserConsole str
+_getBrowserConsoleArgs = (str) -> ansiColors.getBrowserConsoleArgs str
 
 _prevTime = 0
 _getTimeStr = (record, config) ->
@@ -30,14 +29,14 @@ _getTimeStr = (record, config) ->
     if dif < 0.010 then timeStr = '       '
   else
     timeStr = new Date(record.t).toISOString()
-  return {timeStr, extraTimeStr}
+  return [timeStr, extraTimeStr]
 
 #-------------------------------------------------
 # ## Main processing function
 #-------------------------------------------------
 _process = (record, config) ->
-  {src, storyId, level, fStory, obj} = record
-  {timeStr, extraTimeStr} = _getTimeStr record, config
+  {src, storyId, level, fStory, obj, objExpanded, objLevel} = record
+  [timeStr, extraTimeStr] = _getTimeStr record, config
   if fStory
     ## parents = record.parents
     msgStr = record.title
@@ -52,20 +51,33 @@ _process = (record, config) ->
     actionStr = ''
   ## parentsStr = _.padEnd parents.map((o) -> o.slice 0, 7).join(', '), 10
   srcStr = ansiColors.getSrcChalkColor(src) _.padStart(src, config.moduleNameLength)
-  objStr = if obj? then chalk.yellow " -- #{JSON.stringify obj}" else ''
+  objStr = ''
+  if obj? and not objExpanded
+    try
+      objStr = chalk.yellow " -- #{JSON.stringify obj}"
+    catch e
+      objStr = chalk.red " -- [could not stringify object, expanding...]"
+      objExpanded = true
   ## finalMsg = "#{parentsStr} #{timeStr} #{srcStr} #{levelStr} #{storyIdStr}#{msgStr}#{actionStr}"
   finalMsg = "#{timeStr} #{srcStr} #{levelStr} #{storyIdStr}#{msgStr}#{actionStr}#{objStr}"
   if fStory then finalMsg = chalk.bold finalMsg
+  _outputLog finalMsg, record.level, extraTimeStr
+  if objExpanded
+    lines = treeLines obj, {prefix: '  '}
+    levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[objLevel]
+    for line in lines
+      text = "#{timeStr} #{srcStr} #{levelStr} #{line}"
+      _outputLog text
+  return
+
+_outputLog = (text, level, extraTimeStr) ->
   if k.IS_BROWSER
-    args = _argsForBrowserConsole finalMsg
+    args = _getBrowserConsoleArgs text
   else
-    args = [finalMsg]
-  if record.level >= 50
-    if extraTimeStr? then console.log "      #{extraTimeStr}"
-    console.error.apply console, args
-  else if (not k.IS_BROWSER) or (process.env.NODE_ENV isnt 'production')
-    if extraTimeStr? then console.log "      #{extraTimeStr}"
-    console.log.apply console, args
+    args = [text]
+  if extraTimeStr? then console.log "      #{extraTimeStr}"
+  output = if (level? and level >= 50) then 'error' else 'log'
+  console[output].apply console, args
 
 #-------------------------------------------------
 # ## API

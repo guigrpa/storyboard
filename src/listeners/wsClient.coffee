@@ -1,5 +1,6 @@
 socketio = require 'socket.io-client'
 timm = require 'timm'
+treeLines = require '../gral/treeLines'
 
 DEFAULT_CONFIG = {}
 
@@ -67,6 +68,13 @@ _socketTxMsg = (msg) ->
   _socket.emit 'MSG', msg
 
 #-------------------------------------------------
+# ## Helpers
+#-------------------------------------------------
+_preprocessAttachments = (record) -> 
+  return record if not record.obj?
+  return timm.set record, 'obj', treeLines(record.obj)
+
+#-------------------------------------------------
 # ## API
 #-------------------------------------------------
 create = (baseConfig) ->
@@ -79,7 +87,7 @@ create = (baseConfig) ->
     # Relay records coming from local stories
     process: (record) -> 
       ## console.log "[PG] RX PAGE/RECORDS #{records.length} records"
-      _extensionTxMsg {type: 'RECORDS', data: [record]}
+      _extensionTxMsg {type: 'RECORDS', data: [_preprocessAttachments record]}
     config: (newConfig) -> config = timm.merge config, newConfig
   listener
 

@@ -15,23 +15,17 @@ ColoredText = React.createClass
 
   #-----------------------------------------------------
   render: -> 
-    segments = ansiColors.getStructured @props.text
+    segments = ansiColors.getStyledSegments @props.text
     <span 
       onClick={@props.onClick}
       style={@props.style}
     >
-      {@_renderMsgSegments segments}
+      {_.map segments, @renderMsgSegment}
     </span>
 
-  # Recursive
-  _renderMsgSegments: (segments) ->
-    return null if not segments
-    return null if not segments.length
-    return segments.map (segment, idx) =>
-      if _.isString segment
-        return segment
-      <span key={idx} style={segment.style}>
-        {@_renderMsgSegments segment.children}
-      </span>
+  renderMsgSegment: (segment, idx) ->
+    <span key={idx} style={segment.style}>
+      {segment.text}
+    </span>
 
 module.exports = ColoredText

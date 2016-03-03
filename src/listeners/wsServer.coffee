@@ -6,6 +6,7 @@ socketio = require 'socket.io'
 Promise = require 'bluebird'
 chalk = require 'chalk'
 timm = require 'timm'
+treeLines = require '../gral/treeLines'
 
 DEFAULT_CONFIG = 
   port: 8090
@@ -68,36 +69,45 @@ _socketRxMsg = (socket, msg) ->
           socket.join 'AUTHENTICATED'
           rsp.data = 
             login: login
-            bufferedRecords: hub.getBufferedRecords()
+            bufferedRecords: _getBufferedRecords hub
         else
           rsp.result = 'ERROR'
           story.warn LOG_SRC, "User '#{login}' authentication failed"
         _socketTxMsg socket, rsp
-    when 'BUFFERED_RECORDS_REQUEST'
-      rsp = {type: 'BUFFERED_RECORDS_RESPONSE'}
-      if socket.sbAuthenticated
-        rsp.result = 'SUCCESS'
-        rsp.data = hub.getBufferedRecords()
-      else
-        rsp.result = 'ERROR'
-        rsp.error = 'AUTH_REQUIRED'
-      _socketTxMsg socket, rsp
+    ## when 'BUFFERED_RECORDS_REQUEST'
+    ##   rsp = {type: 'BUFFERED_RECORDS_RESPONSE'}
+    ##   if socket.sbAuthenticated
+    ##     rsp.result = 'SUCCESS'
+    ##     rsp.data = hub.getBufferedRecords()
+    ##   else
+    ##     rsp.result = 'ERROR'
+    ##     rsp.error = 'AUTH_REQUIRED'
+    ##   _socketTxMsg socket, rsp
     else
       story.warn LOG_SRC, "Unknown message type '#{type}'"
   return
 
 _socketTxMsg = (socket, msg) -> socket.emit 'MSG', msg
 
-_broadcastBuf = []
-_enqueueRecord = (record, config) -> _broadcastBuf.push record
-
 _socketBroadcast = ->
-  ## console.log "#{new Date().toISOString()} Flushing #{_broadcastBuf.length} records..."
   msg = {type: 'RECORDS', data: _broadcastBuf}
   _ioStandalone?.to('AUTHENTICATED').emit 'MSG', msg
   _ioServerAdaptor?.to('AUTHENTICATED').emit 'MSG', msg
   _broadcastBuf.length = 0
   return
+
+# Get the (long) list of buffered records from the hub.
+# Process their `obj` fields so that they don't include circular references
+_getBufferedRecords = (hub) -> hub.getBufferedRecords().map _preprocessAttachments
+
+# Manage the (short) broadcast buffer (note that `socketBroadcast` is 
+# normally throttled)
+_broadcastBuf = []
+_enqueueRecord = (record, config) -> _broadcastBuf.push _preprocessAttachments record
+
+_preprocessAttachments = (record) -> 
+  return record if not record.obj?
+  return timm.set record, 'obj', treeLines(record.obj)
 
 #-------------------------------------------------
 # ## Main processing function

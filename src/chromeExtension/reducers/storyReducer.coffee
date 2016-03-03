@@ -1,3 +1,4 @@
+_ = require '../../vendor/lodash'
 timm = require 'timm'
 
 _mainStoryPathStr = (fServer) -> "records/#{if fServer then 1 else 0}"
@@ -60,10 +61,25 @@ reducer = (state = INITIAL_STATE, action) ->
       path = "mainStory/#{pathStr}/fHierarchical".split '/'
       return timm.updateIn state, path, (fHierarchical) -> not fHierarchical
 
+    when 'TOGGLE_ATTACHMENT'
+      {pathStr, recordId} = action
+      return state if not(pathStr? and recordId?)
+      path = "mainStory/#{pathStr}/records".split '/'
+      records = timm.getIn state, path
+      idx = _.findIndex records, (o) -> o.id is recordId
+      return state if idx < 0
+      record = records[idx]
+      path.push idx
+      path.push 'objExpanded'
+      return timm.setIn state, path, not(record.objExpanded)
+
+    when 'EXPAND_ALL_STORIES'   then return _expandCollapseAll state, true
+    when 'COLLAPSE_ALL_STORIES' then return _expandCollapseAll state, false
+
     else return state
 
 #-------------------------------------------------
-# ## Processing records
+# ## Adding records
 #-------------------------------------------------
 _rxRecords = (state, action) ->
   {records, fPastRecords} = action
@@ -105,6 +121,7 @@ _rxStory = (state, record, fPastRecords) ->
     pathStr = state.closedStories[storyId]
   if pathStr?
     state = _updateStory state, pathStr, record
+    state = _addLog state, pathStr, record
 
   # It's a new story. Look for the *most suitable parent* and create
   # a new child story object. The *most suitable parent* is
@@ -120,6 +137,9 @@ _rxStory = (state, record, fPastRecords) ->
         pathStr = state.closedStories[parentStoryId]
     pathStr ?= _mainStoryPathStr fServer
     [state, newStoryPathStr] = _addStory state, pathStr, record
+    state = _addLog state, newStoryPathStr, record
+
+  # We return the new state, as well as the path of the new story (if any)
   return [state, newStoryPathStr]
 
 _updateStory = (state, pathStr, record) ->
@@ -151,9 +171,17 @@ _addStory = (state, parentStoryPathStr, record) ->
 _rxLog = (state, record) ->
   {storyId, fServer} = record
   pathStr = state.openStories[storyId] ? _mainStoryPathStr(fServer)
+  state = _addLog state, pathStr, record
+  state
+
+_addLog = (state, pathStr, record) ->
   path = "mainStory/#{pathStr}/records".split '/'
-  state = timm.updateIn state, path, (prevRecords) ->
-    return timm.addLast prevRecords, record
+  return timm.updateIn state, path, (o) -> timm.addLast o, record
+
+#-------------------------------------------------
+# ## Expand/collapse all
+#-------------------------------------------------
+_expandCollapseAll = (state, fExpanded) ->
   state
 
 module.exports = reducer

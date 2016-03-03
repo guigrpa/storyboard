@@ -1,5 +1,4 @@
 uuid = require 'node-uuid'
-chalk = require 'chalk'
 _ = require '../vendor/lodash'
 hub = require './hub'
 k = require './constants'
@@ -28,7 +27,7 @@ Story = (parents, src, title) ->
   @t = new Date().getTime()
   @fOpen = true
   @status = undefined
-  @logStory 'CREATED'
+  @logStory 'CREATED', @t
 
 #-----------------------------------------------
 # ### Story lifecycle
@@ -55,40 +54,32 @@ Story::child = (options = {}) ->
 #-----------------------------------------------
 _.each k.LEVEL_NUM_TO_STR, (levelStr, levelNum) ->
   return if levelStr is 'STORY'
-  Story::[levelStr.toLowerCase()] = (src, msg, obj) ->
+  Story::[levelStr.toLowerCase()] = (src, msg, options) ->
     #- `log.info msg`
     if arguments.length <= 1
       msg = arguments[0] ? ''
       src = DEFAULT_SRC
-    #- `log.info msg, obj`
+    #- `log.info msg, options`
     else if _.isObject arguments[1]
-      obj = arguments[1]
+      options = arguments[1]
       msg = arguments[0] ? ''
       src = DEFAULT_SRC
-    _emit {
-      storyId: @storyId,
-      level: levelNum,
-      src, msg, obj
-    }
-
-Story::tree = (src, node, options, prefix) -> 
-  #- `tree obj`
-  if _.isObject src
-    prefix = options
-    options = node
-    node = src
-    src = DEFAULT_SRC
-  options ?= {}
-  prefix ?= ''
-  level = (options.level ? 'INFO').toLowerCase()
-  story = @
-  options.log = (msg) -> story[level] src, msg
-  return _tree node, options, prefix, []
+    options ?= {}
+    if options.attach
+      objLevel = k.LEVEL_STR_TO_NUM[options.attachLevel?.toUpperCase()] ? levelNum
+    _emit
+      storyId: @storyId
+      level: levelNum
+      src: src
+      msg: msg
+      obj: options.attach
+      objExpanded: options.attachExpanded ? false
+      objLevel: objLevel
 
 #-----------------------------------------------
 # ### Story helpers
 #-----------------------------------------------
-Story::logStory = (action) ->
+Story::logStory = (action, t) ->
   _emit
     parents: @parents
     fRoot: @fRoot
@@ -96,59 +87,11 @@ Story::logStory = (action) ->
     src: @src
     title: @title
     fServer: @fServer
-    t: @t
+    t: t
     fOpen: @fOpen
     status: @status
     fStory: true
     action: action
-
-_tree = (node, options, prefix, stack) ->
-  options.ignoreKeys ?= []
-  stack.push node
-  postponedArrayAttrs = []
-  postponedObjectAttrs = []
-  for key, val of node
-    continue if key in options.ignoreKeys
-    if _.isObject(val) and _.includes(stack, val)  # Avoid circular dependencies
-      _treeLine prefix, key, chalk.green('[CIRCULAR]'), options
-    else if _.isArray(val) and val.length is 0
-      _treeLine prefix, key, '[]', options
-    else if _.isArray(val) and val.length and _.isString(val[0])
-      strVal = _.map(val, (o) -> "'#{o}'").join(', ')
-      strVal = chalk.yellow "[#{strVal}]"
-      _treeLine prefix, key, strVal, options
-    else if _.isDate(val)
-      _treeLine prefix, key, chalk.magenta(val.toISOString()), options
-    else if _.isObject(val) and Object.keys(val).length is 0
-      _treeLine prefix, key, '{}', options
-    else if _.isArray val
-      postponedArrayAttrs.push key
-    else if _.isObject val
-      postponedObjectAttrs.push key
-    else if _.isString val
-      _treeLine prefix, key, chalk.yellow("'#{val}'"), options
-    else if _.isNull val
-      _treeLine prefix, key, chalk.red("null"), options
-    else if _.isUndefined val
-      _treeLine prefix, key, chalk.bgRed("undefined"), options
-    else if _.isBoolean val
-      _treeLine prefix, key, chalk.cyan(val), options
-    else if _.isNumber val
-      _treeLine prefix, key, chalk.blue(val), options
-    else
-      _treeLine prefix, key, val, options
-  for key in postponedObjectAttrs
-    val = node[key]
-    _treeLine prefix, key, '', options
-    _tree val, options, "  #{prefix}", stack
-  for key in postponedArrayAttrs
-    val = node[key]
-    _treeLine prefix, key, '', options
-    _tree val, options, "  #{prefix}", stack
-  stack.pop()
-
-_treeLine = (prefix, key, strVal, options) ->
-  options.log "#{prefix}#{key}: #{chalk.bold strVal}"
 
 # Records can be logs or stories:
 # * `id: string` (a unique record id)
@@ -162,7 +105,9 @@ _treeLine = (prefix, key, strVal, options) ->
 # * `action: string` (only for stories)
 # * `parents: Array` (only for stories)
 # * `title: string?` (only for stories)
-# * `obj: object?`
+# * `obj: object?`       (only for logs)
+# * `objExpanded: bool?` (only for logs)
+# * `objLevel: string?`  (only for logs)
 _emit = (record) ->
   record.id = _getRecordId()
   record.t ?= new Date().getTime()
