@@ -10,6 +10,9 @@ DEFAULT_CONFIG =
   relativeTime:     k.IS_BROWSER
   minLevel:         10
 
+_console = console
+_setConsole = (o) -> _console = o
+
 #-------------------------------------------------
 # ## Helpers
 #-------------------------------------------------
@@ -75,9 +78,9 @@ _outputLog = (text, level, extraTimeStr) ->
     args = _getBrowserConsoleArgs text
   else
     args = [text]
-  if extraTimeStr? then console.log "      #{extraTimeStr}"
+  if extraTimeStr? then _console.log "      #{extraTimeStr}"
   output = if (level? and level >= 50) then 'error' else 'log'
-  console[output].apply console, args
+  _console[output].apply _console, args
 
 #-------------------------------------------------
 # ## API
@@ -93,4 +96,7 @@ create = (baseConfig) ->
 
 module.exports = {
   create,
+
+  # Just for unit testing
+  _setConsole,
 }

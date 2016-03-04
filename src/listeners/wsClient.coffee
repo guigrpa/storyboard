@@ -88,7 +88,7 @@ create = (baseConfig) ->
     process: (record) -> 
       ## console.log "[PG] RX PAGE/RECORDS #{records.length} records"
       _extensionTxMsg {type: 'RECORDS', data: [_preprocessAttachments record]}
-    config: (newConfig) -> config = timm.merge config, newConfig
+    ## config: (newConfig) -> config = timm.merge config, newConfig
   listener
 
 module.exports = {

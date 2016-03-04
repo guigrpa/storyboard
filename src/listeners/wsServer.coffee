@@ -12,7 +12,6 @@ DEFAULT_CONFIG =
   port: 8090
   throttle: 200
   authenticate: null
-  longTermBufferLength: 1000
 LOG_SRC = 'storyboard'
 _ioStandalone = null
 _ioServerAdaptor = null
@@ -130,7 +129,7 @@ create = (baseConfig) ->
     type: 'WS_SERVER'
     init: -> _socketInit config
     process: _process config
-    config: (newConfig) -> config = timm.merge config, newConfig
+    ## config: (newConfig) -> config = timm.merge config, newConfig
   listener
 
 module.exports = {

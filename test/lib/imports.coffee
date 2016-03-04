@@ -1,4 +1,5 @@
 _         = require 'lodash'
+Promise   = require 'bluebird'
 chai      = require 'chai'
 sinon     = require 'sinon'
 sinonChai = require 'sinon-chai'
@@ -13,7 +14,7 @@ fProduction = (process.env.NODE_ENV is 'production') or process.env.TEST_MINIFIE
 
 module.exports = {
   storyboard,
-  _, 
+  _, Promise,
   expect, sinon,
   fProduction,
 }
