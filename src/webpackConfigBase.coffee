@@ -11,7 +11,7 @@ module.exports =
     new webpack.ContextReplacementPlugin /moment[\\\/]locale$/, new RegExp ".[\\\/](#{LANGS.join '|'})"
   ]
 
-  devtool: if process.env.NODE_ENV isnt 'production' then 'eval'
+  ## devtool: if process.env.NODE_ENV isnt 'production' then 'eval'
 
   module:
     loaders: [
