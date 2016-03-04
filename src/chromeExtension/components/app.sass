@@ -17,6 +17,9 @@
   @-o-keyframes #{$value}
   @keyframes #{$value}
 
+=systemFont
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif
+
 +keyframes('fadein {from {opacity: 0;} to {opacity: 1;}}')
 
 *, 
@@ -35,11 +38,14 @@ body
   left: 0
   bottom: 0
   right: 0
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif
+  +systemFont
   font-size: 12px
 
 .fadeIn
   +animation(fadein 0.2s)
+
+.uiFont
+  +systemFont
 
 // Fast development
 #devToolsWrapper

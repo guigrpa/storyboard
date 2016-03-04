@@ -35,7 +35,7 @@ storyboard.addListener wsServer,
   httpServer: httpServer
   authenticate: ({login, password}) -> true
 
-# Some example logs
+# Some example logs (including a circular reference)
 someInfo = 
   appName: 'Storyboard example'
   upSince: new Date()
@@ -48,10 +48,11 @@ someInfo.nested.configOptions.mainInfo = someInfo
 mainStory.debug 'server', "Example info (expanded):", 
   {attach: someInfo, attachExpanded: true, attachLevel: 'TRACE'}
 
-# Initialise our database
+# Initialise our virtual database
 db = require './db'
 db.init()
 
+# Initialise our virtual database
 setInterval -> 
   mainStory.debug 'server', "t: #{chalk.blue new Date().toISOString()}"
 , 60000

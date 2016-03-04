@@ -8,6 +8,7 @@ mapStateToProps = (state) ->
 mapDispatchToProps = (dispatch) ->
   onExpandAllStories:   -> dispatch actions.expandAllStories()
   onCollapseAllStories: -> dispatch actions.collapseAllStories()
+  onToggleShowClosedActions: -> dispatch actions.toggleShowClosedActions()
 
 Toolbar = React.createClass
   displayName: 'Toolbar'
@@ -15,9 +16,10 @@ Toolbar = React.createClass
   #-----------------------------------------------------
   propTypes:
     # From Redux.connect
-    settings:               React.PropTypes.object.isRequired
-    onExpandAllStories:     React.PropTypes.func.isRequired
-    onCollapseAllStories:   React.PropTypes.func.isRequired
+    settings:                   React.PropTypes.object.isRequired
+    onExpandAllStories:         React.PropTypes.func.isRequired
+    onCollapseAllStories:       React.PropTypes.func.isRequired
+    onToggleShowClosedActions:  React.PropTypes.func.isRequired
 
   #-----------------------------------------------------
   render: -> 
@@ -25,6 +27,16 @@ Toolbar = React.createClass
       <button onClick={@props.onExpandAllStories}>Expand all</button>
       {' '}
       <button onClick={@props.onCollapseAllStories}>Collapse all</button>
+      {' '}
+      <input 
+        id="closedActions"
+        type="checkbox"
+        checked={@props.settings.fShowClosedActions}
+        onChange={@props.onToggleShowClosedActions}
+      />
+      <label htmlFor="closedActions">
+        Show <i>CLOSED</i> actions
+      </label>
     </div>
 
 #-----------------------------------------------------

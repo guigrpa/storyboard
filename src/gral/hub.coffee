@@ -10,6 +10,7 @@ mainStory = null
 
 init = (deps, options) ->
   {mainStory} = deps
+  ### !pragma coverage-skip-next ###
   if not(mainStory?)
     throw new Error 'MISSING_DEPENDENCIES'
   if options? then config options
@@ -24,6 +25,8 @@ addListener = (listenerFactory, config) ->
   listener.init?()
 
 getListeners = -> _listeners
+
+removeAllListeners = -> _listeners = []
 
 emit = (record) ->
   _buf.push record
@@ -40,7 +43,7 @@ getBufferedRecords = -> [].concat _buf
 #-------------------------------------------------
 module.exports = hub = {
   init, config,
-  addListener, getListeners,
+  addListener, getListeners, removeAllListeners,
   emit,
   getBufferedRecords,
 }

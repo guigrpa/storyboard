@@ -45,8 +45,8 @@ App = React.createClass
   #-----------------------------------------------------
   render: -> 
     reduxDevTools = undefined
-    if process.env.NODE_ENV isnt 'production'
-      reduxDevTools = <ReduxDevTools/>
+    ## if process.env.NODE_ENV isnt 'production'
+    ##   reduxDevTools = <ReduxDevTools/>
     <div style={_style.outer}>
       {@_renderContents()}
       {reduxDevTools}

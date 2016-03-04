@@ -27,4 +27,5 @@ module.exports = {
   mainStory,
   addListener: hub.addListener,
   getListeners: hub.getListeners,
+  removeAllListeners: hub.removeAllListeners,
 }

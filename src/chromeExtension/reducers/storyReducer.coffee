@@ -16,6 +16,7 @@ _mainStory = (fServer) ->
     fServer: fServer
     action: 'CREATED'
     fOpen: true
+    fMain: true
     status: undefined
     fExpanded: true
     fHierarchical: true
@@ -182,6 +183,18 @@ _addLog = (state, pathStr, record) ->
 # ## Expand/collapse all
 #-------------------------------------------------
 _expandCollapseAll = (state, fExpanded) ->
+  expandCollapse = (prevStory) ->
+    nextRecords = prevStory.records.map expandCollapseRecord
+    nextStory = timm.set prevStory, 'records', nextRecords
+    if not(nextStory.fWrapper or nextStory.fMain)
+      nextStory.fExpanded = fExpanded    # in-place since it is always a new object
+    nextStory
+  expandCollapseRecord = (prevRecord) ->
+    fIsStoryObject = prevRecord.fStory and prevRecord.records
+    return prevRecord if not fIsStoryObject
+    return expandCollapse prevRecord
+  newMainStory = expandCollapse state.mainStory, 0
+  state = timm.set state, 'mainStory', newMainStory
   state
 
 module.exports = reducer

@@ -12,6 +12,7 @@ pids
 node_modules
 
 # Others
+/coverage
 /.extractedApi.md
 *.sublime-project
 *.sublime-workspace

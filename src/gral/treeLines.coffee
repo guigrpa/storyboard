@@ -36,6 +36,7 @@ _tree = (node, options, prefix, stack) ->
     else if _.isNumber val
       out.push "#{prefix}#{key}: #{chalk.blue.bold val}"
     else
+      ### !pragma coverage-skip-block ###
       out.push "#{prefix}#{key}: #{chalk.bold val}"
   for key in postponedObjectAttrs
     val = node[key]

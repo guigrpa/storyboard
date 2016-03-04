@@ -2,6 +2,7 @@ timm = require 'timm'
 
 INITIAL_STATE =
   timeType: 'LOCAL'
+  fShowClosedActions: false
 
 reducer = (state = INITIAL_STATE, action) ->
   switch action.type
@@ -12,6 +13,10 @@ reducer = (state = INITIAL_STATE, action) ->
         when 'RELATIVE' then 'UTC'
         else 'LOCAL'
       return timm.set state, 'timeType', newType
+
+    when 'TOGGLE_SHOW_CLOSED_ACTIONS'
+      return timm.set state, 'fShowClosedActions', \
+        not state.fShowClosedActions
 
     else return state
 

@@ -17,6 +17,7 @@ ansiColors        = require '../../gral/ansiColors'
 #-====================================================
 mapStateToProps = (state) -> 
   timeType: state.settings.timeType
+  fShowClosedActions: state.settings.fShowClosedActions
 mapDispatchToProps = (dispatch) ->
   onToggleTimeType: -> dispatch actions.toggleTimeType()
   onToggleExpanded: (pathStr) -> dispatch actions.toggleExpanded pathStr
@@ -34,6 +35,7 @@ _Story = React.createClass
     seqFullRefresh:         React.PropTypes.number.isRequired
     # From Redux.connect
     timeType:               React.PropTypes.string.isRequired
+    fShowClosedActions:     React.PropTypes.bool.isRequired
     onToggleTimeType:       React.PropTypes.func.isRequired
     onToggleExpanded:       React.PropTypes.func.isRequired
     onToggleHierarchical:   React.PropTypes.func.isRequired
@@ -49,13 +51,13 @@ _Story = React.createClass
   renderRootStory: ->
     {level, story} = @props
     <div className="rootStory" style={_style.outer level, story}>
-      <div 
-        className="rootStoryTitle" 
-        style={_style.rootStoryTitle}
-        onClick={@toggleHierarchical}
-      >
-        {story.title.toUpperCase()}
-      </div>
+      <MainStoryTitle
+        title={story.title}
+        fHierarchical={story.fHierarchical}
+        fExpanded={story.fExpanded}
+        onToggleExpanded={@toggleExpanded}
+        onToggleHierarchical={@toggleHierarchical}
+      />
       {@renderRecords()}
     </div>
 
@@ -83,13 +85,15 @@ _Story = React.createClass
     records = @prepareRecords @props.story.records
     out = []
     for record in records
-      out.push @renderRecord record
+      el = @renderRecord record
+      continue if not el?
+      out.push el
       if record.objExpanded and record.obj?
         out = out.concat @renderAttachment record
     out
 
   renderRecord: (record) ->
-    {id, fStory, storyId, records, obj, objExpanded} = record
+    {id, fStory, storyId, records, obj, objExpanded, action} = record
     fDirectChild = storyId is @props.story.storyId
     if fStory and records
       return <Story key={storyId}
@@ -98,6 +102,9 @@ _Story = React.createClass
         seqFullRefresh={@props.seqFullRefresh}
       />
     else
+      if fDirectChild
+        return if action is 'CREATED'
+        return if (not @props.fShowClosedActions) and (action is 'CLOSED')
       return <Line key={id}
         record={record}
         level={@props.level}
@@ -151,17 +158,87 @@ _style =
     backgroundColor: bgColor # if story.fServer then '#f5f5f5' else '#e8e8e8'
     marginBottom: if level <= 1 then 10
     padding: if level <= 1 then 2
-  rootStoryTitle:
-    fontWeight: 900
-    textAlign: 'center'
-    letterSpacing: 3
-    marginBottom: 5
-    cursor: 'pointer'
 
 #-----------------------------------------------------
 connect = ReactRedux.connect mapStateToProps, mapDispatchToProps
 Story = connect _Story
 
+
+#-====================================================
+# ## MainStoryTitle
+#-====================================================
+MainStoryTitle = React.createClass
+  displayName: 'MainStoryTitle'
+  mixins: [PureRenderMixin]
+
+  #-----------------------------------------------------
+  propTypes:
+    title:                  React.PropTypes.string.isRequired
+    fHierarchical:          React.PropTypes.bool.isRequired
+    fExpanded:              React.PropTypes.bool.isRequired
+    onToggleExpanded:       React.PropTypes.func.isRequired
+    onToggleHierarchical:   React.PropTypes.func.isRequired
+  getInitialState: ->
+    fHovered:               false
+
+  #-----------------------------------------------------
+  render: ->
+    <div 
+      className="rootStoryTitle" 
+      style={_styleMainTitle.outer}
+      onMouseEnter={@onMouseEnter}
+      onMouseLeave={@onMouseLeave}
+    >
+      {@renderCaret()}
+      <span 
+        style={_styleMainTitle.title}
+        onClick={@props.onToggleExpanded}
+      >
+        {@props.title.toUpperCase()}
+      </span>
+      {@renderToggleHierarchical()}
+    </div>
+
+  renderCaret: ->
+    return if not @state.fHovered
+    icon = if @props.fExpanded then 'caret-down' else 'caret-right'
+    <span 
+      onClick={@props.onToggleExpanded}
+      style={_styleMainTitle.caret.outer}
+    >
+      <Icon icon={icon} style={_styleMainTitle.caret.icon}/>
+    </span>
+
+  renderToggleHierarchical: ->
+    return if not @state.fHovered
+    <HierarchicalToggle
+      fHierarchical={@props.fHierarchical}
+      onToggleHierarchical={@props.onToggleHierarchical}
+      fFloat
+    />
+
+  #-----------------------------------------------------
+  onMouseEnter: -> @setState {fHovered: true}
+  onMouseLeave: -> @setState {fHovered: false}
+
+#-----------------------------------------------------
+_styleMainTitle =
+  outer:
+    textAlign: 'center'
+    marginBottom: 5
+    cursor: 'pointer'
+  title:
+    fontWeight: 900
+    letterSpacing: 3
+  caret:
+    outer:
+      display: 'inline-block'
+      position: 'absolute'
+    icon:
+      display: 'inline-block'
+      position: 'absolute'
+      right: 6
+      top: 2
 
 #-====================================================
 # ## AttachmentLine
@@ -227,7 +304,6 @@ Line = React.createClass
   render: ->
     {record, fStoryTitle, fDirectChild, level} = @props
     {id, msg, fStory, fOpen, title, action} = record
-    return <div/> if fDirectChild and action in ['CREATED', 'CLOSED']
     if fStory 
       msg = if not fDirectChild then "#{title} " else ''
       if action and not fStoryTitle then msg += chalk.gray "[#{action}]"
@@ -287,14 +363,10 @@ Line = React.createClass
   renderToggleHierarchical: (story) ->
     return if not @props.onToggleHierarchical
     return if not @state.fHovered
-    {fHierarchical} = story
-    text = if fHierarchical then 'flat' else 'tree'
-    <span 
-      onClick={@props.onToggleHierarchical}
-      style={_styleLine.toggleHierarchical}
-    >
-      {text}
-    </span>
+    <HierarchicalToggle
+      fHierarchical={story.fHierarchical}
+      onToggleHierarchical={@props.onToggleHierarchical}
+    />
 
   renderAttachmentIcon: (record) ->
     return if not record.obj?
@@ -325,12 +397,6 @@ _styleLine =
     fontFamily: 'monospace'
     whiteSpace: 'pre'
     fontWeight: if record.fStory and (record.action is 'CREATED') then 900
-  toggleHierarchical:
-    display: 'inline-block'
-    marginLeft: 10
-    color: 'darkgrey'
-    textDecoration: 'underline'
-    cursor: 'pointer'
   spinner:
     marginLeft: 8
   attachmentIcon:
@@ -412,7 +478,7 @@ Src = React.createClass
     <ColoredText text={srcStr}/>
 
 #-====================================================
-# ## CaretOrSpace
+# ## Indent
 #-====================================================
 Indent = ({level}) -> 
   style = 
@@ -440,6 +506,44 @@ _styleCaretOrSpace =
   width: 30
   paddingLeft: 10
   cursor: 'pointer'
+
+
+#-====================================================
+# ## HierarchicalToggle
+#-====================================================
+HierarchicalToggle = React.createClass
+  displayName: 'HierarchicalToggle'
+  mixins: [PureRenderMixin]
+  propTypes:
+    fHierarchical:          React.PropTypes.bool.isRequired
+    onToggleHierarchical:   React.PropTypes.func.isRequired
+    fFloat:                 React.PropTypes.bool
+  render: ->
+    if @props.fHierarchical
+      text = 'Show flat' 
+      icon = 'bars'
+    else 
+      text = 'Show tree'
+      icon = 'sitemap'
+    <span
+      onClick={@props.onToggleHierarchical}
+      style={_styleHierarchical.outer @props.fFloat}
+    >
+      <Icon icon={icon} style={_styleHierarchical.icon}/>
+      {text}
+    </span>
+
+_styleHierarchical =
+  outer: (fFloat) ->
+    display: 'inline-block'
+    position: if fFloat then 'absolute'
+    marginLeft: 10
+    color: 'darkgrey'
+    textDecoration: 'underline'
+    cursor: 'pointer'
+    fontWeight: 'normal'
+  icon:
+    marginRight: 4
 
 #-----------------------------------------------------
 module.exports = Story

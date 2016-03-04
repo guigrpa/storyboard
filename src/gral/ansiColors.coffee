@@ -114,7 +114,7 @@ getStyledSegments = (str) ->
   tokens = str.split /\u001b\[(\d+)*m/gi
   curStyles = {}
   text = tokens[0]
-  if text.length then out.push {text}
+  if text.length then out.push {text, style: {}}
   for idx in [1...tokens.length] by 2
     curStyles = _updateStyles curStyles, Number tokens[idx]
     text = tokens[idx+1]
@@ -128,15 +128,16 @@ _updateStyles = (curStyles, code) ->
   else if (color = ANSI_ADD_COLOR[code])
     curStyles.color = color
   else if (bgColor = ANSI_ADD_BGCOLOR[code])
-    curStyles.bgColor = color
+    curStyles.bgColor = bgColor
   else if code is 39
     curStyles.color = undefined
   else if code is 49
     curStyles.bgColor = undefined
   else if (removeStyles = ANSI_REMOVE[code])
     curStyles[style] = undefined for style in removeStyles
-  else if code is 0
-    curStyles = {}
+  else 
+    ### istanbul ignore else ###
+    if code is 0 then curStyles = {}
   curStyles
 
 _toConsoleArgs = (styles) ->

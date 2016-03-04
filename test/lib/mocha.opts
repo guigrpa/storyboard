@@ -1,0 +1,6 @@
+--compilers coffee:coffee-script/register
+--require ./tools/coffeeCoverageLoader.coffee
+--recursive
+-R spec 
+--colors 
+--timeout 6000
