@@ -13,7 +13,7 @@ _.each k.LEVEL_NUM_TO_STR, (str, num) ->
     col = if k.IS_BROWSER then chalk.bold else chalk.white
   else if num is 40 then col = chalk.yellow
   else if num >= 50 then col = chalk.red
-  LEVEL_NUM_TO_COLORED_STR[num] = col _.padEnd(str, 5)
+  LEVEL_NUM_TO_COLORED_STR[num] = col _.padEnd(str, 6)
 
 #-------------------------------------------------
 # ## Get a color for a given src (cached)

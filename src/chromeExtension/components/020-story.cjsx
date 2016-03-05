@@ -406,6 +406,8 @@ _styleLine =
 #-====================================================
 # ## Time
 #-====================================================
+TIME_LENGTH = 25
+
 Time = React.createClass
   displayName: 'Time'
   mixins: [PureRenderMixin]
@@ -418,7 +420,7 @@ Time = React.createClass
 
   render: ->
     {t, fShowFull, timeType} = @props
-    if not t? then return <span>{_.padEnd '', 24}</span>
+    if not t? then return <span>{_.padEnd '', TIME_LENGTH}</span>
     fRelativeTime = false
     m = moment t
     localTime = m.format('YYYY-MM-DD HH:mm:ss.SSS')
@@ -432,7 +434,7 @@ Time = React.createClass
       else
         shownTime = '           ' + m.format('HH:mm:ss.SSS')
       if timeType is 'UTC' then shownTime += 'Z'
-    shownTime = _.padEnd shownTime, 24
+    shownTime = _.padEnd shownTime, TIME_LENGTH
     <span 
       onClick={@onClick}
       style={_styleTime fRelativeTime}
@@ -464,10 +466,10 @@ Severity = React.createClass
   render: ->
     {level} = @props
     if level?
-      levelStr = ' ' + ansiColors.LEVEL_NUM_TO_COLORED_STR[level]
+      levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[level]
       <ColoredText text={levelStr}/>
     else
-      <span style={_styleStorySeverity}> -----</span>
+      <span style={_styleStorySeverity}>----- </span>
 
 _styleStorySeverity = 
   color: 'gray'
@@ -482,7 +484,7 @@ Src = React.createClass
     src:                    React.PropTypes.string
   render: ->
     {src} = @props
-    srcStr = ' ' + ansiColors.getSrcChalkColor(src) _.padEnd(src, 15)
+    srcStr = ansiColors.getSrcChalkColor(src) _.padEnd(src, 15)
     <ColoredText text={srcStr}/>
 
 #-====================================================

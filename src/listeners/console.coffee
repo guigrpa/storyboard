@@ -44,7 +44,7 @@ _process = (record, config) ->
   if fStory
     ## parents = record.parents
     msgStr = record.title
-    levelStr = '-----'
+    levelStr = '----- '
     storyIdStr = "#{storyId.slice 0, 8} - "
     actionStr = " [#{record.action}]"
   else
@@ -63,14 +63,14 @@ _process = (record, config) ->
       objStr = chalk.red " -- [could not stringify object, expanding...]"
       objExpanded = true
   ## finalMsg = "#{parentsStr} #{timeStr} #{srcStr} #{levelStr} #{storyIdStr}#{msgStr}#{actionStr}"
-  finalMsg = "#{timeStr} #{srcStr} #{levelStr} #{storyIdStr}#{msgStr}#{actionStr}#{objStr}"
+  finalMsg = "#{timeStr} #{srcStr} #{levelStr}#{storyIdStr}#{msgStr}#{actionStr}#{objStr}"
   if fStory then finalMsg = chalk.bold finalMsg
   _outputLog finalMsg, record.level, extraTimeStr
   if objExpanded and filters.passesFilter src, objLevel
     lines = treeLines obj, {prefix: '  '}
     levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[objLevel]
     for line in lines
-      text = "#{timeStr} #{srcStr} #{levelStr} #{line}"
+      text = "#{timeStr} #{srcStr} #{levelStr}#{line}"
       _outputLog text
   return
 
