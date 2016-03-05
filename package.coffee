@@ -99,8 +99,8 @@ specs =
     # Redux devtools
     "redux-devtools": "3.1.1"
     "redux-devtools-dock-monitor": "1.1.0"
-    "redux-devtools-diff-monitor": "4.0.1"
     "redux-devtools-log-monitor": "1.0.4"
+    "redux-devtools-inspector": "0.3.1"
     "redux-logger": "2.6.1"
 
     # Miscellaneous
