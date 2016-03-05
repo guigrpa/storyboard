@@ -4,6 +4,7 @@ chalk       = require 'chalk'
 k           = require '../gral/constants'
 ansiColors  = require '../gral/ansiColors'
 treeLines   = require '../gral/treeLines'
+filters     = require '../gral/filters'
 
 DEFAULT_CONFIG =
   moduleNameLength: 20
@@ -65,7 +66,7 @@ _process = (record, config) ->
   finalMsg = "#{timeStr} #{srcStr} #{levelStr} #{storyIdStr}#{msgStr}#{actionStr}#{objStr}"
   if fStory then finalMsg = chalk.bold finalMsg
   _outputLog finalMsg, record.level, extraTimeStr
-  if objExpanded
+  if objExpanded and filters.passesFilter src, objLevel
     lines = treeLines obj, {prefix: '  '}
     levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[objLevel]
     for line in lines

@@ -13,6 +13,7 @@ chalk.enabled = true
 k = require './gral/constants'
 
 mainStory = require './gral/stories'
+filters = require './gral/filters'
 
 hub = require './gral/hub'
 hub.init {mainStory}
@@ -23,8 +24,16 @@ if k.IS_BROWSER
 else
   hub.addListener require './listeners/console'
 
+config = (options = {}) ->
+  for key, val of options
+    switch key
+      when 'filter' then filters.config val
+      when 'bufSize' then hub.config {bufSize: val}
+  return
+
 module.exports = {
   mainStory,
+  config,
   addListener: hub.addListener,
   getListeners: hub.getListeners,
   removeAllListeners: hub.removeAllListeners,

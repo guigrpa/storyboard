@@ -5,6 +5,7 @@ bodyParser = require 'body-parser'
 storyboard = require '../storyboard'        # you'd write: `'storyboard'`
 wsServer = require '../listeners/wsServer'  # you'd write: `'storyboard/listeners/wsServer'`
 {mainStory} = storyboard
+storyboard.config filter: '*:*'
 
 PORT = 3000
 

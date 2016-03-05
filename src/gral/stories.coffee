@@ -1,7 +1,8 @@
-uuid = require 'node-uuid'
-_ = require '../vendor/lodash'
-hub = require './hub'
-k = require './constants'
+uuid        = require 'node-uuid'
+_           = require '../vendor/lodash'
+hub         = require './hub'
+k           = require './constants'
+filters     = require './filters'
 
 DEFAULT_SRC = 'main'
 DEFAULT_CHILD_TITLE = ''
@@ -109,6 +110,8 @@ Story::logStory = (action, t) ->
 # * `objExpanded: bool?` (only for logs)
 # * `objLevel: string?`  (only for logs)
 _emit = (record) ->
+  if not record.fStory
+    return unless filters.passesFilter record.src, record.level
   record.id = _getRecordId()
   record.t ?= new Date().getTime()
   record.fServer = not k.IS_BROWSER
