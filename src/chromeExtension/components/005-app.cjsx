@@ -32,22 +32,32 @@ App = React.createClass
 
   #-----------------------------------------------------
   componentDidMount: -> 
-    @_timerFullRefresh = setInterval @_fullRefresh, 30e3
+    @timerFullRefresh = setInterval @fullRefresh, 30e3
+    window.addEventListener 'scroll', @onScroll
 
   componentWillUnmount: ->
-    clearInterval @_timerFullRefresh
-    @_timerFullRefresh = null
+    clearInterval @timerFullRefresh
+    @timerFullRefresh = null
+    window.removeEventListener 'scroll', @onScroll
 
-  _fullRefresh: -> 
+  componentDidUpdate: ->
+    if @fAnchoredToBottom
+      window.scrollTo 0, document.body.scrollHeight
+
+  fullRefresh: -> 
     return if not @props.fRelativeTime
     @setState {seqFullRefresh: @state.seqFullRefresh + 1}
+
+  onScroll: ->
+    bcr = @refs.outer.getBoundingClientRect()
+    @fAnchoredToBottom = (bcr.bottom - window.innerHeight) < 30
 
   #-----------------------------------------------------
   render: -> 
     reduxDevTools = undefined
     if process.env.NODE_ENV isnt 'production'
       reduxDevTools = <ReduxDevTools/>
-    <div style={_style.outer}>
+    <div ref="outer" id="appRoot" style={_style.outer}>
       {@_renderContents()}
       {reduxDevTools}
     </div>
@@ -77,7 +87,6 @@ App = React.createClass
 _style = 
   outer: 
     backgroundColor: 'white'
-    height: '100%'
     padding: 4
 
 #-----------------------------------------------------
