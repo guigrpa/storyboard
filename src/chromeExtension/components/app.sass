@@ -1,4 +1,18 @@
-=box-sizing($value)
+=noUserSelect
+  -webkit-user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+
+=allowUserSelect
+  -webkit-user-select: all
+  -khtml-user-select: all
+  -moz-user-select: all
+  -ms-user-select: all
+  user-select: all
+
+=boxSizing($value)
   -moz-box-sizing: #{$value}
   -webkit-box-sizing: #{$value}
   box-sizing: #{$value}
@@ -25,12 +39,13 @@
 *, 
 *:before, 
 *:after
-  +box-sizing(border-box)
+  +boxSizing(border-box)
 
 body
   padding: 0
   margin: 0
   height: 100%
+  +noUserSelect
 
 #devToolsApp
   position: absolute
@@ -46,6 +61,9 @@ body
 
 .uiFont
   +systemFont
+
+.allowUserSelect
+  +allowUserSelect
 
 // Fast development
 #devToolsWrapper

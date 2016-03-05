@@ -261,7 +261,7 @@ AttachmentLine = React.createClass
     {record} = @props
     style = _styleLine.log record
     <div 
-      className="attachmentLine"
+      className="attachmentLine allowUserSelect"
       style={style}
     >
       <Time
@@ -317,7 +317,7 @@ Line = React.createClass
       style = _styleLine.log record
       indentLevel = level
     <div 
-      className={"#{className} fadeIn"}
+      className={"#{className} allowUserSelect fadeIn"}
       onMouseEnter={@onMouseEnter}
       onMouseLeave={@onMouseLeave}
       style={style}
@@ -415,7 +415,7 @@ Time = React.createClass
     timeType:               React.PropTypes.string.isRequired
     setTimeType:            React.PropTypes.func.isRequired
     seqFullRefresh:         React.PropTypes.number.isRequired
-    
+
   render: ->
     {t, fShowFull, timeType} = @props
     if not t? then return <span>{_.padEnd '', 24}</span>
