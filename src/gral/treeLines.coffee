@@ -1,6 +1,8 @@
 chalk = require 'chalk'
 _ = require '../vendor/lodash'
 
+WRAPPER_KEY = '__wrapper__'
+
 _tree = (node, options, prefix, stack) ->
   out = []
   options.ignoreKeys ?= []
@@ -9,35 +11,36 @@ _tree = (node, options, prefix, stack) ->
   postponedObjectAttrs = []
   for key, val of node
     continue if key in options.ignoreKeys
+    finalPrefix = if key is WRAPPER_KEY then prefix else "#{prefix}#{key}: "
     if _.isObject(val) and _.includes(stack, val)  # Avoid circular dependencies
-      out.push "#{prefix}#{key}: #{chalk.green.bold '[CIRCULAR]'}"
+      out.push "#{finalPrefix}#{chalk.green.bold '[CIRCULAR]'}"
     else if _.isArray(val) and val.length is 0
-      out.push "#{prefix}#{key}: #{chalk.bold '[]'}"
+      out.push "#{finalPrefix}#{chalk.bold '[]'}"
     else if _.isArray(val) and val.length and _.isString(val[0])
       strVal = _.map(val, (o) -> "'#{o}'").join ', '
       strVal = chalk.yellow.bold "[#{strVal}]"
-      out.push "#{prefix}#{key}: #{strVal}"
+      out.push "#{finalPrefix}#{strVal}"
     else if _.isDate(val)
-      out.push "#{prefix}#{key}: #{chalk.magenta.bold val.toISOString()}"
+      out.push "#{finalPrefix}#{chalk.magenta.bold val.toISOString()}"
     else if _.isObject(val) and Object.keys(val).length is 0
-      out.push "#{prefix}#{key}: #{chalk.bold '{}'}"
+      out.push "#{finalPrefix}#{chalk.bold '{}'}"
     else if _.isArray val
       postponedArrayAttrs.push key
     else if _.isObject val
       postponedObjectAttrs.push key
     else if _.isString val
-      out.push "#{prefix}#{key}: " + chalk.yellow.bold("'#{val}'")
+      out.push "#{finalPrefix}" + chalk.yellow.bold("'#{val}'")
     else if _.isNull val
-      out.push "#{prefix}#{key}: #{chalk.red.bold 'null'}"
+      out.push "#{finalPrefix}#{chalk.red.bold 'null'}"
     else if _.isUndefined val
-      out.push "#{prefix}#{key}: #{chalk.bgRed.bold 'undefined'}"
+      out.push "#{finalPrefix}#{chalk.bgRed.bold 'undefined'}"
     else if _.isBoolean val
-      out.push "#{prefix}#{key}: #{chalk.cyan.bold val}"
+      out.push "#{finalPrefix}#{chalk.cyan.bold val}"
     else if _.isNumber val
-      out.push "#{prefix}#{key}: #{chalk.blue.bold val}"
+      out.push "#{finalPrefix}#{chalk.blue.bold val}"
     else
       ### !pragma coverage-skip-block ###
-      out.push "#{prefix}#{key}: #{chalk.bold val}"
+      out.push "#{finalPrefix}#{chalk.bold val}"
   for key in postponedObjectAttrs
     val = node[key]
     out.push "#{prefix}#{key}:"
@@ -52,4 +55,5 @@ _tree = (node, options, prefix, stack) ->
 module.exports = (obj, options = {}) ->
   options.indenter ?= '  '
   prefix = options.prefix ? ''
+  if not _.isObject obj then obj = {"#{WRAPPER_KEY}": obj}
   return _tree obj, options, prefix, []

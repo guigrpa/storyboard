@@ -1,6 +1,5 @@
 - [ ] Library:
     + [ ] Add tests
-    + [ ] Tree lines: support non-objects (arrays, booleans, etc)
 
 - [ ] Chrome extension
     - [ ] Don't use TOGGLE actions, at least for settings - better "SET" them (to be able to set them based on stored settings)

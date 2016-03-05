@@ -66,16 +66,17 @@ _.each k.LEVEL_NUM_TO_STR, (levelStr, levelNum) ->
       msg = arguments[0] ? ''
       src = DEFAULT_SRC
     options ?= {}
-    if options.attach
-      objLevel = k.LEVEL_STR_TO_NUM[options.attachLevel?.toUpperCase()] ? levelNum
-    _emit
+    record =
       storyId: @storyId
       level: levelNum
       src: src
       msg: msg
-      obj: options.attach
-      objExpanded: options.attachExpanded ? false
-      objLevel: objLevel
+    if options.hasOwnProperty 'attach'
+      objLevel = k.LEVEL_STR_TO_NUM[options.attachLevel?.toUpperCase()] ? levelNum
+      record.obj = options.attach
+      record.objExpanded = options.attachExpanded ? false
+      record.objLevel = objLevel
+    _emit record
 
 #-----------------------------------------------
 # ### Story helpers

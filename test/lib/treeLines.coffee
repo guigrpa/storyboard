@@ -66,3 +66,8 @@ describe 'treeLines', ->
     lines = treeLines {a: 1, b: 2}, {ignoreKeys: ['a']}
     expect(lines).to.have.length 1
     expect(lines[0]).to.contain 'b:'
+
+  it 'should handle non-object types: string', ->
+    lines = treeLines "Ratatouille"
+    expect(lines).to.have.length 1
+    expect(lines[0]).to.contain 'Ratatouille'
