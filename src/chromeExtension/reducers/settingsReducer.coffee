@@ -12,8 +12,8 @@ reducer = (state = INITIAL_STATE, action) ->
       return timm.set state, 'timeType', timeType
 
     when 'SET_SHOW_CLOSED_ACTIONS'
-      {fEnabled} = action
-      return timm.set state, 'fShowClosedActions', fEnabled
+      {fShowClosedActions} = action
+      return timm.set state, 'fShowClosedActions', fShowClosedActions
 
     else return state
 

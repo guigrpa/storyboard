@@ -24,6 +24,7 @@ init = (deps) ->
 
   createStore = require './store/createStore'
   _store = createStore()
+  _store.dispatch actions.loadSettings()
 
   # Render the app
   RootComponent = require './components/000-root'

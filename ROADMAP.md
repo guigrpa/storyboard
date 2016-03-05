@@ -2,7 +2,6 @@
     + [ ] Add tests
 
 - [ ] Chrome extension
-    - [ ] Save prefs to localStorage (works for Chrome exts?)
     - [ ] Don't allow selection in general; only allow selection on logs
     - [ ] Reduce the number of spans in a line
     - [ ] Log out
