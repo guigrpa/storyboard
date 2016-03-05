@@ -14,6 +14,7 @@ describe "consoleListener", ->
   before -> 
     storyboard.removeAllListeners()
     storyboard.addListener consoleListener
+    storyboard.config filter: '*:*'
     _listener = storyboard.getListeners()[0]
     _spyLog   = sinon.spy()
     _spyError = sinon.spy()

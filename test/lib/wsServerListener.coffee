@@ -42,6 +42,7 @@ describe "wsServerListener", ->
     before -> 
       storyboard.removeAllListeners()
       storyboard.addListener wsServerListener, {throttle: 0, authenticate: (o) -> true}
+      storyboard.config {filter: '*:*'}
       _listener = storyboard.getListeners()[0]
       _spy = sinon.spy()
       return new Promise (resolve, reject) ->

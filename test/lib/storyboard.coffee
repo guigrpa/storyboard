@@ -16,8 +16,8 @@ describe 'storyboard', ->
   before -> 
     storyboard.removeAllListeners()
     storyboard.addListener _listenerFactory
+    storyboard.config {filter: '*:*', bufSize: 5}
     expect(storyboard.getListeners()).to.have.length 1
-    hub.config {bufSize: 5}
 
   beforeEach -> _spy.reset()
 
