@@ -1,8 +1,8 @@
-toggleTimeType = -> {type: 'TOGGLE_TIME_TYPE'}
-toggleShowClosedActions = -> {type: 'TOGGLE_SHOW_CLOSED_ACTIONS'}
+setTimeType = (timeType) -> {type: 'SET_TIME_TYPE', timeType}
+setShowClosedActions = (fEnabled) -> {type: 'SET_SHOW_CLOSED_ACTIONS', fEnabled}
 
 module.exports =
   actions: {
-    toggleTimeType,
-    toggleShowClosedActions,
+    setTimeType,
+    setShowClosedActions,
   }

@@ -19,7 +19,7 @@ mapStateToProps = (state) ->
   timeType: state.settings.timeType
   fShowClosedActions: state.settings.fShowClosedActions
 mapDispatchToProps = (dispatch) ->
-  onToggleTimeType: -> dispatch actions.toggleTimeType()
+  setTimeType: (timeType) -> dispatch actions.setTimeType timeType
   onToggleExpanded: (pathStr) -> dispatch actions.toggleExpanded pathStr
   onToggleHierarchical: (pathStr) -> dispatch actions.toggleHierarchical pathStr
   onToggleAttachment: (pathStr, recordId) -> 
@@ -36,7 +36,7 @@ _Story = React.createClass
     # From Redux.connect
     timeType:               React.PropTypes.string.isRequired
     fShowClosedActions:     React.PropTypes.bool.isRequired
-    onToggleTimeType:       React.PropTypes.func.isRequired
+    setTimeType:            React.PropTypes.func.isRequired
     onToggleExpanded:       React.PropTypes.func.isRequired
     onToggleHierarchical:   React.PropTypes.func.isRequired
     onToggleAttachment:     React.PropTypes.func.isRequired
@@ -72,7 +72,7 @@ _Story = React.createClass
         fStoryTitle
         fDirectChild={false}
         timeType={@props.timeType}
-        onToggleTimeType={@props.onToggleTimeType}
+        setTimeType={@props.setTimeType}
         onToggleExpanded={@toggleExpanded}
         onToggleHierarchical={@toggleHierarchical}
         seqFullRefresh={@props.seqFullRefresh}
@@ -110,14 +110,14 @@ _Story = React.createClass
         level={@props.level}
         fDirectChild={fDirectChild}
         timeType={@props.timeType}
-        onToggleTimeType={@props.onToggleTimeType}
+        setTimeType={@props.setTimeType}
         onToggleAttachment={@toggleAttachment}
         seqFullRefresh={@props.seqFullRefresh}
       />
     out
 
   renderAttachment: (record) -> 
-    props = _.pick @props, ['level', 'timeType', 'onToggleTimeType', 'seqFullRefresh']
+    props = _.pick @props, ['level', 'timeType', 'setTimeType', 'seqFullRefresh']
     return record.obj.map (line, idx) ->
       <AttachmentLine key={"#{record.id}_#{idx}"}
         record={record}
@@ -252,7 +252,7 @@ AttachmentLine = React.createClass
     record:                 React.PropTypes.object.isRequired
     level:                  React.PropTypes.number.isRequired
     timeType:               React.PropTypes.string.isRequired
-    onToggleTimeType:       React.PropTypes.func.isRequired
+    setTimeType:            React.PropTypes.func.isRequired
     seqFullRefresh:         React.PropTypes.number.isRequired
     msg:                    React.PropTypes.string.isRequired
 
@@ -267,7 +267,7 @@ AttachmentLine = React.createClass
       <Time
         fShowFull={false}
         timeType={@props.timeType}
-        onToggleTimeType={@props.onToggleTimeType}
+        setTimeType={@props.setTimeType}
         seqFullRefresh={@props.seqFullRefresh}
       />
       <Severity level={String record.objLevel}/>
@@ -292,7 +292,7 @@ Line = React.createClass
     fStoryTitle:            React.PropTypes.bool
     fDirectChild:           React.PropTypes.bool.isRequired
     timeType:               React.PropTypes.string.isRequired
-    onToggleTimeType:       React.PropTypes.func.isRequired
+    setTimeType:            React.PropTypes.func.isRequired
     onToggleExpanded:       React.PropTypes.func
     onToggleHierarchical:   React.PropTypes.func
     onToggleAttachment:     React.PropTypes.func
@@ -345,13 +345,13 @@ Line = React.createClass
 
   renderTime: (record) ->
     {fStory, records, t} = record
-    {level, timeType, onToggleTimeType, seqFullRefresh} = @props
+    {level, timeType, setTimeType, seqFullRefresh} = @props
     fShowFull = (fStory and records and level <= 2) or (level <= 1)
     <Time
       t={t}
       fShowFull={fShowFull}
       timeType={timeType}
-      onToggleTimeType={onToggleTimeType}
+      setTimeType={setTimeType}
       seqFullRefresh={seqFullRefresh}
     />
 
@@ -413,8 +413,9 @@ Time = React.createClass
     t:                      React.PropTypes.number
     fShowFull:              React.PropTypes.bool
     timeType:               React.PropTypes.string.isRequired
-    onToggleTimeType:       React.PropTypes.func.isRequired
+    setTimeType:            React.PropTypes.func.isRequired
     seqFullRefresh:         React.PropTypes.number.isRequired
+    
   render: ->
     {t, fShowFull, timeType} = @props
     if not t? then return <span>{_.padEnd '', 24}</span>
@@ -433,12 +434,19 @@ Time = React.createClass
       if timeType is 'UTC' then shownTime += 'Z'
     shownTime = _.padEnd shownTime, 24
     <span 
-      onClick={@props.onToggleTimeType}
+      onClick={@onClick}
       style={_styleTime fRelativeTime}
       title={if timeType isnt 'LOCAL' then localTime}
     >
       {shownTime}
     </span>
+
+  onClick: ->
+    newTimeType = switch @props.timeType
+      when 'LOCAL' then 'RELATIVE'
+      when 'RELATIVE' then 'UTC'
+      else 'LOCAL'
+    @props.setTimeType newTimeType
 
 _styleTime = (fRelativeTime) ->
   display: 'inline-block'

@@ -7,16 +7,13 @@ INITIAL_STATE =
 reducer = (state = INITIAL_STATE, action) ->
   switch action.type
 
-    when 'TOGGLE_TIME_TYPE'
-      newType = switch state.timeType
-        when 'LOCAL' then 'RELATIVE'
-        when 'RELATIVE' then 'UTC'
-        else 'LOCAL'
-      return timm.set state, 'timeType', newType
+    when 'SET_TIME_TYPE'
+      {timeType} = action
+      return timm.set state, 'timeType', timeType
 
-    when 'TOGGLE_SHOW_CLOSED_ACTIONS'
-      return timm.set state, 'fShowClosedActions', \
-        not state.fShowClosedActions
+    when 'SET_SHOW_CLOSED_ACTIONS'
+      {fEnabled} = action
+      return timm.set state, 'fShowClosedActions', fEnabled
 
     else return state
 
