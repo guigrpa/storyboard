@@ -1,7 +1,6 @@
 _                 = require '../../vendor/lodash'
 React             = require 'react'
 ReactRedux        = require 'react-redux'
-Login             = require './010-login'
 Toolbar           = require './015-toolbar'
 Story             = require './020-story'
 LargeMessage      = require './900-largeMessage'
@@ -57,26 +56,25 @@ App = React.createClass
     reduxDevTools = undefined
     if process.env.NODE_ENV isnt 'production'
       reduxDevTools = <ReduxDevTools/>
+    fConnected = @props.cxState is 'CONNECTED'
     <div ref="outer" id="appRoot" style={_style.outer}>
-      {@_renderContents()}
+      {if not fConnected then @renderConnecting()}
+      {if fConnected then <Toolbar/>}
+      {if fConnected then @renderStories()}
       {reduxDevTools}
     </div>
 
-  _renderContents: ->
-    {cxState, fTakingLong, mainStory} = @props
-    if cxState isnt 'CONNECTED' then return @_renderConnecting fTakingLong
-    <div>
-      <Login/>
-      <Toolbar/>
+  renderStories: ->
+    <div style={_style.stories}>
       <Story 
-        story={mainStory} 
+        story={@props.mainStory} 
         level={0} 
         seqFullRefresh={@state.seqFullRefresh}
       />
     </div>
 
-  _renderConnecting: (fTakingLong) ->
-    extra = if fTakingLong then \
+  renderConnecting: ->
+    extra = if @props.fTakingLong then \
       <div>If this seems to be taking a long time, please verify your URL</div>
     <LargeMessage>
       Connecting to Storyboard...
@@ -87,6 +85,8 @@ App = React.createClass
 _style = 
   outer: 
     backgroundColor: 'white'
+    backgroundOpacity: 0.5
+  stories:
     padding: 4
 
 #-----------------------------------------------------

@@ -76,8 +76,10 @@ logIn = (credentials) ->
   _txMsg 'LOGIN_REQUEST', credentials
   return {type: 'LOGIN_STARTED'}
 
-# TODO
-logOut = ->
+logOut = -> (dispatch) ->
+  _lastCredentials = null
+  dispatch {type: 'LOGGED_OUT'}
+  window.location.reload()
 
 #-------------------------------------------------
 # ## Helpers
