@@ -552,6 +552,7 @@ _styleHierarchical =
     textDecoration: 'underline'
     cursor: 'pointer'
     fontWeight: 'normal'
+    fontFamily: 'Menlo, Consolas, monospace'
   icon:
     marginRight: 4
 
