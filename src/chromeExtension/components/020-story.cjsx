@@ -386,7 +386,7 @@ Line = React.createClass
 _styleLine =
   titleRow: (level) ->
     fontWeight: 900
-    fontFamily: 'monospace'
+    fontFamily: 'Menlo, Consolas, monospace'
     whiteSpace: 'pre'
   title:
     cursor: 'pointer'
@@ -394,7 +394,7 @@ _styleLine =
     bgColor = 'aliceblue'
     if record.fServer then bgColor = tinycolor(bgColor).darken(5).toHexString()
     backgroundColor: bgColor # if story.fServer then '#f5f5f5' else '#e8e8e8'
-    fontFamily: 'monospace'
+    fontFamily: 'Menlo, Consolas, monospace'
     whiteSpace: 'pre'
     fontWeight: if record.fStory and (record.action is 'CREATED') then 900
   spinner:
