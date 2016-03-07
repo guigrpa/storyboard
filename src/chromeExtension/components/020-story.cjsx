@@ -12,6 +12,11 @@ actions           = require '../actions/actions'
 k                 = require '../../gral/constants'
 ansiColors        = require '../../gral/ansiColors'
 
+_quickFind = (msg, quickFind) ->
+  return msg if not quickFind.length
+  msg = msg.replace quickFind, chalk.bgYellow(quickFind)
+  msg
+
 #-====================================================
 # ## Story
 #-====================================================
@@ -264,9 +269,7 @@ AttachmentLine = React.createClass
   render: ->
     {record, msg} = @props
     style = _styleLine.log record
-    quickFind = @props.quickFind
-    if quickFind.length
-      msg = msg.replace quickFind, chalk.bgYellow(quickFind)
+    msg = _quickFind msg, @props.quickFind
     <div 
       className="attachmentLine allowUserSelect"
       style={style}
@@ -342,9 +345,7 @@ Line = React.createClass
     </div>
 
   renderMsg: (fStoryObject, msg, level) ->
-    quickFind = @props.quickFind
-    if quickFind.length
-      msg = msg.replace quickFind, chalk.bgYellow(quickFind)
+    msg = _quickFind msg, @props.quickFind
     if level >= k.LEVEL_STR_TO_NUM.ERROR then msg = chalk.red.bold msg
     else if level >= k.LEVEL_STR_TO_NUM.WARN then msg = chalk.red.yellow msg
     if fStoryObject

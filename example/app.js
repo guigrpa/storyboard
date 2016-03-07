@@ -69,6 +69,7 @@
 	  var seq, story;
 	  seq = Math.floor(Math.random() * 100);
 	  story = mainStory.child({
+	    src: 'client',
 	    title: storyTitle + (" (seq=" + seq + ")")
 	  });
 	  story.info('serverInterface', "Fetching items from server...");
@@ -84665,7 +84666,7 @@
 /* 759 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AttachmentLine, CaretOrSpace, ColoredText, HierarchicalToggle, Icon, Indent, Line, MainStoryTitle, PureRenderMixin, React, ReactRedux, Severity, Src, Story, TIME_LENGTH, Time, _, _Story, _style, _styleCaretOrSpace, _styleHierarchical, _styleLine, _styleMainTitle, _styleStorySeverity, _styleTime, actions, ansiColors, chalk, connect, k, mapDispatchToProps, mapStateToProps, moment, timm, tinycolor;
+	var AttachmentLine, CaretOrSpace, ColoredText, HierarchicalToggle, Icon, Indent, Line, MainStoryTitle, PureRenderMixin, React, ReactRedux, Severity, Src, Story, TIME_LENGTH, Time, _, _Story, _quickFind, _style, _styleCaretOrSpace, _styleHierarchical, _styleLine, _styleMainTitle, _styleStorySeverity, _styleTime, actions, ansiColors, chalk, connect, k, mapDispatchToProps, mapStateToProps, moment, timm, tinycolor;
 
 	_ = __webpack_require__(37);
 
@@ -84692,6 +84693,14 @@
 	k = __webpack_require__(12);
 
 	ansiColors = __webpack_require__(232);
+
+	_quickFind = function(msg, quickFind) {
+	  if (!quickFind.length) {
+	    return msg;
+	  }
+	  msg = msg.replace(quickFind, chalk.bgYellow(quickFind));
+	  return msg;
+	};
 
 	mapStateToProps = function(state) {
 	  return {
@@ -85003,13 +85012,10 @@
 	    quickFind: React.PropTypes.string.isRequired
 	  },
 	  render: function() {
-	    var msg, quickFind, record, ref, style;
+	    var msg, record, ref, style;
 	    ref = this.props, record = ref.record, msg = ref.msg;
 	    style = _styleLine.log(record);
-	    quickFind = this.props.quickFind;
-	    if (quickFind.length) {
-	      msg = msg.replace(quickFind, chalk.bgYellow(quickFind));
-	    }
+	    msg = _quickFind(msg, this.props.quickFind);
 	    return React.createElement("div", {
 	      "className": "attachmentLine allowUserSelect",
 	      "style": style
@@ -85092,11 +85098,7 @@
 	    }), this.renderCaretOrSpace(record), this.renderMsg(fStoryObject, msg, record.level), (fStoryObject ? this.renderToggleHierarchical(record) : void 0), spinner, this.renderAttachmentIcon(record));
 	  },
 	  renderMsg: function(fStoryObject, msg, level) {
-	    var quickFind;
-	    quickFind = this.props.quickFind;
-	    if (quickFind.length) {
-	      msg = msg.replace(quickFind, chalk.bgYellow(quickFind));
-	    }
+	    msg = _quickFind(msg, this.props.quickFind);
 	    if (level >= k.LEVEL_STR_TO_NUM.ERROR) {
 	      msg = chalk.red.bold(msg);
 	    } else if (level >= k.LEVEL_STR_TO_NUM.WARN) {

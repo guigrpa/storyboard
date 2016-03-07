@@ -19,15 +19,15 @@ app.use express.static path.join(process.cwd(), 'example')
 app.post '/items', (req, res, next) ->
   {storyId} = req.body
   if storyId? then extraParents = [storyId]
-  story = mainStory.child {src: 'server', title: "HTTP request #{chalk.green req.url}", extraParents}
+  story = mainStory.child {src: 'httpServer', title: "HTTP request #{chalk.green req.url}", extraParents}
   db.getItems {story}
   .then (result) -> 
-    story.debug 'server', "HTTP response: #{result.length} items", attachInline: result
+    story.debug 'httpServer', "HTTP response: #{result.length} items", attachInline: result
     res.json result
     story.close()
 httpServer = http.createServer app
 httpServer.listen PORT
-mainStory.info 'server', "Listening on port #{chalk.cyan PORT}..."
+mainStory.info 'httpServer', "Listening on port #{chalk.cyan PORT}..."
 
 # Apart from the pre-installed console listener, 
 # add remote access to server logs via WebSockets 
