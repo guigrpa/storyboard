@@ -335,16 +335,18 @@ Line = React.createClass
       <Src src={record.src}/>
       <Indent level={indentLevel}/>
       {@renderCaretOrSpace record}
-      {@renderMsg fStoryObject, msg}
+      {@renderMsg fStoryObject, msg, record.level}
       {if fStoryObject then @renderToggleHierarchical record}
       {spinner}
       {@renderAttachmentIcon record}
     </div>
 
-  renderMsg: (fStoryObject, msg) ->
+  renderMsg: (fStoryObject, msg, level) ->
     quickFind = @props.quickFind
     if quickFind.length
       msg = msg.replace quickFind, chalk.bgYellow(quickFind)
+    if level >= k.LEVEL_STR_TO_NUM.ERROR then msg = chalk.red.bold msg
+    else if level >= k.LEVEL_STR_TO_NUM.WARN then msg = chalk.red.yellow msg
     if fStoryObject
       <ColoredText 
         text={msg} 
@@ -381,11 +383,16 @@ Line = React.createClass
 
   renderAttachmentIcon: (record) ->
     return if not record.obj?
-    icon = if record.objExpanded then 'folder-open-o' else 'folder-o'
+    if record.objIsError
+      icon = if record.objExpanded then 'folder-open' else 'folder'
+      style = timm.set _styleLine.attachmentIcon, 'color', 'red'
+    else
+      icon = if record.objExpanded then 'folder-open-o' else 'folder-o'
+      style = _styleLine.attachmentIcon
     <Icon 
       icon={icon} 
       onClick={@onClickAttachment}
-      style={_styleLine.attachmentIcon}
+      style={style}
     />
 
   #-----------------------------------------------------

@@ -19,6 +19,7 @@ module.exports =
   isDate:       require 'lodash/isDate'
   isEmpty:      require 'lodash/isEmpty'
   isEqual:      require 'lodash/isEqual'
+  isError:      require 'lodash/isError'
   isFunction:   require 'lodash/isFunction'
   isNull:       require 'lodash/isNull'
   isNumber:     require 'lodash/isNumber'

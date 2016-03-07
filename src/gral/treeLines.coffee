@@ -60,5 +60,8 @@ _tree = (node, options, prefix, stack) ->
 module.exports = (obj, options = {}) ->
   options.indenter ?= '  '
   prefix = options.prefix ? ''
-  if not _.isObject obj then obj = {"#{WRAPPER_KEY}": obj}
+  if _.isError obj
+    obj = _.pick obj, ['name', 'message', 'stack']
+  else if not _.isObject obj 
+    obj = {"#{WRAPPER_KEY}": obj}
   return _tree obj, options, prefix, []

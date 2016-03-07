@@ -742,6 +742,7 @@
 	      objLevel = (ref3 = k.LEVEL_STR_TO_NUM[(ref4 = options.attachLevel) != null ? ref4.toUpperCase() : void 0]) != null ? ref3 : levelNum;
 	      record.objLevel = objLevel;
 	      record.objOptions = _.pick(options, ['ignoreKeys']);
+	      record.objIsError = _.isError(record.obj);
 	    }
 	    return _emit(record);
 	  };
@@ -4861,6 +4862,7 @@
 	  isDate: __webpack_require__(192),
 	  isEmpty: __webpack_require__(193),
 	  isEqual: __webpack_require__(194),
+	  isError: __webpack_require__(781),
 	  isFunction: __webpack_require__(57),
 	  isNull: __webpack_require__(195),
 	  isNumber: __webpack_require__(196),
@@ -12162,6 +12164,11 @@
 	      objExpanded = true;
 	    }
 	  }
+	  if (level >= k.LEVEL_STR_TO_NUM.ERROR) {
+	    msgStr = chalk.red.bold(msgStr);
+	  } else if (level >= k.LEVEL_STR_TO_NUM.WARN) {
+	    msgStr = chalk.red.yellow(msgStr);
+	  }
 	  finalMsg = timeStr + " " + srcStr + " " + levelStr + storyIdStr + msgStr + actionStr + objStr;
 	  if (fStory) {
 	    finalMsg = chalk.bold(finalMsg);
@@ -12579,7 +12586,9 @@
 	    options.indenter = '  ';
 	  }
 	  prefix = (ref = options.prefix) != null ? ref : '';
-	  if (!_.isObject(obj)) {
+	  if (_.isError(obj)) {
+	    obj = _.pick(obj, ['name', 'message', 'stack']);
+	  } else if (!_.isObject(obj)) {
 	    obj = (
 	      obj1 = {},
 	      obj1["" + WRAPPER_KEY] = obj,
@@ -85067,13 +85076,18 @@
 	      "src": record.src
 	    }), React.createElement(Indent, {
 	      "level": indentLevel
-	    }), this.renderCaretOrSpace(record), this.renderMsg(fStoryObject, msg), (fStoryObject ? this.renderToggleHierarchical(record) : void 0), spinner, this.renderAttachmentIcon(record));
+	    }), this.renderCaretOrSpace(record), this.renderMsg(fStoryObject, msg, record.level), (fStoryObject ? this.renderToggleHierarchical(record) : void 0), spinner, this.renderAttachmentIcon(record));
 	  },
-	  renderMsg: function(fStoryObject, msg) {
+	  renderMsg: function(fStoryObject, msg, level) {
 	    var quickFind;
 	    quickFind = this.props.quickFind;
 	    if (quickFind.length) {
 	      msg = msg.replace(quickFind, chalk.bgYellow(quickFind));
+	    }
+	    if (level >= k.LEVEL_STR_TO_NUM.ERROR) {
+	      msg = chalk.red.bold(msg);
+	    } else if (level >= k.LEVEL_STR_TO_NUM.WARN) {
+	      msg = chalk.red.yellow(msg);
 	    }
 	    if (fStoryObject) {
 	      return React.createElement(ColoredText, {
@@ -85123,15 +85137,21 @@
 	    });
 	  },
 	  renderAttachmentIcon: function(record) {
-	    var icon;
+	    var icon, style;
 	    if (record.obj == null) {
 	      return;
 	    }
-	    icon = record.objExpanded ? 'folder-open-o' : 'folder-o';
+	    if (record.objIsError) {
+	      icon = record.objExpanded ? 'folder-open' : 'folder';
+	      style = timm.set(_styleLine.attachmentIcon, 'color', 'red');
+	    } else {
+	      icon = record.objExpanded ? 'folder-open-o' : 'folder-o';
+	      style = _styleLine.attachmentIcon;
+	    }
 	    return React.createElement(Icon, {
 	      "icon": icon,
 	      "onClick": this.onClickAttachment,
-	      "style": _styleLine.attachmentIcon
+	      "style": style
 	    });
 	  },
 	  onMouseEnter: function() {
@@ -90820,6 +90840,53 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "f775f9cca88e21d45bebe185b27c0e5b.svg";
+
+/***/ },
+/* 781 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObjectLike = __webpack_require__(60);
+
+	/** `Object#toString` result references. */
+	var errorTag = '[object Error]';
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+
+	/**
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objectToString = objectProto.toString;
+
+	/**
+	 * Checks if `value` is an `Error`, `EvalError`, `RangeError`, `ReferenceError`,
+	 * `SyntaxError`, `TypeError`, or `URIError` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an error object, else `false`.
+	 * @example
+	 *
+	 * _.isError(new Error);
+	 * // => true
+	 *
+	 * _.isError(Error);
+	 * // => false
+	 */
+	function isError(value) {
+	  if (!isObjectLike(value)) {
+	    return false;
+	  }
+	  var Ctor = value.constructor;
+	  return (objectToString.call(value) == errorTag) ||
+	    (typeof Ctor == 'function' && objectToString.call(Ctor.prototype) == errorTag);
+	}
+
+	module.exports = isError;
+
 
 /***/ }
 /******/ ]);

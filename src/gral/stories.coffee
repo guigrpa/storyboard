@@ -81,6 +81,7 @@ _.each k.LEVEL_NUM_TO_STR, (levelStr, levelNum) ->
       objLevel = k.LEVEL_STR_TO_NUM[options.attachLevel?.toUpperCase()] ? levelNum
       record.objLevel = objLevel
       record.objOptions = _.pick options, ['ignoreKeys']
+      record.objIsError = _.isError record.obj
     _emit record
 
 #-----------------------------------------------
@@ -116,6 +117,7 @@ Story::logStory = (action, t) ->
 # * `objExpanded: bool?` (only for logs)
 # * `objLevel: string?`  (only for logs)
 # * `objOptions: object?`  (only for logs)
+# * `objIsError: bool?` (only for logs)
 _emit = (record) ->
   if not record.fStory
     return unless filters.passesFilter record.src, record.level

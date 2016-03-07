@@ -22,7 +22,7 @@ app.post '/items', (req, res, next) ->
   story = mainStory.child {src: 'server', title: "HTTP request #{chalk.green req.url}", extraParents}
   db.getItems {story}
   .then (result) -> 
-    story.debug 'server', "HTTP response: #{result.length} items", {attachInline: result}
+    story.debug 'server', "HTTP response: #{result.length} items", attachInline: result
     res.json result
     story.close()
 httpServer = http.createServer app
@@ -35,6 +35,10 @@ mainStory.info 'server', "Listening on port #{chalk.cyan PORT}..."
 storyboard.addListener wsServer,
   httpServer: httpServer
   authenticate: ({login, password}) -> true
+
+# Initialise our fake database
+db = require './db'
+db.init()
 
 # Some example logs (including a circular reference)
 someInfo = 
@@ -51,12 +55,8 @@ mainStory.debug 'server', "Example info (expanded):",
   attach: someInfo
   attachLevel: 'TRACE'
   ignoreKeys: ['dontShow']
-
-# Initialise our virtual database
-db = require './db'
-db.init()
-
-# Initialise our virtual database
+mainStory.warn 'server', "Example warning"
+mainStory.error 'server', "Example error", attach: new Error('Error message')
 setInterval -> 
   mainStory.debug 'server', "t: #{chalk.blue new Date().toISOString()}"
 , 60000

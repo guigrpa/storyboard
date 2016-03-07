@@ -62,6 +62,8 @@ _process = (record, config) ->
     catch e
       objStr = chalk.red " -- [could not stringify object, expanding...]"
       objExpanded = true
+  if level >= k.LEVEL_STR_TO_NUM.ERROR then msgStr = chalk.red.bold msgStr
+  else if level >= k.LEVEL_STR_TO_NUM.WARN then msgStr = chalk.red.yellow msgStr
   ## finalMsg = "#{parentsStr} #{timeStr} #{srcStr} #{levelStr} #{storyIdStr}#{msgStr}#{actionStr}"
   finalMsg = "#{timeStr} #{srcStr} #{levelStr}#{storyIdStr}#{msgStr}#{actionStr}#{objStr}"
   if fStory then finalMsg = chalk.bold finalMsg
