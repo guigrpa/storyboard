@@ -42,7 +42,7 @@
     expressApp = express();
     expressApp.use(express["static"](path.join(__dirname, '../../serverLogsApp')));
     httpServer = http.createServer(expressApp);
-    _ioStandalone = socketio(httpServer);
+    _ioStandalone = socketio(httpServer).of(k.WS_NAMESPACE);
     _ioStandalone.on('connection', function(socket) {
       return _socketOnConnection(socket, config);
     });

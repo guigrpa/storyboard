@@ -13187,6 +13187,8 @@
 
 	chalk = __webpack_require__(2);
 
+	chalk.enabled = true;
+
 	k = __webpack_require__(16);
 
 	LEVEL_NUM_TO_COLORED_STR = {};

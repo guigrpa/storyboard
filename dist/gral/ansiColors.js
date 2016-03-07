@@ -5,6 +5,8 @@
 
   chalk = require('chalk');
 
+  chalk.enabled = true;
+
   k = require('./constants');
 
   LEVEL_NUM_TO_COLORED_STR = {};

@@ -28,7 +28,7 @@ _socketInit = (config) ->
   expressApp = express()
   expressApp.use express.static path.join(__dirname, '../../serverLogsApp')
   httpServer = http.createServer expressApp
-  _ioStandalone = socketio httpServer
+  _ioStandalone = socketio(httpServer).of k.WS_NAMESPACE
   _ioStandalone.on 'connection', (socket) -> _socketOnConnection socket, config
   httpServer.listen port
   story.info LOG_SRC, "Server logs available on port #{chalk.cyan port}"
