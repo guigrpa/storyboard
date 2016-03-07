@@ -1,6 +1,7 @@
 {storyboard, expect, sinon, Promise} = require './imports'
 socketio = require 'socket.io-client'
 wsServerListener = require '../../src/listeners/wsServer'
+k = require '../../src/gral/constants'
 
 {mainStory} = storyboard
 
@@ -46,7 +47,7 @@ describe "wsServerListener", ->
       _listener = storyboard.getListeners()[0]
       _spy = sinon.spy()
       return new Promise (resolve, reject) ->
-        _socket = socketio "http://localhost:8090"
+        _socket = socketio("http://localhost:8090#{k.WS_NAMESPACE}")
         _socket.on 'connect', resolve
         _socket.on 'MSG', _spy
 
@@ -101,7 +102,7 @@ describe "wsServerListener", ->
       _listener = storyboard.getListeners()[0]
       _spy = sinon.spy()
       return new Promise (resolve, reject) ->
-        _socket = socketio "http://localhost:8090"
+        _socket = socketio("http://localhost:8090#{k.WS_NAMESPACE}")
         _socket.on 'connect', resolve
         _socket.on 'MSG', _spy
       .then ->

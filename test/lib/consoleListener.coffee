@@ -52,7 +52,7 @@ describe "consoleListener", ->
 
     it "should use JSON.stringify with inline attachments", ->
       obj = {a: 5}
-      mainStory.info "Inline attachment", attach: obj
+      mainStory.info "Inline attachment", {attach: obj, attachInline: true}
       expect(_spyLog).to.have.been.calledOnce
       msg = _spyLog.args[0][0]
       expect(msg).to.contain JSON.stringify obj
