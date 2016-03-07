@@ -1,5 +1,6 @@
 _ = require '../vendor/lodash'
 chalk = require 'chalk'
+chalk.enabled = true
 k = require './constants'
 
 #-------------------------------------------------

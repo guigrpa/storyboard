@@ -75448,6 +75448,7 @@
 	    var src, srcStr;
 	    src = this.props.src;
 	    srcStr = ansiColors.getSrcChalkColor(src)(_.padEnd(src, 15));
+	    console.log(srcStr);
 	    return React.createElement(ColoredText, {
 	      "text": srcStr
 	    });
@@ -80489,6 +80490,8 @@
 	_ = __webpack_require__(170);
 
 	chalk = __webpack_require__(368);
+
+	chalk.enabled = true;
 
 	k = __webpack_require__(700);
 

@@ -13228,6 +13228,8 @@
 
 	chalk = __webpack_require__(4);
 
+	chalk.enabled = true;
+
 	k = __webpack_require__(16);
 
 	LEVEL_NUM_TO_COLORED_STR = {};
@@ -86276,6 +86278,7 @@
 	    var src, srcStr;
 	    src = this.props.src;
 	    srcStr = ansiColors.getSrcChalkColor(src)(_.padEnd(src, 15));
+	    console.log(srcStr);
 	    return React.createElement(ColoredText, {
 	      "text": srcStr
 	    });

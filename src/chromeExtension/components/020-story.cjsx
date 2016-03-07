@@ -496,6 +496,7 @@ Src = React.createClass
   render: ->
     {src} = @props
     srcStr = ansiColors.getSrcChalkColor(src) _.padEnd(src, 15)
+    console.log srcStr
     <ColoredText text={srcStr}/>
 
 #-====================================================
