@@ -110,6 +110,7 @@
         objLevel = (ref3 = k.LEVEL_STR_TO_NUM[(ref4 = options.attachLevel) != null ? ref4.toUpperCase() : void 0]) != null ? ref3 : levelNum;
         record.objLevel = objLevel;
         record.objOptions = _.pick(options, ['ignoreKeys']);
+        record.objIsError = _.isError(record.obj);
       }
       return _emit(record);
     };

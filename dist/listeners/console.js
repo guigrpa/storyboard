@@ -81,6 +81,11 @@
         objExpanded = true;
       }
     }
+    if (level >= k.LEVEL_STR_TO_NUM.ERROR) {
+      msgStr = chalk.red.bold(msgStr);
+    } else if (level >= k.LEVEL_STR_TO_NUM.WARN) {
+      msgStr = chalk.red.yellow(msgStr);
+    }
     finalMsg = timeStr + " " + srcStr + " " + levelStr + storyIdStr + msgStr + actionStr + objStr;
     if (fStory) {
       finalMsg = chalk.bold(finalMsg);

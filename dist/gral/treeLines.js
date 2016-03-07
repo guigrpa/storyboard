@@ -90,7 +90,9 @@
       options.indenter = '  ';
     }
     prefix = (ref = options.prefix) != null ? ref : '';
-    if (!_.isObject(obj)) {
+    if (_.isError(obj)) {
+      obj = _.pick(obj, ['name', 'message', 'stack']);
+    } else if (!_.isObject(obj)) {
       obj = (
         obj1 = {},
         obj1["" + WRAPPER_KEY] = obj,
