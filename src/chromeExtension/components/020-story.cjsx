@@ -386,7 +386,7 @@ Line = React.createClass
     return if not record.obj?
     if record.objIsError
       icon = if record.objExpanded then 'folder-open' else 'folder'
-      style = timm.set _styleLine.attachmentIcon, 'color', 'red'
+      style = timm.set _styleLine.attachmentIcon, 'color', '#cc0000'
     else
       icon = if record.objExpanded then 'folder-open-o' else 'folder-o'
       style = _styleLine.attachmentIcon

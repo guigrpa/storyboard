@@ -74375,7 +74375,7 @@
 	    }
 	    if (record.objIsError) {
 	      icon = record.objExpanded ? 'folder-open' : 'folder';
-	      style = timm.set(_styleLine.attachmentIcon, 'color', 'red');
+	      style = timm.set(_styleLine.attachmentIcon, 'color', '#cc0000');
 	    } else {
 	      icon = record.objExpanded ? 'folder-open-o' : 'folder-o';
 	      style = _styleLine.attachmentIcon;
@@ -79674,9 +79674,9 @@
 
 	CSS_COLORS = {
 	  BLACK: 'black',
-	  RED: 'red',
+	  RED: '#cc0000',
 	  GREEN: 'green',
-	  YELLOW: 'orange',
+	  YELLOW: '#ff6600',
 	  BLUE: 'blue',
 	  MAGENTA: 'magenta',
 	  CYAN: 'darkturquoise',

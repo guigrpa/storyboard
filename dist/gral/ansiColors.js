@@ -98,9 +98,9 @@
 
   CSS_COLORS = {
     BLACK: 'black',
-    RED: 'red',
+    RED: '#cc0000',
     GREEN: 'green',
-    YELLOW: 'orange',
+    YELLOW: '#ff6600',
     BLUE: 'blue',
     MAGENTA: 'magenta',
     CYAN: 'darkturquoise',
