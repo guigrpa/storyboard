@@ -21,7 +21,7 @@
     "url": "git+https://github.com/guigrpa/storyboard.git"
   },
   "scripts": {
-    "compileLib": "rm -rf dist && coffee -o dist -c src",
+    "compileLib": "rm -rf dist && coffee --no-header -o dist -c src/storyboard.coffee && coffee --no-header -o dist/gral -c src/gral && coffee --no-header -o dist/listeners -c src/listeners && coffee --no-header -o dist/vendor -c src/vendor",
     "testLib": "mocha test/lib --opts test/lib/mocha.opts",
     "testLibCovDev": "cross-env TEST_COV=lib_development NODE_ENV=development mocha test/lib --opts test/lib/mocha.opts",
     "testLibCovProd": "cross-env TEST_COV=lib_production NODE_ENV=production mocha test/lib --opts test/lib/mocha.opts",
@@ -33,7 +33,7 @@
     "buildExtensionWatch": "webpack --config src/chromeExtension/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
     "buildExample": "webpack --config src/example/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
     "example": "coffee src/example/server.coffee",
-    "build": "npm run compileLib && npm run buildExtension && npm run buildServerLogsApp"
+    "build": "coffee package.coffee && npm run compileLib && npm run buildServerLogsApp && npm run buildExtension"
   },
   "dependencies": {
     "bluebird": "3.3.1",

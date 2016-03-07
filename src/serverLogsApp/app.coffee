@@ -5,7 +5,7 @@ chalk = require 'chalk'
 
 # Enable the following block to mount the developer tools 
 # in the main page (for faster development)
-if true
+if false
   devToolsApp = require '../chromeExtension/devToolsApp'
 
   # Emulate the content script for page -> devtools messages

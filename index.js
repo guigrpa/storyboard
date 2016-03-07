@@ -1,1 +1,1 @@
-module.exports = require('./dist/storyboard.js')
+module.exports = require('./dist/storyboard.js');

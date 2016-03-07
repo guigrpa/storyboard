@@ -32,7 +32,10 @@ specs =
     # Library
     compileLib: _runMultiple [
       "rm -rf dist"
-      "coffee -o dist -c src"
+      "coffee --no-header -o dist -c src/storyboard.coffee"
+      "coffee --no-header -o dist/gral -c src/gral"
+      "coffee --no-header -o dist/listeners -c src/listeners"
+      "coffee --no-header -o dist/vendor -c src/vendor"
     ]
     testLib:                  _runMocha 'test/lib'
     testLibCovDev:            _runMocha 'test/lib', 'TEST_COV=lib_development NODE_ENV=development'
@@ -58,9 +61,11 @@ specs =
 
     # General
     build: _runMultiple [
+      "coffee package.coffee"
+      ## TODO: run tests
       "npm run compileLib"
-      "npm run buildExtension"
       "npm run buildServerLogsApp"
+      "npm run buildExtension"
     ]
 
 

@@ -22,7 +22,8 @@ app.post '/items', (req, res, next) ->
   story = mainStory.child {src: 'server', title: "HTTP request #{chalk.green req.url}", extraParents}
   db.getItems {story}
   .then (result) -> 
-    story.debug 'server', "HTTP response: #{result.length} items", {attach: result}
+    story.debug 'server', "HTTP response: #{result.length} items", 
+      {attach: result, attachInline: true}
     res.json result
     story.close()
 httpServer = http.createServer app
@@ -47,7 +48,7 @@ someInfo =
     values: [1, 2]
 someInfo.nested.configOptions.mainInfo = someInfo
 mainStory.debug 'server', "Example info (expanded):", 
-  {attach: someInfo, attachExpanded: true, attachLevel: 'TRACE'}
+  {attach: someInfo, attachLevel: 'TRACE'}
 
 # Initialise our virtual database
 db = require './db'

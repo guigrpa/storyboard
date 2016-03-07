@@ -74,7 +74,7 @@ _.each k.LEVEL_NUM_TO_STR, (levelStr, levelNum) ->
     if options.hasOwnProperty 'attach'
       objLevel = k.LEVEL_STR_TO_NUM[options.attachLevel?.toUpperCase()] ? levelNum
       record.obj = options.attach
-      record.objExpanded = options.attachExpanded ? false
+      record.objExpanded = not(options.attachInline ? false)
       record.objLevel = objLevel
     _emit record
 
