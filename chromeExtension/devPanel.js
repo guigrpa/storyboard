@@ -51192,6 +51192,7 @@
 	_addLog = function(state, pathStr, record) {
 	  var path;
 	  path = ("mainStory/" + pathStr + "/records").split('/');
+	  record = timm.set(record, 'objExpanded', false);
 	  return timm.updateIn(state, path, function(o) {
 	    return timm.addLast(o, record);
 	  });

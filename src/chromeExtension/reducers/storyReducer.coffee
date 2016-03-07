@@ -185,6 +185,7 @@ _rxLog = (state, record) ->
 
 _addLog = (state, pathStr, record) ->
   path = "mainStory/#{pathStr}/records".split '/'
+  record = timm.set record, 'objExpanded', false
   return timm.updateIn state, path, (o) -> timm.addLast o, record
 
 #-------------------------------------------------
