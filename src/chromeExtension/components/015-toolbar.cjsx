@@ -25,32 +25,35 @@ Toolbar = React.createClass
 
   #-----------------------------------------------------
   render: -> 
-    <div style={_style.outer}>
-      <div style={_style.left}>
-        <button onClick={@props.expandAllStories}>Expand all</button>
-        {' '}
-        <button onClick={@props.collapseAllStories}>Collapse all</button>
-        {' '}
-        <input 
-          id="closedActions"
-          type="checkbox"
-          checked={@props.settings.fShowClosedActions}
-          onChange={@onClickShowClosedActions}
-        />
-        <label htmlFor="closedActions">
-          Show <i>CLOSED</i> actions
-        </label>
-        {' '}
-        <input
-          id="quickFind"
-          type="search"
-          results=0
-          placeholder="Quick find..."
-          onChange={@onChangeQuickFind}
-        />
+    <div style={_style.outmost}>
+      <div style={_style.outer}>
+        <div style={_style.left}>
+          <button onClick={@props.expandAllStories}>Expand all</button>
+          {' '}
+          <button onClick={@props.collapseAllStories}>Collapse all</button>
+          {' '}
+          <input 
+            id="closedActions"
+            type="checkbox"
+            checked={@props.settings.fShowClosedActions}
+            onChange={@onClickShowClosedActions}
+          />
+          <label htmlFor="closedActions">
+            Show <i>CLOSED</i> actions
+          </label>
+          {' '}
+          <input
+            id="quickFind"
+            type="search"
+            results=0
+            placeholder="Quick find..."
+            onChange={@onChangeQuickFind}
+          />
+        </div>
+        <div style={_style.spacer}/>
+        <Login/>
       </div>
-      <div style={_style.spacer}/>
-      <Login/>
+      <div style={_style.placeholder}/>
     </div>
 
   #-----------------------------------------------------
@@ -61,9 +64,17 @@ Toolbar = React.createClass
 #-----------------------------------------------------
 _style = 
   outer:
-    marginBottom: 10
+    position: 'fixed'
+    top: 0
+    left: 0
+    height: 30
+    width: '100%'
+    backgroundColor: 'white'
+    borderBottom: '1px solid #ccc'
     display: 'flex'
     flexDirection: 'row'
+  placeholder:
+    height: 30
   left:
     padding: 4
   spacer:

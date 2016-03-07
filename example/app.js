@@ -84533,7 +84533,7 @@
 	_style = {
 	  outer: function(fHighlight) {
 	    return {
-	      padding: 4,
+	      padding: "4px 4px 4px 10px",
 	      backgroundColor: fHighlight ? '#d6ecff' : void 0
 	    };
 	  },
@@ -84597,6 +84597,8 @@
 	  },
 	  render: function() {
 	    return React.createElement("div", {
+	      "style": _style.outmost
+	    }, React.createElement("div", {
 	      "style": _style.outer
 	    }, React.createElement("div", {
 	      "style": _style.left
@@ -84619,7 +84621,9 @@
 	      "onChange": this.onChangeQuickFind
 	    })), React.createElement("div", {
 	      "style": _style.spacer
-	    }), React.createElement(Login, null));
+	    }), React.createElement(Login, null)), React.createElement("div", {
+	      "style": _style.placeholder
+	    }));
 	  },
 	  onClickShowClosedActions: function(ev) {
 	    return this.props.setShowClosedActions(ev.target.checked);
@@ -84631,9 +84635,18 @@
 
 	_style = {
 	  outer: {
-	    marginBottom: 10,
+	    position: 'fixed',
+	    top: 0,
+	    left: 0,
+	    height: 30,
+	    width: '100%',
+	    backgroundColor: 'white',
+	    borderBottom: '1px solid #ccc',
 	    display: 'flex',
 	    flexDirection: 'row'
+	  },
+	  placeholder: {
+	    height: 30
 	  },
 	  left: {
 	    padding: 4

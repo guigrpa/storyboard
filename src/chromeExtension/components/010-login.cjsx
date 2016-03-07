@@ -93,7 +93,7 @@ Login = React.createClass
 #-----------------------------------------------------
 _style = 
   outer: (fHighlight) ->
-    padding: 4
+    padding: "4px 4px 4px 10px"
     backgroundColor: if fHighlight then '#d6ecff'
   field:
     marginRight: 4

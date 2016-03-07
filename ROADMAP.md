@@ -3,7 +3,7 @@
     + [ ] Add namespace to storyboard sockets
 
 - [ ] Chrome extension
-    + [ ] Toolbar: fixed at the top
+    + [ ] Case-insensitive quick find
     + [ ] Better way to add listeners than `require 'storyboard/dist/listeners/xxx` ?
     + [ ] Improve perf with very long logs
     - [ ] Forget logs and (closed) stories...
