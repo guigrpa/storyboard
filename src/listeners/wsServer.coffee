@@ -1,12 +1,13 @@
-_ = require '../vendor/lodash'
-path = require 'path'
-http = require 'http'
-express = require 'express'
-socketio = require 'socket.io'
-Promise = require 'bluebird'
-chalk = require 'chalk'
-timm = require 'timm'
-treeLines = require '../gral/treeLines'
+_           = require '../vendor/lodash'
+path        = require 'path'
+http        = require 'http'
+express     = require 'express'
+socketio    = require 'socket.io'
+Promise     = require 'bluebird'
+chalk       = require 'chalk'
+timm        = require 'timm'
+treeLines   = require '../gral/treeLines'
+k           = require '../gral/constants'
 
 DEFAULT_CONFIG = 
   port: 8090
@@ -35,7 +36,7 @@ _socketInit = (config) ->
   # If a main application server is also provided, 
   # launch another log server on the same application port
   if config.httpServer
-    _ioServerAdaptor = socketio config.httpServer
+    _ioServerAdaptor = socketio(config.httpServer).of k.WS_NAMESPACE
     _ioServerAdaptor.on 'connection', (socket) -> _socketOnConnection socket, config
     port2 = config.httpServer.address().port
     story.info LOG_SRC, "Server logs also available through main HTTP server on port #{chalk.cyan port2}"

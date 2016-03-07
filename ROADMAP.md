@@ -1,7 +1,9 @@
 - [ ] Library:
     + [ ] Add tests
+    + [ ] Add namespace to storyboard sockets
 
 - [ ] Chrome extension
+    + [ ] Better way to add listeners than `require 'storyboard/dist/listeners/xxx` ?
     + [ ] Allow passing options to treeLines from the API
     + [ ] Show attached errors in a special way?
     + [ ] Improve perf with very long logs

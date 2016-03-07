@@ -18,7 +18,8 @@
       FATAL: 60
     },
     FILTER_KEY: 'STORYBOARD',
-    DEFAULT_FILTER: '*:DEBUG'
+    DEFAULT_FILTER: '*:DEBUG',
+    WS_NAMESPACE: '/STORYBOARD'
   };
 
 }).call(this);

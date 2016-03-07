@@ -1,5 +1,5 @@
 (function() {
-  var DEFAULT_CONFIG, LOG_SRC, Promise, _, _broadcastBuf, _enqueueRecord, _getBufferedRecords, _ioServerAdaptor, _ioStandalone, _preprocessAttachments, _process, _socketBroadcast, _socketInit, _socketOnConnection, _socketRxMsg, _socketTxMsg, chalk, create, express, http, path, socketio, timm, treeLines;
+  var DEFAULT_CONFIG, LOG_SRC, Promise, _, _broadcastBuf, _enqueueRecord, _getBufferedRecords, _ioServerAdaptor, _ioStandalone, _preprocessAttachments, _process, _socketBroadcast, _socketInit, _socketOnConnection, _socketRxMsg, _socketTxMsg, chalk, create, express, http, k, path, socketio, timm, treeLines;
 
   _ = require('../vendor/lodash');
 
@@ -18,6 +18,8 @@
   timm = require('timm');
 
   treeLines = require('../gral/treeLines');
+
+  k = require('../gral/constants');
 
   DEFAULT_CONFIG = {
     port: 8090,
@@ -47,7 +49,7 @@
     httpServer.listen(port);
     story.info(LOG_SRC, "Server logs available on port " + (chalk.cyan(port)));
     if (config.httpServer) {
-      _ioServerAdaptor = socketio(config.httpServer);
+      _ioServerAdaptor = socketio(config.httpServer).of(k.WS_NAMESPACE);
       _ioServerAdaptor.on('connection', function(socket) {
         return _socketOnConnection(socket, config);
       });

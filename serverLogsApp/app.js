@@ -1589,7 +1589,8 @@
 	    FATAL: 60
 	  },
 	  FILTER_KEY: 'STORYBOARD',
-	  DEFAULT_FILTER: '*:DEBUG'
+	  DEFAULT_FILTER: '*:DEBUG',
+	  WS_NAMESPACE: '/STORYBOARD'
 	};
 
 
@@ -13543,13 +13544,15 @@
 /* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var DEFAULT_CONFIG, _extensionDoTxMsg, _extensionInit, _extensionMsgQueue, _extensionRxMsg, _extensionTxMsg, _extensionTxPendingMsgs, _fExtensionInitialised, _fExtensionReady, _preprocessAttachments, _socket, _socketInit, _socketRxMsg, _socketTxMsg, create, socketio, timm, treeLines;
+	var DEFAULT_CONFIG, _extensionDoTxMsg, _extensionInit, _extensionMsgQueue, _extensionRxMsg, _extensionTxMsg, _extensionTxPendingMsgs, _fExtensionInitialised, _fExtensionReady, _preprocessAttachments, _socket, _socketInit, _socketRxMsg, _socketTxMsg, create, k, socketio, timm, treeLines;
 
 	socketio = __webpack_require__(239);
 
 	timm = __webpack_require__(232);
 
 	treeLines = __webpack_require__(237);
+
+	k = __webpack_require__(16);
 
 	DEFAULT_CONFIG = {};
 
@@ -13636,7 +13639,7 @@
 	  story = config.mainStory;
 	  story.info('storyboard', "Connecting to WebSocket server...");
 	  if (!_socket) {
-	    _socket = socketio.connect();
+	    _socket = socketio.connect(k.WS_NAMESPACE);
 	    _socket.on('connect', function() {
 	      return story.info('storyboard', "WebSocket connected");
 	    });

@@ -54,8 +54,8 @@ App = React.createClass
   #-----------------------------------------------------
   render: -> 
     reduxDevTools = undefined
-    if process.env.NODE_ENV isnt 'production'
-      reduxDevTools = <ReduxDevTools/>
+    ## if process.env.NODE_ENV isnt 'production'
+    ##   reduxDevTools = <ReduxDevTools/>
     fConnected = @props.cxState is 'CONNECTED'
     <div ref="outer" id="appRoot" style={_style.outer}>
       {if not fConnected then @renderConnecting()}

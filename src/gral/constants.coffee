@@ -18,3 +18,6 @@ module.exports =
   # Filters
   FILTER_KEY: 'STORYBOARD'
   DEFAULT_FILTER: '*:DEBUG'
+
+  # WebSockets
+  WS_NAMESPACE: '/STORYBOARD'

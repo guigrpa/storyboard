@@ -74510,9 +74510,6 @@
 	  render: function() {
 	    var fConnected, reduxDevTools;
 	    reduxDevTools = void 0;
-	    if (process.env.NODE_ENV !== 'production') {
-	      reduxDevTools = React.createElement(ReduxDevTools, null);
-	    }
 	    fConnected = this.props.cxState === 'CONNECTED';
 	    return React.createElement("div", {
 	      "ref": "outer",
@@ -80771,7 +80768,8 @@
 	    FATAL: 60
 	  },
 	  FILTER_KEY: 'STORYBOARD',
-	  DEFAULT_FILTER: '*:DEBUG'
+	  DEFAULT_FILTER: '*:DEBUG',
+	  WS_NAMESPACE: '/STORYBOARD'
 	};
 
 

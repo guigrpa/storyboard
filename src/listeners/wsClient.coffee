@@ -1,6 +1,7 @@
-socketio = require 'socket.io-client'
-timm = require 'timm'
-treeLines = require '../gral/treeLines'
+socketio    = require 'socket.io-client'
+timm        = require 'timm'
+treeLines   = require '../gral/treeLines'
+k           = require '../gral/constants'
 
 DEFAULT_CONFIG = {}
 
@@ -55,7 +56,7 @@ _socketInit = (config) ->
   {mainStory: story} = config
   story.info 'storyboard', "Connecting to WebSocket server..."
   if not _socket
-    _socket = socketio.connect()
+    _socket = socketio.connect k.WS_NAMESPACE
     _socket.on 'connect', -> story.info 'storyboard', "WebSocket connected"
     _socket.on 'MSG', _socketRxMsg
   _socket.sbConfig = config
