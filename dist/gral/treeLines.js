@@ -9,7 +9,7 @@
   WRAPPER_KEY = '__wrapper__';
 
   _tree = function(node, options, prefix, stack) {
-    var finalPrefix, i, j, key, len, len1, out, postponedArrayAttrs, postponedObjectAttrs, strVal, val;
+    var finalPrefix, i, j, k, key, len, len1, len2, line, lines, out, postponedArrayAttrs, postponedObjectAttrs, strVal, val;
     out = [];
     if (options.ignoreKeys == null) {
       options.ignoreKeys = [];
@@ -42,7 +42,15 @@
       } else if (_.isObject(val)) {
         postponedObjectAttrs.push(key);
       } else if (_.isString(val)) {
-        out.push(("" + finalPrefix) + chalk.yellow.bold("'" + val + "'"));
+        lines = val.split('\n');
+        if (lines.length === 1) {
+          out.push(("" + finalPrefix) + chalk.yellow.bold("'" + val + "'"));
+        } else {
+          for (i = 0, len = lines.length; i < len; i++) {
+            line = lines[i];
+            out.push(("" + finalPrefix) + chalk.yellow.bold(line));
+          }
+        }
       } else if (_.isNull(val)) {
         out.push("" + finalPrefix + (chalk.red.bold('null')));
       } else if (_.isUndefined(val)) {
@@ -57,14 +65,14 @@
         out.push("" + finalPrefix + (chalk.bold(val)));
       }
     }
-    for (i = 0, len = postponedObjectAttrs.length; i < len; i++) {
-      key = postponedObjectAttrs[i];
+    for (j = 0, len1 = postponedObjectAttrs.length; j < len1; j++) {
+      key = postponedObjectAttrs[j];
       val = node[key];
       out.push("" + prefix + key + ":");
       out = out.concat(_tree(val, options, "" + options.indenter + prefix, stack));
     }
-    for (j = 0, len1 = postponedArrayAttrs.length; j < len1; j++) {
-      key = postponedArrayAttrs[j];
+    for (k = 0, len2 = postponedArrayAttrs.length; k < len2; k++) {
+      key = postponedArrayAttrs[k];
       val = node[key];
       out.push("" + prefix + key + ":");
       out = out.concat(_tree(val, options, "" + options.indenter + prefix, stack));

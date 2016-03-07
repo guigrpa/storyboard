@@ -71,3 +71,9 @@ describe 'treeLines', ->
     lines = treeLines "Ratatouille"
     expect(lines).to.have.length 1
     expect(lines[0]).to.contain 'Ratatouille'
+
+  it 'should handle multiline strings', ->
+    lines = treeLines "En un lugar de La Mancha\nde cuyo nombre no quiero acordarme"
+    expect(lines).to.have.length 2
+    expect(lines[0]).to.contain 'Mancha'
+    expect(lines[1]).to.contain 'nombre'

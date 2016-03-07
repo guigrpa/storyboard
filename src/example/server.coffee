@@ -22,8 +22,7 @@ app.post '/items', (req, res, next) ->
   story = mainStory.child {src: 'server', title: "HTTP request #{chalk.green req.url}", extraParents}
   db.getItems {story}
   .then (result) -> 
-    story.debug 'server', "HTTP response: #{result.length} items", 
-      {attach: result, attachInline: true}
+    story.debug 'server', "HTTP response: #{result.length} items", {attachInline: result}
     res.json result
     story.close()
 httpServer = http.createServer app
@@ -41,6 +40,7 @@ storyboard.addListener wsServer,
 someInfo = 
   appName: 'Storyboard example'
   upSince: new Date()
+  dontShow: 'hidden'
   loginRequiredForLogs: true
   nested: configOptions: 
     foo: undefined
@@ -48,7 +48,9 @@ someInfo =
     values: [1, 2]
 someInfo.nested.configOptions.mainInfo = someInfo
 mainStory.debug 'server', "Example info (expanded):", 
-  {attach: someInfo, attachLevel: 'TRACE'}
+  attach: someInfo
+  attachLevel: 'TRACE'
+  ignoreKeys: ['dontShow']
 
 # Initialise our virtual database
 db = require './db'

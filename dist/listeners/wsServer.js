@@ -140,7 +140,7 @@
     if (!record.hasOwnProperty('obj')) {
       return record;
     }
-    return timm.set(record, 'obj', treeLines(record.obj));
+    return timm.set(record, 'obj', treeLines(record.obj, record.objOptions));
   };
 
   _process = function(config) {

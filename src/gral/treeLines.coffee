@@ -29,7 +29,12 @@ _tree = (node, options, prefix, stack) ->
     else if _.isObject val
       postponedObjectAttrs.push key
     else if _.isString val
-      out.push "#{finalPrefix}" + chalk.yellow.bold("'#{val}'")
+      lines = val.split '\n'
+      if lines.length is 1
+        out.push "#{finalPrefix}" + chalk.yellow.bold("'#{val}'")
+      else
+        for line in lines
+          out.push "#{finalPrefix}" + chalk.yellow.bold(line)
     else if _.isNull val
       out.push "#{finalPrefix}#{chalk.red.bold 'null'}"
     else if _.isUndefined val

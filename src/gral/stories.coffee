@@ -72,10 +72,15 @@ _.each k.LEVEL_NUM_TO_STR, (levelStr, levelNum) ->
       src: src
       msg: msg
     if options.hasOwnProperty 'attach'
-      objLevel = k.LEVEL_STR_TO_NUM[options.attachLevel?.toUpperCase()] ? levelNum
       record.obj = options.attach
       record.objExpanded = not(options.attachInline ? false)
+    else if options.hasOwnProperty 'attachInline'
+      record.obj = options.attachInline
+      record.objExpanded = false
+    if record.hasOwnProperty 'obj'
+      objLevel = k.LEVEL_STR_TO_NUM[options.attachLevel?.toUpperCase()] ? levelNum
       record.objLevel = objLevel
+      record.objOptions = _.pick options, ['ignoreKeys']
     _emit record
 
 #-----------------------------------------------
@@ -110,6 +115,7 @@ Story::logStory = (action, t) ->
 # * `obj: object?`       (only for logs)
 # * `objExpanded: bool?` (only for logs)
 # * `objLevel: string?`  (only for logs)
+# * `objOptions: object?`  (only for logs)
 _emit = (record) ->
   if not record.fStory
     return unless filters.passesFilter record.src, record.level

@@ -107,7 +107,7 @@ _enqueueRecord = (record, config) -> _broadcastBuf.push _preprocessAttachments r
 
 _preprocessAttachments = (record) -> 
   return record if not record.hasOwnProperty 'obj'
-  return timm.set record, 'obj', treeLines(record.obj)
+  return timm.set record, 'obj', treeLines(record.obj, record.objOptions)
 
 #-------------------------------------------------
 # ## Main processing function

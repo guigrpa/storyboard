@@ -39,7 +39,7 @@ _getTimeStr = (record, config) ->
 # ## Main processing function
 #-------------------------------------------------
 _process = (record, config) ->
-  {src, storyId, level, fStory, obj, objExpanded, objLevel} = record
+  {src, storyId, level, fStory, obj, objExpanded, objLevel, objOptions} = record
   [timeStr, extraTimeStr] = _getTimeStr record, config
   if fStory
     ## parents = record.parents
@@ -67,7 +67,8 @@ _process = (record, config) ->
   if fStory then finalMsg = chalk.bold finalMsg
   _outputLog finalMsg, record.level, extraTimeStr
   if objExpanded and filters.passesFilter src, objLevel
-    lines = treeLines obj, {prefix: '  '}
+    treeOptions = timm.merge {prefix: '  '}, objOptions
+    lines = treeLines obj, treeOptions
     levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[objLevel]
     for line in lines
       text = "#{timeStr} #{srcStr} #{levelStr}#{line}"

@@ -100,10 +100,16 @@
         msg: msg
       };
       if (options.hasOwnProperty('attach')) {
-        objLevel = (ref2 = k.LEVEL_STR_TO_NUM[(ref3 = options.attachLevel) != null ? ref3.toUpperCase() : void 0]) != null ? ref2 : levelNum;
         record.obj = options.attach;
-        record.objExpanded = !((ref4 = options.attachInline) != null ? ref4 : false);
+        record.objExpanded = !((ref2 = options.attachInline) != null ? ref2 : false);
+      } else if (options.hasOwnProperty('attachInline')) {
+        record.obj = options.attachInline;
+        record.objExpanded = false;
+      }
+      if (record.hasOwnProperty('obj')) {
+        objLevel = (ref3 = k.LEVEL_STR_TO_NUM[(ref4 = options.attachLevel) != null ? ref4.toUpperCase() : void 0]) != null ? ref3 : levelNum;
         record.objLevel = objLevel;
+        record.objOptions = _.pick(options, ['ignoreKeys']);
       }
       return _emit(record);
     };

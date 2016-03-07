@@ -56,8 +56,8 @@
   };
 
   _process = function(record, config) {
-    var actionStr, e, error, extraTimeStr, fStory, finalMsg, i, len, level, levelStr, line, lines, msgStr, obj, objExpanded, objLevel, objStr, ref, src, srcStr, storyId, storyIdStr, text, timeStr;
-    src = record.src, storyId = record.storyId, level = record.level, fStory = record.fStory, obj = record.obj, objExpanded = record.objExpanded, objLevel = record.objLevel;
+    var actionStr, e, error, extraTimeStr, fStory, finalMsg, i, len, level, levelStr, line, lines, msgStr, obj, objExpanded, objLevel, objOptions, objStr, ref, src, srcStr, storyId, storyIdStr, text, timeStr, treeOptions;
+    src = record.src, storyId = record.storyId, level = record.level, fStory = record.fStory, obj = record.obj, objExpanded = record.objExpanded, objLevel = record.objLevel, objOptions = record.objOptions;
     ref = _getTimeStr(record, config), timeStr = ref[0], extraTimeStr = ref[1];
     if (fStory) {
       msgStr = record.title;
@@ -87,9 +87,10 @@
     }
     _outputLog(finalMsg, record.level, extraTimeStr);
     if (objExpanded && filters.passesFilter(src, objLevel)) {
-      lines = treeLines(obj, {
+      treeOptions = timm.merge({
         prefix: '  '
-      });
+      }, objOptions);
+      lines = treeLines(obj, treeOptions);
       levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[objLevel];
       for (i = 0, len = lines.length; i < len; i++) {
         line = lines[i];
