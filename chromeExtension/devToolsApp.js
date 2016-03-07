@@ -74514,7 +74514,6 @@
 	    var src, srcStr;
 	    src = this.props.src;
 	    srcStr = ansiColors.getSrcChalkColor(src)(_.padEnd(src, 15));
-	    console.log(srcStr);
 	    return React.createElement(ColoredText, {
 	      "text": srcStr
 	    });
