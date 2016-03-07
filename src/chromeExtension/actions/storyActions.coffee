@@ -1,3 +1,7 @@
+_ = require '../../vendor/lodash'
+
+QUICK_FIND_DEBOUNCE = 250
+
 toggleExpanded = (pathStr) -> 
   {type: 'TOGGLE_EXPANDED', pathStr}
 toggleHierarchical = (pathStr) -> 
@@ -6,6 +10,10 @@ toggleAttachment = (pathStr, recordId) ->
   {type: 'TOGGLE_ATTACHMENT', pathStr, recordId}
 expandAllStories = -> {type: 'EXPAND_ALL_STORIES'}
 collapseAllStories = -> {type: 'COLLAPSE_ALL_STORIES'}
+quickFind = (txt) -> (dispatch) -> _quickFind dispatch, txt
+_quickFind = _.debounce (dispatch, txt) ->
+  dispatch {type: 'QUICK_FIND', txt}
+, QUICK_FIND_DEBOUNCE
 
 module.exports =
   actions: {
@@ -14,4 +22,5 @@ module.exports =
     toggleAttachment,
     expandAllStories,
     collapseAllStories,
+    quickFind,
   }

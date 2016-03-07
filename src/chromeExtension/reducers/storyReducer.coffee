@@ -9,12 +9,12 @@ _mainStory = (fServer) ->
     id: id
     storyId: id
     pathStr: _mainStoryPathStr fServer
-    fStory: true
+    fStoryObject: true
     t: new Date().getTime()
     src: 'main'
     title: if fServer then 'Server' else 'Client'
     fServer: fServer
-    action: 'CREATED'
+    lastAction: 'CREATED'
     fOpen: true
     fMain: true
     status: undefined
@@ -35,6 +35,7 @@ _buildInitialState = ->
     ]
   openStories: {}
   closedStories: {}
+  quickFind: ''
 
 INITIAL_STATE = _buildInitialState()
 
@@ -65,17 +66,20 @@ reducer = (state = INITIAL_STATE, action) ->
     when 'TOGGLE_ATTACHMENT'
       {pathStr, recordId} = action
       return state if not(pathStr? and recordId?)
-      path = "mainStory/#{pathStr}/records".split '/'
-      records = timm.getIn state, path
-      idx = _.findIndex records, (o) -> o.id is recordId
-      return state if idx < 0
-      record = records[idx]
-      path.push idx
-      path.push 'objExpanded'
-      return timm.setIn state, path, not(record.objExpanded)
+      pathStr = "mainStory/#{pathStr}"
+      story = timm.getIn state, pathStr.split('/')
+      return state if not story?
+      recordPathStr = _findRecord story, recordId, not(story.fHierarchical), pathStr
+      return state if not recordPathStr?
+      recordPath = recordPathStr.split '/'
+      record = timm.getIn state, recordPath
+      recordPath.push 'objExpanded'
+      return timm.setIn state, recordPath, not(record.objExpanded)
 
     when 'EXPAND_ALL_STORIES'   then return _expandCollapseAll state, true
     when 'COLLAPSE_ALL_STORIES' then return _expandCollapseAll state, false
+
+    when 'QUICK_FIND' then return timm.set state, 'quickFind', action.txt
 
     else return state
 
@@ -86,7 +90,7 @@ _rxRecords = (state, action) ->
   {records, fPastRecords} = action
   newStories = []
   for record in records
-    ## console.groupCollapsed "#{if record.fStory then record.title else record.msg}#{if record.action then ' - '+record.action else ''}"
+    ## console.groupCollapsed "#{if record.fStoryObject then record.title else record.msg}#{if record.lastAction then ' - '+record.lastAction else ''}"
     ## console.log "Story ID: #{record.storyId}"
     ## console.log "Current open stories:   #{Object.keys(state.openStories).map((o) -> o.slice 0, 7).join()}"
     ## console.log "Current closed stories: #{Object.keys(state.closedStories).map((o) -> o.slice 0, 7).join()}"
@@ -147,7 +151,7 @@ _updateStory = (state, pathStr, record) ->
   {fOpen, title, status, action, storyId} = record
   path = "mainStory/#{pathStr}".split '/'
   prevStory = timm.getIn state, path
-  nextStory = timm.merge prevStory, {fOpen, title, status, action}
+  nextStory = timm.merge prevStory, {fOpen, title, status, lastAction: action}
   state = timm.setIn state, path, nextStory
   if not nextStory.fOpen
     state = timm.setIn state, ['openStories',   storyId], undefined
@@ -161,8 +165,12 @@ _addStory = (state, parentStoryPathStr, record) ->
   story = timm.merge record, 
     pathStr: pathStr
     records: []
+    fStoryObject: true
+    lastAction: record.action
     fExpanded: true
     fHierarchical: true
+  delete story.fStory
+  delete story.action
   path = "mainStory/#{pathStr}".split '/'
   state = timm.setIn state, path, story
   pathSeg = if story.fOpen then 'openStories' else 'closedStories'
@@ -190,11 +198,24 @@ _expandCollapseAll = (state, fExpanded) ->
       nextStory.fExpanded = fExpanded    # in-place since it is always a new object
     nextStory
   expandCollapseRecord = (prevRecord) ->
-    fIsStoryObject = prevRecord.fStory and prevRecord.records
-    return prevRecord if not fIsStoryObject
+    return prevRecord if not prevRecord.fStoryObject
     return expandCollapse prevRecord
   newMainStory = expandCollapse state.mainStory, 0
   state = timm.set state, 'mainStory', newMainStory
   state
+
+#-------------------------------------------------
+# ## Helpers
+#-------------------------------------------------
+_findRecord = (story, recordId, fRecurse, pathStr) ->
+  pathStr ?= story.pathStr
+  for idx in [0...story.records.length]
+    record = story.records[idx]
+    if record.id is recordId
+      return "#{pathStr}/records/#{idx}"
+    if record.fStoryObject and fRecurse
+      res = _findRecord record, recordId, fRecurse, "#{pathStr}/records/#{idx}"
+      if res? then return res
+  return null
 
 module.exports = reducer

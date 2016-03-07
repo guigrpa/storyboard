@@ -16,8 +16,9 @@ ansiColors        = require '../../gral/ansiColors'
 # ## Story
 #-====================================================
 mapStateToProps = (state) -> 
-  timeType: state.settings.timeType
+  timeType:           state.settings.timeType
   fShowClosedActions: state.settings.fShowClosedActions
+  quickFind:          state.stories.quickFind
 mapDispatchToProps = (dispatch) ->
   setTimeType: (timeType) -> dispatch actions.setTimeType timeType
   onToggleExpanded: (pathStr) -> dispatch actions.toggleExpanded pathStr
@@ -36,6 +37,7 @@ _Story = React.createClass
     # From Redux.connect
     timeType:               React.PropTypes.string.isRequired
     fShowClosedActions:     React.PropTypes.bool.isRequired
+    quickFind:              React.PropTypes.string.isRequired
     setTimeType:            React.PropTypes.func.isRequired
     onToggleExpanded:       React.PropTypes.func.isRequired
     onToggleHierarchical:   React.PropTypes.func.isRequired
@@ -69,10 +71,10 @@ _Story = React.createClass
       <Line
         record={story}
         level={@props.level}
-        fStoryTitle
         fDirectChild={false}
         timeType={@props.timeType}
         setTimeType={@props.setTimeType}
+        quickFind={@props.quickFind}
         onToggleExpanded={@toggleExpanded}
         onToggleHierarchical={@toggleHierarchical}
         seqFullRefresh={@props.seqFullRefresh}
@@ -93,9 +95,9 @@ _Story = React.createClass
     out
 
   renderRecord: (record) ->
-    {id, fStory, storyId, records, obj, objExpanded, action} = record
+    {id, fStoryObject, storyId, obj, objExpanded, action} = record
     fDirectChild = storyId is @props.story.storyId
-    if fStory and records
+    if fStoryObject
       return <Story key={storyId}
         story={record}
         level={@props.level + 1}
@@ -111,13 +113,14 @@ _Story = React.createClass
         fDirectChild={fDirectChild}
         timeType={@props.timeType}
         setTimeType={@props.setTimeType}
+        quickFind={@props.quickFind}
         onToggleAttachment={@toggleAttachment}
         seqFullRefresh={@props.seqFullRefresh}
       />
     out
 
   renderAttachment: (record) -> 
-    props = _.pick @props, ['level', 'timeType', 'setTimeType', 'seqFullRefresh']
+    props = _.pick @props, ['level', 'timeType', 'setTimeType', 'quickFind', 'seqFullRefresh']
     return record.obj.map (line, idx) ->
       <AttachmentLine key={"#{record.id}_#{idx}"}
         record={record}
@@ -142,7 +145,7 @@ _Story = React.createClass
   flatten: (records, level = 0) ->
     out = []
     for record in records
-      if record.fStory and record.records
+      if record.fStoryObject
         out = out.concat @flatten(record.records, level + 1)
       else
         out.push record
@@ -255,11 +258,15 @@ AttachmentLine = React.createClass
     setTimeType:            React.PropTypes.func.isRequired
     seqFullRefresh:         React.PropTypes.number.isRequired
     msg:                    React.PropTypes.string.isRequired
+    quickFind:              React.PropTypes.string.isRequired
 
   #-----------------------------------------------------
   render: ->
-    {record} = @props
+    {record, msg} = @props
     style = _styleLine.log record
+    quickFind = @props.quickFind
+    if quickFind.length
+      msg = msg.replace quickFind, chalk.bgYellow(quickFind)
     <div 
       className="attachmentLine allowUserSelect"
       style={style}
@@ -274,7 +281,7 @@ AttachmentLine = React.createClass
       <Src src={record.src}/>
       <Indent level={@props.level}/>
       <CaretOrSpace/>
-      <ColoredText text={'  ' + @props.msg}/>
+      <ColoredText text={'  ' + msg}/>
     </div>
 
 
@@ -289,10 +296,10 @@ Line = React.createClass
   propTypes:
     record:                 React.PropTypes.object.isRequired
     level:                  React.PropTypes.number.isRequired
-    fStoryTitle:            React.PropTypes.bool
     fDirectChild:           React.PropTypes.bool.isRequired
     timeType:               React.PropTypes.string.isRequired
     setTimeType:            React.PropTypes.func.isRequired
+    quickFind:              React.PropTypes.string.isRequired
     onToggleExpanded:       React.PropTypes.func
     onToggleHierarchical:   React.PropTypes.func
     onToggleAttachment:     React.PropTypes.func
@@ -302,12 +309,13 @@ Line = React.createClass
 
   #-----------------------------------------------------
   render: ->
-    {record, fStoryTitle, fDirectChild, level} = @props
-    {id, msg, fStory, fOpen, title, action} = record
+    {record, fDirectChild, level} = @props
+    {id, msg, fStory, fStoryObject, fOpen, title, action} = record
+    if fStoryObject then msg = title
     if fStory 
       msg = if not fDirectChild then "#{title} " else ''
-      if action and not fStoryTitle then msg += chalk.gray "[#{action}]"
-    if fStoryTitle
+      if action then msg += chalk.gray "[#{action}]"
+    if fStoryObject
       className = 'storyTitle'
       style = _styleLine.titleRow level
       indentLevel = level - 1
@@ -327,14 +335,17 @@ Line = React.createClass
       <Src src={record.src}/>
       <Indent level={indentLevel}/>
       {@renderCaretOrSpace record}
-      {@renderMsg fStoryTitle, msg}
-      {if fStoryTitle then @renderToggleHierarchical record}
+      {@renderMsg fStoryObject, msg}
+      {if fStoryObject then @renderToggleHierarchical record}
       {spinner}
       {@renderAttachmentIcon record}
     </div>
 
-  renderMsg: (fStoryTitle, msg) ->
-    if fStoryTitle
+  renderMsg: (fStoryObject, msg) ->
+    quickFind = @props.quickFind
+    if quickFind.length
+      msg = msg.replace quickFind, chalk.bgYellow(quickFind)
+    if fStoryObject
       <ColoredText 
         text={msg} 
         onClick={@props.onToggleExpanded}
@@ -344,9 +355,9 @@ Line = React.createClass
       <ColoredText text={msg}/>
 
   renderTime: (record) ->
-    {fStory, records, t} = record
+    {fStoryObject, t} = record
     {level, timeType, setTimeType, seqFullRefresh} = @props
-    fShowFull = (fStory and records and level <= 2) or (level <= 1)
+    fShowFull = (fStoryObject and level <= 2) or (level <= 1)
     <Time
       t={t}
       fShowFull={fShowFull}
@@ -356,7 +367,7 @@ Line = React.createClass
     />
 
   renderCaretOrSpace: (record) ->
-    if @props.onToggleExpanded and record.fStory and record.records
+    if @props.onToggleExpanded and record.fStoryObject
       fExpanded = record.fExpanded
     <CaretOrSpace fExpanded={fExpanded} onToggleExpanded={@props.onToggleExpanded}/>
 

@@ -10,6 +10,7 @@ mapDispatchToProps = (dispatch) ->
   expandAllStories:   -> dispatch actions.expandAllStories()
   collapseAllStories: -> dispatch actions.collapseAllStories()
   setShowClosedActions: (fEnabled) -> dispatch actions.setShowClosedActions fEnabled
+  quickFind: (txt) -> dispatch actions.quickFind txt
 
 Toolbar = React.createClass
   displayName: 'Toolbar'
@@ -39,13 +40,23 @@ Toolbar = React.createClass
         <label htmlFor="closedActions">
           Show <i>CLOSED</i> actions
         </label>
+        {' '}
+        <input
+          id="quickFind"
+          type="search"
+          results=0
+          placeholder="Quick find..."
+          onChange={@onChangeQuickFind}
+        />
       </div>
       <div style={_style.spacer}/>
       <Login/>
     </div>
 
+  #-----------------------------------------------------
   onClickShowClosedActions: (ev) -> 
     @props.setShowClosedActions ev.target.checked
+  onChangeQuickFind: (ev) -> @props.quickFind ev.target.value
 
 #-----------------------------------------------------
 _style = 
