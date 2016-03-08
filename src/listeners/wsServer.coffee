@@ -22,7 +22,7 @@ _ioServerAdaptor = null
 #-------------------------------------------------
 _socketInit = (config) ->
   return if _ioStandalone   # only one server
-  {port, mainStory: story} = config
+  {port, mainStory} = config
 
   # Launch stand-alone log server
   expressApp = express()
@@ -31,7 +31,7 @@ _socketInit = (config) ->
   _ioStandalone = socketio(httpServer).of k.WS_NAMESPACE
   _ioStandalone.on 'connection', (socket) -> _socketOnConnection socket, config
   httpServer.listen port
-  story.info LOG_SRC, "Server logs available on port #{chalk.cyan port}"
+  mainStory.info LOG_SRC, "Server logs available on port #{chalk.cyan port}"
 
   # If a main application server is also provided, 
   # launch another log server on the same application port
@@ -43,9 +43,9 @@ _socketInit = (config) ->
     _ioServerAdaptor.on 'connection', (socket) -> _socketOnConnection socket, config
     try
       port2 = _ioServerAdaptor.server.httpServer.address().port
-      story.info LOG_SRC, "Server logs also available through main HTTP server on port #{chalk.cyan port2}"
+      mainStory.info LOG_SRC, "Server logs also available through main HTTP server on port #{chalk.cyan port2}"
     catch
-      story.info LOG_SRC, "Server logs also available through main HTTP server (#{chalk.red 'port could not be determined'})"
+      mainStory.info LOG_SRC, "Server logs also available through main HTTP server (#{chalk.red 'port could not be determined'})"
   return
 
 _socketOnConnection = (socket, config) ->
@@ -59,7 +59,7 @@ _socketOnConnection = (socket, config) ->
 
 _socketRxMsg = (socket, msg) ->
   {type, data} = msg
-  {mainStory: story, hub} = socket.sbConfig
+  {mainStory, hub} = socket.sbConfig
   switch type
     when 'LOGIN_REQUEST'
       {authenticate} = socket.sbConfig
@@ -70,7 +70,7 @@ _socketRxMsg = (socket, msg) ->
         rsp = {type: 'LOGIN_RESPONSE'}
         if fAuthValid
           rsp.result = 'SUCCESS'
-          story.info LOG_SRC, "User '#{login}' authenticated successfully"
+          process.nextTick -> mainStory.info LOG_SRC, "User '#{login}' authenticated successfully"
           socket.sbAuthenticated = true
           socket.join 'AUTHENTICATED'
           rsp.data = 
@@ -78,7 +78,7 @@ _socketRxMsg = (socket, msg) ->
             bufferedRecords: _getBufferedRecords hub
         else
           rsp.result = 'ERROR'
-          story.warn LOG_SRC, "User '#{login}' authentication failed"
+          process.nextTick -> mainStory.warn LOG_SRC, "User '#{login}' authentication failed"
         _socketTxMsg socket, rsp
     ## when 'BUFFERED_RECORDS_REQUEST'
     ##   rsp = {type: 'BUFFERED_RECORDS_RESPONSE'}
@@ -90,7 +90,7 @@ _socketRxMsg = (socket, msg) ->
     ##     rsp.error = 'AUTH_REQUIRED'
     ##   _socketTxMsg socket, rsp
     else
-      story.warn LOG_SRC, "Unknown message type '#{type}'"
+      process.nextTick -> mainStory.warn LOG_SRC, "Unknown message type '#{type}'"
   return
 
 _socketTxMsg = (socket, msg) -> socket.emit 'MSG', msg
