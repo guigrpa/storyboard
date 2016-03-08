@@ -12,7 +12,7 @@ _runMultiple = (arr) -> arr.join ' && '
 #-================================================================
 specs =
   name: "storyboard"
-  version: "0.0.2"
+  version: "0.0.3"
   description: "End-to-end, hierarchical, real-time, colorful logs & stories"
   main: "index.js"
   author: "Guillermo Grau Panea"
