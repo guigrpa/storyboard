@@ -73,7 +73,7 @@ specs =
   # ## Storyboard library dependencies
   #-================================================================
   dependencies:
-    "timm": "0.4.2"
+    "timm": "0.4.3"
     "chalk": "1.1.1"
     "bluebird": "3.3.1"
     "express": "4.13.4"
@@ -90,10 +90,10 @@ specs =
     # ### Packaged in the Chrome extension
     #-----------------------------------------------------------------
     # React
-    "react": "0.14.7"
-    "react-dom": "0.14.7"
-    "react-addons-pure-render-mixin": "0.14.7"
-    "react-addons-perf": "0.14.7"
+    "react":                          "15.0.0-rc.1" # 0.14.7
+    "react-dom":                      "15.0.0-rc.1"
+    "react-addons-pure-render-mixin": "15.0.0-rc.1"
+    "react-addons-perf":              "15.0.0-rc.1"
 
     # Redux
     "redux": "3.3.1"
@@ -104,7 +104,7 @@ specs =
     # Redux devtools
     "redux-devtools": "3.1.1"
     "redux-devtools-dock-monitor": "1.1.0"
-    "redux-devtools-log-monitor": "1.0.4"
+    "redux-devtools-log-monitor": "1.0.5"
     "redux-devtools-inspector": "0.3.1"
     "redux-logger": "2.6.1"
 
