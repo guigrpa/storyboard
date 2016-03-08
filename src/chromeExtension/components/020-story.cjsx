@@ -14,7 +14,8 @@ ansiColors        = require '../../gral/ansiColors'
 
 _quickFind = (msg, quickFind) ->
   return msg if not quickFind.length
-  msg = msg.replace quickFind, chalk.bgYellow(quickFind)
+  re = new RegExp quickFind, 'gi'
+  msg = msg.replace re, chalk.bgYellow("$1")
   msg
 
 #-====================================================

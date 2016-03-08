@@ -79,7 +79,14 @@ reducer = (state = INITIAL_STATE, action) ->
     when 'EXPAND_ALL_STORIES'   then return _expandCollapseAll state, true
     when 'COLLAPSE_ALL_STORIES' then return _expandCollapseAll state, false
 
-    when 'QUICK_FIND' then return timm.set state, 'quickFind', action.txt
+    when 'QUICK_FIND' 
+      {txt} = action
+      if txt.length
+        quickFind = txt.replace /([\\\.\+\*\?\[\^\]\$\(\)\{\}\=\!\<\>\|\:])/g, "\\$1"
+        quickFind = "(#{quickFind})"
+      else
+        quickFind = ''
+      return timm.set state, 'quickFind', quickFind
 
     else return state
 
