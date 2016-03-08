@@ -35,11 +35,17 @@ _socketInit = (config) ->
 
   # If a main application server is also provided, 
   # launch another log server on the same application port
-  if config.httpServer
+  if config.socketServer
+    _ioServerAdaptor = config.socketServer.of k.WS_NAMESPACE
+  else if config.httpServer
     _ioServerAdaptor = socketio(config.httpServer).of k.WS_NAMESPACE
+  if _ioServerAdaptor
     _ioServerAdaptor.on 'connection', (socket) -> _socketOnConnection socket, config
-    port2 = config.httpServer.address().port
-    story.info LOG_SRC, "Server logs also available through main HTTP server on port #{chalk.cyan port2}"
+    try
+      port2 = _ioServerAdaptor.server.httpServer.address().port
+      story.info LOG_SRC, "Server logs also available through main HTTP server on port #{chalk.cyan port2}"
+    catch
+      story.info LOG_SRC, "Server logs also available through main HTTP server (#{chalk.red 'port could not be determined'})"
   return
 
 _socketOnConnection = (socket, config) ->

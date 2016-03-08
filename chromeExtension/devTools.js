@@ -45,12 +45,12 @@
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(712);
+	module.exports = __webpack_require__(716);
 
 
 /***/ },
 
-/***/ 712:
+/***/ 716:
 /***/ function(module, exports) {
 
 	chrome.devtools.panels.create('Storyboard', null, 'devPanel.html', function(panel) {

@@ -34,7 +34,7 @@
   _ioServerAdaptor = null;
 
   _socketInit = function(config) {
-    var expressApp, httpServer, port, port2, story;
+    var error, expressApp, httpServer, port, port2, story;
     if (_ioStandalone) {
       return;
     }
@@ -48,13 +48,21 @@
     });
     httpServer.listen(port);
     story.info(LOG_SRC, "Server logs available on port " + (chalk.cyan(port)));
-    if (config.httpServer) {
+    if (config.socketServer) {
+      _ioServerAdaptor = config.socketServer.of(k.WS_NAMESPACE);
+    } else if (config.httpServer) {
       _ioServerAdaptor = socketio(config.httpServer).of(k.WS_NAMESPACE);
+    }
+    if (_ioServerAdaptor) {
       _ioServerAdaptor.on('connection', function(socket) {
         return _socketOnConnection(socket, config);
       });
-      port2 = config.httpServer.address().port;
-      story.info(LOG_SRC, "Server logs also available through main HTTP server on port " + (chalk.cyan(port2)));
+      try {
+        port2 = _ioServerAdaptor.server.httpServer.address().port;
+        story.info(LOG_SRC, "Server logs also available through main HTTP server on port " + (chalk.cyan(port2)));
+      } catch (error) {
+        story.info(LOG_SRC, "Server logs also available through main HTTP server (" + (chalk.red('port could not be determined')) + ")");
+      }
     }
   };
 
