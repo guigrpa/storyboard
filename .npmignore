@@ -1,3 +1,23 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Dependency directory
+node_modules
+
+# Others
+/coverage
+/.extractedApi.md
+*.sublime-project
+*.sublime-workspace
+
+# NPM extras
 /chromeExtension
 /docs
 /example
@@ -8,5 +28,3 @@
 /ROADMAP.md
 /.travis.yml
 /.npmignore
-*.sublime-project
-*.sublime-workspace
