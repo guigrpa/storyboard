@@ -30,12 +30,12 @@ specs =
   scripts: 
 
     # Library
-    compileLib: _runMultiple [
-      "rm -rf dist"
-      "coffee --no-header -o dist -c src/storyboard.coffee"
-      "coffee --no-header -o dist/gral -c src/gral"
-      "coffee --no-header -o dist/listeners -c src/listeners"
-      "coffee --no-header -o dist/vendor -c src/vendor"
+    compile: _runMultiple [
+      "rm -rf lib"
+      "coffee --no-header -o lib -c src/storyboard.coffee"
+      "coffee --no-header -o lib/gral -c src/gral"
+      "coffee --no-header -o lib/listeners -c src/listeners"
+      "coffee --no-header -o lib/vendor -c src/vendor"
     ]
     testLib:                  _runMocha 'test/lib'
     testLibCovDev:            _runMocha 'test/lib', 'TEST_COV=lib_development NODE_ENV=development'
