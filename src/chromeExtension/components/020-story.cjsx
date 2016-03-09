@@ -72,7 +72,6 @@ _Story = React.createClass
   renderNormalStory: ->
     {level, story} = @props
     {title, fOpen} = story
-    if fOpen then spinner = <Icon icon="circle-o-notch" style={_style.spinner}/>
     <div className="story" style={_style.outer(level, story)}>
       <Line
         record={story}
@@ -408,6 +407,8 @@ _styleLine =
     fontWeight: 900
     fontFamily: 'Menlo, Consolas, monospace'
     whiteSpace: 'pre'
+    overflowX: 'hidden'
+    textOverflow: 'ellipsis'
   title:
     cursor: 'pointer'
   log: (record) ->
@@ -417,11 +418,15 @@ _styleLine =
     fontFamily: 'Menlo, Consolas, monospace'
     whiteSpace: 'pre'
     fontWeight: if record.fStory and (record.action is 'CREATED') then 900
+    overflowX: 'hidden'
+    textOverflow: 'ellipsis'
   spinner:
     marginLeft: 8
+    display: 'inline'
   attachmentIcon:
     marginLeft: 8
     cursor: 'pointer'
+    display: 'inline'
 
 #-====================================================
 # ## Time
@@ -565,7 +570,6 @@ HierarchicalToggle = React.createClass
 
 _styleHierarchical =
   outer: (fFloat) ->
-    display: 'inline-block'
     position: if fFloat then 'absolute'
     marginLeft: 10
     color: 'darkgrey'

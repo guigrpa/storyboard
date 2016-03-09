@@ -73,6 +73,7 @@ _style =
     borderBottom: '1px solid #ccc'
     display: 'flex'
     flexDirection: 'row'
+    whiteSpace: 'nowrap'
   placeholder:
     height: 30
   left:
