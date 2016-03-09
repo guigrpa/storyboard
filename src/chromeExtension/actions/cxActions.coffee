@@ -1,6 +1,7 @@
 Promise = require 'bluebird'
 Saga    = require 'redux-saga/effects'
 actions = require './actions'
+require 'babel-polyfill'
 
 _sendMsg = null
 _lastCredentials = null

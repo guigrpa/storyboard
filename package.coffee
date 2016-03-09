@@ -2,10 +2,21 @@ WEBPACK_OPTS            = "--colors --progress --display-modules --display-chunk
 WEBPACK_EXTENSION       = "webpack --config src/chromeExtension/webpackConfig.coffee #{WEBPACK_OPTS}"
 WEBPACK_SERVER_LOGS_APP = "webpack --config src/serverLogsApp/webpackConfig.coffee #{WEBPACK_OPTS}"
 WEBPACK_EXAMPLE         = "webpack --config src/example/webpackConfig.coffee #{WEBPACK_OPTS}"
+
+ISTANBUL_OPTS = "--report json"
+
+_runMultiple = (arr) -> arr.join ' && '
+
 _runMocha = (basePath, env) -> 
   prefix = if env? then "cross-env #{env} " else ''
   return "#{prefix}mocha #{basePath} --opts #{basePath}/mocha.opts"
-_runMultiple = (arr) -> arr.join ' && '
+
+_runMochaCov = (basePath, nodeEnv) ->
+  return _runMultiple [
+    "cross-env NODE_ENV=#{nodeEnv} istanbul cover node_modules/mocha/bin/_mocha #{ISTANBUL_OPTS} -- --opts #{basePath}/mocha.opts"
+    "mv coverage/coverage-final.json coverage/coverage-#{nodeEnv.toUpperCase()}.json"
+    "rm coverage/coverage.json"
+  ]
 
 #-================================================================
 # ## General
@@ -37,22 +48,16 @@ specs =
       "coffee --no-header -o lib/listeners -c src/listeners"
       "coffee --no-header -o lib/vendor -c src/vendor"
     ]
-    testLib:                  _runMocha 'test/lib'
-    testLibCovDev:            _runMocha 'test/lib', 'TEST_COV=lib_development NODE_ENV=development'
-    testLibCovProd:           _runMocha 'test/lib', 'TEST_COV=lib_production NODE_ENV=production'
-    testCovMerge:             "coffee tools/coffeeCoverageMerge.coffee"
-    testCov: _runMultiple [
-      "npm run testLibCovDev"
-      "npm run testLibCovProd"
-      "npm run testCovMerge"
-    ]
+    ## testLib:                  _runMocha    'test/lib'
+    testLibDev:               _runMochaCov 'test/lib', 'development'
+    testLibProd:              _runMochaCov 'test/lib', 'production'
 
     # Server logs app
-    buildServerLogsApp:       "#{WEBPACK_SERVER_LOGS_APP}"
+    buildServerLogsApp:       "cross-env NODE_ENV=production #{WEBPACK_SERVER_LOGS_APP} -p"
     buildServerLogsAppWatch:  "#{WEBPACK_SERVER_LOGS_APP} --watch"
 
     # Chrome extension
-    buildExtension:           "#{WEBPACK_EXTENSION}"
+    buildExtension:           "cross-env NODE_ENV=production #{WEBPACK_EXTENSION} -p"
     buildExtensionWatch:      "#{WEBPACK_EXTENSION} --watch"
 
     # Example
@@ -62,12 +67,19 @@ specs =
     # General
     build: _runMultiple [
       "coffee package.coffee"
-      ## TODO: run tests
-      "npm run compileLib"
+      "npm run compile"
       "npm run buildServerLogsApp"
       "npm run buildExtension"
+      "npm run test"
     ]
-
+    test:                     "npm run testCov"
+    testCov: _runMultiple [
+      "rm -rf coverage"
+      "npm run testLibCovDev"
+      "npm run testLibCovProd"
+      "npm run testCovMerge"
+    ]
+    testCovMerge:             "coffee tools/mergeCoverage.coffee"
 
   #-================================================================
   # ## Storyboard library dependencies
@@ -89,6 +101,8 @@ specs =
     #-----------------------------------------------------------------
     # ### Packaged in the Chrome extension
     #-----------------------------------------------------------------
+    "babel-polyfill":       "6.6.1"     # es6
+
     # React
     "react":                          "15.0.0-rc.1" # 0.14.7
     "react-dom":                      "15.0.0-rc.1"
@@ -124,8 +138,15 @@ specs =
     #-----------------------------------------------------------------
     "coffee-script": "1.10.0"
 
+    # Babel + plugins
+    "babel-core":           "6.6.5"     # es6
+    "babel-preset-es2015":  "6.6.0"     # for ES2015 (a.k.a. ES6)
+    "babel-preset-react":   "6.5.0"     # for React
+    "babel-preset-stage-2": "6.5.0"     # to replace the "stage" of support option in a Webpack config    
+
     # Webpack + loaders (+ related stuff)
     "webpack": "1.12.13"
+    "babel-loader": "6.2.4"
     "coffee-loader": "0.7.2"
     "cjsx-loader": "2.1.0"
     "file-loader": "0.8.5"

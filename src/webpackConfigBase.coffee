@@ -9,6 +9,8 @@ module.exports =
 
   plugins: [
     new webpack.ContextReplacementPlugin /moment[\\\/]locale$/, new RegExp ".[\\\/](#{LANGS.join '|'})"
+    new webpack.DefinePlugin 
+      "process.env.NODE_ENV": JSON.stringify process.env.NODE_ENV
   ]
 
   ## devtool: if process.env.NODE_ENV isnt 'production' then 'eval'
@@ -16,10 +18,10 @@ module.exports =
   module:
     loaders: [
       test: /\.cjsx$/
-      loader: 'coffee!cjsx'
+      loader: 'babel!coffee!cjsx'
     ,
       test: /\.coffee$/
-      loader: 'coffee'
+      loader: 'babel!coffee'
     ,
       test: /\.(otf|eot|svg|ttf|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/
       loader: 'file'

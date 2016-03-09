@@ -1,3 +1,9 @@
+###!
+* Storyboard Chrome DevTools Extension
+* (c) Guillermo Grau Panea 2016
+* License: MIT
+###
+
 React = require 'react'
 ReactDOM = require 'react-dom'
 actions = require './actions/actions'

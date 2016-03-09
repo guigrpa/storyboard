@@ -1,7 +1,7 @@
-###
-| Storyboard
-| (c) Guillermo Grau Panea 2016
-| License: MIT
+###!
+* Storyboard
+* (c) Guillermo Grau Panea 2016
+* License: MIT
 ###
 
 # Chalk is disabled by default in the browser. Override
