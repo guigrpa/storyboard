@@ -1,6 +1,7 @@
 React             = require 'react'
 ReactRedux        = require 'react-redux'
 actions           = require '../actions/actions'
+Icon              = require './910-icon'
 
 RETURN_KEY = 13
 
@@ -36,20 +37,44 @@ Login = React.createClass
       return @renderLogIn()
 
   renderLogOut: ->
+    {login} = @props
+    msg = if login then "Logged in as #{login}" else "Logged in"
     <div style={_style.outer()}>
-      Logged in as {@props.login}
+      {msg}
       {' '}
-      <button onClick={@logOut}>Log out</button>
+      <Icon 
+        icon="sign-out" 
+        title="Log out"
+        size="lg" 
+        fFixedWidth
+        onClick={@logOut}
+        style={_style.icon()}
+      />
     </div>
 
   renderLogIn: ->
     {loginState} = @props
-    btnMessage = switch loginState
-      when 'LOGGED_OUT' then 'Submit'
-      when 'LOGGING_IN' then 'Logging in...'
-      else 'Logged in'
+    btn = switch loginState
+      when 'LOGGED_OUT' 
+        <Icon 
+          icon="sign-in" 
+          title="Log in"
+          size="lg" 
+          fFixedWidth
+          onClick={@logIn}
+          style={_style.icon()}
+        />
+      when 'LOGGING_IN' 
+        <Icon 
+          icon="circle-o-notch" 
+          title="Logging in"
+          fFixedWidth
+          size="lg" 
+          style={_style.icon fDisabled: true}
+        />
+      else ''
     <div style={_style.outer true}>
-      <b>Log in to see server logs:</b>
+      <b>Server logs:</b>
       {' '}
       <span>
         <input ref="login"
@@ -70,12 +95,7 @@ Login = React.createClass
           onKeyUp={@onKeyUpCredentials}
           style={_style.field}
         />
-        <button 
-          onClick={@logIn} 
-          disabled={loginState isnt 'LOGGED_OUT'}
-        >
-          {btnMessage}
-        </button>
+        {btn}
       </span>
     </div>
 
@@ -93,8 +113,10 @@ Login = React.createClass
 #-----------------------------------------------------
 _style = 
   outer: (fHighlight) ->
-    padding: "4px 4px 4px 10px"
+    padding: "4px 10px"
     backgroundColor: if fHighlight then '#d6ecff'
+  icon: ({fDisabled} = {}) ->
+    cursor: if not fDisabled then 'pointer'
   field:
     marginRight: 4
     width: 70

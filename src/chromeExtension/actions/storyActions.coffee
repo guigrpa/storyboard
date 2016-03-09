@@ -10,6 +10,7 @@ toggleAttachment = (pathStr, recordId) ->
   {type: 'TOGGLE_ATTACHMENT', pathStr, recordId}
 expandAllStories = -> {type: 'EXPAND_ALL_STORIES'}
 collapseAllStories = -> {type: 'COLLAPSE_ALL_STORIES'}
+clearLogs = -> {type: 'CLEAR_LOGS'}
 quickFind = (txt) -> (dispatch) -> _quickFind dispatch, txt
 _quickFind = _.debounce (dispatch, txt) ->
   dispatch {type: 'QUICK_FIND', txt}
@@ -22,5 +23,6 @@ module.exports =
     toggleAttachment,
     expandAllStories,
     collapseAllStories,
+    clearLogs,
     quickFind,
   }

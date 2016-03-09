@@ -2,6 +2,8 @@ _                 = require '../../vendor/lodash'
 React             = require 'react'
 ReactRedux        = require 'react-redux'
 Login             = require './010-login'
+Settings          = require './016-settings'
+Icon              = require './910-icon'
 actions           = require '../actions/actions'
 
 mapStateToProps = (state) -> 
@@ -9,7 +11,7 @@ mapStateToProps = (state) ->
 mapDispatchToProps = (dispatch) ->
   expandAllStories:   -> dispatch actions.expandAllStories()
   collapseAllStories: -> dispatch actions.collapseAllStories()
-  setShowClosedActions: (fEnabled) -> dispatch actions.setShowClosedActions fEnabled
+  clearLogs:          -> dispatch actions.clearLogs()
   quickFind: (txt) -> dispatch actions.quickFind txt
 
 Toolbar = React.createClass
@@ -21,26 +23,44 @@ Toolbar = React.createClass
     settings:             React.PropTypes.object.isRequired
     expandAllStories:     React.PropTypes.func.isRequired
     collapseAllStories:   React.PropTypes.func.isRequired
-    setShowClosedActions: React.PropTypes.func.isRequired
+  getInitialState: ->
+    fSettingsShown:       false
+
 
   #-----------------------------------------------------
   render: -> 
-    <div style={_style.outmost}>
+    <div>
+      {@renderSettings()}
       <div style={_style.outer}>
         <div style={_style.left}>
-          <button onClick={@props.expandAllStories}>Expand all</button>
-          {' '}
-          <button onClick={@props.collapseAllStories}>Collapse all</button>
-          {' '}
-          <input 
-            id="closedActions"
-            type="checkbox"
-            checked={@props.settings.fShowClosedActions}
-            onChange={@onClickShowClosedActions}
+          <Icon 
+            icon="cog" 
+            size="lg"
+            title="Show settings..."
+            onClick={@toggleSettings}
+            style={_style.icon}
           />
-          <label htmlFor="closedActions">
-            Show <i>CLOSED</i> actions
-          </label>
+          <Icon 
+            icon="chevron-circle-down" 
+            size="lg" 
+            title="Expand all stories"
+            onClick={@props.expandAllStories}
+            style={_style.icon}
+          />
+          <Icon 
+            icon="chevron-circle-right" 
+            size="lg" 
+            title="Collapse all stories"
+            onClick={@props.collapseAllStories}
+            style={_style.icon}
+          />
+          <Icon 
+            icon="remove"
+            size="lg" 
+            title="Clear logs"
+            onClick={@props.clearLogs}
+            style={_style.icon}
+          />
           {' '}
           <input
             id="quickFind"
@@ -56,9 +76,12 @@ Toolbar = React.createClass
       <div style={_style.placeholder}/>
     </div>
 
+  renderSettings: ->
+    return if not @state.fSettingsShown
+    <Settings onClose={@toggleSettings}/>
+
   #-----------------------------------------------------
-  onClickShowClosedActions: (ev) -> 
-    @props.setShowClosedActions ev.target.checked
+  toggleSettings: -> @setState {fSettingsShown: not @state.fSettingsShown}
   onChangeQuickFind: (ev) -> @props.quickFind ev.target.value
 
 #-----------------------------------------------------
@@ -74,10 +97,13 @@ _style =
     display: 'flex'
     flexDirection: 'row'
     whiteSpace: 'nowrap'
+  icon:
+    cursor: 'pointer'
+    marginRight: 5
   placeholder:
     height: 30
   left:
-    padding: 4
+    padding: "4px 4px 4px 8px"
   spacer:
     flex: '1 1 0px'
 

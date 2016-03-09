@@ -2,7 +2,6 @@
     + [ ] More tests
 
 - [ ] Chrome extension
-    + [ ] "Clear logs" button
     + [ ] Add setting: collapseAllNewStories. It will imply cross-state between storyReducer and settingsReducer!
     + [ ] Better way to add listeners than `require 'storyboard/dist/listeners/xxx` ?
     + [ ] Improve perf with very long logs
