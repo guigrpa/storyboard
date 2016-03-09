@@ -116,6 +116,8 @@ Note that `attach` and `attachInline` have no effect on the way attachments are 
 
 Inspired by the popular [debug](https://github.com/visionmedia/debug) library, Storyboard allows you to filter logs according to source, specifying white and black lists and using wildcards. Beyond that, you can specify the minimum severity level you are interested in, depending on the source:
 
+<<<< remove colons after config
+
 * `*:DEBUG` (default) or `*`: will show logs from all sources, as long as they have severity `debug` or higher
 * `*:*`: will show absolutely all logs
 * `foo` or `foo:DEBUG`: will show logs from `foo` but no logs from any other source
@@ -175,6 +177,9 @@ Logs emitted by stories are relayed by the Storyboard `hub` module to all attach
 * **Websocket client listener**: takes logs pushed from the server, as well as local client logs and relays them to the Storyboard DevTools (if installed). It is automatically enabled in the browser.
 
 More listeners can be added by the user, e.g. to persist logs in a database, publish them online, etc. Get inspired by [winston](https://github.com/winstonjs/winston)'s or [bunyan](https://www.npmjs.com/package/bunyan)'s plugins.
+
+<<<< add/remove listeners
+<<<< config listeners
 
 
 ### Remote access to server stories
