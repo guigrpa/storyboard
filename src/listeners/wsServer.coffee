@@ -28,13 +28,14 @@ _socketInit = (config) ->
   {port, mainStory} = config
 
   # Launch stand-alone log server
-  expressApp = express()
-  expressApp.use express.static path.join(__dirname, '../../serverLogsApp')
-  httpServer = http.createServer expressApp
-  _ioStandalone = socketio(httpServer).of k.WS_NAMESPACE
-  _ioStandalone.on 'connection', (socket) -> _socketOnConnection socket, config
-  httpServer.listen port
-  mainStory.info LOG_SRC, "Server logs available on port #{chalk.cyan port}"
+  if port?
+    expressApp = express()
+    expressApp.use express.static path.join(__dirname, '../../serverLogsApp')
+    httpServer = http.createServer expressApp
+    _ioStandalone = socketio(httpServer).of k.WS_NAMESPACE
+    _ioStandalone.on 'connection', (socket) -> _socketOnConnection socket, config
+    httpServer.listen port
+    mainStory.info LOG_SRC, "Server logs available on port #{chalk.cyan port}"
 
   # If a main application server is also provided, 
   # launch another log server on the same application port
@@ -46,9 +47,9 @@ _socketInit = (config) ->
     _ioServerAdaptor.on 'connection', (socket) -> _socketOnConnection socket, config
     try
       port2 = _ioServerAdaptor.server.httpServer.address().port
-      mainStory.info LOG_SRC, "Server logs also available through main HTTP server on port #{chalk.cyan port2}"
+      mainStory.info LOG_SRC, "Server logs available through main HTTP server on port #{chalk.cyan port2}"
     catch
-      mainStory.info LOG_SRC, "Server logs also available through main HTTP server (#{chalk.red 'port could not be determined'})"
+      mainStory.info LOG_SRC, "Server logs available through main HTTP server (#{chalk.red 'port could not be determined'})"
   return
 
 _socketOnConnection = (socket, config) ->
