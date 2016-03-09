@@ -97,16 +97,11 @@ _rxRecords = (state, action) ->
   {records, fPastRecords} = action
   newStories = []
   for record in records
-    ## console.groupCollapsed "#{if record.fStoryObject then record.title else record.msg}#{if record.lastAction then ' - '+record.lastAction else ''}"
-    ## console.log "Story ID: #{record.storyId}"
-    ## console.log "Current open stories:   #{Object.keys(state.openStories).map((o) -> o.slice 0, 7).join()}"
-    ## console.log "Current closed stories: #{Object.keys(state.closedStories).map((o) -> o.slice 0, 7).join()}"
     if record.fStory 
       [state, pathStr] = _rxStory state, record, fPastRecords
       if pathStr then newStories.push pathStr
     else 
-      state = _rxLog state, record
-    ## console.groupEnd()
+      state = _rxLog state, record, fPastRecords
 
   # Don't expand stories that are already closed upon reception
   for pathStr in newStories
@@ -184,16 +179,21 @@ _addStory = (state, parentStoryPathStr, record) ->
   state = timm.setIn state, [pathSeg, story.storyId], pathStr
   return [state, pathStr]
 
-_rxLog = (state, record) ->
+_rxLog = (state, record, fPastRecords) ->
   {storyId, fServer} = record
   pathStr = state.openStories[storyId] ? _mainStoryPathStr(fServer)
-  state = _addLog state, pathStr, record
+  state = _addLog state, pathStr, record, fPastRecords
   state
 
-_addLog = (state, pathStr, record) ->
+_addLog = (state, pathStr, record, fPastRecords) ->
   path = "mainStory/#{pathStr}/records".split '/'
   record = timm.set record, 'objExpanded', false
-  return timm.updateIn state, path, (o) -> timm.addLast o, record
+  return timm.updateIn state, path, (prevRecords) -> 
+    if fPastRecords
+      {id} = record
+      if _.find(prevRecords, (o) -> o.id is id)?
+        return prevRecords
+    return timm.addLast prevRecords, record
 
 #-------------------------------------------------
 # ## Expand/collapse all

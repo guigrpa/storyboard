@@ -78,8 +78,8 @@ logIn = (credentials) ->
 
 logOut = -> (dispatch) ->
   _lastCredentials = null
+  _txMsg 'LOG_OUT'
   dispatch {type: 'LOGGED_OUT'}
-  window.location.reload()
 
 #-------------------------------------------------
 # ## Helpers

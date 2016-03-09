@@ -13,7 +13,10 @@ DEFAULT_CONFIG =
   port: 8090
   throttle: 200
   authenticate: null
+
 LOG_SRC = 'storyboard'
+SOCKET_ROOM = 'authenticated'
+
 _ioStandalone = null
 _ioServerAdaptor = null
 
@@ -52,7 +55,7 @@ _socketOnConnection = (socket, config) ->
   socket.sbAuthenticated = not config.authenticate?
   socket.sbConfig = config
   if socket.sbAuthenticated
-    socket.join 'AUTHENTICATED'
+    socket.join SOCKET_ROOM
   else
     _socketTxMsg socket, {type: 'LOGIN_REQUIRED'}
   socket.on 'MSG', (msg) -> _socketRxMsg socket, msg
@@ -72,7 +75,7 @@ _socketRxMsg = (socket, msg) ->
           rsp.result = 'SUCCESS'
           process.nextTick -> mainStory.info LOG_SRC, "User '#{login}' authenticated successfully"
           socket.sbAuthenticated = true
-          socket.join 'AUTHENTICATED'
+          socket.join SOCKET_ROOM
           rsp.data = 
             login: login
             bufferedRecords: _getBufferedRecords hub
@@ -89,6 +92,11 @@ _socketRxMsg = (socket, msg) ->
     ##     rsp.result = 'ERROR'
     ##     rsp.error = 'AUTH_REQUIRED'
     ##   _socketTxMsg socket, rsp
+    when 'LOG_OUT'
+      {authenticate} = socket.sbConfig
+      if authenticate?
+        socket.sbAuthenticated = false
+        socket.leave SOCKET_ROOM
     else
       process.nextTick -> mainStory.warn LOG_SRC, "Unknown message type '#{type}'"
   return
@@ -97,8 +105,8 @@ _socketTxMsg = (socket, msg) -> socket.emit 'MSG', msg
 
 _socketBroadcast = ->
   msg = {type: 'RECORDS', data: _broadcastBuf}
-  _ioStandalone?.to('AUTHENTICATED').emit 'MSG', msg
-  _ioServerAdaptor?.to('AUTHENTICATED').emit 'MSG', msg
+  _ioStandalone?.to(SOCKET_ROOM).emit 'MSG', msg
+  _ioServerAdaptor?.to(SOCKET_ROOM).emit 'MSG', msg
   _broadcastBuf.length = 0
   return
 
