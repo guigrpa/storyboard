@@ -31,7 +31,7 @@ To install the Storyboard library in your project:
 $ npm install --save storyboard
 ```
 
-To install the Storyboard DevTools extension for Chrome, get it from the Chrome Web Store. Optional, but highly recommended! After installing it, open the Storyboard in the DevTools and point your browser to a Storyboard-equipped page (see *Usage* below).
+To install the Storyboard DevTools extension for Chrome, get it from the Chrome Web Store. Optional, but highly recommended! After installing it, open the Storyboard in the DevTools and point your browser to a Storyboard-equipped page (see the following sections).
 
 Feel free to check out the [example](https://github.com/guigrpa/storyboard/blob/master/src/example) in this repo. To try it out, clone the repo and run `npm install && npm run buildExample && npm run example`.
 
@@ -63,7 +63,7 @@ story.fatal("Ooops! Crashed! Mayday!", {attach: fatalError});
 // ...
 ```
 
-Maybe you noticed that the `trace` call does not produce any output. See [Log filtering](#log-filtering) below to understand why.
+Maybe you noticed that the `trace` call does not produce any output. See [Log filtering](#log-filtering) to understand why.
 
 
 ### Sources
@@ -96,14 +96,17 @@ We recommend using the popular [chalk](https://github.com/chalk/chalk) library b
 
 Attach anything that might provide context to your logs: an object, an array, an exception, a simple value... Don't worry about circular references! Use the `attach` option to show attachments as a tree in the console, or `attachInline` to show a more compact, `JSON.stringify`ed version of the object.
 
+You can also use the `attachLevel` option to control the (severity) level of the detailed object logs (by default: the same level of the main logged line).
+
 ```js
 story.info("test", "A simple object", {attachInline: obj1})
 // 2016-03-09T16:51:16.436Z           test INFO  A simple object -- {"foo":2,"bar":3}
-story.info("test", "An object with a circular reference", {attach: obj2})
+story.info("test", "An object with a circular reference", 
+  {attach: obj2, attachLevel: 'debug'})
 // 2016-03-09T16:52:48.882Z           test INFO  An object with a circular reference
-// 2016-03-09T16:52:48.882Z           test INFO    foo: 2
-// 2016-03-09T16:52:48.882Z           test INFO    bar: 3
-// 2016-03-09T16:52:48.882Z           test INFO    circularRef: [CIRCULAR]
+// 2016-03-09T16:52:48.882Z           test DEBUG   foo: 2
+// 2016-03-09T16:52:48.882Z           test DEBUG   bar: 3
+// 2016-03-09T16:52:48.882Z           test DEBUG   circularRef: [CIRCULAR]
 ```
 
 Note that `attach` and `attachInline` have no effect on the way attachments are shown in the Storyboard DevTools.
@@ -145,26 +148,41 @@ storyboard.config({filter: "*:*"});
 
 ### Children stories
 
-- Opening and closing a story
+Create child stories by calling `child()` on the parent story and passing an options argument. Don't forget to `close()` the child story when you're done with it!
 
 ```js
 var childStory = story.child({src: "lib", title: "Little Red Riding Hood"});
-childStory.info("Once open a time...");
-childStory.info("THE END");
+childStory.info("Once upon a time...");
+childStory.warn("...a wolf appeared!...");
+childStory.info("...and they lived happily ever after.");
 childStory.close();
 // 2016-03-09T17:28:35.574Z     lib ----- ss/ce8b2 - Little Red Riding Hood [CREATED]
-// 2016-03-09T17:28:35.578Z    main INFO  Once open a time...
-// 2016-03-09T17:28:35.582Z    main INFO  THE END
+// 2016-03-09T17:28:35.578Z    main INFO  Once upon a time...
+// 2016-03-09T17:28:35.580Z    main WARN  ...a wolf appeared!...
+// 2016-03-09T17:28:35.582Z    main INFO  ...and they lived happily ever after.
 // 2016-03-09T17:28:35.586Z     lib ----- ss/ce8b2 - Little Red Riding Hood [CLOSED]
 ```
 
-### An introduction to listeners
+
+### Listeners
+
+Logs emitted by stories are relayed by the Storyboard `hub` module to all attached *listeners*. Storyboard comes with three listeners built-in:
+
+* **Console listener**: formats logs and sends them to `console.log` or `console.error`. You've already seen this listener in action in the previous sections. It is automatically enabled in the server, and in development mode in the browser.
+
+* **Websocket server listener**: encapsulates logs and pushes them in real-time to Websocket clients. It is disabled by default. Enable it for [remote access to server stories](#remote-access-to-server-stories)
+
+* **Websocket client listener**: takes logs pushed from the server, as well as local client logs and relays them to the Storyboard DevTools (if installed). It is automatically enabled in the browser.
+
+More listeners can be added by the user, e.g. to persist logs in a database, publish them online, etc. Get inspired by [winston](https://github.com/winstonjs/winston)'s or [bunyan](https://www.npmjs.com/package/bunyan)'s plugins.
+
 
 ### Remote access to server stories
 
 - Simple integration #1: app is just server-side
 - Simple integration #2: app has an HTTP server -- explain what happens if the app uses the simple Express 
 - Intermediate case: app has both HTTP and WS server -- special care with auth and namespaces!
+
 
 ### Linking server and client stories
 
