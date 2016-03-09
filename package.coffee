@@ -75,8 +75,8 @@ specs =
     test:                     "npm run testCov"
     testCov: _runMultiple [
       "rm -rf coverage"
-      "npm run testLibCovDev"
-      "npm run testLibCovProd"
+      "npm run testLibDev"
+      "npm run testLibProd"
       "npm run testCovMerge"
     ]
     testCovMerge:             "coffee tools/mergeCoverage.coffee"
