@@ -1,5 +1,5 @@
 {storyboard, expect} = require './imports'
-filters = require '../../src/gral/filters'
+filters = require '../../lib/gral/filters'
 
 {passesFilter} = filters
 config = (filter) ->

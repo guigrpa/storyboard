@@ -1,5 +1,5 @@
 {storyboard, expect, sinon, Promise} = require './imports'
-consoleListener = require '../../src/listeners/console'
+consoleListener = require '../../lib/listeners/console'
 
 {mainStory} = storyboard
 

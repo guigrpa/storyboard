@@ -1,6 +1,6 @@
 chalk = require 'chalk'
 {expect} = require './imports'
-treeLines = require '../../src/gral/treeLines'
+treeLines = require '../../lib/gral/treeLines'
 
 describe 'treeLines', ->
 

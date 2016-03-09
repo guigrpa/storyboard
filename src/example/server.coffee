@@ -3,7 +3,7 @@ path = require 'path'
 chalk = require 'chalk'
 bodyParser = require 'body-parser'
 storyboard = require '../storyboard'        # you'd write: `'storyboard'`
-wsServer = require '../listeners/wsServer'  # you'd write: `'storyboard/listeners/wsServer'`
+wsServer = require '../listeners/wsServer'  # you'd write: `'storyboard/lib/listeners/wsServer'`
 {mainStory} = storyboard
 storyboard.config filter: '*:*'
 

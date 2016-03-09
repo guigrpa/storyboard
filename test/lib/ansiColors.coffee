@@ -1,7 +1,9 @@
 _ = require 'lodash'
 chalk = require 'chalk'
 {expect} = require './imports'
-ansiColors = require '../../src/gral/ansiColors'
+ansiColors = require '../../lib/gral/ansiColors'
+
+RED = "#cc0000"
 
 describe 'ansiColors', ->
 
@@ -22,7 +24,7 @@ describe 'ansiColors', ->
         args = ansiColors.getBrowserConsoleArgs text
         expect(args).to.deep.equal [
           "A %csimple%c test"
-          "color: red"
+          "color: #{RED}"
           ''
         ]
 
@@ -31,7 +33,7 @@ describe 'ansiColors', ->
         args = ansiColors.getBrowserConsoleArgs text
         expect(args).to.deep.equal [
           '%cinverted%c'
-          'color: white; background-color: red'
+          "color: white; background-color: #{RED}"
           ''
         ]
 
@@ -45,7 +47,7 @@ describe 'ansiColors', ->
           style: {}
         ,
           text: 'simple'
-          style: color: 'red'
+          style: color: RED
         ,
           text: ' test'
           style: {}
@@ -56,7 +58,7 @@ describe 'ansiColors', ->
         args = ansiColors.getStyledSegments text
         expect(args).to.deep.equal [
           text: 'inverted'
-          style: {color: 'white', backgroundColor: 'red'}
+          style: {color: 'white', backgroundColor: RED}
         ]
 
       it 'should not include extra, empty segments', ->
@@ -64,7 +66,7 @@ describe 'ansiColors', ->
         segments = ansiColors.getStyledSegments text
         expect(segments).to.deep.equal [
           text: 'Three'
-          style: {color: 'red', fontWeight: 'bold'}
+          style: {color: RED, fontWeight: 'bold'}
         ,
           text: ' babies'
           style: {}
@@ -78,7 +80,7 @@ describe 'ansiColors', ->
       args = ansiColors.getBrowserConsoleArgs text
       expect(args).to.deep.equal [
         "%cRed %ctomatoes%c%c"
-        'color: red'
+        "color: #{RED}"
         ''
         ''
         ''

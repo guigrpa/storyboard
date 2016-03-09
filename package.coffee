@@ -14,7 +14,7 @@ specs =
   name: "storyboard"
   version: "0.0.3"
   description: "End-to-end, hierarchical, real-time, colorful logs & stories"
-  main: "index.js"
+  main: "lib/storyboard.js"
   author: "Guillermo Grau Panea"
   license: "MIT"
   keywords: ["log", "logging", "websockets", "console", "isomorphic"]
@@ -27,7 +27,7 @@ specs =
   #-================================================================
   # ## Scripts
   #-================================================================
-  scripts: 
+  scripts:
 
     # Library
     compile: _runMultiple [

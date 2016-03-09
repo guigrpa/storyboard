@@ -1,5 +1,5 @@
 {storyboard, expect, sinon} = require './imports'
-hub = require '../../src/gral/hub'
+hub = require '../../lib/gral/hub'
 
 _spy = sinon.spy()
 _listenerFactory = 

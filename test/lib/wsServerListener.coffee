@@ -1,7 +1,7 @@
 {storyboard, expect, sinon, Promise} = require './imports'
 socketio = require 'socket.io-client'
-wsServerListener = require '../../src/listeners/wsServer'
-k = require '../../src/gral/constants'
+wsServerListener = require '../../lib/listeners/wsServer'
+k = require '../../lib/gral/constants'
 
 {mainStory} = storyboard
 
@@ -61,9 +61,9 @@ describe "wsServerListener", ->
     it "should accept a log in", ->
       _spy.reset()
       _socket.emit 'MSG', {type: 'LOGIN_REQUEST', data: {login: 'a', password: 'b'}}
-      _waitUntil(1000, -> _spy.callCount > 0)
+      _waitUntil(1000, -> _spy.callCount > 1)
       .then (res) ->
-        expect(_spy).to.have.been.calledOnce
+        expect(_spy).to.have.been.calledTwice # second time: logging the successful login
         msg = _spy.args[0][0]
         expect(msg.type).to.equal 'LOGIN_RESPONSE'
         expect(msg.result).to.equal 'SUCCESS'
