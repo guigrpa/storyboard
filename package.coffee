@@ -24,7 +24,7 @@ _runMochaCov = (basePath, nodeEnv) ->
 specs =
   name: "storyboard"
   version: "0.0.3"
-  description: "End-to-end, hierarchical, real-time, colorful logs & stories"
+  description: "End-to-end, hierarchical, real-time, colorful logs and stories"
   main: "lib/storyboard.js"
   author: "Guillermo Grau Panea"
   license: "MIT"
@@ -61,7 +61,8 @@ specs =
     buildExtensionWatch:      "#{WEBPACK_EXTENSION} --watch"
 
     # Example
-    buildExample:             "#{WEBPACK_EXAMPLE} --watch"
+    buildExample:             "#{WEBPACK_EXAMPLE}"
+    buildExampleWatch:        "#{WEBPACK_EXAMPLE} --watch"
     example:                  "coffee src/example/server.coffee"
 
     # General

@@ -1,7 +1,7 @@
 {
   "name": "storyboard",
   "version": "0.0.3",
-  "description": "End-to-end, hierarchical, real-time, colorful logs & stories",
+  "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
   "main": "lib/storyboard.js",
   "author": "Guillermo Grau Panea",
   "license": "MIT",
@@ -28,7 +28,8 @@
     "buildServerLogsAppWatch": "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
     "buildExtension": "cross-env NODE_ENV=production webpack --config src/chromeExtension/webpackConfig.coffee --colors --progress --display-modules --display-chunks -p",
     "buildExtensionWatch": "webpack --config src/chromeExtension/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
-    "buildExample": "webpack --config src/example/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
+    "buildExample": "webpack --config src/example/webpackConfig.coffee --colors --progress --display-modules --display-chunks",
+    "buildExampleWatch": "webpack --config src/example/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
     "example": "coffee src/example/server.coffee",
     "build": "coffee package.coffee && npm run compile && npm run buildServerLogsApp && npm run buildExtension && npm run test",
     "test": "npm run testCov",

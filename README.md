@@ -1,3 +1,202 @@
-# storyboard
+# storyboard [![Build Status](https://travis-ci.org/guigrpa/storyboard.svg)](https://travis-ci.org/guigrpa/storyboard) [![npm version](https://img.shields.io/npm/v/storyboard.svg)](https://www.npmjs.com/package/storyboard) 
 
-This is a work in progress. Docs will come soon!
+## What?
+
+A library, plus a DevTools extension (currently for Chrome).
+
+![Storyboard DevTools](https://github.com/guigrpa/storyboard/blob/master/docs/xxxx.png?raw=true)
+
+
+## Why?
+
+* **Hierarchical stories**: a *story* is a group of logs and other stories, extremely useful with concurrent user actions.
+* **End-to-end stories**: don't lose track of your stories; all client and server logs related to a user click (a Login button, maybe) in a single place.
+* **Chrome extension**: use it to view client and server logs with a clean and detail-rich interface.
+* **Real-time**: server logs can be pushed out-of-the-box to the Storyboard DevTools extension via websockets.
+* **Authentication**: of course, you don't want to grant access to server logs to everybody; hook your own auth function.
+* **Simple-yet-complete API**: severity levels, sources, story status, etc.
+* **Attachments**: logs can include all sorts of attachments
+* **Flexible architecture** with stories, a hub, and listeners (plugins). Three plugins are available out of the box: console, WebSocket server and WebSocket client. Just use what you want: most features are optional!
+* **Log filtering** by source and severity levels, with white and black lists.
+* **Colorful logs**: based on the popular [chalk](https://github.com/chalk/chalk) library, extended so that it can also be used on the browser.
+
+
+## How?
+
+### Installation
+
+To install the Storyboard library in your project:
+
+```
+$ npm install --save storyboard
+```
+
+To install the Storyboard DevTools extension for Chrome, get it from the Chrome Web Store. Optional, but highly recommended! After installing it, open the Storyboard in the DevTools and point your browser to a Storyboard-equipped page (see *Usage* below).
+
+Feel free to check out the [example](https://github.com/guigrpa/storyboard/blob/master/src/example) in this repo. To try it out, clone the repo and run `npm install && npm run buildExample && npm run example`.
+
+
+### Basic usage
+
+```js
+const {mainStory: story} = require('storyboard');
+story.info("Hello world!");
+```
+
+
+### Severity levels
+
+```js
+story.trace("Teeny-weeny detail: x = 3, y = 4");
+story.debug("Called login()");
+story.info("User 'admin' authenticated successfully");
+story.warn("Sad we can't show colors in GFM");
+story.error("User 'admin' could not be authenticated", {attach: err});
+story.fatal("Ooops! Crashed! Mayday!", {attach: fatalError});
+// ...
+// 2016-03-09T16:18:19.659Z           main WARN  Sad we can't show colors in GFM
+// 2016-03-09T16:18:19.672Z           main ERROR User 'admin' could not be authenticated
+// 2016-03-09T16:18:19.672Z           main ERROR   name: 'Error'
+// 2016-03-09T16:18:19.672Z           main ERROR   message: 'AUTHENTICATION_ERROR'
+// 2016-03-09T16:18:19.672Z           main ERROR   stack: Error: AUTHENTICATION_ERROR
+// 2016-03-09T16:18:19.672Z           main ERROR   stack:     at repl:3:11
+// ...
+```
+
+Maybe you noticed that the `trace` call does not produce any output. See [Log filtering](#log-filtering) below to understand why.
+
+
+### Sources
+
+Namespace your logs for readability, as well as to allow finer-grained filtering later on.
+
+```js
+story.info("http", "GET /api/item/25");
+story.info("db", "Fetching item 25...");
+// 2016-03-09T16:29:51.943Z           http INFO  GET /api/item/25
+// 2016-03-09T16:31:52.231Z             db INFO  Fetching item 25...
+```
+
+
+### Colors
+
+Use colors to highlight important parts of your logs:
+
+```js
+story.info("http", `GET ${chalk.green.bold("/api/item/26")}`);
+story.info("db", `Fetching item ${chalk.green.bold("26")}...`);
+// 2016-03-09T16:29:51.943Z           http INFO  GET /api/item/26
+// 2016-03-09T16:31:52.231Z             db INFO  Fetching item 26...
+```
+
+We recommend using the popular [chalk](https://github.com/chalk/chalk) library by Sindre Sorhus. Chalk is automatically extended by Storyboard for use in the browser. If you use another ANSI-color library, make sure it's universal and doesn't disable itself in the browser.
+
+
+### Attachments
+
+Attach anything that might provide context to your logs: an object, an array, an exception, a simple value... Don't worry about circular references! Use the `attach` option to show attachments as a tree in the console, or `attachInline` to show a more compact, `JSON.stringify`ed version of the object.
+
+```js
+story.info("test", "A simple object", {attachInline: obj1})
+// 2016-03-09T16:51:16.436Z           test INFO  A simple object -- {"foo":2,"bar":3}
+story.info("test", "An object with a circular reference", {attach: obj2})
+// 2016-03-09T16:52:48.882Z           test INFO  An object with a circular reference
+// 2016-03-09T16:52:48.882Z           test INFO    foo: 2
+// 2016-03-09T16:52:48.882Z           test INFO    bar: 3
+// 2016-03-09T16:52:48.882Z           test INFO    circularRef: [CIRCULAR]
+```
+
+Note that `attach` and `attachInline` have no effect on the way attachments are shown in the Storyboard DevTools.
+
+
+### Log filtering
+
+Inspired by the popular [debug](https://github.com/visionmedia/debug) library, Storyboard allows you to filter logs according to source, specifying white and black lists and using wildcards. Beyond that, you can specify the minimum severity level you are interested in, depending on the source:
+
+* `*:DEBUG` (default) or `*`: will show logs from all sources, as long as they have severity `debug` or higher
+* `*:*`: will show absolutely all logs
+* `foo` or `foo:DEBUG`: will show logs from `foo` but no logs from any other source
+* `-test, *:*`: will show all logs, except those from source `test`
+* `foo, bar:INFO, -test, *:WARN`: will show logs from `foo` (`DEBUG` or higher), `bar` (`INFO` or higher), and all other modules (`WARN` or higher), but nothing from source `test`
+* `ba*:*, -basket`, will show all logs from `bar`, `baz`, etc. but not from `basket`
+
+In Node, you can configure filter logs via the `STORYBOARD` environment variable:
+
+```bash
+# OS X / Linux
+STORYBOARD=*:* node myScript
+# Windows
+set "STORYBOARD=*:*" && node myScript
+```
+
+In the browser, use `localStorage`:
+
+```js
+localStorage.STORYBOARD = "*:*"
+```
+
+Alternatively, you can configure the log filters programatically:
+
+```js
+const storyboard = require("storyboard");
+storyboard.config({filter: "*:*"});
+```
+
+
+### Children stories
+
+- Opening and closing a story
+
+```js
+var childStory = story.child({src: "lib", title: "Little Red Riding Hood"});
+childStory.info("Once open a time...");
+childStory.info("THE END");
+childStory.close();
+// 2016-03-09T17:28:35.574Z     lib ----- ss/ce8b2 - Little Red Riding Hood [CREATED]
+// 2016-03-09T17:28:35.578Z    main INFO  Once open a time...
+// 2016-03-09T17:28:35.582Z    main INFO  THE END
+// 2016-03-09T17:28:35.586Z     lib ----- ss/ce8b2 - Little Red Riding Hood [CLOSED]
+```
+
+### An introduction to listeners
+
+### Remote access to server stories
+
+- Simple integration #1: app is just server-side
+- Simple integration #2: app has an HTTP server -- explain what happens if the app uses the simple Express 
+- Intermediate case: app has both HTTP and WS server -- special care with auth and namespaces!
+
+### Linking server and client stories
+
+
+### Storyboard DevTools
+
+Using the Storyboard DevTools is (or should be) very straightforward. Just open the Chrome DevTools, select the Storyboard pane and point your browser at either:
+
+- Your standard port (80), to see both server and client logs
+- Port 8090 (configurable) of your server, to see server logs only
+
+
+
+
+## Shall I? — The MIT license
+
+Copyright (c) [Guillermo Grau Panea](https://github.com/guigrpa) 2016
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
