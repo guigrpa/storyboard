@@ -39,7 +39,7 @@ Feel free to check out the [example](https://github.com/guigrpa/storyboard/blob/
 ### Basic usage
 
 ```js
-const {mainStory: story} = require('storyboard');
+var {mainStory: story} = require('storyboard');
 story.info("Hello world!");
 ```
 
@@ -143,7 +143,7 @@ localStorage.STORYBOARD = "*:*"
 Alternatively, you can configure the log filters programatically:
 
 ```js
-const storyboard = require("storyboard");
+var storyboard = require("storyboard");
 storyboard.config({filter: "*:*"});
 ```
 
@@ -178,15 +178,68 @@ Logs emitted by stories are relayed by the Storyboard `hub` module to all attach
 
 More listeners can be added by the user, e.g. to persist logs in a database, publish them online, etc. Get inspired by [winston](https://github.com/winstonjs/winston)'s or [bunyan](https://www.npmjs.com/package/bunyan)'s plugins.
 
-<<<< add/remove listeners
-<<<< config listeners
-
 
 ### Remote access to server stories
 
-- Simple integration #1: app is just server-side
-- Simple integration #2: app has an HTTP server -- explain what happens if the app uses the simple Express 
-- Intermediate case: app has both HTTP and WS server -- special care with auth and namespaces!
+Adding remote access to a Node application is easy; just attach the Websocket server listener as follows:
+
+```js
+var storyboard = require("storyboard");
+var wsServer = require("storyboard/lib/listeners/wsServer");
+storyboard.addListener(wsServer);
+```
+
+You can call `addListener()` with an additional `options` object overriding the following defaults or including additional parameters:
+
+```js
+var options = {
+  port: 8090,           // standalone server logs port
+  throttle: 200,        // [ms] send logs at most every X ms
+  authenticate: null,   // no authentication function
+};
+```
+
+Most probably, you'll want to configure the `authenticate` function:
+
+```js
+// Example #1: synchronous
+storyboard.addListener(wsServer, {
+  authenticate: ({login, password}) => true
+});
+
+// Example #2: asynchronous (returning a promise)
+storyboard.addListener(wsServer, {
+  authenticate: ({login, password}) => Promise.resolve(true)
+});
+```
+
+Configuring `options.port`, `options.httpServer` and/or `options.socketServer` lets you configure 0, 1 or 2 log servers:
+
+* If you want to set up a **standalone HTTP server** (independent from your main application HTTP server), leave the default `port` value or specify a different port. You'll be able to see your server-side logs with the Storyboard DevTools. Disable this server by setting `port` to `null`.
+
+* If you want to use your **main application HTTP server**, find your case below. This is most interesting, since it enables [end-to-end stories](#linking-server-and-client-stories).
+
+    + If you don't already use websockets, pass the `http` `Server` instance as `options.httpServer`:
+
+    ```js
+    var http = require('http');
+    var app = require('express')();
+    var httpServer = http.createServer(app);
+    httpServer.listen(3000);
+    storyboard.addListener(wsServer, {httpServer});
+    ```
+
+    + If your main server uses [socket.io](https://github.com/socketio/socket.io) websockets, pass the `socket.io` `Server` instance as `options.socketServer`:
+
+    ```js
+    var socketServer = socketio(httpServer);
+    storyboard.addListener(wsServer, {socketServer});
+    // If you use socket authentication, make sure you namespace the main app's
+    // sockets so that it does not interfere with the log server
+    var io = socketServer.of("/myApp");
+    io.use(socketAuthenticate);
+    io.on("connection", socketConnect);
+    ```
 
 
 ### Linking server and client stories
