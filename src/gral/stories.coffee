@@ -43,7 +43,6 @@ Story::changeStatus = (status) ->
   @status = status
   @logStory 'STATUS_CHANGED'
 
-Story::addParent = (id) -> @parents.push id
 Story::child = (options = {}) -> 
   {src = DEFAULT_SRC, title = DEFAULT_CHILD_TITLE, extraParents} = options
   parents = [@storyId]

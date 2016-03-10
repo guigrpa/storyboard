@@ -78,10 +78,6 @@ describe 'storyboard', ->
       expect(record.fStory).to.be.true
       expect(record.action).to.equal 'CLOSED'
 
-    it 'should allow adding parents after-the-fact', ->
-      childStory.addParent 'parent2'
-      expect(childStory.parents).to.deep.equal [mainStory.storyId, 'parent2']
-
   it 'should be possible to create stories directly with more than one parent', ->
     childStory = mainStory.child {title: 'title1', extraParents: 'foo'}
     expect(childStory.parents).to.deep.equal [mainStory.storyId, 'foo']

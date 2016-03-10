@@ -24,7 +24,7 @@ app.post '/items', (req, res, next) ->
   .then (result) -> 
     story.debug 'httpServer', "HTTP response: #{result.length} items", attachInline: result
     res.json result
-    story.close()
+  .finally -> story.close()
 httpServer = http.createServer app
 httpServer.listen PORT
 mainStory.info 'httpServer', "Listening on port #{chalk.cyan PORT}..."
@@ -56,7 +56,7 @@ mainStory.debug 'server', "Example info (expanded):",
   attachLevel: 'TRACE'
   ignoreKeys: ['dontShow']
 mainStory.warn 'server', "Example warning"
-mainStory.error 'server', "Example error", attach: new Error('Error message')
+mainStory.error 'server', "Example error", attach: new Error('EXAMPLE error message')
 setInterval -> 
   mainStory.debug 'server', "t: #{chalk.blue new Date().toISOString()}"
 , 60000
