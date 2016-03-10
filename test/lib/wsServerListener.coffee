@@ -91,7 +91,7 @@ describe "wsServerListener", ->
         expect(msg.data[0].obj).to.have.length 2
 
 
-  describe "with throttling", ->
+  describe.skip "with throttling", ->
 
     _listener = null
     _socket = null

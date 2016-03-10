@@ -15,15 +15,14 @@ setShowClosedActions = (fShowClosedActions) ->
 LOCALSTORAGE_PREFIX = 'storyboard'
 
 _get = (key) ->
-  return if not localStorage?
-  json = localStorage["#{LOCALSTORAGE_PREFIX}_#{key}"]
   try
+    json = localStorage["#{LOCALSTORAGE_PREFIX}_#{key}"]
     return JSON.parse json
   return
 
 _set = (key, val) ->
-  return if not localStorage?
-  localStorage["#{LOCALSTORAGE_PREFIX}_#{key}"] = JSON.stringify val
+  try
+    localStorage["#{LOCALSTORAGE_PREFIX}_#{key}"] = JSON.stringify val
   return
 
 loadSettings = -> (dispatch) ->
