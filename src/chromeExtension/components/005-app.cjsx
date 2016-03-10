@@ -75,7 +75,7 @@ App = React.createClass
 
   renderConnecting: ->
     extra = if @props.fTakingLong then \
-      <div>If this seems to be taking a long time, please verify your URL</div>
+      <div>Navigate to your Storyboard-equipped app (and log in if needed)</div>
     <LargeMessage>
       Connecting to Storyboard...
       {extra}

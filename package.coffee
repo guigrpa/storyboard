@@ -171,7 +171,6 @@ specs =
     "cross-env": "1.0.7"
     "uglifyjs": "2.4.10"
 
-
 #-================================================================
 # ## Build package.json
 #-================================================================
@@ -183,3 +182,29 @@ specs.dependencies = _sortDeps specs.dependencies
 specs.devDependencies = _sortDeps specs.devDependencies
 packageJson = JSON.stringify(specs, null, '  ') + '\n'
 require('fs').writeFileSync "package.json", packageJson
+
+#-================================================================
+# ## Build manifest.json
+#-================================================================
+manifest = 
+  manifest_version: 2
+
+  name: "Storyboard DevTools"
+  short_name: "Storyboard DevTools"
+  description: "Gives you access to end-to-end stories (logs) for Storyboard-equipped applications"
+  author: "Guillermo Grau Panea"
+  version: specs.version
+
+  content_scripts: [
+    matches: ["<all_urls>"]
+    js: ["contentScript.js"]
+    run_at: "document_start"
+  ]
+
+  background:
+    scripts: ["background.js"]
+    persistent: false
+
+  devtools_page: "devTools.html"
+manifestJson = JSON.stringify(manifest, null, '  ') + '\n'
+require('fs').writeFileSync "chromeExtension/manifest.json", manifestJson
