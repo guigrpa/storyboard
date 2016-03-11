@@ -74,12 +74,14 @@ _socketRxMsg = (socket, msg) ->
         rsp = {type: 'LOGIN_RESPONSE'}
         if fAuthValid
           rsp.result = 'SUCCESS'
-          process.nextTick -> mainStory.info LOG_SRC, "User '#{login}' authenticated successfully"
           socket.sbAuthenticated = true
           socket.join SOCKET_ROOM
           rsp.data = 
             login: login
             bufferedRecords: _getBufferedRecords hub
+          process.nextTick -> 
+            mainStory.info LOG_SRC, "User '#{login}' authenticated successfully"
+            mainStory.debug LOG_SRC, "Piggybacked #{chalk.cyan rsp.data.bufferedRecords.length} records"
         else
           rsp.result = 'ERROR'
           process.nextTick -> mainStory.warn LOG_SRC, "User '#{login}' authentication failed"
