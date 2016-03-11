@@ -13,7 +13,6 @@ require 'font-awesome/css/font-awesome.css'
 mapStateToProps = (state) -> 
   fRelativeTime:  state.settings.timeType is 'RELATIVE'
   cxState:        state.cx.cxState
-  fTakingLong:    state.cx.fTakingLong
   mainStory:      state.stories.mainStory
 
 App = React.createClass
@@ -24,7 +23,6 @@ App = React.createClass
     # From Redux.connect
     fRelativeTime:          React.PropTypes.bool.isRequired
     cxState:                React.PropTypes.string.isRequired
-    fTakingLong:            React.PropTypes.bool.isRequired
     mainStory:              React.PropTypes.object.isRequired
   getInitialState: ->
     seqFullRefresh:         0
@@ -74,11 +72,9 @@ App = React.createClass
     </div>
 
   renderConnecting: ->
-    extra = if @props.fTakingLong then \
-      <div>Navigate to your Storyboard-equipped app (and log in if needed)</div>
     <LargeMessage>
-      Connecting to Storyboard...
-      {extra}
+      Connecting to Storyboard... <br/>
+      Navigate to your Storyboard-equipped app (and log in if required)
     </LargeMessage>
 
 #-----------------------------------------------------

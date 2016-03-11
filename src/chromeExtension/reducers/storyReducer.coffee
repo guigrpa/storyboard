@@ -47,7 +47,7 @@ reducer = (state = INITIAL_STATE, action, settings = {}) ->
 
     # Clean up the main story after connecting
     # (we don't want to carry over logs from a previous page)
-    when 'CX_SUCCEEDED', 'CLEAR_LOGS' then return _buildInitialState()
+    when 'CX_CONNECTED', 'CLEAR_LOGS' then return _buildInitialState()
 
     when 'RECORDS_RECEIVED' then return _rxRecords state, action, settings
 

@@ -57,8 +57,6 @@ _socketOnConnection = (socket, config) ->
   socket.sbConfig = config
   if socket.sbAuthenticated
     socket.join SOCKET_ROOM
-  else
-    _socketTxMsg socket, {type: 'LOGIN_REQUIRED'}
   socket.on 'MSG', (msg) -> _socketRxMsg socket, msg
 
 _socketRxMsg = (socket, msg) ->
@@ -100,6 +98,11 @@ _socketRxMsg = (socket, msg) ->
       if authenticate?
         socket.sbAuthenticated = false
         socket.leave SOCKET_ROOM
+    when 'LOGIN_REQUIRED_QUESTION'
+      _socketTxMsg socket,
+        type: 'LOGIN_REQUIRED_RESPONSE'
+        result: 'SUCCESS'
+        data: {fLoginRequired: socket.sbConfig.authenticate?}
     else
       process.nextTick -> mainStory.warn LOG_SRC, "Unknown message type '#{type}'"
   return

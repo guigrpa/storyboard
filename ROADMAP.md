@@ -1,7 +1,7 @@
 - [ ] Library:
     + [ ] More tests
-    + [ ] Better tests for WS Server listener
+    + [ ] Better tests for WS Server listener (currently skipped)
 
 - [ ] Chrome extension:
-    + [ ] Open page, open devtools, open sb pane. Then close and open the devtools. No login, no logout!
-    - [ ] Forget logs and (closed) stories...
+    + [ ] Better approach for app reducer? Handle actions in a single place. See this: http://www.code-experience.com/problems-with-flux/
+    - [ ] Periodically, go through the story tree and "forget" logs and (closed) stories...

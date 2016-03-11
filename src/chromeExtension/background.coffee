@@ -3,20 +3,24 @@
 # each of them holding the corresponding connection.
 _connections = {}
 
-console.log "[BG] Launching..."
+console.log "[BG] Launched"
 
 _logConnections = ->
-  console.log "[BG] Current connections:"
+  title = "[BG] Current connections:"
+  title += ' none' if not Object.keys(_connections).length
+  console.log title
   for tabId, connections of _connections
     console.log "- #{tabId}: " +
-      "DT: #{if connections.DT? then 'YES' else 'NO'}, " +
-      "CS: #{if connections.CS? then 'YES' else 'NO'}"
+      "DevTools (DT): #{if connections.DT? then 'YES' else 'NO'}, " +
+      "content script (YES): #{if connections.CS? then 'YES' else 'NO'}"
+  return
 
 chrome.runtime.onConnect.addListener (port) ->
   console.log "[BG] Connected: #{port.sender.url} [tabId: #{port.sender.tab?.id}]"
   listener = (msg) ->
     {src, dst, type, data} = msg
-    console.log "[BG] RX #{src}/#{type}", data
+    if process.env.NODE_ENV isnt 'production'
+      console.log "[BG] RX #{src}/#{type}", data
 
     # Connection initialisation
     if type is 'CONNECT_REQUEST'
@@ -45,9 +49,19 @@ chrome.runtime.onConnect.addListener (port) ->
       for cxType, connection of connections
         if connection is port
           delete _connections[tabId][cxType]
+
+          # Tell the DT for a given page that the user went away
+          if _connections[tabId].DT?
+            _connections[tabId].DT.postMessage
+              src: 'PAGE'
+              type: 'CX_DISCONNECTED'
+
+          # Purge entry in `_connections`, if needed
           if (not _connections[tabId].DT?) and (not _connections[tabId].CS?)
             delete _connections[tabId]
           break
 
     _logConnections()
     return
+
+_logConnections()

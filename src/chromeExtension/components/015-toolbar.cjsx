@@ -8,6 +8,7 @@ actions           = require '../actions/actions'
 
 mapStateToProps = (state) -> 
   settings:       state.settings
+  wsState:        state.cx.wsState
 mapDispatchToProps = (dispatch) ->
   expandAllStories:   -> dispatch actions.expandAllStories()
   collapseAllStories: -> dispatch actions.collapseAllStories()
@@ -21,6 +22,7 @@ Toolbar = React.createClass
   propTypes:
     # From Redux.connect
     settings:             React.PropTypes.object.isRequired
+    wsState:              React.PropTypes.string.isRequired
     expandAllStories:     React.PropTypes.func.isRequired
     collapseAllStories:   React.PropTypes.func.isRequired
   getInitialState: ->
@@ -69,6 +71,7 @@ Toolbar = React.createClass
             placeholder="Quick find..."
             onChange={@onChangeQuickFind}
           />
+          {@renderWsStatus()}
         </div>
         <div style={_style.spacer}/>
         <Login/>
@@ -79,6 +82,21 @@ Toolbar = React.createClass
   renderSettings: ->
     return if not @state.fSettingsShown
     <Settings onClose={@toggleSettings}/>
+
+  renderWsStatus: ->
+    fConnected = @props.wsState is 'CONNECTED'
+    if fConnected
+      icon = 'chain'
+      title = 'Connection with the server is UP'
+    else
+      icon = 'chain-broken'
+      title = 'Connection with the server is DOWN'
+    <Icon 
+      icon={icon}
+      size="lg" 
+      title={title}
+      style={_style.wsStatus fConnected}
+    />
 
   #-----------------------------------------------------
   toggleSettings: -> @setState {fSettingsShown: not @state.fSettingsShown}
@@ -100,10 +118,16 @@ _style =
   icon:
     cursor: 'pointer'
     marginRight: 5
+  wsStatus: (fConnected) ->
+    marginRight: 5
+    marginLeft: 5
+    color: if fConnected then 'green' else 'red'
   placeholder:
     height: 30
   left:
     padding: "4px 4px 4px 8px"
+  right:
+    padding: "4px 8px 4px 4px"
   spacer:
     flex: '1 1 0px'
 

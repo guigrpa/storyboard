@@ -57,7 +57,16 @@ _socketInit = (config) ->
   story.info 'storyboard', "Connecting to WebSocket server..."
   if not _socket
     _socket = socketio.connect k.WS_NAMESPACE
-    _socket.on 'connect', -> story.info 'storyboard', "WebSocket connected"
+    socketConnected = ->
+      story.info 'storyboard', "WebSocket connected"
+      _extensionTxMsg {type: 'WS_CONNECTED'}
+    socketDisconnected = ->
+      story.info 'storyboard', "WebSocket disconnected"
+      _extensionTxMsg {type: 'WS_DISCONNECTED'}
+    _socket.on 'connect', socketConnected
+    _socket.on 'reconnect', socketConnected
+    _socket.on 'disconnect', socketDisconnected
+    _socket.on 'error', socketDisconnected
     _socket.on 'MSG', _socketRxMsg
   _socket.sbConfig = config
 

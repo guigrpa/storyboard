@@ -21,15 +21,11 @@ connect = ->
 
   # Give the other party a chance at connecting
   yield Promise.delay 30
-  return if yield Saga.call _isConnected
 
-  # If the other party hasn't started, we try to establish
-  yield Saga.call _txMsg, 'CONNECT_REQUEST'
-
-  # If it's taking long, issue a warning to the user
-  yield Promise.delay 2000
-  return if yield Saga.call _isConnected
-  yield Saga.put {type: 'CX_TAKING_LONG'}
+  while true
+    if not yield Saga.call _isConnected
+      yield Saga.call _txMsg, 'CONNECT_REQUEST'
+    yield Promise.delay 2000
 
 _isConnected = -> 
   cxState = yield Saga.select (state) -> state.cx.cxState
@@ -42,15 +38,20 @@ rxMsg = ->
   while true
     {msg} = yield Saga.take 'MSG_RECEIVED'
     {src, type, result, data} = msg
-    ## console.log "[DT] RX #{src}/#{type}", data
+    console.log "[DT] RX #{src}/#{type}", data
     switch type
+      when 'CX_DISCONNECTED'
+        yield Saga.put {type: 'CX_DISCONNECTED'}
       when 'CONNECT_REQUEST', 'CONNECT_RESPONSE'
         if type is 'CONNECT_REQUEST' 
           yield Saga.call _txMsg, 'CONNECT_RESPONSE'
-        yield Saga.put {type: 'CX_SUCCEEDED', records: data}
-      when 'LOGIN_REQUIRED'
-        yield Saga.put {type: 'LOGIN_REQUIRED'}
-        if _lastCredentials
+        yield Saga.put {type: 'CX_CONNECTED', records: data}
+        yield Saga.call _txMsg, 'LOGIN_REQUIRED_QUESTION'
+        # Too fast?
+      when 'LOGIN_REQUIRED_RESPONSE'
+        {fLoginRequired} = data
+        yield Saga.put {type: 'LOGIN_REQUIRED', fLoginRequired}
+        if fLoginRequired and _lastCredentials
           yield Saga.put {type: 'LOGIN_STARTED'}
           yield Saga.call _txMsg, 'LOGIN_REQUEST', _lastCredentials
       when 'LOGIN_RESPONSE' 
@@ -67,6 +68,8 @@ rxMsg = ->
           _lastCredentials = null
       when 'RECORDS' 
         yield Saga.put {type: 'RECORDS_RECEIVED', records: data}
+
+      when 'WS_CONNECTED', 'WS_DISCONNECTED' then yield Saga.put {type}
   return
 
 #-------------------------------------------------

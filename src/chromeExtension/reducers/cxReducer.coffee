@@ -1,10 +1,10 @@
 timm = require 'timm'
 
 INITIAL_STATE =
-  cxState: 'DISCONNECTED'
-  fTakingLong: false
+  cxState: 'DISCONNECTED'   # connection with the WsClient listener ("the" page)
   fLoginRequired: false
   loginState: 'LOGGED_OUT'
+  wsState: 'DISCONNECTED'   # connection btw WsClient listener and WsServer listener
   login: null
 
 reducer = (state = INITIAL_STATE, action) ->
@@ -13,17 +13,27 @@ reducer = (state = INITIAL_STATE, action) ->
     #-------------------------------------------------
     # ## Connection-related actions
     #-------------------------------------------------
-    when 'CX_SUCCEEDED'
+    when 'CX_CONNECTED'
       return timm.set state, 'cxState', 'CONNECTED'
 
-    when 'CX_TAKING_LONG'
-      return timm.set state, 'fTakingLong', true
+    when 'CX_DISCONNECTED'
+      return timm.set state, 'cxState', 'DISCONNECTED'
+
+    #-------------------------------------------------
+    # ## WebSocket-related actions
+    #-------------------------------------------------
+    when 'WS_CONNECTED'
+      return timm.set state, 'wsState', 'CONNECTED'
+
+    when 'WS_DISCONNECTED'
+      return timm.set state, 'wsState', 'DISCONNECTED'
 
     #-------------------------------------------------
     # ## Login-related actions
     #-------------------------------------------------
     when 'LOGIN_REQUIRED'
-      return timm.set state, 'fLoginRequired', true
+      {fLoginRequired} = action
+      return timm.set state, 'fLoginRequired', fLoginRequired
 
     when 'LOGIN_STARTED'
       return timm.set state, 'loginState', 'LOGGING_IN'
