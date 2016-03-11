@@ -42,14 +42,14 @@ INITIAL_STATE = _buildInitialState()
 #-------------------------------------------------
 # ## Reducer
 #-------------------------------------------------
-reducer = (state = INITIAL_STATE, action) ->
+reducer = (state = INITIAL_STATE, action, settings = {}) ->
   switch action.type
 
     # Clean up the main story after connecting
     # (we don't want to carry over logs from a previous page)
     when 'CX_SUCCEEDED', 'CLEAR_LOGS' then return _buildInitialState()
 
-    when 'RECORDS_RECEIVED' then return _rxRecords state, action
+    when 'RECORDS_RECEIVED' then return _rxRecords state, action, settings
 
     when 'TOGGLE_EXPANDED'
       {pathStr} = action
@@ -93,15 +93,16 @@ reducer = (state = INITIAL_STATE, action) ->
 #-------------------------------------------------
 # ## Adding records
 #-------------------------------------------------
-_rxRecords = (state, action) ->
+_rxRecords = (state, action, settings) ->
   {records, fPastRecords} = action
+  options = timm.merge settings, {fPastRecords}
   newStories = []
   for record in records
     if record.fStory 
-      [state, pathStr] = _rxStory state, record, fPastRecords
+      [state, pathStr] = _rxStory state, record, options
       if pathStr then newStories.push pathStr
     else 
-      state = _rxLog state, record, fPastRecords
+      state = _rxLog state, record, options
 
   # Don't expand stories that are already closed upon reception
   for pathStr in newStories
@@ -110,7 +111,8 @@ _rxRecords = (state, action) ->
     state = timm.setIn state, "mainStory/#{pathStr}/fExpanded".split('/'), false
   state
 
-_rxStory = (state, record, fPastRecords) ->
+_rxStory = (state, record, options) ->
+  {fPastRecords} = options
   {storyId} = record
   newStoryPathStr = null
 
@@ -128,7 +130,7 @@ _rxStory = (state, record, fPastRecords) ->
     pathStr = state.closedStories[storyId]
   if pathStr?
     state = _updateStory state, pathStr, record
-    state = _addLog state, pathStr, record
+    state = _addLog state, pathStr, record, options
 
   # It's a new story. Look for the *most suitable parent* and create
   # a new child story object. The *most suitable parent* is
@@ -143,8 +145,8 @@ _rxStory = (state, record, fPastRecords) ->
       if (not pathStr?) and fPastRecords
         pathStr = state.closedStories[parentStoryId]
     pathStr ?= _mainStoryPathStr fServer
-    [state, newStoryPathStr] = _addStory state, pathStr, record
-    state = _addLog state, newStoryPathStr, record
+    [state, newStoryPathStr] = _addStory state, pathStr, record, options
+    state = _addLog state, newStoryPathStr, record, options
 
   # We return the new state, as well as the path of the new story (if any)
   return [state, newStoryPathStr]
@@ -160,7 +162,8 @@ _updateStory = (state, pathStr, record) ->
     state = timm.setIn state, ['closedStories', storyId], pathStr
   state
 
-_addStory = (state, parentStoryPathStr, record) ->
+_addStory = (state, parentStoryPathStr, record, options) ->
+  {fCollapseAllNewStories} = options
   parentRecordsPath = "mainStory/#{parentStoryPathStr}/records".split '/'
   parentRecords = timm.getIn state, parentRecordsPath
   pathStr = "#{parentStoryPathStr}/records/#{parentRecords.length}"
@@ -169,7 +172,7 @@ _addStory = (state, parentStoryPathStr, record) ->
     records: []
     fStoryObject: true
     lastAction: record.action
-    fExpanded: true
+    fExpanded: not fCollapseAllNewStories
     fHierarchical: true
   delete story.fStory
   delete story.action
@@ -179,15 +182,16 @@ _addStory = (state, parentStoryPathStr, record) ->
   state = timm.setIn state, [pathSeg, story.storyId], pathStr
   return [state, pathStr]
 
-_rxLog = (state, record, fPastRecords) ->
+_rxLog = (state, record, options) ->
   {storyId, fServer} = record
   pathStr = state.openStories[storyId] ? _mainStoryPathStr(fServer)
-  state = _addLog state, pathStr, record, fPastRecords
+  state = _addLog state, pathStr, record, options
   state
 
-_addLog = (state, pathStr, record, fPastRecords) ->
+_addLog = (state, pathStr, record, options) ->
+  {fPastRecords, fExpandAllNewAttachments} = options
   path = "mainStory/#{pathStr}/records".split '/'
-  record = timm.set record, 'objExpanded', false
+  record = timm.set record, 'objExpanded', fExpandAllNewAttachments
   return timm.updateIn state, path, (prevRecords) -> 
     if fPastRecords
       {id} = record

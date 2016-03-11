@@ -9,6 +9,14 @@ setShowClosedActions = (fShowClosedActions) ->
   _set 'fShowClosedActions', fShowClosedActions
   {type: 'SET_SHOW_CLOSED_ACTIONS', fShowClosedActions}
 
+setCollapseAllNewStories = (fCollapseAllNewStories) -> 
+  _set 'fCollapseAllNewStories', fCollapseAllNewStories
+  {type: 'SET_COLLAPSE_ALL_NEW_STORIES', fCollapseAllNewStories}
+
+setExpandAllNewAttachments = (fExpandAllNewAttachments) -> 
+  _set 'fExpandAllNewAttachments', fExpandAllNewAttachments
+  {type: 'SET_EXPAND_ALL_NEW_ATTACHMENTS', fExpandAllNewAttachments}
+
 #-------------------------------------------------
 # ## LocalStorage
 #-------------------------------------------------
@@ -36,4 +44,6 @@ module.exports =
     loadSettings,
     setTimeType,
     setShowClosedActions,
+    setCollapseAllNewStories,
+    setExpandAllNewAttachments,
   }

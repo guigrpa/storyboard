@@ -9,16 +9,20 @@ mapStateToProps = (state) ->
   settings:       state.settings
 mapDispatchToProps = (dispatch) ->
   setShowClosedActions: (fEnabled) -> dispatch actions.setShowClosedActions fEnabled
+  setCollapseAllNewStories: (fEnabled) -> dispatch actions.setCollapseAllNewStories fEnabled
+  setExpandAllNewAttachments: (fEnabled) -> dispatch actions.setExpandAllNewAttachments fEnabled
 
 Settings = React.createClass
   displayName: 'Settings'
 
   #-----------------------------------------------------
   propTypes:
-    onClose:              React.PropTypes.func.isRequired
+    onClose:                    React.PropTypes.func.isRequired
     # From Redux.connect
-    settings:             React.PropTypes.object.isRequired
-    setShowClosedActions: React.PropTypes.func.isRequired
+    settings:                   React.PropTypes.object.isRequired
+    setShowClosedActions:       React.PropTypes.func.isRequired
+    setCollapseAllNewStories:   React.PropTypes.func.isRequired
+    setExpandAllNewAttachments: React.PropTypes.func.isRequired
   getInitialState: ->
     fCanSave: true
 
@@ -36,13 +40,35 @@ Settings = React.createClass
       />
       <div>
         <input 
-          id="closedActions"
+          id="fShowClosedActions"
           type="checkbox"
           checked={@props.settings.fShowClosedActions}
           onChange={@onClickShowClosedActions}
         />
-        <label htmlFor="closedActions">
+        <label htmlFor="fShowClosedActions">
           Show <i>CLOSED</i> actions
+        </label>
+      </div>
+      <div>
+        <input 
+          id="fCollapseAllNewStories"
+          type="checkbox"
+          checked={@props.settings.fCollapseAllNewStories}
+          onChange={@onClickCollapseAllNewStories}
+        />
+        <label htmlFor="fCollapseAllNewStories">
+          Collapse all new stories (even if they are still open)
+        </label>
+      </div>
+      <div>
+        <input 
+          id="fExpandAllNewAttachments"
+          type="checkbox"
+          checked={@props.settings.fExpandAllNewAttachments}
+          onChange={@onClickExpandAllNewAttachments}
+        />
+        <label htmlFor="fExpandAllNewAttachments">
+          Expand all attachments upon receipt
         </label>
       </div>
     </div>
@@ -60,6 +86,10 @@ Settings = React.createClass
   #-----------------------------------------------------
   onClickShowClosedActions: (ev) -> 
     @props.setShowClosedActions ev.target.checked
+  onClickCollapseAllNewStories: (ev) -> 
+    @props.setCollapseAllNewStories ev.target.checked
+  onClickExpandAllNewAttachments: (ev) -> 
+    @props.setExpandAllNewAttachments ev.target.checked
 
   #-----------------------------------------------------
   checkLocalStorage: ->
