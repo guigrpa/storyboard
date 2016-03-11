@@ -19,10 +19,15 @@ Settings = React.createClass
     # From Redux.connect
     settings:             React.PropTypes.object.isRequired
     setShowClosedActions: React.PropTypes.func.isRequired
+  getInitialState: ->
+    fCanSave: true
+
+  componentDidMount: -> @checkLocalStorage()
 
   #-----------------------------------------------------
   render: -> 
     <div className="settings" style={_style.outer}>
+      {@renderLocalStorageWarning()}
       <Icon 
         icon="close" 
         size="lg" 
@@ -42,9 +47,27 @@ Settings = React.createClass
       </div>
     </div>
 
+  renderLocalStorageWarning: ->
+    return if @state.fCanSave
+    <div className="allowUserSelect" style={_style.localStorageWarning}>
+      Changes to these settings can't be saved (beyond your current session)
+      due to your current Chrome configuration. Please visit 
+      <b>chrome://settings/content</b> and
+      uncheck the option "Block third-party cookies and site 
+      data". Then close the Chrome DevTools and open them again.
+    </div>
+
   #-----------------------------------------------------
   onClickShowClosedActions: (ev) -> 
     @props.setShowClosedActions ev.target.checked
+
+  #-----------------------------------------------------
+  checkLocalStorage: ->
+    try
+      ls = localStorage.foo
+      @setState fCanSave: true
+    catch e
+      @setState fCanSave: false
 
 #-----------------------------------------------------
 _style = 
@@ -64,7 +87,12 @@ _style =
     right: 5
     top: 5
     cursor: 'pointer'
-
+  localStorageWarning:
+    color: 'red'
+    border: "1px solid red"
+    padding: 15
+    marginBottom: 10
+    borderRadius: 2
 
 #-----------------------------------------------------
 connect = ReactRedux.connect mapStateToProps, mapDispatchToProps
