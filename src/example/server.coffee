@@ -51,7 +51,7 @@ someInfo =
     bar: null
     values: [1, 2]
 someInfo.nested.configOptions.mainInfo = someInfo
-mainStory.debug 'server', "Example info (expanded):", 
+mainStory.debug 'server', "Example info:", 
   attach: someInfo
   attachLevel: 'TRACE'
   ignoreKeys: ['dontShow']
