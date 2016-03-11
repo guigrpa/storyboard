@@ -30,6 +30,10 @@ _extensionRxMsg = (msg) ->
       _fExtensionReady = true
       if type is 'CONNECT_REQUEST' 
         _extensionTxMsg {type: 'CONNECT_RESPONSE'}
+        if _fSocketConnected
+          _extensionTxMsg {type: 'WS_CONNECTED'}
+        else
+          _extensionTxMsg {type: 'WS_DISCONNECTED'}
       _extensionTxPendingMsgs()
     else
       _socketTxMsg {type, data}
@@ -51,31 +55,34 @@ _extensionDoTxMsg = (msg) -> window.postMessage msg, '*'
 #-------------------------------------------------
 # ## Websocket I/O
 #-------------------------------------------------
-_socket = null
+_socketio = null
+_fSocketConnected = false
 _socketInit = (config) ->
   {mainStory: story} = config
   story.info 'storyboard', "Connecting to WebSocket server..."
-  if not _socket
-    _socket = socketio.connect k.WS_NAMESPACE
+  if not _socketio
+    _socketio = socketio.connect k.WS_NAMESPACE
     socketConnected = ->
       story.info 'storyboard', "WebSocket connected"
       _extensionTxMsg {type: 'WS_CONNECTED'}
+      _fSocketConnected = true
     socketDisconnected = ->
       story.info 'storyboard', "WebSocket disconnected"
       _extensionTxMsg {type: 'WS_DISCONNECTED'}
-    _socket.on 'connect', socketConnected
-    _socket.on 'reconnect', socketConnected
-    _socket.on 'disconnect', socketDisconnected
-    _socket.on 'error', socketDisconnected
-    _socket.on 'MSG', _socketRxMsg
-  _socket.sbConfig = config
+      _fSocketConnected = false
+    _socketio.on 'connect', socketConnected
+    _socketio.on 'reconnect', socketConnected
+    _socketio.on 'disconnect', socketDisconnected
+    _socketio.on 'error', socketDisconnected
+    _socketio.on 'MSG', _socketRxMsg
+  _socketio.sbConfig = config
 
 _socketRxMsg = (msg) -> _extensionTxMsg msg
 _socketTxMsg = (msg) ->
-  if not _socket
+  if not _socketio
     console.error "Cannot send '#{msg.type}' message to server: socket unavailable"
     return
-  _socket.emit 'MSG', msg
+  _socketio.emit 'MSG', msg
 
 #-------------------------------------------------
 # ## Helpers

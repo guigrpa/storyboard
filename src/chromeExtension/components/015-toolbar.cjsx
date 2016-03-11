@@ -117,10 +117,11 @@ _style =
     whiteSpace: 'nowrap'
   icon:
     cursor: 'pointer'
-    marginRight: 5
+    color: '#666'
+    marginRight: 10
   wsStatus: (fConnected) ->
     marginRight: 5
-    marginLeft: 5
+    marginLeft: 10
     color: if fConnected then 'green' else 'red'
   placeholder:
     height: 30
