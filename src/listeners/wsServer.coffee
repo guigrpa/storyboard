@@ -29,13 +29,20 @@ _socketInit = (config) ->
 
   # Launch stand-alone log server
   if port?
-    expressApp = express()
-    expressApp.use express.static path.join(__dirname, '../../serverLogsApp')
-    httpServer = http.createServer expressApp
-    _ioStandalone = socketio(httpServer).of k.WS_NAMESPACE
-    _ioStandalone.on 'connection', (socket) -> _socketOnConnection socket, config
-    httpServer.listen port
-    mainStory.info LOG_SRC, "Server logs available on port #{chalk.cyan port}"
+    _httpInitError = (err) ->
+      mainStory.error LOG_SRC, "Error initialising standalong server logs on port #{chalk.cyan port}:", attach: err
+    try
+      expressApp = express()
+      expressApp.use express.static path.join(__dirname, '../../serverLogsApp')
+      httpServer = http.createServer expressApp
+      httpServer.on 'error', _httpInitError
+      httpServer.on 'listening', ->
+        mainStory.info LOG_SRC, "Server logs available on port #{chalk.cyan httpServer.address().port}"
+      _ioStandalone = socketio(httpServer).of k.WS_NAMESPACE
+      _ioStandalone.on 'connection', (socket) -> _socketOnConnection socket, config
+      httpServer.listen port
+    catch err
+      _httpInitError err
 
   # If a main application server is also provided, 
   # launch another log server on the same application port
@@ -45,11 +52,16 @@ _socketInit = (config) ->
     _ioServerAdaptor = socketio(config.httpServer).of k.WS_NAMESPACE
   if _ioServerAdaptor
     _ioServerAdaptor.on 'connection', (socket) -> _socketOnConnection socket, config
+    _http2InitError = (err) ->
+      mainStory.error LOG_SRC, "Error initialising log server adaptor:", attach: err
     try
-      port2 = _ioServerAdaptor.server.httpServer.address().port
-      mainStory.info LOG_SRC, "Server logs available through main HTTP server on port #{chalk.cyan port2}"
-    catch
-      mainStory.info LOG_SRC, "Server logs available through main HTTP server (#{chalk.red 'port could not be determined'})"
+      httpServer2 = _ioServerAdaptor.server.httpServer
+      httpServer2.on 'error', _http2InitError
+      httpServer2.on 'listening', ->
+        port2 = httpServer2.address().port
+        mainStory.info LOG_SRC, "Server logs available through main HTTP server on port #{chalk.cyan port2}"
+    catch err
+      _http2InitError err
   return
 
 _socketOnConnection = (socket, config) ->
