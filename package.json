@@ -1,6 +1,6 @@
 {
   "name": "storyboard",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
   "main": "lib/storyboard.js",
   "author": "Guillermo Grau Panea",
@@ -28,10 +28,11 @@
     "buildServerLogsAppWatch": "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
     "buildExtension": "cross-env NODE_ENV=production webpack --config src/chromeExtension/webpackConfig.coffee --colors --progress --display-modules --display-chunks -p",
     "buildExtensionWatch": "webpack --config src/chromeExtension/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
+    "zipExtension": "bestzip chromeExtension_v0.0.4.zip chromeExtension/* && mv chromeExtension_v0.0.4.zip chromeExtension/",
     "buildExample": "webpack --config src/example/webpackConfig.coffee --colors --progress --display-modules --display-chunks",
     "buildExampleWatch": "webpack --config src/example/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
     "example": "coffee src/example/server.coffee",
-    "build": "coffee package.coffee && npm run compile && npm run buildServerLogsApp && npm run buildExtension && npm run test",
+    "build": "coffee package.coffee && npm run compile && npm run buildServerLogsApp && npm run buildExtension && npm run test && npm run zipExtension",
     "test": "npm run testCov",
     "testCov": "rm -rf coverage && npm run testLibDev && npm run testLibProd && npm run testCovMerge",
     "testCovMerge": "coffee tools/mergeCoverage.coffee"
@@ -52,6 +53,7 @@
     "babel-preset-es2015": "6.6.0",
     "babel-preset-react": "6.5.0",
     "babel-preset-stage-2": "6.5.0",
+    "bestzip": "1.1.3",
     "body-parser": "1.15.0",
     "chai": "3.5.0",
     "cjsx-loader": "2.1.0",

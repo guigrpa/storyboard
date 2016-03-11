@@ -5,6 +5,8 @@ WEBPACK_EXAMPLE         = "webpack --config src/example/webpackConfig.coffee #{W
 
 ISTANBUL_OPTS = "--report json"
 
+VERSION = "0.0.4"
+
 _runMultiple = (arr) -> arr.join ' && '
 
 _runMocha = (basePath, env) -> 
@@ -23,7 +25,7 @@ _runMochaCov = (basePath, nodeEnv) ->
 #-================================================================
 specs =
   name: "storyboard"
-  version: "0.0.3"
+  version: VERSION
   description: "End-to-end, hierarchical, real-time, colorful logs and stories"
   main: "lib/storyboard.js"
   author: "Guillermo Grau Panea"
@@ -59,6 +61,10 @@ specs =
     # Chrome extension
     buildExtension:           "cross-env NODE_ENV=production #{WEBPACK_EXTENSION} -p"
     buildExtensionWatch:      "#{WEBPACK_EXTENSION} --watch"
+    zipExtension:             _runMultiple [
+      "bestzip chromeExtension_v#{VERSION}.zip chromeExtension/*"
+      "mv chromeExtension_v#{VERSION}.zip chromeExtension/"
+    ]
 
     # Example
     buildExample:             "#{WEBPACK_EXAMPLE}"
@@ -66,15 +72,16 @@ specs =
     example:                  "coffee src/example/server.coffee"
 
     # General
-    build: _runMultiple [
+    build:                    _runMultiple [
       "coffee package.coffee"
       "npm run compile"
       "npm run buildServerLogsApp"
       "npm run buildExtension"
       "npm run test"
+      "npm run zipExtension"
     ]
     test:                     "npm run testCov"
-    testCov: _runMultiple [
+    testCov:                  _runMultiple [
       "rm -rf coverage"
       "npm run testLibDev"
       "npm run testLibProd"
@@ -170,6 +177,7 @@ specs =
     "envify": "3.4.0"
     "cross-env": "1.0.7"
     "uglifyjs": "2.4.10"
+    "bestzip": "1.1.3"
 
 #-================================================================
 # ## Build package.json
@@ -193,7 +201,7 @@ manifest =
   short_name: "Storyboard DevTools"
   description: "Gives you access to end-to-end stories (logs) for Storyboard-equipped applications"
   author: "Guillermo Grau Panea"
-  version: specs.version
+  version: VERSION
 
   content_scripts: [
     matches: ["<all_urls>"]

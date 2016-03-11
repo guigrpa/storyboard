@@ -1,5 +1,6 @@
 - [ ] Library:
     + [ ] More tests
+    + [ ] Better tests for WS Server listener
     + [ ] Separate wsClient listener in two: one only for WS, the other for just relaying client logs. Refactor the common parts
 
 - [ ] Chrome extension:
