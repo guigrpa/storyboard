@@ -1,21 +1,21 @@
 # This module simulates database access
+_ = require 'lodash'
 {mainStory} = require '../storyboard'  # you'd write: `'storyboard'`
 Promise = require 'bluebird'
 chalk = require 'chalk'
 
-_items = []
+ANIMALS = ['Cow', 'Hummingbird', 'Rhinoceros', 'Capybara', 'Igel', 'Sheep']
 
-init = ->
-  mainStory.info 'db', "Initialising database..."
-  _items = _items.concat ['Unicorn', 'Cow', 'Hummingbird']
+init = -> mainStory.info 'db', "Initialising database..."
 
 getItems = (options = {}) -> 
   {story = mainStory} = options
   story.debug 'db', "Retrieving items..."
-  Promise.delay 2500
+  Promise.delay 1500
   .then -> 
-    story.debug 'db', "Items found: #{chalk.cyan _items.length}"
-    return _items
+    numAnimals = 2 + Math.floor(Math.random()*3)
+    story.debug 'db', "Items found: #{chalk.cyan numAnimals}"
+    return ['Unicorn'].concat _.sampleSize(ANIMALS, numAnimals)
 
 module.exports = {
   init,

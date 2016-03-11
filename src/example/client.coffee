@@ -10,6 +10,7 @@ _refresh = (storyTitle) ->
   seq = Math.floor(Math.random() * 100)
   story = mainStory.child {src: 'client', title: storyTitle + " (seq=#{seq})"}
   story.info 'serverInterface', "Fetching items from server..."
+  nodeItems.innerHTML = "Fetching..."
   fetch "/items?seq=#{seq}",
     method: 'post'
     headers:

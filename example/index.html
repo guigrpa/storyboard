@@ -7,6 +7,7 @@
         font-family: "Helvetica", "Arial", sans-serif
       }
       .instructions { 
+        display: none;
         max-width: 400px; 
         margin-left: auto; 
         margin-right: auto;
@@ -28,11 +29,10 @@
   </head>
   <body>
     <div>
-      Items:
+      Items: <button id="refresh">Refresh</button>
       <ul id="items">
         <li>loading...</li>
       </ul>
-      <button id="refresh">Refresh</button>
     </div>
     <div class="instructions">
       <div>To see client and server logs:</div>
