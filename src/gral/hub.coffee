@@ -1,7 +1,7 @@
 timm = require 'timm'
 
 DEFAULT_CONFIG =
-  bufSize = 1000
+  bufSize: 1000
 
 _listeners = []
 _buf = []
