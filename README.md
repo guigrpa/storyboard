@@ -4,7 +4,7 @@
 
 A library, plus a Chrome DevTools extension.
 
-![Storyboard DevTools](https://github.com/guigrpa/storyboard/blob/master/docs/Storyboard2.gif?raw=true)
+![Storyboard DevTools](https://github.com/guigrpa/storyboard/blob/master/docs/Storyboard.gif?raw=true)
 
 ## Why?
 
