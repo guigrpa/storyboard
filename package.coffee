@@ -5,7 +5,7 @@ WEBPACK_EXAMPLE         = "webpack --config src/example/webpackConfig.coffee #{W
 
 ISTANBUL_OPTS = "--report json"
 
-VERSION = "0.0.4"
+VERSION = "0.0.5"
 
 _runMultiple = (arr) -> arr.join ' && '
 

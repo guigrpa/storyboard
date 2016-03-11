@@ -1,6 +1,6 @@
 {
   "name": "storyboard",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
   "main": "lib/storyboard.js",
   "author": "Guillermo Grau Panea",
@@ -28,7 +28,7 @@
     "buildServerLogsAppWatch": "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
     "buildExtension": "cross-env NODE_ENV=production webpack --config src/chromeExtension/webpackConfig.coffee --colors --progress --display-modules --display-chunks -p",
     "buildExtensionWatch": "webpack --config src/chromeExtension/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
-    "zipExtension": "bestzip chromeExtension_v0.0.4.zip chromeExtension/* && mv chromeExtension_v0.0.4.zip chromeExtension/",
+    "zipExtension": "bestzip chromeExtension_v0.0.5.zip chromeExtension/* && mv chromeExtension_v0.0.5.zip chromeExtension/",
     "buildExample": "webpack --config src/example/webpackConfig.coffee --colors --progress --display-modules --display-chunks",
     "buildExampleWatch": "webpack --config src/example/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
     "example": "coffee src/example/server.coffee",
