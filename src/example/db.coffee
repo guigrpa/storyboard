@@ -10,11 +10,11 @@ init = -> mainStory.info 'db', "Initialising database..."
 
 getItems = (options = {}) -> 
   {story = mainStory} = options
-  story.debug 'db', "Retrieving items..."
+  story.debug 'db', "Retrieving animals..."
   Promise.delay 1500
   .then -> 
     numAnimals = 2 + Math.floor(Math.random()*3)
-    story.debug 'db', "Items found: #{chalk.cyan numAnimals}"
+    story.debug 'db', "Animals found: #{chalk.cyan numAnimals}"
     return ['Unicorn'].concat _.sampleSize(ANIMALS, numAnimals)
 
 module.exports = {

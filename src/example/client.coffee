@@ -9,9 +9,9 @@ nodeButton.addEventListener 'click', -> _refresh 'Click on Refresh'
 _refresh = (storyTitle) ->
   seq = Math.floor(Math.random() * 100)
   story = mainStory.child {src: 'client', title: storyTitle + " (seq=#{seq})"}
-  story.info 'serverInterface', "Fetching items from server..."
+  story.info 'serverInterface', "Fetching animals from server..."
   nodeItems.innerHTML = "Fetching..."
-  fetch "/items?seq=#{seq}",
+  fetch "/animals?seq=#{seq}",
     method: 'post'
     headers:
       'Accept': 'application/json'
@@ -20,7 +20,7 @@ _refresh = (storyTitle) ->
   .then (response) -> response.json()
   .then (items) ->
     if Array.isArray items
-      story.info 'serverInterface', "Fetched items from server: #{items.length}", attach: items
+      story.info 'serverInterface', "Fetched animals from server: #{items.length}", attach: items
       nodeItems.innerHTML = items.map((o) -> "<li>#{o}</li>").join('')
     story.close()
 

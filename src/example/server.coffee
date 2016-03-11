@@ -16,13 +16,13 @@ app = express()
 app.use bodyParser.json()
 app.use bodyParser.urlencoded {extended: true}
 app.use express.static path.join(process.cwd(), 'example')
-app.post '/items', (req, res, next) ->
+app.post '/animals', (req, res, next) ->
   {storyId} = req.body
   if storyId? then extraParents = [storyId]
   story = mainStory.child {src: 'httpServer', title: "HTTP request #{chalk.green req.url}", extraParents}
   db.getItems {story}
   .then (result) -> 
-    story.debug 'httpServer', "HTTP response: #{result.length} items", attachInline: result
+    story.debug 'httpServer', "HTTP response: #{result.length} animals", attachInline: result
     res.json result
   .finally -> story.close()
 httpServer = http.createServer app
