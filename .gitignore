@@ -17,6 +17,7 @@ node_modules
 *.sublime-project
 *.sublime-workspace
 /chromeExtension/*.zip
+/docs/otherPromoAssets
 
 # GIT extras
 /lib
