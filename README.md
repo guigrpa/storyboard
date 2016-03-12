@@ -1,4 +1,4 @@
-# storyboard [![Build Status](https://travis-ci.org/guigrpa/storyboard.svg)](https://travis-ci.org/guigrpa/storyboard) [![npm version](https://img.shields.io/npm/v/storyboard.svg)](https://www.npmjs.com/package/storyboard) 
+# ![Logo](https://github.com/guigrpa/storyboard/blob/master/docs/Logo.png?raw=true) storyboard [![Build Status](https://travis-ci.org/guigrpa/storyboard.svg)](https://travis-ci.org/guigrpa/storyboard) [![npm version](https://img.shields.io/npm/v/storyboard.svg)](https://www.npmjs.com/package/storyboard) 
 
 ## What?
 
@@ -11,7 +11,7 @@ A library, plus a Chrome DevTools extension.
 * **Hierarchical stories**: put logs in context (*stories*), and stories/logs within stories. Such groupings are extremely useful with concurrent user actions.
 * Watch the whole picture with **end-to-end stories**: see all client and server tasks triggered by a user action (a click on the *Login* button, maybe) in a single place.
 * Use the **Chrome extension** to view client and server logs with a clean and detail-rich interface.
-* Push server logs in **real time** (and out-of-the-box) to the Storyboard DevTools extension via WebSockets.
+* Watch server logs being pushed in **real time** (and out-of-the-box) to the Storyboard DevTools extension via WebSockets.
 * Ask for **authentication** to see server logs; hook your own auth function.
 * **Attach things** to your logs for further investigation.
 * Integrate your app with Storyboard's **flexible plugin architecture**. Three plugins are available out of the box: Console, WebSocket Server and WebSocket Client. Just use what you want: most features are optional!
