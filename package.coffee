@@ -5,7 +5,7 @@ WEBPACK_EXAMPLE         = "webpack --config src/example/webpackConfig.coffee #{W
 
 ISTANBUL_OPTS = "--report json"
 
-VERSION = "0.0.5"
+VERSION = "0.0.6"
 
 _runMultiple = (arr) -> arr.join ' && '
 
@@ -119,8 +119,8 @@ specs =
 
     # Redux
     "redux": "3.3.1"
-    "react-redux": "4.4.0"
-    "redux-saga": "0.9.2"
+    "react-redux": "4.4.1"
+    "redux-saga": "0.9.4"
     "redux-thunk": "1.0.3"
 
     # Redux devtools
