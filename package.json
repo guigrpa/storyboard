@@ -28,7 +28,7 @@
     "buildServerLogsAppWatch": "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
     "buildExtension": "cross-env NODE_ENV=production webpack --config src/chromeExtension/webpackConfig.coffee --colors --progress --display-modules --display-chunks -p",
     "buildExtensionWatch": "webpack --config src/chromeExtension/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
-    "zipExtension": "bestzip chromeExtension_v0.0.7.zip chromeExtension/* && mv chromeExtension_v0.0.7.zip chromeExtension/",
+    "zipExtension": "rm chromeExtension/chromeExtension_*.zip && bestzip chromeExtension_v0.0.7.zip chromeExtension/* && mv chromeExtension_v0.0.7.zip chromeExtension/",
     "buildExample": "webpack --config src/example/webpackConfig.coffee --colors --progress --display-modules --display-chunks",
     "buildExampleWatch": "webpack --config src/example/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
     "example": "coffee src/example/server.coffee",

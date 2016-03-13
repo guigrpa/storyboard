@@ -62,6 +62,7 @@ specs =
     buildExtension:           "cross-env NODE_ENV=production #{WEBPACK_EXTENSION} -p"
     buildExtensionWatch:      "#{WEBPACK_EXTENSION} --watch"
     zipExtension:             _runMultiple [
+      "rm chromeExtension/chromeExtension_*.zip"
       "bestzip chromeExtension_v#{VERSION}.zip chromeExtension/*"
       "mv chromeExtension_v#{VERSION}.zip chromeExtension/"
     ]
