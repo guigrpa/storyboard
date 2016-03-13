@@ -5,7 +5,7 @@ WEBPACK_EXAMPLE         = "webpack --config src/example/webpackConfig.coffee #{W
 
 ISTANBUL_OPTS = "--report json"
 
-VERSION = "0.0.6"
+VERSION = "0.0.7"
 
 _runMultiple = (arr) -> arr.join ' && '
 
@@ -214,5 +214,12 @@ manifest =
     persistent: false
 
   devtools_page: "devTools.html"
+
+  icons: 
+    "16": "logo16.png"
+    "32": "logo32.png"
+    "48": "logo48.png"
+    "128": "logo128.png"
+
 manifestJson = JSON.stringify(manifest, null, '  ') + '\n'
 require('fs').writeFileSync "chromeExtension/manifest.json", manifestJson
