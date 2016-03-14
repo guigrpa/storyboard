@@ -26,24 +26,24 @@
 <h2>
 <a id="what" class="anchor" href="#what" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What?</h2>
 
-<p>A library, plus a Chrome DevTools extension.</p>
-
 <p><img src="https://github.com/guigrpa/storyboard/blob/master/docs/Storyboard.gif?raw=true" alt="Storyboard DevTools"></p>
+
+<p>A library, plus a <a href="https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc">Chrome DevTools extension</a>.</p>
 
 <h2>
 <a id="why" class="anchor" href="#why" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Why?</h2>
 
 <ul>
 <li>
-<strong>Hierarchical stories</strong>: put logs in context (<em>stories</em>), and stories/logs within stories. Such groupings are extremely useful with concurrent user actions.</li>
-<li>Watch the whole picture with <strong>end-to-end stories</strong>: see all client and server tasks triggered by a user action (a click on the <em>Login</em> button, maybe) in a single place.</li>
-<li>Use the <strong>Chrome extension</strong> to view client and server logs with a clean and detail-rich interface.</li>
-<li>Push server logs in <strong>real time</strong> (and out-of-the-box) to the Storyboard DevTools extension via WebSockets.</li>
-<li>Ask for <strong>authentication</strong> to see server logs; hook your own auth function.</li>
+<strong>Hierarchical stories</strong>: put logs in context (<em>stories</em>), and group stories/logs within stories. Such groupings are extremely useful with concurrent user actions.</li>
+<li>Get the whole picture with <strong>end-to-end stories</strong>: see all <strong>client and server</strong> tasks triggered by a user action (a click on the <em>Login</em> button, maybe) in a single place.</li>
+<li>Use the <strong>Storyboard DevTools Chrome extension</strong> to view client and server logs with a clean and detail-rich interface.</li>
+<li>Watch server logs being pushed in <strong>real time</strong> to the Storyboard DevTools extension via WebSockets.</li>
+<li>Ask for <strong>authentication</strong> to see server logs; hook up your own auth function.</li>
 <li>
-<strong>Attach things</strong> to your logs for further investigation.</li>
-<li>Integrate your app with Storyboard's <strong>flexible plugin architecture</strong>. Three plugins are available out of the box: Console, WebSocket Server and WebSocket Client. Just use what you want: most features are optional!</li>
-<li>Give logs <strong>source and severity levels</strong> and apply <strong>coarse- or fine-grained filtering</strong>, with white and black lists.</li>
+<strong>Attach anything</strong> to your logs for further investigation.</li>
+<li>Integrate your app with Storyboard's <strong>flexible plugin architecture</strong>. Three plugins are available out of the box: Console, WebSocket Server and WebSocket Client. Just use what you need: most features are optional!</li>
+<li>Give logs <strong>source and severity</strong> attributes and apply <strong>coarse- or fine-grained filtering</strong>, with white and black lists.</li>
 <li>Use <strong>color</strong> to highlight what's important. Storyboard extends the popular <a href="https://github.com/chalk/chalk">chalk</a> library so that it can also be used on the browser.</li>
 <li>Enjoy the <strong>simple-yet-powerful API</strong> (I hope!).</li>
 </ul>
@@ -59,7 +59,7 @@
 <pre><code>$ npm install --save storyboard
 </code></pre>
 
-<p>To install the <strong>Storyboard DevTools</strong> Chrome extension, get it from the Chrome Web Store. Optional, but highly recommended! After installing it, open the Storyboard pane in the Chrome DevTools and point your browser to a Storyboard-equipped page (see the following sections).</p>
+<p>To install the <strong>Storyboard DevTools</strong> Chrome extension, <a href="https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc">get it from the Chrome Web Store</a>. Optional, but highly recommended! After installing it, open the Storyboard pane in the Chrome DevTools and point your browser to a Storyboard-equipped page (see below for how to use the library).</p>
 
 <p>Feel free to check out the <a href="https://github.com/guigrpa/storyboard/blob/master/src/example">example</a>: just clone the repo and run <code>npm install &amp;&amp; npm run buildExample &amp;&amp; npm run example</code>.</p>
 
@@ -87,12 +87,12 @@
 <span class="pl-c">// 2016-03-09T16:18:19.672Z           main ERROR   stack:     at repl:3:11</span>
 <span class="pl-c">// ...</span></pre></div>
 
-<p>Maybe you noticed that the <code>trace</code> call does not produce any output. See <a href="#log-filtering">Log filtering</a> to understand why.</p>
+<p>Maybe you noticed that the <code>trace</code> call produces no output by default. See <a href="#log-filtering">Log filtering</a> to understand why.</p>
 
 <h3>
 <a id="sources" class="anchor" href="#sources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sources</h3>
 
-<p>Namespace your logs for readability, as well as to allow finer-grained filtering later on.</p>
+<p>Namespace your logs for readability, as well as to allow finer-grained <a href="#log-filtering">filtering</a> later on.</p>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>http<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>GET /api/item/25<span class="pl-pds">"</span></span>);
 <span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>db<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Fetching item 25...<span class="pl-pds">"</span></span>);
@@ -114,7 +114,7 @@
 <h3>
 <a id="attachments" class="anchor" href="#attachments" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Attachments</h3>
 
-<p>Attach anything to your logs that might provide additional context: an object, an array, an exception, a simple value... Don't worry about circular references! Use the <code>attach</code> option to display attachments as a tree, or <code>attachInline</code> for a more compact, <code>JSON.stringify</code>ed version.</p>
+<p>Attach anything to your logs that might provide additional context: an object, an array, an exception, a simple value... Don't worry about circular references! Use the <code>attach</code> option to display it as a tree, or <code>attachInline</code> for a more compact, <code>JSON.stringify</code>-ed version.</p>
 
 <p>You can also use the <code>attachLevel</code> option to control the (severity) level of the detailed object logs (by default: the same level of the main logged line).</p>
 
@@ -127,7 +127,7 @@
 <span class="pl-c">// 2016-03-09T16:52:48.882Z           test DEBUG   bar: 3</span>
 <span class="pl-c">// 2016-03-09T16:52:48.882Z           test DEBUG   circularRef: [CIRCULAR]</span></pre></div>
 
-<p>Note that <code>attach</code> and <code>attachInline</code> have no effect on the way attachments are shown in the Storyboard DevTools.</p>
+<p><em>Note: <code>attach</code> and <code>attachInline</code> have no effect on the way attachments are shown in the Storyboard DevTools.</em></p>
 
 <h3>
 <a id="log-filtering" class="anchor" href="#log-filtering" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Log filtering</h3>
@@ -168,7 +168,7 @@ STORYBOARD=<span class="pl-k">*</span>:<span class="pl-k">*</span> node myScript
 <h3>
 <a id="children-stories" class="anchor" href="#children-stories" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Children stories</h3>
 
-<p>Create child stories by calling <code>child()</code> on the parent story and passing an options argument. Don't forget to <code>close()</code> the child story when you're done with it!</p>
+<p>Create child stories by calling <code>child()</code> on the parent story and passing an options argument. Don't forget to <code>close()</code> the child story when you're done with it! More on child stories <a href="#remote-access-to-server-stories">here</a>.</p>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> childStory <span class="pl-k">=</span> <span class="pl-smi">story</span>.<span class="pl-en">child</span>({src<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>lib<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Little Red Riding Hood<span class="pl-pds">"</span></span>});
 <span class="pl-smi">childStory</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>Once upon a time...<span class="pl-pds">"</span></span>);
@@ -187,12 +187,12 @@ STORYBOARD=<span class="pl-k">*</span>:<span class="pl-k">*</span> node myScript
 <p>Logs emitted by stories are relayed by the Storyboard <code>hub</code> module to all attached <em>listeners</em>. Three listeners come built-in:</p>
 
 <ul>
-<li><p><strong>Console</strong>: formats logs and sends them to <code>console.log</code> or <code>console.error</code>. You've already seen this listener in action in the previous sections. It is automatically enabled in the server, and in development mode (<code>NODE_ENV</code> environment variable set to <code>development</code> while bundling) in the browser.</p></li>
-<li><p><strong>WebSocket Server</strong>: encapsulates logs and pushes them in real time to WebSocket clients. It is disabled by default. Enable it for <a href="#remote-access-to-server-stories">remote access to server stories</a>.</p></li>
-<li><p><strong>WebSocket Client</strong>: takes logs pushed from the server, as well as local client logs and relays them to the Storyboard DevTools. It is automatically enabled in the browser.</p></li>
+<li><p><strong>Console</strong>: formats logs and sends them to <code>console.log</code> or <code>console.error</code>. You've already seen this listener in action above. Automatically enabled in the server, and in development mode in the browser (set the <code>NODE_ENV</code> environment variable to <code>development</code> while bundling).</p></li>
+<li><p><strong>WebSocket Server</strong>: encapsulates logs and pushes them in real time to WebSocket clients. Disabled by default; enable it for <a href="#remote-access-to-server-stories">remote access to server stories</a>.</p></li>
+<li><p><strong>WebSocket Client</strong>: takes logs pushed from the server, as well as local client logs and relays them to the <a href="#storyboard-devtools">Storyboard DevTools</a>. Automatically enabled in the browser.</p></li>
 </ul>
 
-<p>More listeners can be added by the user, e.g. to persist logs in a database, publish them online, etc. Get inspired by <a href="https://github.com/winstonjs/winston">winston</a>'s or <a href="https://www.npmjs.com/package/bunyan">bunyan</a>'s plugins.</p>
+<p>More listeners can be added by the user, e.g. to persist logs in a database, publish them online, etc. Get inspired by <a href="https://github.com/winstonjs/winston">winston</a>'s or <a href="https://github.com/trentm/node-bunyan">bunyan</a>'s plugins.</p>
 
 <h3>
 <a id="remote-access-to-server-stories" class="anchor" href="#remote-access-to-server-stories" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Remote access to server stories</h3>
@@ -225,50 +225,37 @@ STORYBOARD=<span class="pl-k">*</span>:<span class="pl-k">*</span> node myScript
   authenticate<span class="pl-k">:</span> ({<span class="pl-smi">login</span>, <span class="pl-smi">password</span>}) <span class="pl-k">=&gt;</span> <span class="pl-smi">Promise</span>.<span class="pl-en">resolve</span>(<span class="pl-c1">true</span>)
 });</pre></div>
 
-<p>Configuring <code>options.port</code>, <code>options.httpServer</code> and/or <code>options.socketServer</code> lets you configure 0, 1 or 2 log servers:</p>
+<p>You'll also probably want to supercharge your <strong>main application HTTP server for <a href="#end-to-end-stories">end-to-end stories</a></strong>. Just pass your <code>http</code> <code>Server</code> instance as <code>options.httpServer</code>, or your <a href="http://socket.io/"><code>socket.io</code></a> <code>Server</code> instance as <code>options.socketServer</code>, depending on your case:</p>
 
-<ul>
-<li><p>If you want to set up a <strong>standalone HTTP server</strong> (independent from your main application HTTP server), leave the default <code>port</code> value or specify a different port. You'll be able to see your server-side logs with the Storyboard DevTools. Disable the standalone server by setting <code>port</code> to <code>null</code>.</p></li>
-<li>
-<p>If you want to supercharge your <strong>main application HTTP server for <a href="#end-to-end-stories">end-to-end stories</a></strong>, find your case below:</p>
-
-<ol>
-<li>
-<p>If you don't already use WebSockets, pass the <code>http</code> <code>Server</code> instance as <code>options.httpServer</code>:</p>
-
-<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> http <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>http<span class="pl-pds">"</span></span>);
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// If you don't use WebSockets:</span>
 <span class="pl-k">var</span> app <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>express<span class="pl-pds">"</span></span>)();
-<span class="pl-k">var</span> httpServer <span class="pl-k">=</span> <span class="pl-smi">http</span>.<span class="pl-en">createServer</span>(app);
+<span class="pl-k">var</span> httpServer <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>http<span class="pl-pds">"</span></span>).<span class="pl-en">createServer</span>(app);
 <span class="pl-smi">httpServer</span>.<span class="pl-en">listen</span>(<span class="pl-c1">3000</span>);
-<span class="pl-smi">storyboard</span>.<span class="pl-en">addListener</span>(wsServer, {httpServer});</pre></div>
-</li>
-<li>
-<p>If your main server uses <a href="https://github.com/socketio/socket.io">socket.io</a> WebSockets, pass the <code>socket.io</code> <code>Server</code> instance as <code>options.socketServer</code>:</p>
+<span class="pl-smi">storyboard</span>.<span class="pl-en">addListener</span>(wsServer, {httpServer});
 
-<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> socketServer <span class="pl-k">=</span> <span class="pl-en">socketio</span>(httpServer);
+<span class="pl-c">// If you use socket.io WebSockets:</span>
+<span class="pl-k">var</span> socketServer <span class="pl-k">=</span> <span class="pl-en">socketio</span>(httpServer);
 <span class="pl-smi">storyboard</span>.<span class="pl-en">addListener</span>(wsServer, {socketServer});
 
-<span class="pl-c">// If you use socket authentication, make sure you namespace the main app's</span>
-<span class="pl-c">// sockets so that it does not interfere with the log server.</span>
+<span class="pl-c">// If you use socket authentication, namespace the main app's</span>
+<span class="pl-c">// sockets so that it does not interfere with the log server:</span>
 <span class="pl-c">// At the server...</span>
 <span class="pl-k">var</span> io <span class="pl-k">=</span> <span class="pl-smi">socketServer</span>.<span class="pl-en">of</span>(<span class="pl-s"><span class="pl-pds">"</span>/myApp<span class="pl-pds">"</span></span>);
 <span class="pl-smi">io</span>.<span class="pl-en">use</span>(socketAuthenticate);
 <span class="pl-smi">io</span>.<span class="pl-en">on</span>(<span class="pl-s"><span class="pl-pds">"</span>connection<span class="pl-pds">"</span></span>, socketConnect);
 <span class="pl-c">// ...and at the client:</span>
 <span class="pl-k">var</span> socket <span class="pl-k">=</span> <span class="pl-smi">socketio</span>.<span class="pl-en">connect</span>(<span class="pl-s"><span class="pl-pds">"</span>/myApp<span class="pl-pds">"</span></span>)</pre></div>
-</li>
-</ol>
-</li>
-</ul>
+
+<p>You can also change the port of the <strong>standalone log server</strong> (independent from your main application's HTTP server) by modifying <code>options.port</code>. Disable it entirely by setting the attribute to <code>null</code>.</p>
 
 <h3>
 <a id="end-to-end-stories" class="anchor" href="#end-to-end-stories" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>End-to-end stories</h3>
 
-<p>The icing on the cake is linking server- and client-side stories to have a complete picture of what is triggered by a user action (see video <a href="#what">at the top of this page</a>). </p>
+<p>The icing on the cake is linking server- and client-side stories to get a complete picture of what is triggered by a user action (see video <a href="#what">at the top of this page</a>).</p>
 
-<p>Storyboard provides a simple yet flexible way to accomplish this: stories can have multiple parents, which are specified upon creation. This is leveraged for example by the Storyboard DevTools: when it receives a new story from the server with multiple parents, it checks whether any of the parents is a client-side story. If so, it prioritises this parent for display purposes, since it is expected to provide more context.</p>
+<p>Storyboard provides a simple yet flexible way to achieve this: stories can have multiple parents, which are specified upon creation. This feature is leveraged by the <a href="#storyboard-devtools">Storyboard DevTools</a>: when it receives a new story from the server with multiple parents, it checks whether any of the parents is a client-side story. If so, it prioritises this parent for display purposes, since it is expected to provide more context.</p>
 
-<p>In order for this to work, the client's <code>storyId</code> must be transmitted to the server somehow. This example uses the URL query string for simplicity, but feel free to use whatever you want (the body of a <code>POST</code> request, your own WebSocket messaging scheme, etc.):</p>
+<p>For this to work, the client's <code>storyId</code> must be transmitted to the server <em>somehow</em>. This example uses the URL query string for simplicity, but feel free to use whatever technique you want (the body of a <code>POST</code> request, your own WebSocket messaging scheme, etc.):</p>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-c">// Client:</span>
 <span class="pl-k">var</span> story <span class="pl-k">=</span> <span class="pl-smi">mainStory</span>.<span class="pl-en">child</span>({src<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>itemList<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>User click on Refresh<span class="pl-pds">"</span></span>});
@@ -294,14 +281,14 @@ STORYBOARD=<span class="pl-k">*</span>:<span class="pl-k">*</span> node myScript
   <span class="pl-smi">story</span>.<span class="pl-c1">close</span>();
 });</pre></div>
 
-<p>Want to see the end-to-end story? Use the <a href="#storyboard-devtools">Storyboard DevTools</a> extension.</p>
+<p>Want to see the end-to-end story? Use the Storyboard DevTools extension.</p>
 
 <p><em>Note: end-to-end stories work better when server and client system clocks are not too different. Servers are typically NTP-synchronised, as are most modern PCs with Internet access. If this is not the case, your story hierarchy will be OK but mixed client-server stories might be out of order.</em></p>
 
 <h3>
 <a id="storyboard-devtools" class="anchor" href="#storyboard-devtools" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Storyboard DevTools</h3>
 
-<p>Using the Storyboard DevTools should be pretty straightforward. Just open the Chrome DevTools, select the Storyboard pane and point your browser at either:</p>
+<p>Using the extension should be pretty straightforward. After <a href="https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc">installing it</a>, open the Chrome DevTools, select the Storyboard pane and point your browser at either:</p>
 
 <ul>
 <li>Your standard application URL, to see both server and client logs</li>
