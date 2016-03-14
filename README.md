@@ -2,20 +2,20 @@
 
 ## What?
 
-A library, plus a Chrome DevTools extension.
-
 ![Storyboard DevTools](https://github.com/guigrpa/storyboard/blob/master/docs/Storyboard.gif?raw=true)
+
+A library, plus a [Chrome DevTools extension](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc).
 
 ## Why?
 
-* **Hierarchical stories**: put logs in context (*stories*), and stories/logs within stories. Such groupings are extremely useful with concurrent user actions.
-* Watch the whole picture with **end-to-end stories**: see all client and server tasks triggered by a user action (a click on the *Login* button, maybe) in a single place.
-* Use the **Chrome extension** to view client and server logs with a clean and detail-rich interface.
-* Watch server logs being pushed in **real time** (and out-of-the-box) to the Storyboard DevTools extension via WebSockets.
-* Ask for **authentication** to see server logs; hook your own auth function.
-* **Attach things** to your logs for further investigation.
-* Integrate your app with Storyboard's **flexible plugin architecture**. Three plugins are available out of the box: Console, WebSocket Server and WebSocket Client. Just use what you want: most features are optional!
-* Give logs **source and severity levels** and apply **coarse- or fine-grained filtering**, with white and black lists.
+* **Hierarchical stories**: put logs in context (*stories*), and group stories/logs within stories. Such groupings are extremely useful with concurrent user actions.
+* Get the whole picture with **end-to-end stories**: see all **client and server** tasks triggered by a user action (a click on the *Login* button, maybe) in a single place.
+* Use the **Storyboard DevTools Chrome extension** to view client and server logs with a clean and detail-rich interface.
+* Watch server logs being pushed in **real time** to the Storyboard DevTools extension via WebSockets.
+* Ask for **authentication** to see server logs; hook up your own auth function.
+* **Attach anything** to your logs for further investigation.
+* Integrate your app with Storyboard's **flexible plugin architecture**. Three plugins are available out of the box: Console, WebSocket Server and WebSocket Client. Just use what you need: most features are optional!
+* Give logs **source and severity** attributes and apply **coarse- or fine-grained filtering**, with white and black lists.
 * Use **color** to highlight what's important. Storyboard extends the popular [chalk](https://github.com/chalk/chalk) library so that it can also be used on the browser.
 * Enjoy the **simple-yet-powerful API** (I hope!).
 
@@ -30,7 +30,7 @@ To install the **Storyboard library** in your project:
 $ npm install --save storyboard
 ```
 
-To install the **Storyboard DevTools** Chrome extension, get it from the Chrome Web Store. Optional, but highly recommended! After installing it, open the Storyboard pane in the Chrome DevTools and point your browser to a Storyboard-equipped page (see the following sections).
+To install the **Storyboard DevTools** Chrome extension, [get it from the Chrome Web Store](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc). Optional, but highly recommended! After installing it, open the Storyboard pane in the Chrome DevTools and point your browser to a Storyboard-equipped page (see below for how to use the library).
 
 Feel free to check out the [example](https://github.com/guigrpa/storyboard/blob/master/src/example): just clone the repo and run `npm install && npm run buildExample && npm run example`.
 
@@ -62,12 +62,12 @@ story.fatal("Ooops! Crashed! Mayday!", {attach: fatalError});
 // ...
 ```
 
-Maybe you noticed that the `trace` call does not produce any output. See [Log filtering](#log-filtering) to understand why.
+Maybe you noticed that the `trace` call produces no output by default. See [Log filtering](#log-filtering) to understand why.
 
 
 ### Sources
 
-Namespace your logs for readability, as well as to allow finer-grained filtering later on.
+Namespace your logs for readability, as well as to allow finer-grained [filtering](#log-filtering) later on.
 
 ```js
 story.info("http", "GET /api/item/25");
@@ -93,7 +93,7 @@ We recommend using the popular [chalk](https://github.com/chalk/chalk) library b
 
 ### Attachments
 
-Attach anything to your logs that might provide additional context: an object, an array, an exception, a simple value... Don't worry about circular references! Use the `attach` option to display attachments as a tree, or `attachInline` for a more compact, `JSON.stringify`ed version.
+Attach anything to your logs that might provide additional context: an object, an array, an exception, a simple value... Don't worry about circular references! Use the `attach` option to display it as a tree, or `attachInline` for a more compact, `JSON.stringify`-ed version.
 
 You can also use the `attachLevel` option to control the (severity) level of the detailed object logs (by default: the same level of the main logged line).
 
@@ -108,7 +108,7 @@ story.info("test", "An object with a circular reference",
 // 2016-03-09T16:52:48.882Z           test DEBUG   circularRef: [CIRCULAR]
 ```
 
-Note that `attach` and `attachInline` have no effect on the way attachments are shown in the Storyboard DevTools.
+*Note: `attach` and `attachInline` have no effect on the way attachments are shown in the Storyboard DevTools.*
 
 
 ### Log filtering
@@ -147,7 +147,7 @@ storyboard.config({filter: "*:*"});
 
 ### Children stories
 
-Create child stories by calling `child()` on the parent story and passing an options argument. Don't forget to `close()` the child story when you're done with it!
+Create child stories by calling `child()` on the parent story and passing an options argument. Don't forget to `close()` the child story when you're done with it! More on child stories [here](#remote-access-to-server-stories).
 
 ```js
 var childStory = story.child({src: "lib", title: "Little Red Riding Hood"});
@@ -167,11 +167,11 @@ childStory.close();
 
 Logs emitted by stories are relayed by the Storyboard `hub` module to all attached *listeners*. Three listeners come built-in:
 
-* **Console**: formats logs and sends them to `console.log` or `console.error`. You've already seen this listener in action in the previous sections. It is automatically enabled in the server, and in development mode (`NODE_ENV` environment variable set to `development` while bundling) in the browser.
+* **Console**: formats logs and sends them to `console.log` or `console.error`. You've already seen this listener in action above. Automatically enabled in the server, and in development mode in the browser (set the `NODE_ENV` environment variable to `development` while bundling).
 
-* **WebSocket Server**: encapsulates logs and pushes them in real time to WebSocket clients. It is disabled by default. Enable it for [remote access to server stories](#remote-access-to-server-stories).
+* **WebSocket Server**: encapsulates logs and pushes them in real time to WebSocket clients. Disabled by default; enable it for [remote access to server stories](#remote-access-to-server-stories).
 
-* **WebSocket Client**: takes logs pushed from the server, as well as local client logs and relays them to the Storyboard DevTools. It is automatically enabled in the browser.
+* **WebSocket Client**: takes logs pushed from the server, as well as local client logs and relays them to the [Storyboard DevTools](#storyboard-devtools). Automatically enabled in the browser.
 
 More listeners can be added by the user, e.g. to persist logs in a database, publish them online, etc. Get inspired by [winston](https://github.com/winstonjs/winston)'s or [bunyan](https://www.npmjs.com/package/bunyan)'s plugins.
 
@@ -212,46 +212,39 @@ storyboard.addListener(wsServer, {
 });
 ```
 
-Configuring `options.port`, `options.httpServer` and/or `options.socketServer` lets you configure 0, 1 or 2 log servers:
+You'll also probably want to supercharge your **main application HTTP server for [end-to-end stories](#end-to-end-stories)**. Just pass your `http` `Server` instance as `options.httpServer`, or your [`socket.io`](https://github.com/socketio/socket.io) `Server` instance as `options.socketServer`, depending on your case:
 
-* If you want to set up a **standalone HTTP server** (independent from your main application HTTP server), leave the default `port` value or specify a different port. You'll be able to see your server-side logs with the Storyboard DevTools. Disable the standalone server by setting `port` to `null`.
-
-* If you want to supercharge your **main application HTTP server for [end-to-end stories](#end-to-end-stories)**, find your case below:
-
-    1. If you don't already use WebSockets, pass the `http` `Server` instance as `options.httpServer`:
-
-        ```js
-        var http = require("http");
-        var app = require("express")();
-        var httpServer = http.createServer(app);
-        httpServer.listen(3000);
-        storyboard.addListener(wsServer, {httpServer});
-        ```
-
-    2. If your main server uses [socket.io](https://github.com/socketio/socket.io) WebSockets, pass the `socket.io` `Server` instance as `options.socketServer`:
-
-        ```js
-        var socketServer = socketio(httpServer);
-        storyboard.addListener(wsServer, {socketServer});
+    ```js
+    // If you don't use WebSockets:
+    var app = require("express")();
+    var httpServer = require("http").createServer(app);
+    httpServer.listen(3000);
+    storyboard.addListener(wsServer, {httpServer});
     
-        // If you use socket authentication, make sure you namespace the main app's
-        // sockets so that it does not interfere with the log server.
-        // At the server...
-        var io = socketServer.of("/myApp");
-        io.use(socketAuthenticate);
-        io.on("connection", socketConnect);
-        // ...and at the client:
-        var socket = socketio.connect("/myApp")
-        ```
+    // If you use socket.io WebSockets:
+    var socketServer = socketio(httpServer);
+    storyboard.addListener(wsServer, {socketServer});
+    
+    // If you use socket authentication, namespace the main app's
+    // sockets so that it does not interfere with the log server:
+    // At the server...
+    var io = socketServer.of("/myApp");
+    io.use(socketAuthenticate);
+    io.on("connection", socketConnect);
+    // ...and at the client:
+    var socket = socketio.connect("/myApp")
+    ```
+
+You can also modify the port of the **standalone log server** (independent from your main application's HTTP server) by changing `options.port`. Disable it entirely by setting it to `null`.
 
 
 ### End-to-end stories
 
-The icing on the cake is linking server- and client-side stories to have a complete picture of what is triggered by a user action (see video [at the top of this page](#what)). 
+The icing on the cake is linking server- and client-side stories to get a complete picture of what is triggered by a user action (see video [at the top of this page](#what)).
 
-Storyboard provides a simple yet flexible way to accomplish this: stories can have multiple parents, which are specified upon creation. This is leveraged for example by the Storyboard DevTools: when it receives a new story from the server with multiple parents, it checks whether any of the parents is a client-side story. If so, it prioritises this parent for display purposes, since it is expected to provide more context.
+Storyboard provides a simple yet flexible way to achieve this: stories can have multiple parents, which are specified upon creation. This feature is leveraged by the [Storyboard DevTools](#storyboard-devtools): when it receives a new story from the server with multiple parents, it checks whether any of the parents is a client-side story. If so, it prioritises this parent for display purposes, since it is expected to provide more context.
 
-In order for this to work, the client's `storyId` must be transmitted to the server somehow. This example uses the URL query string for simplicity, but feel free to use whatever you want (the body of a `POST` request, your own WebSocket messaging scheme, etc.):
+In order for this to work, the client's `storyId` must be transmitted to the server *somehow*. This example uses the URL query string for simplicity, but feel free to use whatever technique you want (the body of a `POST` request, your own WebSocket messaging scheme, etc.):
 
 ```js
 // Client:
@@ -279,14 +272,14 @@ app.get("/items", function(req, res){
 });
 ```
 
-Want to see the end-to-end story? Use the [Storyboard DevTools](#storyboard-devtools) extension.
+Want to see the end-to-end story? Use the Storyboard DevTools extension.
 
 *Note: end-to-end stories work better when server and client system clocks are not too different. Servers are typically NTP-synchronised, as are most modern PCs with Internet access. If this is not the case, your story hierarchy will be OK but mixed client-server stories might be out of order.*
 
 
 ### Storyboard DevTools
 
-Using the Storyboard DevTools should be pretty straightforward. Just open the Chrome DevTools, select the Storyboard pane and point your browser at either:
+Using the Storyboard DevTools should be pretty straightforward. After [installing them](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc), open the Chrome DevTools, select the Storyboard pane and point your browser at either:
 
 * Your standard application URL, to see both server and client logs
 * Port 8090 (configurable) of your server, to see server logs only
