@@ -173,7 +173,7 @@ Logs emitted by stories are relayed by the Storyboard `hub` module to all attach
 
 * **WebSocket Client**: takes logs pushed from the server, as well as local client logs and relays them to the [Storyboard DevTools](#storyboard-devtools). Automatically enabled in the browser.
 
-More listeners can be added by the user, e.g. to persist logs in a database, publish them online, etc. Get inspired by [winston](https://github.com/winstonjs/winston)'s or [bunyan](https://www.npmjs.com/package/bunyan)'s plugins.
+More listeners can be added by the user, e.g. to persist logs in a database, publish them online, etc. Get inspired by [winston](https://github.com/winstonjs/winston)'s or [bunyan](https://github.com/trentm/node-bunyan)'s plugins.
 
 
 ### Remote access to server stories
@@ -212,30 +212,30 @@ storyboard.addListener(wsServer, {
 });
 ```
 
-You'll also probably want to supercharge your **main application HTTP server for [end-to-end stories](#end-to-end-stories)**. Just pass your `http` `Server` instance as `options.httpServer`, or your [`socket.io`](https://github.com/socketio/socket.io) `Server` instance as `options.socketServer`, depending on your case:
+You'll also probably want to supercharge your **main application HTTP server for [end-to-end stories](#end-to-end-stories)**. Just pass your `http` `Server` instance as `options.httpServer`, or your [`socket.io`](http://socket.io/) `Server` instance as `options.socketServer`, depending on your case:
 
-    ```js
-    // If you don't use WebSockets:
-    var app = require("express")();
-    var httpServer = require("http").createServer(app);
-    httpServer.listen(3000);
-    storyboard.addListener(wsServer, {httpServer});
-    
-    // If you use socket.io WebSockets:
-    var socketServer = socketio(httpServer);
-    storyboard.addListener(wsServer, {socketServer});
-    
-    // If you use socket authentication, namespace the main app's
-    // sockets so that it does not interfere with the log server:
-    // At the server...
-    var io = socketServer.of("/myApp");
-    io.use(socketAuthenticate);
-    io.on("connection", socketConnect);
-    // ...and at the client:
-    var socket = socketio.connect("/myApp")
-    ```
+```js
+// If you don't use WebSockets:
+var app = require("express")();
+var httpServer = require("http").createServer(app);
+httpServer.listen(3000);
+storyboard.addListener(wsServer, {httpServer});
 
-You can also modify the port of the **standalone log server** (independent from your main application's HTTP server) by changing `options.port`. Disable it entirely by setting it to `null`.
+// If you use socket.io WebSockets:
+var socketServer = socketio(httpServer);
+storyboard.addListener(wsServer, {socketServer});
+
+// If you use socket authentication, namespace the main app's
+// sockets so that it does not interfere with the log server:
+// At the server...
+var io = socketServer.of("/myApp");
+io.use(socketAuthenticate);
+io.on("connection", socketConnect);
+// ...and at the client:
+var socket = socketio.connect("/myApp")
+```
+
+You can also change the port of the **standalone log server** (independent from your main application's HTTP server) by modifying `options.port`. Disable it entirely by setting the attribute to `null`.
 
 
 ### End-to-end stories
@@ -244,7 +244,7 @@ The icing on the cake is linking server- and client-side stories to get a comple
 
 Storyboard provides a simple yet flexible way to achieve this: stories can have multiple parents, which are specified upon creation. This feature is leveraged by the [Storyboard DevTools](#storyboard-devtools): when it receives a new story from the server with multiple parents, it checks whether any of the parents is a client-side story. If so, it prioritises this parent for display purposes, since it is expected to provide more context.
 
-In order for this to work, the client's `storyId` must be transmitted to the server *somehow*. This example uses the URL query string for simplicity, but feel free to use whatever technique you want (the body of a `POST` request, your own WebSocket messaging scheme, etc.):
+For this to work, the client's `storyId` must be transmitted to the server *somehow*. This example uses the URL query string for simplicity, but feel free to use whatever technique you want (the body of a `POST` request, your own WebSocket messaging scheme, etc.):
 
 ```js
 // Client:
@@ -279,7 +279,7 @@ Want to see the end-to-end story? Use the Storyboard DevTools extension.
 
 ### Storyboard DevTools
 
-Using the Storyboard DevTools should be pretty straightforward. After [installing them](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc), open the Chrome DevTools, select the Storyboard pane and point your browser at either:
+Using the extension should be pretty straightforward. After [installing it](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc), open the Chrome DevTools, select the Storyboard pane and point your browser at either:
 
 * Your standard application URL, to see both server and client logs
 * Port 8090 (configurable) of your server, to see server logs only
