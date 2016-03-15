@@ -1,5 +1,5 @@
 # Changelog
 
-## 0.0.4 (Feb. 9, 2016)
+## 0.1.0 (Mar. 15, 2016)
 
-* First release.
+* First public release.
