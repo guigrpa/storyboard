@@ -6,6 +6,8 @@
 
 A library, plus a [Chrome DevTools extension](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc).
 
+Demo: http://storyboard-demo.herokuapp.com/
+
 ## Why?
 
 * **Hierarchical stories**: put logs in context (*stories*), and group stories/logs within stories. Such groupings are extremely useful with concurrent user actions.
@@ -291,6 +293,8 @@ Some highlighted features:
 * Open attachments, including exceptions: click on the folder icon.
 * 3 timestamp formats: UTC, local or relative to now: click on any timestamp.
 * Use quick find (case-insensitive) to highlight what you're looking for.
+
+You can check your new extension navigating to: http://storyboard-demo.herokuapp.com/
 
 Storyboard DevTools is built with [React](https://facebook.github.io/react/), [Redux](http://redux.js.org/) and [Redux-Saga](http://yelouafi.github.io/redux-saga/).
 

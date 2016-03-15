@@ -3,6 +3,10 @@ WEBPACK_EXTENSION       = "webpack --config src/chromeExtension/webpackConfig.co
 WEBPACK_SERVER_LOGS_APP = "webpack --config src/serverLogsApp/webpackConfig.coffee #{WEBPACK_OPTS}"
 WEBPACK_EXAMPLE         = "webpack --config src/example/webpackConfig.coffee #{WEBPACK_OPTS}"
 
+HEROKU_ROOT = "example/heroku"
+HEROKU_CLIENT = "#{HEROKU_ROOT}/client"
+HEROKU_SERVER = "#{HEROKU_ROOT}/server"
+
 ISTANBUL_OPTS = "--report json"
 
 VERSION = "0.1.0"
@@ -69,6 +73,11 @@ specs =
 
     # Example
     buildExample:             "#{WEBPACK_EXAMPLE}"
+    buildExampleHeroku:       _runMultiple [
+      "rm -f #{HEROKU_CLIENT}/*.eot #{HEROKU_CLIENT}/*.ttf #{HEROKU_CLIENT}/*.woff* #{HEROKU_CLIENT}/*.svg #{HEROKU_CLIENT}/*.js"
+      "cross-env NODE_ENV=production #{WEBPACK_EXAMPLE} -p"
+      "cp example/*.eot example/*.ttf example/*.woff* example/*.svg example/*.js #{HEROKU_CLIENT}/"
+    ]
     buildExampleWatch:        "#{WEBPACK_EXAMPLE} --watch"
     example:                  "coffee src/example/server.coffee"
 
@@ -78,6 +87,7 @@ specs =
       "npm run compile"
       "npm run buildServerLogsApp"
       "npm run buildExtension"
+      "npm run buildExampleHeroku"
       "npm run test"
       "npm run zipExtension"
     ]
