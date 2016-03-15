@@ -87,7 +87,6 @@ specs =
       "npm run compile"
       "npm run buildServerLogsApp"
       "npm run buildExtension"
-      "npm run buildExampleHeroku"
       "npm run test"
       "npm run zipExtension"
     ]
