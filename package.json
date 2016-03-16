@@ -34,6 +34,7 @@
     "buildExampleWatch": "webpack --config src/example/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
     "example": "coffee src/example/server.coffee",
     "build": "coffee package.coffee && npm run compile && npm run buildServerLogsApp && npm run buildExtension && npm run test && npm run zipExtension",
+    "travis": "coffee package.coffee && npm run compile && npm run test",
     "test": "npm run testCov",
     "testCov": "rm -rf coverage && npm run testLibDev && npm run testLibProd && npm run testCovMerge",
     "testCovMerge": "coffee tools/mergeCoverage.coffee"

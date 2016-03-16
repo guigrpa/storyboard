@@ -90,6 +90,11 @@ specs =
       "npm run test"
       "npm run zipExtension"
     ]
+    travis:                   _runMultiple [
+      "coffee package.coffee"
+      "npm run compile"
+      "npm run test"
+    ]
     test:                     "npm run testCov"
     testCov:                  _runMultiple [
       "rm -rf coverage"
