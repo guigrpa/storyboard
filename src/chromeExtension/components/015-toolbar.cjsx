@@ -115,6 +115,7 @@ _style =
     display: 'flex'
     flexDirection: 'row'
     whiteSpace: 'nowrap'
+    zIndex: 10
   icon:
     cursor: 'pointer'
     color: '#666'

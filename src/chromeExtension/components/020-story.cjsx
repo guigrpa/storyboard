@@ -341,6 +341,7 @@ Line = React.createClass
       {@renderMsg fStoryObject, msg, record.level}
       {if fStoryObject then @renderToggleHierarchical record}
       {spinner}
+      {' '}
       {@renderAttachmentIcon record}
     </div>
 
@@ -422,7 +423,6 @@ _styleLine =
     textOverflow: 'ellipsis'
   spinner:
     marginLeft: 8
-    display: 'inline'
   attachmentIcon:
     marginLeft: 8
     cursor: 'pointer'
