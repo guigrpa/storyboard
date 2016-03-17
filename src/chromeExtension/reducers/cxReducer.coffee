@@ -43,7 +43,7 @@ reducer = (state = INITIAL_STATE, action) ->
       return timm.merge state, {login, loginState: 'LOGGED_IN'}
 
     when 'LOGIN_FAILED'
-      return timm.merge state, {login: null, loginState: 'LOGGED_OUT'}
+      return timm.merge state, {login: null, loginState: 'LOGGED_OUT_WITH_ERROR'}
 
     when 'LOGGED_OUT'
       return timm.merge state, {login: null, loginState: 'LOGGED_OUT'}

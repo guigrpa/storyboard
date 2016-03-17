@@ -34,7 +34,7 @@ mainStory.info 'httpServer', "Listening on port #{chalk.cyan PORT}..."
 # (but ask for credentials)
 storyboard.addListener wsServer,
   httpServer: httpServer
-  authenticate: ({login, password}) -> true
+  authenticate: ({login, password}) -> login isnt 'unicorn'
 
 # Initialise our fake database
 db = require './db'

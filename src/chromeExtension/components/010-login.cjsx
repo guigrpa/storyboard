@@ -55,7 +55,7 @@ Login = React.createClass
   renderLogIn: ->
     {loginState} = @props
     btn = switch loginState
-      when 'LOGGED_OUT' 
+      when 'LOGGED_OUT', 'LOGGED_OUT_WITH_ERROR'
         <Icon 
           icon="sign-in" 
           title="Log in"
@@ -73,6 +73,7 @@ Login = React.createClass
           style={_style.icon fDisabled: true}
         />
       else ''
+    fError = loginState is 'LOGGED_OUT_WITH_ERROR'
     <div style={_style.outer true}>
       <b>Server logs:</b>
       {' '}
@@ -84,7 +85,7 @@ Login = React.createClass
           placeholder="Login"
           onChange={@onChangeCredentials}
           onKeyUp={@onKeyUpCredentials}
-          style={_style.field}
+          style={_style.field fError}
         />
         <input ref="password"
           id="password"
@@ -93,7 +94,7 @@ Login = React.createClass
           placeholder="Password"
           onChange={@onChangeCredentials}
           onKeyUp={@onKeyUpCredentials}
-          style={_style.field}
+          style={_style.field fError}
         />
         {btn}
       </span>
@@ -117,9 +118,10 @@ _style =
     backgroundColor: if fHighlight then '#d6ecff'
   icon: ({fDisabled} = {}) ->
     cursor: if not fDisabled then 'pointer'
-  field:
+  field: (fError) ->
     marginRight: 4
     width: 70
+    border: if fError then '1px solid red'
 
 #-----------------------------------------------------
 connect = ReactRedux.connect mapStateToProps, mapDispatchToProps
