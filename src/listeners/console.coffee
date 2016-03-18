@@ -11,8 +11,10 @@ DEFAULT_CONFIG =
   relativeTime:     k.IS_BROWSER
   minLevel:         10
 
-TIME_COL_LENGTH = 7
-TIME_COL_EMPTY = _.padStart '', TIME_COL_LENGTH
+TIME_COL_RELATIVE_LENGTH = 7
+TIME_COL_RELATIVE_EMPTY = _.padStart '', TIME_COL_RELATIVE_LENGTH
+TIME_COL_ABSOLUTE_LENGTH = new Date().toISOString().length
+TIME_COL_ABSOLUTE_EMPTY = _.padStart '', TIME_COL_ABSOLUTE_LENGTH
 
 _console = console
 _setConsole = (o) -> _console = o
@@ -31,9 +33,9 @@ _getTimeStr = (record, config) ->
     dif = if _prevTime then (newTime - _prevTime)/1000 else 0
     _prevTime = newTime
     timeStr = if dif < 1 then dif.toFixed(3) else dif.toFixed(1)
-    timeStr = _.padStart timeStr, TIME_COL_LENGTH
+    timeStr = _.padStart timeStr, TIME_COL_RELATIVE_LENGTH
     if dif > 1 then extraTimeStr = '    ...'
-    if dif < 0.010 then timeStr = TIME_COL_EMPTY
+    if dif < 0.010 then timeStr = TIME_COL_RELATIVE_EMPTY
   else
     timeStr = new Date(record.t).toISOString()
   return [timeStr, extraTimeStr]
@@ -73,8 +75,9 @@ _process = (record, config) ->
     treeOptions = timm.merge {prefix: '  '}, objOptions
     lines = treeLines obj, treeOptions
     levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[objLevel]
+    emptyTimeStr = if config.relativeTime then TIME_COL_RELATIVE_EMPTY else TIME_COL_ABSOLUTE_EMPTY
     for line in lines
-      text = "#{TIME_COL_EMPTY} #{srcStr} #{levelStr}#{line}"
+      text = "#{emptyTimeStr} #{srcStr} #{levelStr}#{line}"
       _outputLog text
   return
 
