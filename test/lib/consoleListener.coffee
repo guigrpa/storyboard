@@ -46,7 +46,7 @@ describe "consoleListener", ->
     childStory = mainStory.child {title: "Three piggies"}
     expect(_spyLog).to.have.been.calledOnce
     msg = _spyLog.args[0][0]
-    expect(msg).to.contain '[CREATED]'
+    expect(msg).to.contain 'CREATED'
 
   describe "object attachments", ->
 

@@ -11,6 +11,9 @@ DEFAULT_CONFIG =
   relativeTime:     k.IS_BROWSER
   minLevel:         10
 
+TIME_COL_LENGTH = 7
+TIME_COL_EMPTY = _.padStart '', TIME_COL_LENGTH
+
 _console = console
 _setConsole = (o) -> _console = o
 
@@ -28,9 +31,9 @@ _getTimeStr = (record, config) ->
     dif = if _prevTime then (newTime - _prevTime)/1000 else 0
     _prevTime = newTime
     timeStr = if dif < 1 then dif.toFixed(3) else dif.toFixed(1)
-    timeStr = _.padStart timeStr, 7
+    timeStr = _.padStart timeStr, TIME_COL_LENGTH
     if dif > 1 then extraTimeStr = '    ...'
-    if dif < 0.010 then timeStr = '       '
+    if dif < 0.010 then timeStr = TIME_COL_EMPTY
   else
     timeStr = new Date(record.t).toISOString()
   return [timeStr, extraTimeStr]
@@ -43,15 +46,14 @@ _process = (record, config) ->
   [timeStr, extraTimeStr] = _getTimeStr record, config
   if fStory
     ## parents = record.parents
-    msgStr = record.title
+    timeStr = chalk.bold timeStr
+    msgStr = chalk.bold record.title
     levelStr = '----- '
-    storyIdStr = "#{storyId.slice 0, 8} - "
-    actionStr = " [#{record.action}]"
+    actionStr = " [#{chalk.bold record.action}]"
   else
     ## parents = [storyId]
     msgStr = record.msg
     levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[level]
-    storyIdStr = ''
     actionStr = ''
   ## parentsStr = _.padEnd parents.map((o) -> o.slice 0, 7).join(', '), 10
   srcStr = ansiColors.getSrcChalkColor(src) _.padStart(src, config.moduleNameLength)
@@ -64,16 +66,15 @@ _process = (record, config) ->
       objExpanded = true
   if level >= k.LEVEL_STR_TO_NUM.ERROR then msgStr = chalk.red.bold msgStr
   else if level >= k.LEVEL_STR_TO_NUM.WARN then msgStr = chalk.red.yellow msgStr
-  ## finalMsg = "#{parentsStr} #{timeStr} #{srcStr} #{levelStr} #{storyIdStr}#{msgStr}#{actionStr}"
-  finalMsg = "#{timeStr} #{srcStr} #{levelStr}#{storyIdStr}#{msgStr}#{actionStr}#{objStr}"
-  if fStory then finalMsg = chalk.bold finalMsg
+  ## finalMsg = "#{parentsStr} #{timeStr} #{srcStr} #{levelStr} #{msgStr}#{actionStr}"
+  finalMsg = "#{timeStr} #{srcStr} #{levelStr}#{msgStr}#{actionStr}#{objStr}"
   _outputLog finalMsg, record.level, extraTimeStr
   if objExpanded and filters.passesFilter src, objLevel
     treeOptions = timm.merge {prefix: '  '}, objOptions
     lines = treeLines obj, treeOptions
     levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[objLevel]
     for line in lines
-      text = "#{timeStr} #{srcStr} #{levelStr}#{line}"
+      text = "#{TIME_COL_EMPTY} #{srcStr} #{levelStr}#{line}"
       _outputLog text
   return
 
