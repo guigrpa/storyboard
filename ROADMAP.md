@@ -3,8 +3,8 @@
     + [ ] Better tests for WS Server listener (currently skipped)
     + [ ] Stories with levels:
         * [x] Add attribute to story
-        * [X] Story actions published with same level as story
-        * [ ] Console listener: always show level (simplification)
+        * [x] Story actions published with same level as story
+        * [x] Console listener: always show level
         * [ ] Include story records in the filter -- implies:
             - [ ] Chrome extension will ignore the existence of some stories
             - [ ] When it receives a log belonging to one of those stories, it will put it on the main story. Id. for child stories

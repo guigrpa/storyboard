@@ -46,16 +46,19 @@ _getTimeStr = (record, config) ->
 _process = (record, config) ->
   {src, storyId, level, fStory, obj, objExpanded, objLevel, objOptions} = record
   [timeStr, extraTimeStr] = _getTimeStr record, config
+  levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[level]
   if fStory
     ## parents = record.parents
     timeStr = chalk.bold timeStr
-    msgStr = chalk.bold record.title
-    levelStr = '----- '
+    storyPrefix = switch record.action
+      when 'CREATED' then "\u250c\u2500\u2500"
+      when 'CLOSED'  then "\u2514\u2500\u2500"
+      else                "\u251c\u2500\u2500"
+    msgStr = chalk.bold "#{storyPrefix} #{record.title}"
     actionStr = " [#{chalk.bold record.action}]"
   else
     ## parents = [storyId]
     msgStr = record.msg
-    levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[level]
     actionStr = ''
   ## parentsStr = _.padEnd parents.map((o) -> o.slice 0, 7).join(', '), 10
   srcStr = ansiColors.getSrcChalkColor(src) _.padStart(src, config.moduleNameLength)
