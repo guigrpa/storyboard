@@ -1,5 +1,6 @@
 {storyboard, expect, sinon} = require './imports'
 hub = require '../../lib/gral/hub'
+k   = require '../../lib/gral/constants'
 
 _spy = sinon.spy()
 _listenerFactory = 
@@ -25,6 +26,9 @@ describe 'storyboard', ->
     expect(storyboard.mainStory).to.exist
 
   describe 'using the main story', ->
+
+    it 'should have the highest level', ->
+      expect(mainStory.level).to.equal k.LEVEL_STR_TO_NUM.FATAL
     
     it 'should emit a record when logging', ->
       mainStory.info 'src1', 'msg1'
@@ -62,6 +66,15 @@ describe 'storyboard', ->
       expect(record.fStory).to.be.true
       expect(record.action).to.equal 'CREATED'
 
+    it 'should have INFO level (default)', ->
+      expect(childStory.level).to.equal k.LEVEL_STR_TO_NUM.INFO
+
+    it 'should publish actions with the same level as the story itself', ->
+      record = _spy.args[0][0]
+      expect(record.fStory).to.be.true
+      expect(record.action).to.equal 'CREATED'
+      expect(record.level).to.equal k.LEVEL_STR_TO_NUM.INFO
+
     it 'should allow changing its title', ->
       childStory.changeTitle 'another title'
       expect(childStory.title).to.equal 'another title'
@@ -77,6 +90,13 @@ describe 'storyboard', ->
       record = _spy.args[1][0]
       expect(record.fStory).to.be.true
       expect(record.action).to.equal 'CLOSED'
+
+    it 'should keep track of emitted action records', ->
+      childStory.close()
+      pastActionRecords = childStory.pastActionRecords
+      expect(pastActionRecords).to.have.length 2
+      expect(pastActionRecords[0].action).to.equal 'CREATED'
+      expect(pastActionRecords[1].action).to.equal 'CLOSED'
 
   it 'should be possible to create stories directly with more than one parent', ->
     childStory = mainStory.child {title: 'title1', extraParents: 'foo'}
