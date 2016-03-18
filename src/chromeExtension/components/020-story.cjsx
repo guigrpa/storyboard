@@ -280,8 +280,8 @@ AttachmentLine = React.createClass
         setTimeType={@props.setTimeType}
         seqFullRefresh={@props.seqFullRefresh}
       />
-      <Severity level={String record.objLevel}/>
       <Src src={record.src}/>
+      <Severity level={String record.objLevel}/>
       <Indent level={@props.level}/>
       <CaretOrSpace/>
       <ColoredText text={'  ' + msg}/>
@@ -334,8 +334,8 @@ Line = React.createClass
       style={style}
     >
       {@renderTime record}
-      <Severity level={if fStory then null else record.level}/>
       <Src src={record.src}/>
+      <Severity level={if fStory then null else record.level}/>
       <Indent level={indentLevel}/>
       {@renderCaretOrSpace record}
       {@renderMsg fStoryObject, msg, record.level}
@@ -423,6 +423,7 @@ _styleLine =
     textOverflow: 'ellipsis'
   spinner:
     marginLeft: 8
+    overflow: 'hidden'
   attachmentIcon:
     marginLeft: 8
     cursor: 'pointer'
@@ -509,7 +510,7 @@ Src = React.createClass
     src:                    React.PropTypes.string
   render: ->
     {src} = @props
-    srcStr = ansiColors.getSrcChalkColor(src) _.padEnd(src, 15)
+    srcStr = ansiColors.getSrcChalkColor(src) _.padStart(src + ' ', 20)
     <ColoredText text={srcStr}/>
 
 #-====================================================

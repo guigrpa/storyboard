@@ -121,7 +121,7 @@ _style =
   field: (fError) ->
     marginRight: 4
     width: 70
-    border: if fError then '1px solid red'
+    backgroundColor: if fError then 'blanchedalmond'
 
 #-----------------------------------------------------
 connect = ReactRedux.connect mapStateToProps, mapDispatchToProps
