@@ -24,7 +24,7 @@ _extensionInit = (config) ->
 _extensionRxMsg = (msg) ->
   {src, type, data} = msg
   return if src isnt 'DT'
-  console.log "[PG] RX #{src}/#{type}", data
+  ## console.log "[PG] RX #{src}/#{type}", data
   switch type
     when 'CONNECT_REQUEST', 'CONNECT_RESPONSE'
       _fExtensionReady = true
