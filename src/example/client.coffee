@@ -1,3 +1,4 @@
+chalk = require 'chalk'
 {mainStory} = require '../storyboard'  # you'd write: `'storyboard'`
 
 mainStory.info 'client', 'Running client...'
@@ -20,7 +21,7 @@ _refresh = (storyTitle) ->
   .then (response) -> response.json()
   .then (items) ->
     if Array.isArray items
-      story.info 'serverInterface', "Fetched animals from server: #{items.length}", attach: items
+      story.info 'serverInterface', "Fetched animals from server: #{chalk.cyan.bold items.length}", attach: items
       nodeItems.innerHTML = items.map((o) -> "<li>#{o}</li>").join('')
     story.close()
 
