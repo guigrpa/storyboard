@@ -9,7 +9,7 @@ HEROKU_SERVER = "#{HEROKU_ROOT}/server"
 
 ISTANBUL_OPTS = "--report json"
 
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 
 _runMultiple = (arr) -> arr.join ' && '
 

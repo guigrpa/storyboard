@@ -18,6 +18,7 @@ node_modules
 *.sublime-workspace
 /chromeExtension/*.zip
 /docs/otherPromoAssets
+/docs/guigrpa
 /example/heroku
 
 # NPM extras
