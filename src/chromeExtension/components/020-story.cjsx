@@ -335,7 +335,7 @@ Line = React.createClass
     >
       {@renderTime record}
       <Src src={record.src}/>
-      <Severity level={if fStory then null else record.level}/>
+      <Severity level={record.level}/>
       <Indent level={indentLevel}/>
       {@renderCaretOrSpace record}
       {@renderMsg fStoryObject, msg, record.level}

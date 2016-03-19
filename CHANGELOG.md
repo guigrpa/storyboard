@@ -2,9 +2,13 @@
 
 * Browser extension: 
     - [m] Swap severity and source columns for coherence wiht console output
+    - [m] Show story levels
     - [m] Tweak style of some components
 * Lib: 
+    - Stories:
+        + [M] Add story level
     - Console Listener: 
+        + [m] Show story levels
         + [m] Hide story ID
         + [m] Hide time in attachment lines (just as in the browser extension)
         + [m] Highlight action lines

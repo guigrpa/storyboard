@@ -9,7 +9,10 @@ nodeButton.addEventListener 'click', -> _refresh 'Click on Refresh'
 
 _refresh = (storyTitle) ->
   seq = Math.floor(Math.random() * 100)
-  story = mainStory.child {src: 'client', title: storyTitle + " (seq=#{seq})"}
+  story = mainStory.child 
+    src: 'client'
+    title: storyTitle + " (seq=#{seq})"
+    level: 'DEBUG'
   story.info 'serverInterface', "Fetching animals from server..."
   nodeItems.innerHTML = "Fetching..."
   fetch "/animals?seq=#{seq}",
