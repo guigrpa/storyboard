@@ -172,16 +172,18 @@ STORYBOARD=<span class="pl-k">*</span>:<span class="pl-k">*</span> node myScript
 
 <p>Create child stories by calling <code>child()</code> on the parent story and passing an options argument. Don't forget to <code>close()</code> the child story when you're done with it! More on child stories <a href="#remote-access-to-server-stories">here</a>.</p>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> childStory <span class="pl-k">=</span> <span class="pl-smi">story</span>.<span class="pl-en">child</span>({src<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>lib<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Little Red Riding Hood<span class="pl-pds">"</span></span>});
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> childStory <span class="pl-k">=</span> <span class="pl-smi">story</span>.<span class="pl-en">child</span>({src<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>lib<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Little Red Riding Hood<span class="pl-pds">"</span></span>, level<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>DEBUG<span class="pl-pds">'</span></span>});
 <span class="pl-smi">childStory</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>Once upon a time...<span class="pl-pds">"</span></span>);
 <span class="pl-smi">childStory</span>.<span class="pl-en">warn</span>(<span class="pl-s"><span class="pl-pds">"</span>...a wolf appeared!...<span class="pl-pds">"</span></span>);
 <span class="pl-smi">childStory</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>...and they lived happily ever after.<span class="pl-pds">"</span></span>);
 <span class="pl-smi">childStory</span>.<span class="pl-c1">close</span>();
-<span class="pl-c">// 2016-03-09T17:28:35.574Z     lib ----- ss/ce8b2 - Little Red Riding Hood [CREATED]</span>
-<span class="pl-c">// 2016-03-09T17:28:35.578Z    main INFO  Once upon a time...</span>
-<span class="pl-c">// 2016-03-09T17:28:35.580Z    main WARN  ...a wolf appeared!...</span>
-<span class="pl-c">// 2016-03-09T17:28:35.582Z    main INFO  ...and they lived happily ever after.</span>
-<span class="pl-c">// 2016-03-09T17:28:35.586Z     lib ----- ss/ce8b2 - Little Red Riding Hood [CLOSED]</span></pre></div>
+<span class="pl-c">// 2016-03-19T14:10:14.080Z        lib DEBUG ┌── Little Red Riding Hood [CREATED]</span>
+<span class="pl-c">// 2016-03-19T14:10:14.083Z       main INFO  Once upon a time...</span>
+<span class="pl-c">// 2016-03-19T14:10:14.085Z       main WARN  ...a wolf appeared!...</span>
+<span class="pl-c">// 2016-03-19T14:10:14.087Z       main INFO  ...and they lived happily ever after.</span>
+<span class="pl-c">// 2016-03-19T14:10:14.088Z        lib DEBUG └── Little Red Riding Hood [CLOSED]</span></pre></div>
+
+<p><em>Note: Child stories have <code>INFO</code> level by default, and can be completely hidden by <a href="#log-filtering">log filtering</a>. However, when a log with level <code>WARN</code> or higher is added to a hidden story, the story and all of its ancestors will become visible. You will not miss any errors, nor the actions that led to them!</em></p>
 
 <h3>
 <a id="listeners" class="anchor" href="#listeners" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Listeners</h3>
@@ -219,12 +221,12 @@ STORYBOARD=<span class="pl-k">*</span>:<span class="pl-k">*</span> node myScript
 
 <div class="highlight highlight-source-js"><pre><span class="pl-c">// Example #1: synchronous</span>
 <span class="pl-smi">storyboard</span>.<span class="pl-en">addListener</span>(wsServer, {
-  authenticate<span class="pl-k">:</span> ({<span class="pl-smi">login</span>, <span class="pl-smi">password</span>}) <span class="pl-k">=&gt;</span> <span class="pl-c1">true</span>
+  <span class="pl-en">authenticate</span><span class="pl-k">:</span> ({login, password}) <span class="pl-k">=&gt;</span> <span class="pl-c1">true</span>
 });
 
 <span class="pl-c">// Example #2: asynchronous (returning a promise)</span>
 <span class="pl-smi">storyboard</span>.<span class="pl-en">addListener</span>(wsServer, {
-  authenticate<span class="pl-k">:</span> ({<span class="pl-smi">login</span>, <span class="pl-smi">password</span>}) <span class="pl-k">=&gt;</span> <span class="pl-smi">Promise</span>.<span class="pl-en">resolve</span>(<span class="pl-c1">true</span>)
+  <span class="pl-en">authenticate</span><span class="pl-k">:</span> ({login, password}) <span class="pl-k">=&gt;</span> <span class="pl-smi">Promise</span>.<span class="pl-en">resolve</span>(<span class="pl-c1">true</span>)
 });</pre></div>
 
 <p>You'll also probably want to supercharge your <strong>main application HTTP server for <a href="#end-to-end-stories">end-to-end stories</a></strong>. Just pass your <code>http</code> <code>Server</code> instance as <code>options.httpServer</code>, or your <a href="http://socket.io/"><code>socket.io</code></a> <code>Server</code> instance as <code>options.socketServer</code>, depending on your case:</p>
@@ -263,8 +265,8 @@ STORYBOARD=<span class="pl-k">*</span>:<span class="pl-k">*</span> node myScript
 <span class="pl-k">var</span> story <span class="pl-k">=</span> <span class="pl-smi">mainStory</span>.<span class="pl-en">child</span>({src<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>itemList<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>User click on Refresh<span class="pl-pds">"</span></span>});
 <span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>itemList<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Fetching items...<span class="pl-pds">"</span></span>);
 <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">`</span>/items?storyId=<span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">story</span>.<span class="pl-smi">storyId</span><span class="pl-pse">}</span></span><span class="pl-pds">`</span></span>)
-.<span class="pl-en">then</span>(response <span class="pl-k">=&gt;</span> <span class="pl-smi">response</span>.<span class="pl-en">json</span>())
-.<span class="pl-en">then</span>(items <span class="pl-k">=&gt;</span> <span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>itemList<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">`</span>Fetched <span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">items</span>.<span class="pl-c1">length</span><span class="pl-pse">}</span></span> items<span class="pl-pds">`</span></span>))
+.<span class="pl-en">then</span>(<span class="pl-smi">response</span> <span class="pl-k">=&gt;</span> <span class="pl-smi">response</span>.<span class="pl-en">json</span>())
+.<span class="pl-en">then</span>(<span class="pl-smi">items</span> <span class="pl-k">=&gt;</span> <span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>itemList<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">`</span>Fetched <span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">items</span>.<span class="pl-c1">length</span><span class="pl-pse">}</span></span> items<span class="pl-pds">`</span></span>))
 .<span class="pl-en">finally</span>(() <span class="pl-k">=&gt;</span> <span class="pl-smi">story</span>.<span class="pl-c1">close</span>());  <span class="pl-c">// using Bluebird's terse API</span>
 
 <span class="pl-c">// Server (using Express):</span>
