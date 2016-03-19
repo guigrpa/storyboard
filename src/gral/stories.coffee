@@ -7,6 +7,8 @@ filters     = require './filters'
 DEFAULT_SRC = 'main'
 DEFAULT_CHILD_TITLE = ''
 
+_hiddenStories = {}
+
 #-----------------------------------------------
 # ### Helpers
 #-----------------------------------------------
@@ -18,7 +20,7 @@ _getRecordId = -> if k.IS_BROWSER then "c#{_recordId++}" else "s#{_recordId++}"
 #-----------------------------------------------
 # ## Story
 #-----------------------------------------------
-Story = (parents, src, title, levelNum) ->
+Story = ({parents, src, title, levelNum, fHiddenByFilter}) ->
   @parents = parents
   @fRoot = not parents.length
   @storyId = if @fRoot then '*' else _getStoryId()
@@ -29,7 +31,9 @@ Story = (parents, src, title, levelNum) ->
   @t = new Date().getTime()
   @fOpen = true
   @status = undefined
-  @pastActionRecords = []
+  @hiddenRecords = []
+  @fHiddenByFilter = fHiddenByFilter or (not filters.passesFilter @src, @level)
+  if @fHiddenByFilter then _hiddenStories[@storyId] = @
   @emitAction 'CREATED', @t
 
 #-----------------------------------------------
@@ -38,6 +42,9 @@ Story = (parents, src, title, levelNum) ->
 Story::close = -> 
   @fOpen = false
   @emitAction 'CLOSED'
+  if @fHiddenByFilter
+    _hiddenStories[@storyId] = null
+    @hiddenRecords = []
   return
 Story::changeTitle = (title) ->
   @title = title
@@ -55,14 +62,19 @@ Story::child = (options = {}) ->
   levelNum = k.LEVEL_STR_TO_NUM[levelStr?.toUpperCase()] ? k.LEVEL_STR_TO_NUM.INFO
   parents = [@storyId]
   if extraParents? then parents = parents.concat extraParents
-  return new Story parents, src, title, levelNum
+  return new Story {
+    parents, src, title, levelNum, 
+    fHiddenByFilter: @fHiddenByFilter
+  }
 
 #-----------------------------------------------
 # ### Logs
 #-----------------------------------------------
-_.each k.LEVEL_NUM_TO_STR, (levelStr, levelNum) ->
+_.each k.LEVEL_STR_TO_NUM, (levelNum, levelStr) ->
   return if levelStr is 'STORY'
   Story::[levelStr.toLowerCase()] = (src, msg, options) ->
+
+    # Prepare arguments
     #- `log.info msg`
     if arguments.length <= 1
       msg = arguments[0] ? ''
@@ -73,6 +85,11 @@ _.each k.LEVEL_NUM_TO_STR, (levelStr, levelNum) ->
       msg = arguments[0] ? ''
       src = DEFAULT_SRC
     options ?= {}
+
+    # Filtering rule #1
+    return if not filters.passesFilter src, levelNum
+
+    # Prepare record
     record =
       storyId: @storyId
       level: levelNum
@@ -89,6 +106,15 @@ _.each k.LEVEL_NUM_TO_STR, (levelStr, levelNum) ->
       record.objLevel = objLevel
       record.objOptions = _.pick options, ['ignoreKeys']
       record.objIsError = _.isError record.obj
+    record = _completeRecord record
+
+    # Filtering rule #2
+    if @fHiddenByFilter
+      if levelNum < k.LEVEL_STR_TO_NUM.WARN
+        @hiddenRecords.push record
+        return
+      _revealHiddenStory @
+
     _emit record
     return
 
@@ -96,7 +122,7 @@ _.each k.LEVEL_NUM_TO_STR, (levelStr, levelNum) ->
 # ### Story helpers
 #-----------------------------------------------
 Story::emitAction = (action, t) ->
-  record = _emit
+  record = _completeRecord
     parents: @parents
     fRoot: @fRoot
     storyId: @storyId
@@ -109,7 +135,10 @@ Story::emitAction = (action, t) ->
     status: @status
     fStory: true
     action: action
-  @pastActionRecords.push record
+  if @fHiddenByFilter
+    @hiddenRecords.push record
+    return
+  _emit record
   return
 
 # Records can be logs or stories:
@@ -129,18 +158,36 @@ Story::emitAction = (action, t) ->
 # * `objLevel: string?`  (only for logs)
 # * `objOptions: object?`  (only for logs)
 # * `objIsError: bool?` (only for logs)
-_emit = (record) ->
-  if not record.fStory
-    return unless filters.passesFilter record.src, record.level
+_completeRecord = (record) ->
   record.id = _getRecordId()
   record.t ?= new Date().getTime()
   record.fServer = not k.IS_BROWSER
-  hub.emit record
   record
+
+_emit = (record) -> hub.emit record
+
+_revealHiddenStory = (story) ->
+  {parents, storyId} = story
+
+  # Reveal parents recursively
+  for parentStoryId in parents
+    parentStory = _hiddenStories[parentStoryId]
+    if parentStory? then _revealHiddenStory parentStory
+
+  # Reveal myself
+  story.fHiddenByFilter = false
+  _hiddenStories[storyId] = null
+  _emit record for record in story.hiddenRecords
+  story.hiddenRecords = []
+  return
 
 #-----------------------------------------------
 # ### API
 #-----------------------------------------------
 title = (if k.IS_BROWSER then 'BROWSER' else 'SERVER') + ' ROOT STORY'
-mainStory = new Story [], 'storyboard', title, k.LEVEL_STR_TO_NUM.FATAL
+mainStory = new Story 
+  parents: []
+  src: 'storyboard'
+  title: title
+  levelNum: k.LEVEL_STR_TO_NUM.FATAL
 module.exports = mainStory

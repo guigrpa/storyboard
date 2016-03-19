@@ -12,7 +12,6 @@ _refresh = (storyTitle) ->
   story = mainStory.child 
     src: 'client'
     title: storyTitle + " (seq=#{seq})"
-    level: 'DEBUG'
   story.info 'serverInterface', "Fetching animals from server..."
   nodeItems.innerHTML = "Fetching..."
   fetch "/animals?seq=#{seq}",

@@ -17,15 +17,17 @@ describe 'storyboard', ->
   before -> 
     storyboard.removeAllListeners()
     storyboard.addListener _listenerFactory
-    storyboard.config {filter: '*:*', bufSize: 5}
+    storyboard.config {bufSize: 5}
     expect(storyboard.getListeners()).to.have.length 1
 
   beforeEach -> _spy.reset()
 
   it 'sanity', ->
-    expect(storyboard.mainStory).to.exist
+    expect(mainStory).to.exist
 
   describe 'using the main story', ->
+
+    beforeEach -> storyboard.config {filter: '*:*'}
 
     it 'should have the highest level', ->
       expect(mainStory.level).to.equal k.LEVEL_STR_TO_NUM.FATAL
@@ -36,6 +38,7 @@ describe 'storyboard', ->
       record = _spy.args[0][0]
       expect(record.src).to.equal 'src1'
       expect(record.msg).to.equal 'msg1'
+      expect(record.level).to.equal k.LEVEL_STR_TO_NUM.INFO
 
     it 'should allow omitting the source', ->
       mainStory.info 'msg2'
@@ -55,6 +58,7 @@ describe 'storyboard', ->
 
     childStory = null
     beforeEach ->
+      storyboard.config {filter: '*:*'}
       childStory = mainStory.child {title: 'childish title'}
 
     it 'should be correctly initialised', ->
@@ -91,19 +95,13 @@ describe 'storyboard', ->
       expect(record.fStory).to.be.true
       expect(record.action).to.equal 'CLOSED'
 
-    it 'should keep track of emitted action records', ->
-      childStory.close()
-      pastActionRecords = childStory.pastActionRecords
-      expect(pastActionRecords).to.have.length 2
-      expect(pastActionRecords[0].action).to.equal 'CREATED'
-      expect(pastActionRecords[1].action).to.equal 'CLOSED'
-
   it 'should be possible to create stories directly with more than one parent', ->
     childStory = mainStory.child {title: 'title1', extraParents: 'foo'}
     expect(childStory.parents).to.deep.equal [mainStory.storyId, 'foo']
 
   describe 'getting the buffered records', ->
 
+    beforeEach -> storyboard.config {filter: '*:*'}
     before ->
       mainStory.info 'message1'
       mainStory.info 'message2'
@@ -117,3 +115,66 @@ describe 'storyboard', ->
       expect(buf.length).to.equal 5
       for idx in [0...5]
         expect(buf[idx].msg).to.equal "message#{idx+2}"
+
+  describe 'for a filtered out story', ->
+
+    foo = null
+    beforeEach -> 
+      storyboard.config {filter: 'foo:INFO,*:*'}
+      foo = mainStory.child {src: 'foo', title: 'Foo', level: 'DEBUG'}
+
+    it 'should NOT emit action records', ->
+      expect(_spy).to.not.have.been.called
+
+    it 'should NOT emit logs <= INFO', ->
+      foo.debug "foo", "msg1"
+      foo.info "foo", "msg2"
+      foo.debug "interesting", "msg3"
+      foo.info "interesting", "msg4"
+      expect(_spy).to.not.have.been.called
+
+    it 'should emit logs >= WARN (and make the story visible)', ->
+      foo.warn 'whatever', 'Warning, warning!'
+      expect(_spy).to.have.been.calledTwice
+      record = _spy.args[0][0]
+      expect(record.src).to.equal 'foo'
+      expect(record.action).to.equal 'CREATED'
+      expect(record.level).to.equal k.LEVEL_STR_TO_NUM.DEBUG
+      record = _spy.args[1][0]
+      expect(record.src).to.equal 'whatever'
+      expect(record.level).to.equal k.LEVEL_STR_TO_NUM.WARN
+
+    describe 'with a child', ->
+
+      fooChild = null
+      beforeEach ->
+        fooChild = foo.child {src: 'child', title: 'Foo child'}
+
+      it 'should NOT be visible (as a child of a hidden story)', ->
+        expect(_spy).to.not.have.been.called
+
+      it 'should NOT emit logs <= INFO', ->
+        fooChild.debug "foo", "msg1"
+        fooChild.info "foo", "msg2"
+        fooChild.debug "interesting", "msg3"
+        fooChild.info "interesting", "msg4"
+        expect(_spy).to.not.have.been.called
+
+      it 'should emit logs >= WARN (and make both ancestors visible)', ->
+        fooChild.info 'whatever', 'Some operation'
+        fooChild.warn 'whatever', 'Warning, warning!'
+        expect(_spy).to.have.callCount 4
+        record = _spy.args[0][0]
+        expect(record.src).to.equal 'foo'
+        expect(record.action).to.equal 'CREATED'
+        expect(record.level).to.equal k.LEVEL_STR_TO_NUM.DEBUG
+        record = _spy.args[1][0]
+        expect(record.src).to.equal 'child'
+        expect(record.action).to.equal 'CREATED'
+        expect(record.level).to.equal k.LEVEL_STR_TO_NUM.INFO
+        record = _spy.args[2][0]
+        expect(record.src).to.equal 'whatever'
+        expect(record.level).to.equal k.LEVEL_STR_TO_NUM.INFO
+        record = _spy.args[3][0]
+        expect(record.src).to.equal 'whatever'
+        expect(record.level).to.equal k.LEVEL_STR_TO_NUM.WARN

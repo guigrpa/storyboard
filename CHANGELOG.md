@@ -7,6 +7,7 @@
 * Lib: 
     - Stories:
         + [M] Add story level
+        + [M] Filter out stories completely according to source and level, even if they contain logs that would have been visible (up to INFO level). Logs at WARN or above make their ancestor stories visible, if needed.
     - Console Listener: 
         + [m] Show story levels
         + [m] Hide story ID
