@@ -113,7 +113,7 @@ _.each k.LEVEL_STR_TO_NUM, (levelNum, levelStr) ->
       if levelNum < k.LEVEL_STR_TO_NUM.WARN
         @hiddenRecords.push record
         return
-      _revealHiddenStory @
+      @reveal()
 
     _emit record
     return
@@ -141,6 +141,16 @@ Story::emitAction = (action, t) ->
   _emit record
   return
 
+# Reveal parents recursively, and then reveal myself
+Story::reveal = ->
+  for parentStoryId in @parents
+    _hiddenStories[parentStoryId]?.reveal()
+  @fHiddenByFilter = false
+  _hiddenStories[@storyId] = null
+  _emit record for record in @hiddenRecords
+  @hiddenRecords = []
+  return
+
 # Records can be logs or stories:
 # * `id: string` (a unique record id)
 # * `fStory: boolean`
@@ -165,21 +175,6 @@ _completeRecord = (record) ->
   record
 
 _emit = (record) -> hub.emit record
-
-_revealHiddenStory = (story) ->
-  {parents, storyId} = story
-
-  # Reveal parents recursively
-  for parentStoryId in parents
-    parentStory = _hiddenStories[parentStoryId]
-    if parentStory? then _revealHiddenStory parentStory
-
-  # Reveal myself
-  story.fHiddenByFilter = false
-  _hiddenStories[storyId] = null
-  _emit record for record in story.hiddenRecords
-  story.hiddenRecords = []
-  return
 
 #-----------------------------------------------
 # ### API
