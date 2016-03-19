@@ -89,6 +89,8 @@ specs =
       "npm run buildExtension"
       "npm run test"
       "npm run zipExtension"
+      "npm run buildExampleHeroku"
+      "echo 'Remember to update Heroku package.json with the latest SB version!'"
     ]
     travis:                   _runMultiple [
       "coffee package.coffee"
