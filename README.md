@@ -157,12 +157,14 @@ childStory.info("Once upon a time...");
 childStory.warn("...a wolf appeared!...");
 childStory.info("...and they lived happily ever after.");
 childStory.close();
-// 2016-03-09T17:28:35.574Z     lib ----- ss/ce8b2 - Little Red Riding Hood [CREATED]
-// 2016-03-09T17:28:35.578Z    main INFO  Once upon a time...
-// 2016-03-09T17:28:35.580Z    main WARN  ...a wolf appeared!...
-// 2016-03-09T17:28:35.582Z    main INFO  ...and they lived happily ever after.
-// 2016-03-09T17:28:35.586Z     lib ----- ss/ce8b2 - Little Red Riding Hood [CLOSED]
+// 2016-03-19T14:10:14.080Z        lib INFO  ┌── Little Red Riding Hood [CREATED]
+// 2016-03-19T14:10:14.083Z       main INFO  Once upon a time...
+// 2016-03-19T14:10:14.085Z       main WARN  ...a wolf appeared!...
+// 2016-03-19T14:10:14.087Z       main INFO  ...and they lived happily ever after.
+// 2016-03-19T14:10:14.088Z        lib INFO  └── Little Red Riding Hood [CLOSED]
 ```
+
+*Note: Child stories have `INFO` level by default, and can be completely hidden by [log filtering](#log-filtering). However, when a log with level `WARN` or higher is added to a hidden story, the story and all of its ancestors will become visible. You will not miss any errors, nor the actions that led to them!*
 
 
 ### Listeners
