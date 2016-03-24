@@ -2,6 +2,9 @@
 
 *[M]: major change; [m]: minor change*
 
+* Tooling:
+    - Use `nyc` instead of `istanbul` for coverage testing (simplifies merging coverage reports)
+    
 ## 0.1.1 (Mar. 19, 2016)
 
 **Not a breaking change, but still noteworthy:** Stories now have a level attribute and are subject to filtering, the same way as logs. The default story level is `INFO`. Depending on your filter configuration, you may start filtering out some stories.

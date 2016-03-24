@@ -22,8 +22,8 @@
   },
   "scripts": {
     "compile": "rm -rf lib && coffee --no-header -o lib -c src/storyboard.coffee && coffee --no-header -o lib/gral -c src/gral && coffee --no-header -o lib/listeners -c src/listeners && coffee --no-header -o lib/vendor -c src/vendor",
-    "testLibDev": "cross-env NODE_ENV=development istanbul cover node_modules/mocha/bin/_mocha --report json -- --opts test/lib/mocha.opts && mv coverage/coverage-final.json coverage/coverage-DEVELOPMENT.json && rm coverage/coverage.json",
-    "testLibProd": "cross-env NODE_ENV=production istanbul cover node_modules/mocha/bin/_mocha --report json -- --opts test/lib/mocha.opts && mv coverage/coverage-final.json coverage/coverage-PRODUCTION.json && rm coverage/coverage.json",
+    "testLibDev": "cross-env NODE_ENV=development nyc node_modules/mocha/bin/_mocha --opts test/lib/mocha.opts && mv .nyc_output/* .nyc_tmp/",
+    "testLibProd": "cross-env NODE_ENV=production nyc node_modules/mocha/bin/_mocha --opts test/lib/mocha.opts && mv .nyc_output/* .nyc_tmp/",
     "buildServerLogsApp": "cross-env NODE_ENV=production webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --display-modules --display-chunks -p",
     "buildServerLogsAppWatch": "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --display-modules --display-chunks --watch",
     "buildExtension": "cross-env NODE_ENV=production webpack --config src/chromeExtension/webpackConfig.coffee --colors --progress --display-modules --display-chunks -p",
@@ -36,8 +36,9 @@
     "build": "coffee package.coffee && npm run compile && npm run buildServerLogsApp && npm run buildExtension && npm run test && npm run zipExtension && npm run buildExampleHeroku && echo 'Remember to update Heroku package.json with the latest SB version!'",
     "travis": "coffee package.coffee && npm run compile && npm run test",
     "test": "npm run testCov",
-    "testCov": "rm -rf coverage && npm run testLibDev && npm run testLibProd && npm run testCovMerge",
-    "testCovMerge": "coffee tools/mergeCoverage.coffee"
+    "testCovPrepare": "rm -rf ./coverage .nyc_output .nyc_tmp && mkdir .nyc_tmp",
+    "testCov": "npm run testCovPrepare && npm run testLibDev && npm run testLibProd && npm run testCovReport",
+    "testCovReport": "cp .nyc_tmp/* .nyc_output/ && nyc report --reporter=html --reporter=lcov"
   },
   "dependencies": {
     "bluebird": "3.3.1",
@@ -69,10 +70,10 @@
     "envify": "3.4.0",
     "file-loader": "0.8.5",
     "font-awesome": "4.5.0",
-    "istanbul": "0.4.2",
     "mocha": "2.4.5",
     "moment": "^2.11.2",
     "node-sass": "3.4.2",
+    "nyc": "6.1.1",
     "react": "15.0.0-rc.1",
     "react-addons-perf": "15.0.0-rc.1",
     "react-addons-pure-render-mixin": "15.0.0-rc.1",

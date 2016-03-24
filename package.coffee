@@ -7,8 +7,6 @@ HEROKU_ROOT = "example/heroku"
 HEROKU_CLIENT = "#{HEROKU_ROOT}/client"
 HEROKU_SERVER = "#{HEROKU_ROOT}/server"
 
-ISTANBUL_OPTS = "--report json"
-
 VERSION = "0.1.1"
 
 _runMultiple = (arr) -> arr.join ' && '
@@ -19,9 +17,8 @@ _runMocha = (basePath, env) ->
 
 _runMochaCov = (basePath, nodeEnv) ->
   return _runMultiple [
-    "cross-env NODE_ENV=#{nodeEnv} istanbul cover node_modules/mocha/bin/_mocha #{ISTANBUL_OPTS} -- --opts #{basePath}/mocha.opts"
-    "mv coverage/coverage-final.json coverage/coverage-#{nodeEnv.toUpperCase()}.json"
-    "rm coverage/coverage.json"
+    "cross-env NODE_ENV=#{nodeEnv} nyc node_modules/mocha/bin/_mocha --opts #{basePath}/mocha.opts"
+    "mv .nyc_output/* .nyc_tmp/"
   ]
 
 #-================================================================
@@ -98,13 +95,20 @@ specs =
       "npm run test"
     ]
     test:                     "npm run testCov"
+    testCovPrepare:           _runMultiple [
+      "rm -rf ./coverage .nyc_output .nyc_tmp"
+      "mkdir .nyc_tmp"
+    ]
     testCov:                  _runMultiple [
-      "rm -rf coverage"
+      "npm run testCovPrepare"
       "npm run testLibDev"
       "npm run testLibProd"
-      "npm run testCovMerge"
+      "npm run testCovReport"
     ]
-    testCovMerge:             "coffee tools/mergeCoverage.coffee"
+    testCovReport:            _runMultiple [
+      "cp .nyc_tmp/* .nyc_output/"
+      "nyc report --reporter=html --reporter=lcov"
+    ]
 
   #-================================================================
   # ## Storyboard library dependencies
@@ -185,7 +189,7 @@ specs =
     "sinon": "1.17.3"
     "sinon-chai": "2.8.0"
     "mocha": "2.4.5"
-    "istanbul": "0.4.2"
+    "nyc": "6.1.1"
     "coffee-coverage": "1.0.1"
     "coveralls": "2.11.6"
     "diveSync": "0.3.0"
