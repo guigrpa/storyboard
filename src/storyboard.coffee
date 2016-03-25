@@ -17,10 +17,12 @@ filters = require './gral/filters'
 
 hub = require './gral/hub'
 hub.init {mainStory}
+
 if k.IS_BROWSER
   if process.env.NODE_ENV isnt 'production'
     hub.addListener require './listeners/console'
-  hub.addListener require './listeners/wsClient'
+  if not process.env.TEST_BROWSER
+    hub.addListener require './listeners/wsClient'
 else
   hub.addListener require './listeners/console'
 
@@ -35,6 +37,7 @@ module.exports = {
   mainStory,
   config,
   addListener: hub.addListener,
+  removeListener: hub.removeListener,
   getListeners: hub.getListeners,
   removeAllListeners: hub.removeAllListeners,
 }

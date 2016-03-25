@@ -17,20 +17,21 @@ DEFAULT_CONFIG =
 LOG_SRC = 'storyboard'
 SOCKET_ROOM = 'authenticated'
 
-_ioStandalone = null
+_ioStandaloneServer = null
+_ioStandaloneNamespace = null
 _ioServerAdaptor = null
 
 #-------------------------------------------------
 # ## WebSocket I/O
 #-------------------------------------------------
 _socketInit = (config) ->
-  return if _ioStandalone   # only one server
+  return if _ioStandaloneNamespace   # only one server
   {port, mainStory} = config
 
   # Launch stand-alone log server
   if port?
     _httpInitError = (err) ->
-      mainStory.error LOG_SRC, "Error initialising standalong server logs on port #{chalk.cyan port}:", attach: err
+      mainStory.error LOG_SRC, "Error initialising standalone server logs on port #{chalk.cyan port}:", attach: err
     try
       expressApp = express()
       expressApp.use express.static path.join(__dirname, '../../serverLogsApp')
@@ -38,8 +39,9 @@ _socketInit = (config) ->
       httpServer.on 'error', _httpInitError
       httpServer.on 'listening', ->
         mainStory.info LOG_SRC, "Server logs available on port #{chalk.cyan httpServer.address().port}"
-      _ioStandalone = socketio(httpServer).of k.WS_NAMESPACE
-      _ioStandalone.on 'connection', (socket) -> _socketOnConnection socket, config
+      _ioStandaloneServer = socketio httpServer
+      _ioStandaloneNamespace = _ioStandaloneServer.of k.WS_NAMESPACE
+      _ioStandaloneNamespace.on 'connection', (socket) -> _socketOnConnection socket, config
       httpServer.listen port
     catch err
       _httpInitError err
@@ -62,6 +64,13 @@ _socketInit = (config) ->
         mainStory.info LOG_SRC, "Server logs available through main HTTP server on port #{chalk.cyan port2}"
     catch err
       _http2InitError err
+  return
+
+_socketShutDown = (config) ->
+  _ioStandaloneServer?.close()
+  _ioStandaloneServer = _ioStandaloneNamespace = null
+  _ioServerAdaptor?.close?()
+  _ioServerAdaptor = null
   return
 
 _socketOnConnection = (socket, config) ->
@@ -123,7 +132,7 @@ _socketTxMsg = (socket, msg) -> socket.emit 'MSG', msg
 
 _socketBroadcast = ->
   msg = {type: 'RECORDS', data: _broadcastBuf}
-  _ioStandalone?.to(SOCKET_ROOM).emit 'MSG', msg
+  _ioStandaloneNamespace?.to(SOCKET_ROOM).emit 'MSG', msg
   _ioServerAdaptor?.to(SOCKET_ROOM).emit 'MSG', msg
   _broadcastBuf.length = 0
   return
@@ -163,6 +172,7 @@ create = (baseConfig) ->
     init: -> _socketInit config
     process: _process config
     ## config: (newConfig) -> config = timm.merge config, newConfig
+    tearDown: -> _socketShutDown config
   listener
 
 module.exports = {

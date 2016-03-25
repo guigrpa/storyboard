@@ -1,4 +1,5 @@
-WEBPACK_OPTS            = "--colors --progress --display-modules --display-chunks"
+## WEBPACK_OPTS            = "--colors --progress --display-modules --display-chunks"
+WEBPACK_OPTS            = "--colors --progress"
 WEBPACK_EXTENSION       = "webpack --config src/chromeExtension/webpackConfig.coffee #{WEBPACK_OPTS}"
 WEBPACK_SERVER_LOGS_APP = "webpack --config src/serverLogsApp/webpackConfig.coffee #{WEBPACK_OPTS}"
 WEBPACK_EXAMPLE         = "webpack --config src/example/webpackConfig.coffee #{WEBPACK_OPTS}"
@@ -15,9 +16,10 @@ _runMocha = (basePath, env) ->
   prefix = if env? then "cross-env #{env} " else ''
   return "#{prefix}mocha #{basePath} --opts #{basePath}/mocha.opts"
 
-_runMochaCov = (basePath, nodeEnv) ->
+_runMochaCov = (basePath, env) ->
+  envStr = if env? then "#{env} " else ''
   return _runMultiple [
-    "cross-env NODE_ENV=#{nodeEnv} nyc node_modules/mocha/bin/_mocha --opts #{basePath}/mocha.opts"
+    "cross-env #{envStr}nyc node_modules/mocha/bin/_mocha --opts #{basePath}/mocha.opts"
     "mv .nyc_output/* .nyc_tmp/"
   ]
 
@@ -52,8 +54,9 @@ specs =
       "coffee --no-header -o lib/vendor -c src/vendor"
     ]
     ## testLib:                  _runMocha    'test/lib'
-    testLibDev:               _runMochaCov 'test/lib', 'development'
-    testLibProd:              _runMochaCov 'test/lib', 'production'
+    testLibDev:               _runMochaCov 'test/lib', "NODE_ENV=development"
+    testLibProd:              _runMochaCov 'test/lib', "NODE_ENV=production"
+    testLibBrowser:           _runMochaCov 'test/lib', "NODE_ENV=development TEST_BROWSER=true"
 
     # Server logs app
     buildServerLogsApp:       "cross-env NODE_ENV=production #{WEBPACK_SERVER_LOGS_APP} -p"
@@ -92,7 +95,7 @@ specs =
     travis:                   _runMultiple [
       "coffee package.coffee"
       "npm run compile"
-      "npm run test"
+      "npm run testCov"
     ]
     test:                     "npm run testCov"
     testCovPrepare:           _runMultiple [
@@ -103,6 +106,7 @@ specs =
       "npm run testCovPrepare"
       "npm run testLibDev"
       "npm run testLibProd"
+      "npm run testLibBrowser"
       "npm run testCovReport"
     ]
     testCovReport:            _runMultiple [

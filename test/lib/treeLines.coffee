@@ -77,3 +77,11 @@ describe 'treeLines', ->
     expect(lines).to.have.length 2
     expect(lines[0]).to.contain 'Mancha'
     expect(lines[1]).to.contain 'nombre'
+
+  it 'should handle Errors', ->
+    lines = treeLines new Error('ExampleError')
+    expect(lines.length).to.be.at.least 3
+    expect(lines[0]).to.contain 'name'
+    expect(lines[1]).to.contain 'message'
+    expect(lines[2]).to.contain 'stack'
+

@@ -24,6 +24,7 @@ describe 'storyboard', ->
 
   it 'sanity', ->
     expect(mainStory).to.exist
+    storyboard.config()
 
   describe 'using the main story', ->
 
@@ -59,11 +60,11 @@ describe 'storyboard', ->
     childStory = null
     beforeEach ->
       storyboard.config {filter: '*:*'}
-      childStory = mainStory.child {title: 'childish title'}
+      childStory = mainStory.child()
 
     it 'should be correctly initialised', ->
       expect(childStory.parents).to.deep.equal [mainStory.storyId]
-      expect(childStory.title).to.equal 'childish title'
+      expect(childStory.title).to.equal ''
       expect(childStory.fOpen).to.be.true
       expect(_spy).to.have.been.calledOnce
       record = _spy.args[0][0]
@@ -124,6 +125,7 @@ describe 'storyboard', ->
       foo = mainStory.child {src: 'foo', title: 'Foo', level: 'DEBUG'}
 
     it 'should NOT emit action records', ->
+      foo.close()
       expect(_spy).to.not.have.been.called
 
     it 'should NOT emit logs <= INFO', ->

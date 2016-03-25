@@ -1,5 +1,5 @@
 module.exports = 
-  IS_BROWSER: window?
+  IS_BROWSER: window? or process.env.TEST_BROWSER?
   LEVEL_NUM_TO_STR:
     10: 'TRACE'
     20: 'DEBUG'

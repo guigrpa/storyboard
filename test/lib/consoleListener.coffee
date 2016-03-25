@@ -48,11 +48,29 @@ describe "consoleListener", ->
     msg = _spyLog.args[0][0]
     expect(msg).to.contain 'CREATED'
 
+  it "should report closure of a story", ->
+    childStory = mainStory.child {title: "Simbad the Sailor"}
+    childStory.close()
+    expect(_spyLog).to.have.been.calledTwice
+    msg = _spyLog.args[0][0]
+    expect(msg).to.contain 'CREATED'
+    msg = _spyLog.args[1][0]
+    expect(msg).to.contain 'CLOSED'
+
+  it "should report changes of state in a story", ->
+    childStory = mainStory.child {title: "The Little Mermaid"}
+    childStory.changeStatus('UNDER_THE_SEA')
+    expect(_spyLog).to.have.been.calledTwice
+    msg = _spyLog.args[0][0]
+    expect(msg).to.contain 'CREATED'
+    msg = _spyLog.args[1][0]
+    expect(msg).to.contain 'STATUS_CHANGED'
+
   describe "object attachments", ->
 
     it "should use JSON.stringify with inline attachments", ->
       obj = {a: 5}
-      mainStory.info "Inline attachment", {attach: obj, attachInline: true}
+      mainStory.info "Inline attachment", {attachInline: obj}
       expect(_spyLog).to.have.been.calledOnce
       msg = _spyLog.args[0][0]
       expect(msg).to.contain JSON.stringify obj
@@ -60,7 +78,7 @@ describe "consoleListener", ->
     it "when JSON.stringify is impossible, it should expand the object tree", ->
       obj = {oneAttr: 5}
       obj.b = obj
-      mainStory.info "Inline attachment with circular ref", attach: obj
+      mainStory.info "Inline attachment with circular ref", {attachInline: obj}
       expect(_spyLog).to.have.been.calledThrice
       expect(_spyLog.args[0][0]).to.contain "circular ref"
       expect(_spyLog.args[1][0]).to.contain "oneAttr"
@@ -90,3 +108,21 @@ describe "consoleListener", ->
         expect(args[0][0]).to.contain "Msg A"
         expect(args[1][0]).to.contain "..."
         expect(args[2][0]).to.contain "Msg B"
+
+  it "should highlight warning logs in yellow", ->
+    mainStory.warn "Warning!"
+    expect(_spyLog).to.have.been.calledOnce
+    if process.env.TEST_BROWSER
+      expect(_spyLog.args[0][0]).to.contain '%c%cWarning!'
+      expect(_spyLog.args[0]).to.contain 'color: #ff6600;font-weight: bold'
+    else
+      expect(_spyLog.args[0][0]).to.contain '\u001b[33m\u001b[1mWarning!'
+
+  it "should highlight error logs in red", ->
+    mainStory.error "Error!"
+    expect(_spyError).to.have.been.calledOnce
+    if process.env.TEST_BROWSER
+      expect(_spyError.args[0][0]).to.contain '%c%cError!'
+      expect(_spyError.args[0]).to.contain 'color: #cc0000;font-weight: bold'
+    else
+      expect(_spyError.args[0][0]).to.contain '\u001b[31m\u001b[1mError!'

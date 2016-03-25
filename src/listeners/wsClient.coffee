@@ -5,6 +5,8 @@ k           = require '../gral/constants'
 
 DEFAULT_CONFIG = {}
 
+_window = null
+
 #-------------------------------------------------
 # ## Extension I/O
 #-------------------------------------------------
@@ -14,10 +16,10 @@ _fExtensionReady = false
 _extensionInit = (config) ->
   return if _fExtensionInitialised
   _fExtensionInitialised = true
-  window.addEventListener 'message', (event) ->
+  _window?.addEventListener 'message', (event) ->
     {source, data: msg} = event
-    return if source isnt window
-    {data: {src, type, data}} = event
+    return if source isnt _window
+    ## {data: {src, type, data}} = event
     _extensionRxMsg msg
   _extensionTxMsg {type: 'CONNECT_REQUEST'}
 
@@ -50,7 +52,7 @@ _extensionTxPendingMsgs = ->
   return if not _fExtensionReady
   _extensionDoTxMsg msg for msg in _extensionMsgQueue
   _extensionMsgQueue.length = 0
-_extensionDoTxMsg = (msg) -> window.postMessage msg, '*'
+_extensionDoTxMsg = (msg) -> _window?.postMessage msg, '*'
 
 #-------------------------------------------------
 # ## Websocket I/O
@@ -61,7 +63,10 @@ _socketInit = (config) ->
   {mainStory: story} = config
   story.info 'storyboard', "Connecting to WebSocket server..."
   if not _socketio
-    _socketio = socketio.connect k.WS_NAMESPACE
+    url = k.WS_NAMESPACE
+    if process.env.TEST_BROWSER 
+      url = "http://localhost:8090#{k.WS_NAMESPACE}"
+    _socketio = socketio.connect url
     socketConnected = ->
       story.info 'storyboard', "WebSocket connected"
       _extensionTxMsg {type: 'WS_CONNECTED'}
@@ -96,6 +101,7 @@ _preprocessAttachments = (record) ->
 #-------------------------------------------------
 create = (baseConfig) ->
   config = timm.addDefaults baseConfig, DEFAULT_CONFIG
+  _window = if process.env.TEST_BROWSER then config._mockWindow else window
   listener =
     type: 'WS_CLIENT'
     init: -> 

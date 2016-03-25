@@ -1,4 +1,5 @@
 timm = require 'timm'
+_ = require '../vendor/lodash'
 
 DEFAULT_CONFIG =
   bufSize: 1000
@@ -10,10 +11,11 @@ mainStory = null
 
 init = (deps, options) ->
   {mainStory} = deps
-  ### !pragma coverage-skip-next ###
+  ### istanbul ignore if ###
   if not(mainStory?)
     throw new Error 'MISSING_DEPENDENCIES'
   if options? then config options
+  return
 
 config = (options) -> 
   _config = timm.merge _config, options
@@ -23,6 +25,11 @@ addListener = (listenerFactory, config) ->
   listener = listenerFactory.create listenerConfig
   _listeners.push listener
   listener.init?()
+  listener
+
+removeListener = (listener) ->
+  listener.tearDown?()
+  _listeners = _.filter _listeners, (o) -> o isnt listener
 
 getListeners = -> _listeners
 
@@ -43,7 +50,7 @@ getBufferedRecords = -> [].concat _buf
 #-------------------------------------------------
 module.exports = hub = {
   init, config,
-  addListener, getListeners, removeAllListeners,
+  addListener, removeListener, getListeners, removeAllListeners,
   emit,
   getBufferedRecords,
 }

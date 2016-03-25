@@ -23,14 +23,14 @@ _init = ->
       _included.push {re: new RegExp("^#{src}$"), threshold: level}
 
 _getFilter = ->
-  store = if k.IS_BROWSER then localStorage else process.env
+  store = window?.localStorage ? process.env
   _filter = store[k.FILTER_KEY]
   if (not _filter?) or (not _filter.length)
     _filter = k.DEFAULT_FILTER
   _filter
 
 config = (filter) ->
-  store = if k.IS_BROWSER then localStorage else process.env
+  store = window?.localStorage ? process.env
   store[k.FILTER_KEY] = filter
   _init()
 

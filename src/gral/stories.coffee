@@ -71,7 +71,6 @@ Story::child = (options = {}) ->
 # ### Logs
 #-----------------------------------------------
 _.each k.LEVEL_STR_TO_NUM, (levelNum, levelStr) ->
-  return if levelStr is 'STORY'
   Story::[levelStr.toLowerCase()] = (src, msg, options) ->
 
     # Prepare arguments
