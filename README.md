@@ -1,4 +1,4 @@
-# storyboard [![Build Status](https://travis-ci.org/guigrpa/storyboard.svg)](https://travis-ci.org/guigrpa/storyboard) [![npm version](https://img.shields.io/npm/v/storyboard.svg)](https://www.npmjs.com/package/storyboard) 
+# storyboard [![Build Status](https://travis-ci.org/guigrpa/storyboard.svg)](https://travis-ci.org/guigrpa/storyboard) [![Coverage Status](https://coveralls.io/repos/github/guigrpa/storyboard/badge.svg?branch=master)](https://coveralls.io/github/guigrpa/storyboard?branch=master) [![npm version](https://img.shields.io/npm/v/storyboard.svg)](https://www.npmjs.com/package/storyboard) 
 
 ## What?
 
