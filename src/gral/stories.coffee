@@ -34,7 +34,8 @@ Story = ({parents, src, title, levelNum, fHiddenByFilter}) ->
   @hiddenRecords = []
   @fHiddenByFilter = fHiddenByFilter or (not filters.passesFilter @src, @level)
   if @fHiddenByFilter then _hiddenStories[@storyId] = @
-  @emitAction 'CREATED', @t
+  if not @fRoot
+    @emitAction 'CREATED', @t
 
 #-----------------------------------------------
 # ### Story lifecycle

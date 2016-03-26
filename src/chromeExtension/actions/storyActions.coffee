@@ -1,7 +1,16 @@
-_ = require '../../vendor/lodash'
+_       = require '../../vendor/lodash'
+Promise = require 'bluebird'
+Saga    = require 'redux-saga/effects'
+require 'babel-polyfill'
 
+MAX_RECORDS = 800
+FORGET_HYSTERESIS = 0.25
+CHECK_FORGET_PERIOD = 3000
 QUICK_FIND_DEBOUNCE = 250
 
+#-------------------------------------------------
+# ## Miscellaneous actions
+#-------------------------------------------------
 toggleExpanded = (pathStr) -> 
   {type: 'TOGGLE_EXPANDED', pathStr}
 toggleHierarchical = (pathStr) -> 
@@ -16,7 +25,26 @@ _quickFind = _.debounce (dispatch, txt) ->
   dispatch {type: 'QUICK_FIND', txt}
 , QUICK_FIND_DEBOUNCE
 
-module.exports =
+#-------------------------------------------------
+# ## forgetRecords saga
+#-------------------------------------------------
+forgetRecords = ->
+  while true
+    for idx in [0, 1]
+      story = yield Saga.select (state) -> state.stories.mainStory.records[idx]
+      if story.numRecords > MAX_RECORDS
+        yield Saga.put 
+          type: 'FORGET'
+          maxRecords: MAX_RECORDS
+          forgetHysteresis: FORGET_HYSTERESIS
+          pathStr: story.pathStr
+    yield Promise.delay CHECK_FORGET_PERIOD
+  return
+
+#-------------------------------------------------
+# ## API
+#-------------------------------------------------
+module.exports = {
   actions: {
     toggleExpanded,
     toggleHierarchical,
@@ -26,3 +54,7 @@ module.exports =
     clearLogs,
     quickFind,
   }
+  sagas: [
+    forgetRecords
+  ]
+}

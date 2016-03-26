@@ -2,6 +2,11 @@
 
 *[M]: major change; [m]: minor change*
 
+* Lib:
+    - Add unit tests for most tests
+* Browser extension:
+    - [M] Add the capability to forget logs and closed stories
+    - Add very limited unit tests (concerning the storyReducer)
 * Tooling:
     - Use `nyc` instead of `istanbul` for coverage testing (simplifies merging coverage reports)
     

@@ -8,6 +8,7 @@ DevTools              = require '../components/990-reduxDevTools'
 createStore = ->
   allSagas = _.flatten [
     require('../actions/cxActions').sagas
+    require('../actions/storyActions').sagas
   ]
   saga = Saga allSagas...
   addMiddlewares = Redux.applyMiddleware thunk, saga

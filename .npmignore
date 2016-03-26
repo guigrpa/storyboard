@@ -27,6 +27,7 @@ node_modules
 /docs
 /example
 /src
+/lib/chromeExtension
 /tools
 /test
 /package.coffee

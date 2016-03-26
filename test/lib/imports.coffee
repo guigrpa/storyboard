@@ -6,7 +6,7 @@ sinonChai = require 'sinon-chai'
 chai.use sinonChai
 expect    = chai.expect
 storyboard  = require '../../lib/storyboard'
-h           = require './helpers'
+h           = require '../helpers'
 fProduction = process.env.NODE_ENV is 'production'
 
 module.exports = {

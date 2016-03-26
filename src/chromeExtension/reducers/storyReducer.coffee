@@ -21,6 +21,7 @@ _mainStory = (fServer) ->
     fExpanded: true
     fHierarchical: true
     records: []
+    numRecords: 0
   story
 
 _buildInitialState = ->
@@ -37,12 +38,10 @@ _buildInitialState = ->
   closedStories: {}
   quickFind: ''
 
-INITIAL_STATE = _buildInitialState()
-
 #-------------------------------------------------
 # ## Reducer
 #-------------------------------------------------
-reducer = (state = INITIAL_STATE, action, settings = {}) ->
+reducer = (state = _buildInitialState(), action, settings = {}) ->
   switch action.type
 
     # Clean up the main story after connecting
@@ -50,6 +49,8 @@ reducer = (state = INITIAL_STATE, action, settings = {}) ->
     when 'CX_CONNECTED', 'CLEAR_LOGS' then return _buildInitialState()
 
     when 'RECORDS_RECEIVED' then return _rxRecords state, action, settings
+
+    when 'FORGET' then return _forgetRecords state, action
 
     when 'TOGGLE_EXPANDED'
       {pathStr} = action
@@ -131,6 +132,7 @@ _rxStory = (state, record, options) ->
   if pathStr?
     state = _updateStory state, pathStr, record
     state = _addLog state, pathStr, record, options
+    rootStoryIdx = pathStr.split('/')[1]
 
   # It's a new story. Look for the *most suitable parent* and create
   # a new child story object. The *most suitable parent* is
@@ -147,6 +149,10 @@ _rxStory = (state, record, options) ->
     pathStr ?= _mainStoryPathStr fServer
     [state, newStoryPathStr] = _addStory state, pathStr, record, options
     state = _addLog state, newStoryPathStr, record, options
+    rootStoryIdx = newStoryPathStr.split('/')[1]
+
+  # Increment counter
+  state = timm.updateIn state, ['mainStory', 'records', rootStoryIdx, 'numRecords'], (o) -> o + 1
 
   # We return the new state, as well as the path of the new story (if any)
   return [state, newStoryPathStr]
@@ -186,6 +192,8 @@ _rxLog = (state, record, options) ->
   {storyId, fServer} = record
   pathStr = state.openStories[storyId] ? _mainStoryPathStr(fServer)
   state = _addLog state, pathStr, record, options
+  rootStoryIdx = pathStr.split('/')[1]
+  state = timm.updateIn state, ['mainStory', 'records', rootStoryIdx, 'numRecords'], (o) -> o + 1
   state
 
 _addLog = (state, pathStr, record, options) ->
@@ -200,19 +208,117 @@ _addLog = (state, pathStr, record, options) ->
     return timm.addLast prevRecords, record
 
 #-------------------------------------------------
+# ## Forgetting records
+#-------------------------------------------------
+_forgetRecords = (state, action) ->
+  {maxRecords, forgetHysteresis, pathStr} = action
+  {mainStory} = state
+  path = "mainStory/#{pathStr}".split '/'
+  prevStory = timm.getIn state, path
+  {numRecords} = prevStory
+  targetForget = Math.ceil((numRecords - maxRecords) + (maxRecords * forgetHysteresis))
+  result = _forgetRecursively prevStory, targetForget, {}, prevStory.pathStr
+  {nextStory, numForgotten, updatedStoryPaths} = result
+  nextStory.numRecords = numRecords - numForgotten
+  state = timm.setIn state, path, nextStory
+  openStories = _updateStoryPaths state.openStories, updatedStoryPaths
+  closedStories = _updateStoryPaths state.closedStories, updatedStoryPaths
+  state = timm.merge state, {openStories, closedStories}
+  state
+
+_forgetRecursively = (prevStory, targetForget, updatedStoryPaths, storyPathStr) ->
+  numForgotten = 0
+  nextRecords = []
+  prevRecords = prevStory.records
+  prevRecordsLen = prevRecords.length
+
+  # Forget records
+  idx = 0
+  while idx < prevRecordsLen
+    prevRecord = prevRecords[idx]
+    fEnoughForgotten = (numForgotten >= targetForget)
+
+    # Action records are never forgotten
+    if prevRecord.fStory
+      nextRecords.push prevRecord
+
+    # Stories
+    else if prevRecord.fStoryObject
+
+      # Closed story objects are forgotten as a whole
+      if (not fEnoughForgotten) and (not prevRecord.fOpen)
+        numForgotten += _numStoryRecords prevRecord
+        for storyId in _collectChildStoryIds prevRecord
+          updatedStoryPaths[storyId] = null
+        updatedStoryPaths[prevRecord.storyId] = null
+
+      # Other cases: open stories, or enough forgotten. Copy at least some records
+      else
+        childPathStr = "#{storyPathStr}/records/#{nextRecords.length}"
+        targetChildForget = if fEnoughForgotten then 0 else targetForget - numForgotten
+        result = _forgetRecursively prevRecord, targetChildForget, \
+          updatedStoryPaths, childPathStr
+        nextChildStory = timm.set result.nextStory, 'pathStr', childPathStr
+        nextRecords.push nextChildStory
+        numForgotten += result.numForgotten
+        updatedStoryPaths[prevRecord.storyId] = childPathStr
+
+    # Normal logs
+    else
+      if fEnoughForgotten
+        nextRecords.push prevRecord
+      else
+        numForgotten++
+
+    idx++
+
+  nextStory = timm.set prevStory, 'records', nextRecords
+  return {nextStory, numForgotten, updatedStoryPaths}
+
+_numStoryRecords = (story) ->
+  num = 0
+  for record in story.records
+    if record.fStoryObject
+      num += _numStoryRecords record
+    else
+      num++
+  num
+
+_collectChildStoryIds = (story, storyIds = []) ->
+  for record in story.records when record.fStoryObject
+    storyIds.push record.storyId
+    _collectChildStoryIds record, storyIds
+  storyIds
+
+_updateStoryPaths = (storyHash, updatedStoryPaths) ->
+  for storyId, pathStr of updatedStoryPaths
+    if storyHash[storyId]?
+      if pathStr is null then pathStr = undefined
+      storyHash = timm.set storyHash, storyId, pathStr
+  storyHash
+
+#-------------------------------------------------
 # ## Expand/collapse all
 #-------------------------------------------------
 _expandCollapseAll = (state, fExpanded) ->
+
+  # Returns a new subtree, expanding/collapsing child stories
   expandCollapse = (prevStory) ->
-    nextRecords = prevStory.records.map expandCollapseRecord
+    nextRecords = prevStory.records.map expandCollapseRecord  # new array always!
     nextStory = timm.set prevStory, 'records', nextRecords
     if not(nextStory.fWrapper or nextStory.fMain)
       nextStory.fExpanded = fExpanded    # in-place since it is always a new object
     nextStory
+
+  # Returns:
+  # - For normal records (logs): the same record
+  # - For story objects: the expanded/collapsed record
   expandCollapseRecord = (prevRecord) ->
     return prevRecord if not prevRecord.fStoryObject
     return expandCollapse prevRecord
-  newMainStory = expandCollapse state.mainStory, 0
+
+  # Run recursive algorithm
+  newMainStory = expandCollapse state.mainStory
   state = timm.set state, 'mainStory', newMainStory
   state
 

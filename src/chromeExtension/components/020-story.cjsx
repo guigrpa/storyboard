@@ -61,6 +61,7 @@ _Story = React.createClass
     <div className="rootStory" style={_style.outer level, story}>
       <MainStoryTitle
         title={story.title}
+        numRecords={story.numRecords}
         fHierarchical={story.fHierarchical}
         fExpanded={story.fExpanded}
         onToggleExpanded={@toggleExpanded}
@@ -182,6 +183,7 @@ MainStoryTitle = React.createClass
   #-----------------------------------------------------
   propTypes:
     title:                  React.PropTypes.string.isRequired
+    numRecords:             React.PropTypes.number.isRequired
     fHierarchical:          React.PropTypes.bool.isRequired
     fExpanded:              React.PropTypes.bool.isRequired
     onToggleExpanded:       React.PropTypes.func.isRequired
@@ -202,7 +204,8 @@ MainStoryTitle = React.createClass
         style={_styleMainTitle.title}
         onClick={@props.onToggleExpanded}
       >
-        {@props.title.toUpperCase()}
+        {@props.title.toUpperCase()}{' '}
+        <span style={_styleMainTitle.numRecords}>[{@props.numRecords}]</span>
       </span>
       {@renderToggleHierarchical()}
     </div>
@@ -238,6 +241,8 @@ _styleMainTitle =
   title:
     fontWeight: 900
     letterSpacing: 3
+  numRecords:
+    color: 'darkgrey'
   caret:
     outer:
       display: 'inline-block'
@@ -281,7 +286,7 @@ AttachmentLine = React.createClass
         seqFullRefresh={@props.seqFullRefresh}
       />
       <Src src={record.src}/>
-      <Severity level={String record.objLevel}/>
+      <Severity level={record.objLevel}/>
       <Indent level={@props.level}/>
       <CaretOrSpace/>
       <ColoredText text={'  ' + msg}/>
@@ -488,7 +493,7 @@ Severity = React.createClass
   displayName: 'Severity'
   mixins: [PureRenderMixin]
   propTypes:
-    level:                  React.PropTypes.string
+    level:                  React.PropTypes.number
   render: ->
     {level} = @props
     if level?
