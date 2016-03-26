@@ -12,14 +12,10 @@ VERSION = "0.1.1"
 
 _runMultiple = (arr) -> arr.join ' && '
 
-_runMocha = (basePath, env) -> 
-  prefix = if env? then "cross-env #{env} " else ''
-  return "#{prefix}mocha #{basePath} --opts #{basePath}/mocha.opts"
-
-_runMochaCov = (basePath, env) ->
+_runMochaCov = (env) ->
   envStr = if env? then "#{env} " else ''
   return _runMultiple [
-    "cross-env #{envStr}nyc node_modules/mocha/bin/_mocha --opts #{basePath}/mocha.opts"
+    "cross-env #{envStr}nyc node_modules/mocha/bin/_mocha"
     "mv .nyc_output/* .nyc_tmp/"
   ]
 
@@ -45,18 +41,14 @@ specs =
   #-================================================================
   scripts:
 
-    # Library
     compile: _runMultiple [
       "rm -rf lib"
       "coffee --no-header -o lib -c src/storyboard.coffee"
       "coffee --no-header -o lib/gral -c src/gral"
       "coffee --no-header -o lib/listeners -c src/listeners"
       "coffee --no-header -o lib/vendor -c src/vendor"
+      "coffee --no-header -o lib/chromeExtension -c src/chromeExtension"
     ]
-    ## testLib:                  _runMocha    'test/lib'
-    testLibDev:               _runMochaCov 'test/lib', "NODE_ENV=development"
-    testLibProd:              _runMochaCov 'test/lib', "NODE_ENV=production"
-    testLibBrowser:           _runMochaCov 'test/lib', "NODE_ENV=development TEST_BROWSER=true"
 
     # Server logs app
     buildServerLogsApp:       "cross-env NODE_ENV=production #{WEBPACK_SERVER_LOGS_APP} -p"
@@ -95,20 +87,23 @@ specs =
     travis:                   _runMultiple [
       "coffee package.coffee"
       "npm run compile"
-      "npm run testCov"
+      "npm run test"
     ]
     test:                     "npm run testCov"
+    testCov:                  _runMultiple [
+      "npm run testCovPrepare"
+      "npm run testDev"
+      "npm run testProd"
+      "npm run testBrowser"
+      "npm run testCovReport"
+    ]
     testCovPrepare:           _runMultiple [
       "rm -rf ./coverage .nyc_output .nyc_tmp"
       "mkdir .nyc_tmp"
     ]
-    testCov:                  _runMultiple [
-      "npm run testCovPrepare"
-      "npm run testLibDev"
-      "npm run testLibProd"
-      "npm run testLibBrowser"
-      "npm run testCovReport"
-    ]
+    testDev:                  _runMochaCov "NODE_ENV=development"
+    testProd:                 _runMochaCov "NODE_ENV=production"
+    testBrowser:              _runMochaCov "NODE_ENV=development TEST_BROWSER=true"
     testCovReport:            _runMultiple [
       "cp .nyc_tmp/* .nyc_output/"
       "nyc report --reporter=html --reporter=lcov"
