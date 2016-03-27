@@ -57,7 +57,7 @@ _tree = (node, options, prefix, stack) ->
   stack.pop()
   out
 
-module.exports = (obj, options = {}) ->
+treeLines = (obj, options = {}) ->
   options.indenter ?= '  '
   prefix = options.prefix ? ''
   if _.isError obj
@@ -65,3 +65,11 @@ module.exports = (obj, options = {}) ->
   else if not _.isObject obj 
     obj = {"#{WRAPPER_KEY}": obj}
   return _tree obj, options, prefix, []
+
+treeLines.log = ->
+  lines = treeLines arguments...
+  for line in lines
+    console.log line
+  return
+
+module.exports = treeLines
