@@ -1,7 +1,8 @@
-timm = require 'timm'
-{expect} = require './imports'
-reducer = require '../../lib/chromeExtension/reducers/storyReducer'
-_ = require 'lodash'
+_         = require 'lodash'
+timm      = require 'timm'
+{expect}  = require './imports'
+reducer   = require '../../lib/chromeExtension/reducers/storyReducer'
+treeLines = require '../../lib/gral/treeLines'
 
 #-------------------------------------------------
 # ## Helpers
@@ -88,13 +89,15 @@ describe 'storyReducer', ->
     it 'the pathStr of open stories should be updated if necessary', ->
       openStoryRecord0 = _openStory {title: 'story0'}
       openStoryRecord1 = _openStory {title: 'story1', parents: [openStoryRecord0.storyId]}
+      openStoryRecord2 = _openStory {title: 'story2', parents: [openStoryRecord1.storyId]}
       state = reducer state, _recordsReceived [
         _log {msg: "msg0"}
         _log {msg: "msg1"}
         openStoryRecord0
         openStoryRecord1
+        openStoryRecord2
       ]
-      expect(state.mainStory.records[0].numRecords).to.equal 4
+      expect(state.mainStory.records[0].numRecords).to.equal 5
       state = reducer state, _forget({maxRecords: 1})
       topStory = state.mainStory.records[0]
       expect(topStory.records.length).to.equal 1
@@ -104,6 +107,100 @@ describe 'storyReducer', ->
       expect(topStory.records[0].records[0].action).to.equal 'CREATED'
       expect(topStory.records[0].records[1].title).to.equal 'story1'
       expect(topStory.records[0].records[1].pathStr).to.equal 'records/0/records/0/records/1'
-      expect(topStory.numRecords).to.equal 2
+      expect(topStory.records[0].records[1].records.length).to.equal 2
+      expect(topStory.records[0].records[1].records[0].action).to.equal 'CREATED'
+      expect(topStory.records[0].records[1].records[1].title).to.equal 'story2'
+      expect(topStory.records[0].records[1].records[1].pathStr).to.equal 'records/0/records/0/records/1/records/1'
+      expect(topStory.numRecords).to.equal 3
       expect(state.openStories[openStoryRecord0.storyId]).to.equal 'records/0/records/0'
       expect(state.openStories[openStoryRecord1.storyId]).to.equal 'records/0/records/0/records/1'
+      expect(state.openStories[openStoryRecord2.storyId]).to.equal 'records/0/records/0/records/1/records/1'
+
+  describe 'multiple actions', ->
+    beforeEach ->
+      openStoryRecord0 = _openStory {title: 'story0'}
+      openStoryRecord1 = _openStory {title: 'story1', parents: [openStoryRecord0.storyId]}
+      attachment = {a: 1, b: 2, c: 3}
+      logRecord = _log
+        id: 'logWithAttachment' 
+        storyId: openStoryRecord1.storyId
+        msg: "log with attachment"
+        obj: treeLines attachment
+        objExpanded: false 
+      state = reducer state, _recordsReceived [
+        openStoryRecord0
+        openStoryRecord1
+        logRecord
+      ]
+      expect(state.mainStory.records[0].records[0].fExpanded).to.be.true
+      expect(state.mainStory.records[0].records[0].records[1].fExpanded).to.be.true
+
+    it 'should allow expanding/collapsing all stories', ->
+      state = reducer state, {type: 'COLLAPSE_ALL_STORIES'}
+      expect(state.mainStory.records[0].records[0].fExpanded).to.be.false
+      expect(state.mainStory.records[0].records[0].records[1].fExpanded).to.be.false
+      state = reducer state, {type: 'EXPAND_ALL_STORIES'}
+      expect(state.mainStory.records[0].records[0].fExpanded).to.be.true
+      expect(state.mainStory.records[0].records[0].records[1].fExpanded).to.be.true
+
+    it 'should allow expanding/collapsing an individual story', ->
+      state = reducer state, {type: 'TOGGLE_EXPANDED', pathStr: 'records/0/records/0'}
+      expect(state.mainStory.records[0].records[0].fExpanded).to.be.false
+      state = reducer state, {type: 'TOGGLE_EXPANDED', pathStr: 'records/0/records/0'}
+      expect(state.mainStory.records[0].records[0].fExpanded).to.be.true
+      state2 = reducer state, {type: 'TOGGLE_EXPANDED'}
+      expect(state2).to.equal state
+
+    it 'should allow showing stories in a flat/hierarchical way', ->
+      state = reducer state, {type: 'TOGGLE_HIERARCHICAL', pathStr: 'records/0/records/0'}
+      expect(state.mainStory.records[0].records[0].fHierarchical).to.be.false
+      state = reducer state, {type: 'TOGGLE_HIERARCHICAL', pathStr: 'records/0/records/0'}
+      expect(state.mainStory.records[0].records[0].fHierarchical).to.be.true
+      state2 = reducer state, {type: 'TOGGLE_HIERARCHICAL'}
+      expect(state2).to.equal state
+
+    it 'should store quick-find info', ->
+      state = reducer state, {type: 'QUICK_FIND', txt: 'hello'}
+      expect(state.quickFind).to.equal '(hello)'
+      state = reducer state, {type: 'QUICK_FIND', txt: ''}
+      expect(state.quickFind).to.equal ''
+      state = reducer state, {type: 'QUICK_FIND', txt: '.+*'}
+      expect(state.quickFind).to.equal '(\\.\\+\\*)'
+
+    it 'should clear the state when receiving a CX_CONNECTED action', ->
+      state = reducer state, {type: 'CX_CONNECTED'}
+      expect(state.mainStory.records[0].records).to.have.length 0
+      expect(state.mainStory.records[1].records).to.have.length 0
+
+    it 'should clear the state when receiving a CLEAR_LOGS action', ->
+      state = reducer state, {type: 'CLEAR_LOGS'}
+      expect(state.mainStory.records[0].records).to.have.length 0
+      expect(state.mainStory.records[1].records).to.have.length 0
+
+    describe 'expanding attachments', ->
+      it 'in a hierarchical story', ->
+        expect(state.mainStory.records[0].records[0].records[1].records[1].msg).to.contain 'with attachment'
+        expect(state.mainStory.records[0].records[0].records[1].records[1].objExpanded).to.be.false
+        pathStr = "records/0/records/0/records/1"
+        state = reducer state, {type: 'TOGGLE_ATTACHMENT', pathStr, recordId: 'logWithAttachment'}
+        expect(state.mainStory.records[0].records[0].records[1].records[1].objExpanded).to.be.true
+        state = reducer state, {type: 'TOGGLE_ATTACHMENT', pathStr, recordId: 'logWithAttachment'}
+        expect(state.mainStory.records[0].records[0].records[1].records[1].objExpanded).to.be.false
+
+      it 'in a flat story', ->
+        pathStr = "records/0"
+        state = reducer state, {type: 'TOGGLE_HIERARCHICAL', pathStr}
+        expect(state.mainStory.records[0].fHierarchical).to.be.false
+        state = reducer state, {type: 'TOGGLE_ATTACHMENT', pathStr, recordId: 'logWithAttachment'}
+        expect(state.mainStory.records[0].records[0].records[1].records[1].objExpanded).to.be.true
+        state = reducer state, {type: 'TOGGLE_ATTACHMENT', pathStr, recordId: 'logWithAttachment'}
+        expect(state.mainStory.records[0].records[0].records[1].records[1].objExpanded).to.be.false
+
+      it 'with incorrect arguments', ->
+        pathStr = "records/0"
+        state2 = reducer state, {type: 'TOGGLE_ATTACHMENT', pathStr, recordId: 'xxx'}
+        expect(state2).to.equal state
+        state2 = reducer state, {type: 'TOGGLE_ATTACHMENT', pathStr: null, recordId: 'xxx'}
+        expect(state2).to.equal state
+        state2 = reducer state, {type: 'TOGGLE_ATTACHMENT', pathStr: 'unknown/path', recordId: 'xxx'}
+        expect(state2).to.equal state
