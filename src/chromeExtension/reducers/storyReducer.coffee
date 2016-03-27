@@ -199,7 +199,7 @@ _rxLog = (state, record, options) ->
 _addLog = (state, pathStr, record, options) ->
   {fPastRecords, fExpandAllNewAttachments} = options
   path = "mainStory/#{pathStr}/records".split '/'
-  record = timm.set record, 'objExpanded', fExpandAllNewAttachments
+  record = timm.set record, 'objExpanded', (fExpandAllNewAttachments ? false)
   return timm.updateIn state, path, (prevRecords) -> 
     if fPastRecords
       {id} = record
@@ -326,8 +326,7 @@ _expandCollapseAll = (state, fExpanded) ->
 # ## Helpers
 #-------------------------------------------------
 _findRecord = (story, recordId, fRecurse, pathStr) ->
-  pathStr ?= story.pathStr
-  for idx in [0...story.records.length]
+  for idx in [0...story.records.length] by +1
     record = story.records[idx]
     if record.id is recordId
       return "#{pathStr}/records/#{idx}"
