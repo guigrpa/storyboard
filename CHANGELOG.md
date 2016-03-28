@@ -2,10 +2,12 @@
 
 *[M]: major change; [m]: minor change*
 
+## 0.1.2 (Mar. 28, 2016)
+
 * Lib:
     - Add unit tests for most tests
 * Browser extension:
-    - [M] Add the capability to forget logs and closed stories
+    - [M] **Add the capability to forget logs and closed stories**
     - Add very limited unit tests (concerning the storyReducer)
 * Tooling:
     - Use `nyc` instead of `istanbul` for coverage testing (simplifies merging coverage reports)
@@ -16,8 +18,8 @@
 
 * Lib: 
     - Stories:
-        + [M] Add story level
-        + [M] Filter out stories completely according to source and level, even if they contain logs that would have been visible (up to INFO level). Logs at WARN or above turn their ancestor stories visible again.
+        + [M] **Add story level**
+        + [M] **Filter out stories completely according to source and level**, even if they contain logs that would have been visible (up to INFO level). Logs at WARN or above turn their ancestor stories visible again.
     - Console Listener: 
         + [m] Show story levels
         + [m] Hide story ID
