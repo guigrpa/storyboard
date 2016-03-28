@@ -7,18 +7,22 @@ treeLines = require '../../lib/gral/treeLines'
 #-------------------------------------------------
 # ## Helpers
 #-------------------------------------------------
-_recordsReceived = (records) -> {type: 'RECORDS_RECEIVED', records}
+_recordsReceived = (records, fPastRecords = false) -> 
+ return {type: 'RECORDS_RECEIVED', records, fPastRecords}
+
 _forget = (action) -> timm.merge action, 
   type: 'FORGET'
   forgetHysteresis: 0.25
   pathStr: "records/0"
 
+_seqId = 0
 _log = (record) -> timm.addDefaults record,
   fStory: false
   fServer: false
   src: 'main'
   level: 30
   storyId: '*'
+  id: "llll#{_seqId++}"
 
 _actionRecord = (record) -> timm.addDefaults record,
   fStory: true
@@ -204,3 +208,28 @@ describe 'storyReducer', ->
         expect(state2).to.equal state
         state2 = reducer state, {type: 'TOGGLE_ATTACHMENT', pathStr: 'unknown/path', recordId: 'xxx'}
         expect(state2).to.equal state
+
+  describe 'adding a new story to a closed story', ->
+
+    _storyId = null
+    beforeEach ->
+      openStoryRecord = _openStory {title: 'story0'}
+      _storyId = openStoryRecord.storyId
+      state = reducer state, _recordsReceived [
+        openStoryRecord
+        _closeStory _storyId
+      ]
+
+    it 'with fPastRecords: false (should NOT include it in the closed story)', ->
+      state = reducer state, _recordsReceived([_openStory {title: "child", parents: [_storyId]}], false)
+      expect(state.mainStory.records[0].records[0].records.length).to.equal 2 # CREATED and CLOSED
+      expect(state.mainStory.records[0].records[1].title).to.equal 'child'
+
+    it 'with fPastRecords: true (should include it in the closed story)', ->
+      state = reducer state, _recordsReceived([_openStory {title: "child", parents: [_storyId]}], true)
+      expect(state.mainStory.records[0].records[0].records.length).to.equal 3
+      expect(state.mainStory.records[0].records[0].records[2].title).to.equal 'child'
+
+  it 'adding a root story should be ignored', ->
+    state2 = reducer state, _recordsReceived [_openStory {title: 'rootStory23', storyId: '*'}]
+    expect(state2).to.equal state
