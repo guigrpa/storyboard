@@ -29,7 +29,7 @@ module.exports =
   map:          require 'lodash/map'
   ## merge:        require 'lodash/merge'
   omit:         require 'lodash/omit'
-  ## omitBy:       require 'lodash/omitBy'
+  omitBy:       require 'lodash/omitBy'
   ## orderBy:      require 'lodash/orderBy'
   padStart:     require 'lodash/padStart'
   padEnd:       require 'lodash/padEnd'

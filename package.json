@@ -48,7 +48,7 @@
     "lodash": "4.5.0",
     "node-uuid": "1.4.7",
     "socket.io": "1.4.5",
-    "timm": "0.4.3"
+    "timm": "0.6.0"
   },
   "devDependencies": {
     "babel-core": "6.6.5",
