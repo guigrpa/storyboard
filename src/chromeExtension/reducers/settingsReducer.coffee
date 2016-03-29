@@ -3,27 +3,18 @@ timm = require 'timm'
 INITIAL_STATE =
   timeType: 'LOCAL'
   fShowClosedActions: false
+  fShorthandForDuplicates: true
   fCollapseAllNewStories: false
   fExpandAllNewAttachments: false
+  maxRecords: 800
+  forgetHysteresis: 0.25
 
 reducer = (state = INITIAL_STATE, action) ->
   switch action.type
 
-    when 'SET_TIME_TYPE'
-      {timeType} = action
-      return timm.set state, 'timeType', timeType
-
-    when 'SET_SHOW_CLOSED_ACTIONS'
-      {fShowClosedActions} = action
-      return timm.set state, 'fShowClosedActions', fShowClosedActions
-
-    when 'SET_COLLAPSE_ALL_NEW_STORIES'
-      {fCollapseAllNewStories} = action
-      return timm.set state, 'fCollapseAllNewStories', fCollapseAllNewStories
-
-    when 'SET_EXPAND_ALL_NEW_ATTACHMENTS'
-      {fExpandAllNewAttachments} = action
-      return timm.set state, 'fExpandAllNewAttachments', fExpandAllNewAttachments
+    when 'UPDATE_SETTINGS'
+      {settings} = action
+      return timm.merge state, settings
 
     else return state
 

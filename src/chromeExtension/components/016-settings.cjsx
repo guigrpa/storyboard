@@ -8,9 +8,7 @@ actions           = require '../actions/actions'
 mapStateToProps = (state) -> 
   settings:       state.settings
 mapDispatchToProps = (dispatch) ->
-  setShowClosedActions: (fEnabled) -> dispatch actions.setShowClosedActions fEnabled
-  setCollapseAllNewStories: (fEnabled) -> dispatch actions.setCollapseAllNewStories fEnabled
-  setExpandAllNewAttachments: (fEnabled) -> dispatch actions.setExpandAllNewAttachments fEnabled
+  updateSettings: (settings) -> dispatch actions.updateSettings settings
 
 Settings = React.createClass
   displayName: 'Settings'
@@ -20,13 +18,21 @@ Settings = React.createClass
     onClose:                    React.PropTypes.func.isRequired
     # From Redux.connect
     settings:                   React.PropTypes.object.isRequired
-    setShowClosedActions:       React.PropTypes.func.isRequired
-    setCollapseAllNewStories:   React.PropTypes.func.isRequired
-    setExpandAllNewAttachments: React.PropTypes.func.isRequired
+    updateSettings:             React.PropTypes.func.isRequired
   getInitialState: ->
-    fCanSave: true
+    _fCanSave: true
 
+  componentWillMount: -> @setState @props.settings
   componentDidMount: -> @checkLocalStorage()
+
+  componentWillUnmount: -> 
+    settings = {}
+    for key, val of @state
+      continue if key[0] is '_'
+      settings[key] = switch key
+        when 'maxRecords', 'forgetHysteresis' then Number(val)
+        else val
+    @props.updateSettings settings
 
   #-----------------------------------------------------
   render: -> 
@@ -34,7 +40,8 @@ Settings = React.createClass
       {@renderLocalStorageWarning()}
       <Icon 
         icon="close" 
-        size="lg" 
+        size="lg"
+        title="Save settings and close"
         onClick={@props.onClose}
         style={_style.closeIcon}
       />
@@ -42,7 +49,7 @@ Settings = React.createClass
         <input 
           id="fShowClosedActions"
           type="checkbox"
-          checked={@props.settings.fShowClosedActions}
+          checked={@state.fShowClosedActions}
           onChange={@onClickShowClosedActions}
         />
         <label htmlFor="fShowClosedActions">
@@ -51,9 +58,20 @@ Settings = React.createClass
       </div>
       <div>
         <input 
+          id="fShorthandForDuplicates"
+          type="checkbox"
+          checked={@state.fShorthandForDuplicates}
+          onChange={@onClickShorthandForDuplicates}
+        />
+        <label htmlFor="fShorthandForDuplicates">
+          Use shorthand notation for duplicated logs
+        </label>
+      </div>
+      <div>
+        <input 
           id="fCollapseAllNewStories"
           type="checkbox"
-          checked={@props.settings.fCollapseAllNewStories}
+          checked={@state.fCollapseAllNewStories}
           onChange={@onClickCollapseAllNewStories}
         />
         <label htmlFor="fCollapseAllNewStories">
@@ -64,17 +82,30 @@ Settings = React.createClass
         <input 
           id="fExpandAllNewAttachments"
           type="checkbox"
-          checked={@props.settings.fExpandAllNewAttachments}
+          checked={@state.fExpandAllNewAttachments}
           onChange={@onClickExpandAllNewAttachments}
         />
         <label htmlFor="fExpandAllNewAttachments">
           Expand all attachments upon receipt
         </label>
       </div>
+      <div>
+        <label htmlFor="maxRecords">
+          Number of logs and stories to remember:
+        </label>{' '}
+        <input 
+          id="maxRecords"
+          type="number"
+          step={1}
+          value={@state.maxRecords}
+          onChange={@onChangeMaxRecords}
+          style={{display: 'inline-block', width: 50}}
+        />
+      </div>
     </div>
 
   renderLocalStorageWarning: ->
-    return if @state.fCanSave
+    return if @state._fCanSave
     <div className="allowUserSelect" style={_style.localStorageWarning}>
       Changes to these settings can't be saved (beyond your current session)
       due to your current Chrome configuration. Please visit 
@@ -85,19 +116,25 @@ Settings = React.createClass
 
   #-----------------------------------------------------
   onClickShowClosedActions: (ev) -> 
-    @props.setShowClosedActions ev.target.checked
+    @setState {fShowClosedActions: ev.target.checked}
+  onClickShorthandForDuplicates: (ev) -> 
+    @setState {fShorthandForDuplicates: ev.target.checked}
   onClickCollapseAllNewStories: (ev) -> 
-    @props.setCollapseAllNewStories ev.target.checked
+    @setState {fCollapseAllNewStories: ev.target.checked}
   onClickExpandAllNewAttachments: (ev) -> 
-    @props.setExpandAllNewAttachments ev.target.checked
+    @setState {fExpandAllNewAttachments: ev.target.checked}
+  onChangeMaxRecords: (ev) -> 
+    @setState {maxRecords: ev.target.value}
+  onChangeForgetHysteresis: (ev) -> 
+    @setState {forgetHysteresis: ev.target.value}
 
   #-----------------------------------------------------
   checkLocalStorage: ->
     try
       ls = localStorage.foo
-      @setState fCanSave: true
+      @setState _fCanSave: true
     catch e
-      @setState fCanSave: false
+      @setState _fCanSave: false
 
 #-----------------------------------------------------
 _style = 

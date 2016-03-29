@@ -3,8 +3,6 @@ Promise = require 'bluebird'
 Saga    = require 'redux-saga/effects'
 require 'babel-polyfill'
 
-MAX_RECORDS = 800
-FORGET_HYSTERESIS = 0.25
 CHECK_FORGET_PERIOD = 3000
 QUICK_FIND_DEBOUNCE = 250
 
@@ -31,13 +29,11 @@ _quickFind = _.debounce (dispatch, txt) ->
 forgetRecords = ->
   while true
     for idx in [0, 1]
-      story = yield Saga.select (state) -> state.stories.mainStory.records[idx]
-      if story.numRecords > MAX_RECORDS
-        yield Saga.put 
-          type: 'FORGET'
-          maxRecords: MAX_RECORDS
-          forgetHysteresis: FORGET_HYSTERESIS
-          pathStr: story.pathStr
+      {story, maxRecords} = yield Saga.select (state) -> 
+        story:      state.stories.mainStory.records[idx]
+        maxRecords: state.settings.maxRecords
+      if story.numRecords > maxRecords
+        yield Saga.put {type: 'FORGET', pathStr: story.pathStr}
     yield Promise.delay CHECK_FORGET_PERIOD
   return
 

@@ -1,49 +1,41 @@
+timm = require 'timm'
+
 #-------------------------------------------------
 # ## Actions
 #-------------------------------------------------
-setTimeType = (timeType) -> 
-  _set 'timeType', timeType
-  {type: 'SET_TIME_TYPE', timeType}
+updateSettings = (settings) ->
+  prevSettings = _getSettings() ? {}
+  nextSettings = timm.merge prevSettings, settings
+  _setSettings nextSettings
+  return {type: 'UPDATE_SETTINGS', settings}
 
-setShowClosedActions = (fShowClosedActions) -> 
-  _set 'fShowClosedActions', fShowClosedActions
-  {type: 'SET_SHOW_CLOSED_ACTIONS', fShowClosedActions}
-
-setCollapseAllNewStories = (fCollapseAllNewStories) -> 
-  _set 'fCollapseAllNewStories', fCollapseAllNewStories
-  {type: 'SET_COLLAPSE_ALL_NEW_STORIES', fCollapseAllNewStories}
-
-setExpandAllNewAttachments = (fExpandAllNewAttachments) -> 
-  _set 'fExpandAllNewAttachments', fExpandAllNewAttachments
-  {type: 'SET_EXPAND_ALL_NEW_ATTACHMENTS', fExpandAllNewAttachments}
+# Convenience action creator
+setTimeType = (timeType) -> updateSettings {timeType}
 
 #-------------------------------------------------
 # ## LocalStorage
 #-------------------------------------------------
 LOCALSTORAGE_PREFIX = 'storyboard'
 
-_get = (key) ->
+_getSettings = ->
   try
-    json = localStorage["#{LOCALSTORAGE_PREFIX}_#{key}"]
+    json = localStorage["#{LOCALSTORAGE_PREFIX}_settings"]
     return JSON.parse json
   return
 
-_set = (key, val) ->
+_setSettings = (settings) ->
   try
-    localStorage["#{LOCALSTORAGE_PREFIX}_#{key}"] = JSON.stringify val
+    localStorage["#{LOCALSTORAGE_PREFIX}_settings"] = JSON.stringify settings
   return
 
 loadSettings = -> (dispatch) ->
-  timeType = _get 'timeType'
-  if timeType? then dispatch setTimeType timeType
-  fShowClosedActions = _get 'fShowClosedActions'
-  if fShowClosedActions? then dispatch setShowClosedActions fShowClosedActions
+  settings = _getSettings()
+  if settings? then dispatch updateSettings settings
+  return
   
 module.exports =
   actions: {
     loadSettings,
+    updateSettings,
     setTimeType,
-    setShowClosedActions,
-    setCollapseAllNewStories,
-    setExpandAllNewAttachments,
   }

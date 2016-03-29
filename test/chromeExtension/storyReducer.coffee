@@ -7,12 +7,15 @@ treeLines = require '../../lib/gral/treeLines'
 #-------------------------------------------------
 # ## Helpers
 #-------------------------------------------------
+_settings = (settings = {}) -> timm.addDefaults settings,
+  maxRecords: 50
+  forgetHysteresis: 0.25
+
 _recordsReceived = (records, fPastRecords = false) -> 
  return {type: 'RECORDS_RECEIVED', records, fPastRecords}
 
-_forget = (action) -> timm.merge action, 
+_forget = (action = {}) -> timm.addDefaults action, 
   type: 'FORGET'
-  forgetHysteresis: 0.25
   pathStr: "records/0"
 
 _seqId = 0
@@ -65,7 +68,7 @@ describe 'storyReducer', ->
       records = _.map [0...8], (idx) -> _log msg: "msg#{idx}"
       state = reducer state, _recordsReceived records
       expect(state.mainStory.records[0].numRecords).to.equal 8
-      state = reducer state, _forget({maxRecords: 4})
+      state = reducer state, _forget(), _settings({maxRecords: 4})
       topStory = state.mainStory.records[0]
       expect(topStory.records.length).to.equal 3    # forget: (8-4) + 0.25*4 = 5
       expect(topStory.records[0].msg).to.equal 'msg5'
@@ -84,7 +87,7 @@ describe 'storyReducer', ->
       ]
       ## console.log JSON.stringify state.mainStory.records[0], null, '  '
       expect(state.mainStory.records[0].numRecords).to.equal 5
-      state = reducer state, _forget {maxRecords: 4}
+      state = reducer state, _forget(), _settings({maxRecords: 4})
       topStory = state.mainStory.records[0]
       expect(topStory.records.length).to.equal 1
       expect(topStory.records[0].msg).to.equal 'msg1'
@@ -102,7 +105,7 @@ describe 'storyReducer', ->
         openStoryRecord2
       ]
       expect(state.mainStory.records[0].numRecords).to.equal 5
-      state = reducer state, _forget({maxRecords: 1})
+      state = reducer state, _forget(), _settings({maxRecords: 1})
       topStory = state.mainStory.records[0]
       expect(topStory.records.length).to.equal 1
       expect(topStory.records[0].title).to.equal 'story0'

@@ -2,6 +2,9 @@
 
 *[M]: major change; [m]: minor change*
 
+* Browser extension:
+    - [m] Allow the user to configure the maximum number of logs/stories to be remembered
+
 ## 0.1.2 (Mar. 28, 2016)
 
 * Lib:

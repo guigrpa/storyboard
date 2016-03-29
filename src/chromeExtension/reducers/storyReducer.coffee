@@ -50,7 +50,7 @@ reducer = (state = _buildInitialState(), action, settings = {}) ->
 
     when 'RECORDS_RECEIVED' then return _rxRecords state, action, settings
 
-    when 'FORGET' then return _forgetRecords state, action
+    when 'FORGET' then return _forgetRecords state, action, settings
 
     when 'TOGGLE_EXPANDED'
       {pathStr} = action
@@ -95,8 +95,8 @@ reducer = (state = _buildInitialState(), action, settings = {}) ->
 # ## Adding records
 #-------------------------------------------------
 _rxRecords = (state, action, settings) ->
-  {records, fPastRecords} = action
-  options = timm.merge settings, {fPastRecords}
+  {records, fPastRecords, fShorthandForDuplicates} = action
+  options = timm.merge settings, {fPastRecords, fShorthandForDuplicates}
   newStories = []
   for record in records
     if record.fStory 
@@ -190,7 +190,10 @@ _addStory = (state, parentStoryPathStr, record, options) ->
 
 _rxLog = (state, record, options) ->
   {storyId, fServer} = record
+  {fShorthandForDuplicates} = options
   pathStr = state.openStories[storyId] ? _mainStoryPathStr(fServer)
+  if not(fShorthandForDuplicates ? false)
+    ;
   state = _addLog state, pathStr, record, options
   rootStoryIdx = pathStr.split('/')[1]
   state = timm.updateIn state, ['mainStory', 'records', rootStoryIdx, 'numRecords'], (o) -> o + 1
@@ -210,8 +213,9 @@ _addLog = (state, pathStr, record, options) ->
 #-------------------------------------------------
 # ## Forgetting records
 #-------------------------------------------------
-_forgetRecords = (state, action) ->
-  {maxRecords, forgetHysteresis, pathStr} = action
+_forgetRecords = (state, action, settings) ->
+  {pathStr} = action
+  {maxRecords, forgetHysteresis} = settings
   {mainStory} = state
   path = "mainStory/#{pathStr}".split '/'
   prevStory = timm.getIn state, path
