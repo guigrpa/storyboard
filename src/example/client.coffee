@@ -29,7 +29,7 @@ _refresh = (storyTitle) ->
 
 _refresh 'Initial fetch'
 
-
+setInterval (-> mainStory.debug "Repeated message"), 5000
 
 # Enable the following block to mount the developer tools 
 # in the main page (for faster development)

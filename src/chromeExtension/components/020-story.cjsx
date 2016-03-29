@@ -98,6 +98,8 @@ _Story = React.createClass
       out.push el
       if record.objExpanded and record.obj?
         out = out.concat @renderAttachment record
+      if record.repetitions
+        out.push @renderRepetitions record
     out
 
   renderRecord: (record) ->
@@ -133,6 +135,13 @@ _Story = React.createClass
         {...props}
         msg={line}
       />
+
+  renderRepetitions: (record) ->
+    props = _.pick @props, ['level', 'timeType', 'setTimeType', 'quickFind', 'seqFullRefresh']
+    <RepetitionLine key={"#{record.id}_repetitions"}
+      record={record}
+      {...props}
+    />
 
   #-----------------------------------------------------
   toggleExpanded: -> @props.onToggleExpanded @props.story.pathStr
@@ -294,6 +303,55 @@ AttachmentLine = React.createClass
 
 
 #-====================================================
+# ## RepetitionLine
+#-====================================================
+RepetitionLine = React.createClass
+  displayName: 'RepetitionLine'
+  mixins: [PureRenderMixin]
+
+  #-----------------------------------------------------
+  propTypes:
+    record:                 React.PropTypes.object.isRequired
+    level:                  React.PropTypes.number.isRequired
+    timeType:               React.PropTypes.string.isRequired
+    setTimeType:            React.PropTypes.func.isRequired
+    seqFullRefresh:         React.PropTypes.number.isRequired
+    msg:                    React.PropTypes.string.isRequired
+    quickFind:              React.PropTypes.string.isRequired
+
+  #-----------------------------------------------------
+  render: ->
+    {record, level, timeType, setTimeType, seqFullRefresh} = @props
+    style = _styleLine.log record
+    msg = " x#{record.repetitions+1}, latest: "
+    msg = _quickFind msg, @props.quickFind
+    <div 
+      className="attachmentLine allowUserSelect"
+      style={style}
+    >
+      <Time
+        fShowFull={false}
+        timeType={timeType}
+        setTimeType={setTimeType}
+        seqFullRefresh={seqFullRefresh}
+      />
+      <Src src=''/>
+      <Severity/>
+      <Indent level={level}/>
+      <CaretOrSpace/>
+      <Icon icon="copy"/>
+      <ColoredText text={msg}/>
+      <Time
+        t={record.tLastRepetition}
+        fTrim
+        timeType={timeType}
+        setTimeType={setTimeType}
+        seqFullRefresh={seqFullRefresh}
+      />
+    </div>
+
+
+#-====================================================
 # ## Line
 #-====================================================
 Line = React.createClass
@@ -448,9 +506,10 @@ Time = React.createClass
     timeType:               React.PropTypes.string.isRequired
     setTimeType:            React.PropTypes.func.isRequired
     seqFullRefresh:         React.PropTypes.number.isRequired
+    fTrim:                  React.PropTypes.bool
 
   render: ->
-    {t, fShowFull, timeType} = @props
+    {t, fShowFull, timeType, fTrim} = @props
     if not t? then return <span>{_.padEnd '', TIME_LENGTH}</span>
     fRelativeTime = false
     m = moment t
@@ -466,6 +525,7 @@ Time = React.createClass
         shownTime = '           ' + m.format('HH:mm:ss.SSS')
       if timeType is 'UTC' then shownTime += 'Z'
     shownTime = _.padEnd shownTime, TIME_LENGTH
+    if fTrim then shownTime = _.trim shownTime
     <span 
       onClick={@onClick}
       style={_styleTime fRelativeTime}
@@ -500,7 +560,7 @@ Severity = React.createClass
       levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[level]
       <ColoredText text={levelStr}/>
     else
-      <span style={_styleStorySeverity}>----- </span>
+      <span style={_styleStorySeverity}>      </span>
 
 _styleStorySeverity = 
   color: 'gray'

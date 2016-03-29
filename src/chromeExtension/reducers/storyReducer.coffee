@@ -131,7 +131,7 @@ _rxStory = (state, record, options) ->
     pathStr = state.closedStories[storyId]
   if pathStr?
     state = _updateStory state, pathStr, record
-    state = _addLog state, pathStr, record, options
+    {state} = _addLog state, pathStr, record, options
     rootStoryIdx = pathStr.split('/')[1]
 
   # It's a new story. Look for the *most suitable parent* and create
@@ -148,7 +148,7 @@ _rxStory = (state, record, options) ->
         pathStr = state.closedStories[parentStoryId]
     pathStr ?= _mainStoryPathStr fServer
     [state, newStoryPathStr] = _addStory state, pathStr, record, options
-    state = _addLog state, newStoryPathStr, record, options
+    {state} = _addLog state, newStoryPathStr, record, options
     rootStoryIdx = newStoryPathStr.split('/')[1]
 
   # Increment counter
@@ -190,25 +190,39 @@ _addStory = (state, parentStoryPathStr, record, options) ->
 
 _rxLog = (state, record, options) ->
   {storyId, fServer} = record
-  {fShorthandForDuplicates} = options
   pathStr = state.openStories[storyId] ? _mainStoryPathStr(fServer)
-  if not(fShorthandForDuplicates ? false)
-    ;
-  state = _addLog state, pathStr, record, options
-  rootStoryIdx = pathStr.split('/')[1]
-  state = timm.updateIn state, ['mainStory', 'records', rootStoryIdx, 'numRecords'], (o) -> o + 1
+  {state, fDuplicate} = _addLog state, pathStr, record, options
+  if not fDuplicate
+    rootStoryIdx = pathStr.split('/')[1]
+    state = timm.updateIn state, ['mainStory', 'records', rootStoryIdx, 'numRecords'], (o) -> o + 1
   state
 
 _addLog = (state, pathStr, record, options) ->
-  {fPastRecords, fExpandAllNewAttachments} = options
+  {fPastRecords, fExpandAllNewAttachments, fShorthandForDuplicates} = options
   path = "mainStory/#{pathStr}/records".split '/'
   record = timm.set record, 'objExpanded', (fExpandAllNewAttachments ? false)
-  return timm.updateIn state, path, (prevRecords) -> 
+  fDuplicate = false
+  state = timm.updateIn state, path, (prevRecords) -> 
     if fPastRecords
       {id} = record
       if _.find(prevRecords, (o) -> o.id is id)?
         return prevRecords
-    return timm.addLast prevRecords, record
+    if (fShorthandForDuplicates ? true) and
+       (not record.fStory)
+      idx = prevRecords.length - 1
+      prevLastRecord = prevRecords[idx]
+      if prevLastRecord? and 
+         (prevLastRecord.msg is record.msg) and 
+         (prevLastRecord.src is record.src)
+        fDuplicate = true
+        repetitions = prevLastRecord.repetitions ? 0
+        nextLastRecord = timm.merge prevLastRecord,
+          repetitions: repetitions + 1
+          tLastRepetition: record.t
+        nextRecords = timm.replaceAt prevRecords, idx, nextLastRecord
+    nextRecords ?= timm.addLast prevRecords, record
+    nextRecords
+  return {state, fDuplicate}
 
 #-------------------------------------------------
 # ## Forgetting records

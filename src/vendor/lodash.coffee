@@ -45,6 +45,6 @@ module.exports =
   ## some:         require 'lodash/some'
   sortBy:       require 'lodash/sortBy'
   throttle:     require 'lodash/throttle'
-  ## trim:         require 'lodash/trim'
+  trim:         require 'lodash/trim'
   ## upperFirst:   require 'lodash/upperFirst'
   ## without:      require 'lodash/without'
