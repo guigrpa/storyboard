@@ -2,6 +2,8 @@
 
 *[M]: major change; [m]: minor change*
 
+## 0.1.3 (Mar. 30, 2016)
+
 * Browser extension:
     - [M] **Add shorthand representation for "identical, consecutive logs"**
     - [m] Allow user configuration of the maximum number of logs/stories to be remembered
@@ -24,7 +26,7 @@
 
 * Lib: 
     - Stories:
-        + [M] **Add story level**
+        + [M] **Add level attribute to stories (same as for logs)**
         + [M] **Filter out stories completely according to source and level**, even if they contain logs that would have been visible (up to INFO level). Logs at WARN or above turn their ancestor stories visible again.
     - Console Listener: 
         + [m] Show story levels
