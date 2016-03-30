@@ -14,7 +14,10 @@ reducer = (state = INITIAL_STATE, action) ->
 
     when 'UPDATE_SETTINGS'
       {settings} = action
-      return timm.merge state, settings
+      state = timm.merge state, settings
+      if not(state.maxRecords > 0)
+        state = timm.set state, 'maxRecords', INITIAL_STATE.maxRecords
+      return state
 
     else return state
 

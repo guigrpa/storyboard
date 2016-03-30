@@ -3,12 +3,15 @@
 *[M]: major change; [m]: minor change*
 
 * Browser extension:
-    - [m] Allow the user to configure the maximum number of logs/stories to be remembered
+    - [M] **Add shorthand representation for "identical, consecutive logs"**
+    - [m] Allow user configuration of the maximum number of logs/stories to be remembered
+    - Thorough testing of storyReducer
+    - Add tests for all other reducers
 
 ## 0.1.2 (Mar. 28, 2016)
 
 * Lib:
-    - Add unit tests for most tests
+    - Add unit tests for most modules
 * Browser extension:
     - [M] **Add the capability to forget logs and closed stories**
     - Add very limited unit tests (concerning the storyReducer)

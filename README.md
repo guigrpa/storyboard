@@ -295,6 +295,8 @@ Some highlighted features:
 * Open attachments, including exceptions: click on the folder icon.
 * 3 timestamp formats: UTC, local or relative to now: click on any timestamp.
 * Use quick find (case-insensitive) to highlight what you're looking for.
+* See how identical, consecutive messages get squashed into a convenient summary line.
+* Configure when and how Storyboard *forgets* old logs and stories.
 
 You can check your new extension navigating to: http://storyboard-demo.herokuapp.com/
 

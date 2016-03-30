@@ -77,21 +77,26 @@ describe 'storyReducer', ->
       expect(topStory.numRecords).to.equal 3
 
     it 'closed stories should be forgotten', ->
-      openStoryRecord = _openStory {title: 'story0'}
+      openStoryRecord0 = _openStory {title: 'story0'}
+      openStoryRecord1 = _openStory {title: 'story1', parents: [openStoryRecord0.storyId]}
       state = reducer state, _recordsReceived [
         _log {msg: "msg0"}
-        openStoryRecord
-        _log {msg: "story log", storyId: openStoryRecord.storyId}
-        _closeStory openStoryRecord.storyId
+        openStoryRecord0
+        _log {msg: "story log", storyId: openStoryRecord0.storyId}
+        openStoryRecord1
+        _closeStory openStoryRecord1.storyId
+        _closeStory openStoryRecord0.storyId
         _log {msg: "msg1"}
       ]
       ## console.log JSON.stringify state.mainStory.records[0], null, '  '
-      expect(state.mainStory.records[0].numRecords).to.equal 5
+      expect(state.mainStory.records[0].numRecords).to.equal 7
       state = reducer state, _forget(), _settings({maxRecords: 4})
       topStory = state.mainStory.records[0]
       expect(topStory.records.length).to.equal 1
       expect(topStory.records[0].msg).to.equal 'msg1'
       expect(topStory.numRecords).to.equal 1
+      expect(state.closedStories[openStoryRecord0.storyId]).to.be.undefined
+      expect(state.closedStories[openStoryRecord1.storyId]).to.be.undefined
 
     it 'the pathStr of open stories should be updated if necessary', ->
       openStoryRecord0 = _openStory {title: 'story0'}
@@ -236,3 +241,50 @@ describe 'storyReducer', ->
   it 'adding a root story should be ignored', ->
     state2 = reducer state, _recordsReceived [_openStory {title: 'rootStory23', storyId: '*'}]
     expect(state2).to.equal state
+
+  describe 'showing identical consecutive logs', ->
+
+    it 'by default, should use shorthand notation', ->
+      state = reducer state, _recordsReceived [
+        _log msg: "msg23"
+        _log msg: "msg23"
+        _log msg: "msg23"
+      ]
+      expect(state.mainStory.records[0].records).to.have.length 1
+      record = state.mainStory.records[0].records[0]
+      expect(record.repetitions).to.equal 2
+      expect(record.tLastRepetition).not.to.be.null
+
+    it 'with fShorthandForDuplicates=false, should include all logs', ->
+      state = reducer state, _recordsReceived([
+        _log msg: "msg23"
+        _log msg: "msg23"
+        _log msg: "msg23"
+      ]), {fShorthandForDuplicates: false}
+      expect(state.mainStory.records[0].records).to.have.length 3
+
+    it 'should detect when attachments are equal', ->
+      state = reducer state, _recordsReceived [
+        _log msg: "msg45", obj: ['line1', 'line2']
+        _log msg: "msg45", obj: ['line1', 'line2']
+      ]
+      expect(state.mainStory.records[0].records).to.have.length 1
+
+    it 'should detect when attachments are different', ->
+      state = reducer state, _recordsReceived [
+        _log msg: "msg45", obj: ['line1', 'line2']
+        _log msg: "msg45", obj: ['line1', 'DIFFERENT']
+      ]
+      expect(state.mainStory.records[0].records).to.have.length 2
+
+  it 'should remove duplicates when using fPastRecords', ->
+    state = reducer state, _recordsReceived [
+      _log {msg: 'msg0', id: 'id0'}
+      _log {msg: 'msg1', id: 'id1'}
+    ]
+    state = reducer state, _recordsReceived([
+      _log {msg: 'msg0', id: 'id0'}
+    ], true)
+    expect(state.mainStory.records[0].records).to.have.length 2
+    expect(state.mainStory.records[0].records[0].id).to.equal 'id0'
+    expect(state.mainStory.records[0].records[1].id).to.equal 'id1'

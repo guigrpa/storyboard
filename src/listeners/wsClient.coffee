@@ -84,6 +84,7 @@ _socketInit = (config) ->
 
 _socketRxMsg = (msg) -> _extensionTxMsg msg
 _socketTxMsg = (msg) ->
+  ### istanbul ignore if ###
   if not _socketio
     console.error "Cannot send '#{msg.type}' message to server: socket unavailable"
     return
@@ -92,6 +93,8 @@ _socketTxMsg = (msg) ->
 #-------------------------------------------------
 # ## Helpers
 #-------------------------------------------------
+# Process client-side attachments, exactly the same
+# way as in the WS Server listener
 _preprocessAttachments = (record) -> 
   return record if not record.obj?
   return timm.set record, 'obj', treeLines(record.obj)

@@ -212,8 +212,9 @@ _addLog = (state, pathStr, record, options) ->
       idx = prevRecords.length - 1
       prevLastRecord = prevRecords[idx]
       if prevLastRecord? and 
-         (prevLastRecord.msg is record.msg) and 
-         (prevLastRecord.src is record.src)
+          (prevLastRecord.msg is record.msg) and 
+          (prevLastRecord.src is record.src) and
+          _.isEqual(prevLastRecord.obj, record.obj)
         fDuplicate = true
         repetitions = prevLastRecord.repetitions ? 0
         nextLastRecord = timm.merge prevLastRecord,

@@ -64,7 +64,7 @@ Settings = React.createClass
           onChange={@onClickShorthandForDuplicates}
         />
         <label htmlFor="fShorthandForDuplicates">
-          Use shorthand notation for duplicated logs
+          Use shorthand notation for identical consecutive logs
         </label>
       </div>
       <div>
@@ -92,7 +92,8 @@ Settings = React.createClass
       <div>
         <label htmlFor="maxRecords">
           Number of logs and stories to remember:
-        </label>{' '}
+        </label>
+        {' '}
         <input 
           id="maxRecords"
           type="number"
@@ -100,6 +101,25 @@ Settings = React.createClass
           value={@state.maxRecords}
           onChange={@onChangeMaxRecords}
           style={{display: 'inline-block', width: 50}}
+        />
+        {' '}
+        <label htmlFor="forgetHysteresis">
+          with hysteresis:
+        </label>
+        {' '}
+        <input 
+          id="forgetHysteresis"
+          type="number"
+          step={.05}
+          value={@state.forgetHysteresis}
+          onChange={@onChangeForgetHysteresis}
+          style={{display: 'inline-block', width: 50}}
+        />
+        {' '}
+        <Icon 
+          icon="info-circle"
+          title={@maxLogsDesc()}
+          style={_style.maxLogsDesc}
         />
       </div>
     </div>
@@ -113,6 +133,13 @@ Settings = React.createClass
       uncheck the option "Block third-party cookies and site 
       data". Then close the Chrome DevTools and open them again.
     </div>
+
+  maxLogsDesc: ->
+    hyst = Number @state.forgetHysteresis
+    hi = Number @state.maxRecords
+    lo = hi - hi * hyst
+    return "When the backlog reaches #{hi}, Storyboard will " +
+      "start forgetting old stuff until it goes below #{lo}"
 
   #-----------------------------------------------------
   onClickShowClosedActions: (ev) -> 
@@ -160,6 +187,8 @@ _style =
     padding: 15
     marginBottom: 10
     borderRadius: 2
+  maxLogsDesc:
+    cursor: 'pointer'
 
 #-----------------------------------------------------
 connect = ReactRedux.connect mapStateToProps, mapDispatchToProps
