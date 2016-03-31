@@ -1,30 +1,32 @@
-# Logs
+# GIT-NPM common
+# --------------
+# All projects
 logs
 *.log
 npm-debug.log*
-
-# Runtime data
 pids
 *.pid
 *.seed
-
-# Dependency directory
 node_modules
-
-# Others
 /coverage
 /.nyc_output
 /.nyc_tmp
-/.extractedApi.md
 *.sublime-project
 *.sublime-workspace
+
+# Project-specific
 /chromeExtension/*.zip
 /docs/otherPromoAssets
 /docs/guigrpa
 /example/heroku
 
-# GIT extras
+
+# GIT-specific
+# ------------
+# All projects
 /lib
+
+# Project-specific
 /chromeExtension/*.js
 /chromeExtension/*.eot
 /chromeExtension/*.woff

@@ -1,36 +1,38 @@
-# Logs
+# GIT-NPM common
+# --------------
+# All projects
 logs
 *.log
 npm-debug.log*
-
-# Runtime data
 pids
 *.pid
 *.seed
-
-# Dependency directory
 node_modules
-
-# Others
 /coverage
 /.nyc_output
 /.nyc_tmp
-/.extractedApi.md
 *.sublime-project
 *.sublime-workspace
+
+# Project-specific
 /chromeExtension/*.zip
 /docs/otherPromoAssets
 /docs/guigrpa
 /example/heroku
 
-# NPM extras
-/docs
-/example
+
+# NPM-specific
+# ------------
+# All projects
 /src
-/lib/chromeExtension
 /tools
 /test
 /package.coffee
 /ROADMAP.md
 /.travis.yml
 /.npmignore
+
+# Project-specific
+/docs
+/example
+/lib/chromeExtension

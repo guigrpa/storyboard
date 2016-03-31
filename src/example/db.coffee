@@ -1,8 +1,7 @@
 # This module simulates database access
 _ = require 'lodash'
-{mainStory} = require '../storyboard'  # you'd write: `'storyboard'`
+{mainStory, chalk} = require '../storyboard'  # you'd write: `'storyboard'`
 Promise = require 'bluebird'
-chalk = require 'chalk'
 
 ANIMALS = ['Cow', 'Hummingbird', 'Rhinoceros', 'Capybara', 'Igel', 'Sheep']
 

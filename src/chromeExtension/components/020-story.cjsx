@@ -6,11 +6,11 @@ timm              = require 'timm'
 tinycolor         = require 'tinycolor2'
 moment            = require 'moment'
 chalk             = require 'chalk'
+ansiColors        = require 'storyboard-core/lib/ansiColors'
 ColoredText       = require './030-coloredText'
 Icon              = require './910-icon'
 actions           = require '../actions/actions'
 k                 = require '../../gral/constants'
-ansiColors        = require '../../gral/ansiColors'
 
 _quickFind = (msg, quickFind) ->
   return msg if not quickFind.length

@@ -12,10 +12,10 @@ chalk.enabled = true
 
 k = require './gral/constants'
 
-mainStory = require './gral/stories'
-filters = require './gral/filters'
+mainStory = require 'storyboard-core/lib/stories'
+filters = require 'storyboard-core/lib/filters'
 
-hub = require './gral/hub'
+hub = require 'storyboard-core/lib/hub'
 hub.init {mainStory}
 
 if k.IS_BROWSER
@@ -36,6 +36,7 @@ config = (options = {}) ->
 module.exports = {
   mainStory,
   config,
+  chalk,
   addListener: hub.addListener,
   removeListener: hub.removeListener,
   getListeners: hub.getListeners,

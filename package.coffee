@@ -106,20 +106,21 @@ specs =
     testBrowser:              _runMochaCov "NODE_ENV=development TEST_BROWSER=true"
     testCovReport:            _runMultiple [
       "cp .nyc_tmp/* .nyc_output/"
-      "nyc report --reporter=html --reporter=lcov"
+      "nyc report --reporter=html --reporter=lcov --reporter=text"
     ]
 
   #-================================================================
   # ## Storyboard library dependencies
   #-================================================================
   dependencies:
-    "timm": "0.6.0"
-    "chalk": "1.1.1"
-    "bluebird": "3.3.1"
-    "express": "4.13.4"
-    "socket.io": "1.4.5"
-    "node-uuid": "1.4.7"
-    "lodash": "4.5.0"
+    "storyboard-core": "^1.0.0"
+    "timm": "^0.6.0"
+    "chalk": "^1.0.0"
+    "bluebird": "^3.3.1"
+    "express": "^4.13.4"
+    "socket.io": "^1.4.5"
+    "node-uuid": "^1.4.7"
+    "lodash": "^4.5.0"
 
   #-================================================================
   # ## Other dependencies

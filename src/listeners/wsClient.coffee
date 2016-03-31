@@ -1,6 +1,6 @@
 socketio    = require 'socket.io-client'
 timm        = require 'timm'
-treeLines   = require '../gral/treeLines'
+treeLines   = require 'storyboard-core/lib/treeLines'
 k           = require '../gral/constants'
 
 DEFAULT_CONFIG = {}
