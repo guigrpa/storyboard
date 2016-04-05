@@ -176,7 +176,7 @@ describe "wsServerListener", ->
 
       it "should still receive log records", ->
         mainStory.info "Msg2 through web sockets"
-        h.waitUntil(1000, -> _spy.callCount > 0)
+        h.waitUntil(3000, -> _spy.callCount > 0)
         .then (res) ->
           expect(_spy).to.have.been.calledOnce
           msg = _spy.args[0][0]
@@ -215,7 +215,7 @@ describe "wsServerListener", ->
 
     it "should receive log records", ->
       mainStory.info "Msg through web sockets"
-      h.waitUntil(1000, -> _spy.callCount > 0)
+      h.waitUntil(3000, -> _spy.callCount > 0)
       .then (res) ->
         expect(_spy).to.have.been.calledOnce
         msg = _spy.args[0][0]
