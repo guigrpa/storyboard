@@ -2,6 +2,12 @@
 
 *[M]: major change; [m]: minor change*
 
+## 1.0.0 (Apr. 5, 2016)
+
+* Enforce semver.
+* Lib:
+    - [m] Publish chalk as part of the top-level API: `storyboard.chalk`. This is for convenience, as well as to prevent duplicate instances of chalk in certain setups (should not happen anyway if you use `npm@3` and include `chalk@^1.0.0`).
+
 ## 0.1.3 (Mar. 30, 2016)
 
 * Browser extension:
