@@ -156,7 +156,7 @@ describe "wsServerListener", ->
         .then -> expect(_spy).to.not.have.been.called
 
 
-    describe "with throttling", ->
+    describe.skip "with throttling", ->
 
       _listener = null
       _socket = null
