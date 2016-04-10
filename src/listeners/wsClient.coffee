@@ -68,17 +68,14 @@ _preprocessAttachments = (record) ->
 #-------------------------------------------------
 create = (baseConfig) ->
   config = timm.addDefaults baseConfig, DEFAULT_CONFIG
-  _window = if process.env.TEST_BROWSER then config._mockWindow else window
   listener =
     type: 'WS_CLIENT'
     init: -> 
       _socketInit config
       ifExtension.rx _extensionRxMsg
-    # Relay records coming from local stories
+    # Nothing to be done with hub records; we're just
+    # concerned with relaying records from WS
     process: (record) -> 
-      ## console.log "[PG] RX PAGE/RECORDS #{records.length} records"
-      ifExtension.tx {type: 'RECORDS', data: [_preprocessAttachments record]}
-    ## config: (newConfig) -> config = timm.merge config, newConfig
   listener
 
 module.exports = {

@@ -81,27 +81,6 @@ describe "wsClientListener", ->
       expect(msg.type).to.equal 'EXAMPLE_REQUEST'
       expect(msg.data).to.deep.equal {a: 3}
 
-  describe "client stories -> extension relay", ->
-
-    it "should relay simple logs", ->
-      _spyClientWinTxMsg.reset()
-      mainStory.info "Somewhere over the rainbow..."
-      h.waitUntil(1000, -> _spyClientWinTxMsg.callCount > 0)
-      .then ->
-        msg = _spyClientWinTxMsg.args[0][0]
-        expect(msg.type).to.equal 'RECORDS'
-        expect(msg.data[0].msg).to.contain 'rainbow'
-
-    it "should preprocess attachments through treeLines", ->
-      _spyClientWinTxMsg.reset()
-      mainStory.info "We can be heroes...", attach: just: "for one day"
-      h.waitUntil(1000, -> _spyClientWinTxMsg.callCount > 0)
-      .then ->
-        record = _spyClientWinTxMsg.args[0][0].data[0]
-        expect(record.msg).to.contain 'heroes'
-        expect(record.obj[0]).to.contain 'just'
-        expect(record.obj[0]).to.contain 'one day'
-
   #-====================================================
   # ### Low-level tests for the extension interface
   #-====================================================
