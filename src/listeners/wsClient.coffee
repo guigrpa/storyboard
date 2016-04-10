@@ -1,6 +1,5 @@
 socketio    = require 'socket.io-client'
 timm        = require 'timm'
-treeLines   = require 'storyboard-core/lib/treeLines'
 ifExtension = require './interfaceExtension'
 k           = require '../gral/constants'
 
@@ -53,15 +52,6 @@ _socketTxMsg = (msg) ->
     console.error "Cannot send '#{msg.type}' message to server: socket unavailable"
     return
   _socketio.emit 'MSG', msg
-
-#-------------------------------------------------
-# ## Helpers
-#-------------------------------------------------
-# Process client-side attachments, exactly the same
-# way as in the WS Server listener
-_preprocessAttachments = (record) -> 
-  return record if not record.obj?
-  return timm.set record, 'obj', treeLines(record.obj)
 
 #-------------------------------------------------
 # ## API
