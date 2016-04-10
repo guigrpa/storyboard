@@ -114,7 +114,6 @@ specs =
   # ## Storyboard library dependencies
   #-================================================================
   dependencies:
-    "storyboard-core": "^1.0.0"
     "timm": "^0.6.0"
     "chalk": "^1.0.0"
     "bluebird": "^3.3.1"

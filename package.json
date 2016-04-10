@@ -48,7 +48,6 @@
     "lodash": "^4.5.0",
     "node-uuid": "^1.4.7",
     "socket.io": "^1.4.5",
-    "storyboard-core": "^1.0.0",
     "timm": "^0.6.0"
   },
   "devDependencies": {
