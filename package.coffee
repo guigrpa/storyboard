@@ -133,10 +133,10 @@ specs =
     "babel-polyfill":       "6.6.1"     # es6
 
     # React
-    "react":                          "15.0.0-rc.1" # 0.14.7
-    "react-dom":                      "15.0.0-rc.1"
-    "react-addons-pure-render-mixin": "15.0.0-rc.1"
-    "react-addons-perf":              "15.0.0-rc.1"
+    "react":                          "15.0.1"
+    "react-dom":                      "15.0.1"
+    "react-addons-pure-render-mixin": "15.0.1"
+    "react-addons-perf":              "15.0.1"
 
     # Redux
     "redux": "3.3.1"
