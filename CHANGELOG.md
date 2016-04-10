@@ -2,6 +2,10 @@
 
 *[M]: major change; [m]: minor change*
 
+* Browser extension:
+    - [M] For servers requiring no auth for logs: Automatically retrieve server backlog upon startup
+    - [m] Bumped React to v15.0.1
+
 ## 1.0.0 (Apr. 5, 2016)
 
 * Enforce semver.

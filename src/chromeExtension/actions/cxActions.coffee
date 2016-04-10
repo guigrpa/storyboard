@@ -54,6 +54,9 @@ rxMsg = ->
         if fLoginRequired and _lastCredentials
           yield Saga.put {type: 'LOGIN_STARTED'}
           yield Saga.call _txMsg, 'LOGIN_REQUEST', _lastCredentials
+        else if not fLoginRequired
+          yield Saga.put {type: 'LOGIN_STARTED'}
+          yield Saga.call _txMsg, 'LOGIN_REQUEST', {login: '', password: ''}
       when 'LOGIN_RESPONSE' 
         if result is 'SUCCESS'
           {login, bufferedRecords} = data
