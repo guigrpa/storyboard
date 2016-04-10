@@ -44,6 +44,7 @@ specs =
     compile: _runMultiple [
       "rm -rf lib"
       "coffee --no-header -o lib -c src/storyboard.coffee"
+      "coffee --no-header -o lib -c src/light.coffee"
       "coffee --no-header -o lib/gral -c src/gral"
       "coffee --no-header -o lib/listeners -c src/listeners"
       "coffee --no-header -o lib/vendor -c src/vendor"
