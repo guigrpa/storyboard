@@ -3,6 +3,7 @@ chalk             = require 'chalk'
 http              = require 'http'
 socketio          = require 'socket.io'
 wsClientListener  = require '../../lib/listeners/wsClient'
+ifExtension       = require '../../lib/listeners/interfaceExtension'
 k                 = require '../../lib/gral/constants'
 
 {mainStory} = storyboard
@@ -32,6 +33,7 @@ describe "wsClientListener", ->
     _mockWindow = 
       postMessage: _spyClientWinTxMsg
       addEventListener: (evType, listener) -> _clientWinRxEvent = listener
+    ifExtension._setWindow _mockWindow
     return new Promise (resolve, reject) ->
       _httpServer = http.createServer(->)
       _httpServer.on 'listening', resolve
@@ -43,7 +45,7 @@ describe "wsClientListener", ->
         _serverSocket = socket
         _serverSocket.on 'MSG', _spyServerRxMsg
         resolve()
-      _listener = storyboard.addListener wsClientListener, {_mockWindow}
+      _listener = storyboard.addListener wsClientListener
 
     # Make WsServerListener think that the extension is ready
     .then ->
@@ -78,27 +80,6 @@ describe "wsClientListener", ->
       msg = _spyServerRxMsg.args[0][0]
       expect(msg.type).to.equal 'EXAMPLE_REQUEST'
       expect(msg.data).to.deep.equal {a: 3}
-
-  describe "client stories -> extension relay", ->
-
-    it "should relay simple logs", ->
-      _spyClientWinTxMsg.reset()
-      mainStory.info "Somewhere over the rainbow..."
-      h.waitUntil(1000, -> _spyClientWinTxMsg.callCount > 0)
-      .then ->
-        msg = _spyClientWinTxMsg.args[0][0]
-        expect(msg.type).to.equal 'RECORDS'
-        expect(msg.data[0].msg).to.contain 'rainbow'
-
-    it "should preprocess attachments through treeLines", ->
-      _spyClientWinTxMsg.reset()
-      mainStory.info "We can be heroes...", attach: just: "for one day"
-      h.waitUntil(1000, -> _spyClientWinTxMsg.callCount > 0)
-      .then ->
-        record = _spyClientWinTxMsg.args[0][0].data[0]
-        expect(record.msg).to.contain 'heroes'
-        expect(record.obj[0]).to.contain 'just'
-        expect(record.obj[0]).to.contain 'one day'
 
   #-====================================================
   # ### Low-level tests for the extension interface

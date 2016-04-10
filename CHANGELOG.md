@@ -2,13 +2,17 @@
 
 *[M]: major change; [m]: minor change*
 
+* Lib:
+    - [M] Split WS Client listener in two:
+        + WS Client listener (dedicated just to WebSockets)
+        + Browser Extension listener (relays client-side logs to the browser extension)
 * Browser extension:
     - [M] For servers requiring no auth for logs: Automatically retrieve server backlog upon startup
     - [m] Bumped React to v15.0.1
 
 ## 1.0.0 (Apr. 5, 2016)
 
-* Enforce semver.
+* Enforce semver
 * Lib:
     - [m] Publish chalk as part of the top-level API: `storyboard.chalk`. This is for convenience, as well as to prevent duplicate instances of chalk in certain setups (should not happen anyway if you use `npm@3` and include `chalk@^1.0.0`).
 
@@ -52,4 +56,4 @@
 
 ## 0.1.0 (Mar. 15, 2016)
 
-* First public release.
+* First public release
