@@ -316,7 +316,6 @@ RepetitionLine = React.createClass
     timeType:               React.PropTypes.string.isRequired
     setTimeType:            React.PropTypes.func.isRequired
     seqFullRefresh:         React.PropTypes.number.isRequired
-    msg:                    React.PropTypes.string.isRequired
     quickFind:              React.PropTypes.string.isRequired
 
   #-----------------------------------------------------
