@@ -1,4 +1,7 @@
-_window = if process.env.TEST_BROWSER then undefined else window
+_window = undefined
+if not process.env.TEST_BROWSER
+  try
+    _window = window
 _listeners = []
 _fExtensionReady = false
 
@@ -29,12 +32,6 @@ _rxMsg = (msg) ->
     _fExtensionReady = true
     if type is 'CONNECT_REQUEST' 
       _txMsg {type: 'CONNECT_RESPONSE'}
-
-      # MOVE TO A COMPATIBLE WS CLIENT LISTENER!!
-      #if _fSocketConnected
-      #  _txMsg {type: 'WS_CONNECTED'}
-      #else
-      #  _txMsg {type: 'WS_DISCONNECTED'}
     _txPendingMsgs()
 
   for listener in _listeners
@@ -63,7 +60,6 @@ _doTxMsg = (msg) -> _window?.postMessage msg, '*'
 _init()
 
 module.exports = {
-  init,
   tx,
   rx,
 

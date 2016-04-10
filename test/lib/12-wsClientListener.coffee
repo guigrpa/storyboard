@@ -3,6 +3,7 @@ chalk             = require 'chalk'
 http              = require 'http'
 socketio          = require 'socket.io'
 wsClientListener  = require '../../lib/listeners/wsClient'
+ifExtension       = require '../../lib/listeners/interfaceExtension'
 k                 = require '../../lib/gral/constants'
 
 {mainStory} = storyboard
@@ -32,6 +33,7 @@ describe "wsClientListener", ->
     _mockWindow = 
       postMessage: _spyClientWinTxMsg
       addEventListener: (evType, listener) -> _clientWinRxEvent = listener
+    ifExtension._setWindow _mockWindow
     return new Promise (resolve, reject) ->
       _httpServer = http.createServer(->)
       _httpServer.on 'listening', resolve
@@ -43,7 +45,7 @@ describe "wsClientListener", ->
         _serverSocket = socket
         _serverSocket.on 'MSG', _spyServerRxMsg
         resolve()
-      _listener = storyboard.addListener wsClientListener, {_mockWindow}
+      _listener = storyboard.addListener wsClientListener
 
     # Make WsServerListener think that the extension is ready
     .then ->
