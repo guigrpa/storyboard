@@ -2,7 +2,7 @@ _                 = require '../../vendor/lodash'
 timm              = require 'timm'
 React             = require 'react'
 PureRenderMixin   = require 'react-addons-pure-render-mixin'
-ansiColors        = require 'storyboard-core/lib/ansiColors'
+ansiColors        = require '../../gral/ansiColors'
 
 ColoredText = React.createClass
   displayName: 'ColoredText'

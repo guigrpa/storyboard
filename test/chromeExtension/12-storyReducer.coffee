@@ -1,6 +1,6 @@
 _         = require 'lodash'
 timm      = require 'timm'
-treeLines = require 'storyboard-core/lib/treeLines'
+treeLines = require '../../lib/gral/treeLines'
 {expect}  = require './imports'
 reducer   = require '../../lib/chromeExtension/reducers/storyReducer'
 

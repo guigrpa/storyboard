@@ -6,7 +6,7 @@ socketio    = require 'socket.io'
 Promise     = require 'bluebird'
 chalk       = require 'chalk'
 timm        = require 'timm'
-treeLines   = require 'storyboard-core/lib/treeLines'
+treeLines   = require '../gral/treeLines'
 k           = require '../gral/constants'
 
 DEFAULT_CONFIG = 

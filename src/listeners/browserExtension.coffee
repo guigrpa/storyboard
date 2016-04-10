@@ -1,6 +1,6 @@
 timm        = require 'timm'
-treeLines   = require 'storyboard-core/lib/treeLines'
 ifExtension = require './interfaceExtension'
+treeLines   = require '../gral/treeLines'
 k           = require '../gral/constants'
 
 DEFAULT_CONFIG = {}
