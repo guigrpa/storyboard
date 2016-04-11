@@ -16,11 +16,14 @@ describe "consoleListener", ->
     storyboard.addListener consoleListener
     storyboard.config filter: '*:*'
     _listener = storyboard.getListeners()[0]
-    _spyLog   = sinon.spy()
-    _spyError = sinon.spy()
-    consoleListener._setConsole 
-      log: _spyLog
-      error: _spyError
+    sinon.spy console, 'log'
+    sinon.spy console, 'error'
+    _spyLog   = console.log
+    _spyError = console.error
+
+  after ->
+    console.log.restore()
+    console.error.restore()
 
   beforeEach -> 
     _spyLog.reset()

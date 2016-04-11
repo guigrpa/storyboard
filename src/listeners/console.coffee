@@ -16,9 +16,6 @@ TIME_COL_RELATIVE_EMPTY = _.padStart '', TIME_COL_RELATIVE_LENGTH
 TIME_COL_ABSOLUTE_LENGTH = new Date().toISOString().length
 TIME_COL_ABSOLUTE_EMPTY = _.padStart '', TIME_COL_ABSOLUTE_LENGTH
 
-_console = console
-_setConsole = (o) -> _console = o
-
 #-------------------------------------------------
 # ## Helpers
 #-------------------------------------------------
@@ -96,9 +93,9 @@ _outputLog = (text, level, extraTimeStr) ->
     args = _getBrowserConsoleArgs text
   else
     args = [text]
-  if extraTimeStr? then _console.log "      #{extraTimeStr}"
+  if extraTimeStr? then console.log "      #{extraTimeStr}"
   output = if (level? and level >= 50 and level <= 60) then 'error' else 'log'
-  _console[output].apply _console, args
+  console[output].apply console, args
 
 #-------------------------------------------------
 # ## API
@@ -114,7 +111,4 @@ create = (baseConfig) ->
 
 module.exports = {
   create,
-
-  # Just for unit testing
-  _setConsole,
 }
