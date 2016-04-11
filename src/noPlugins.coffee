@@ -18,16 +18,6 @@ filters = require './gral/filters'
 hub = require './gral/hub'
 hub.init {mainStory}
 
-# Browser side: in production, nothing. 
-if k.IS_BROWSER
-  if process.env.NODE_ENV isnt 'production'
-    hub.addListener require './listeners/console'
-    hub.addListener require './listeners/browserExtension'
-
-# Server side: console listener
-else
-  hub.addListener require './listeners/console'
-
 config = (options = {}) ->
   for key, val of options
     switch key

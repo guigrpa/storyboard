@@ -6,7 +6,7 @@
     - [M] Split WS Client listener in two:
         + WS Client listener (dedicated just to WebSockets)
         + Browser Extension listener (relays client-side logs to the browser extension)
-    - [M] Include a *light* version of Storyboard (at `storyboard/lib/light`) that does not include the socket.io dependency (by default included in the normal version)
+    - [M] Include a *no-plugins* version of Storyboard (at `storyboard/lib/noPlugins`), which might become default in future major releases. Using this version prevents socket.io from getting into your bundle, if you don't need it.
 * Browser extension:
     - [M] For servers requiring no auth for logs: Automatically retrieve server backlog upon startup
     - [m] Bumped React to v15.0.1
