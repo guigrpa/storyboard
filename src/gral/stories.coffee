@@ -23,7 +23,7 @@ _getRecordId = -> if k.IS_BROWSER then "c#{_recordId++}" else "s#{_recordId++}"
 Story = ({parents, src, title, levelNum, fHiddenByFilter}) ->
   @parents = parents
   @fRoot = not parents.length
-  @storyId = if @fRoot then '*' else _getStoryId()
+  @storyId = (if @fRoot then '*/' else '') + _getStoryId()
   @src = src
   @title = title
   @level = levelNum
@@ -34,8 +34,7 @@ Story = ({parents, src, title, levelNum, fHiddenByFilter}) ->
   @hiddenRecords = []
   @fHiddenByFilter = fHiddenByFilter or (not filters.passesFilter @src, @level)
   if @fHiddenByFilter then _hiddenStories[@storyId] = @
-  if not @fRoot
-    @emitAction 'CREATED', @t
+  @emitAction 'CREATED', @t
 
 #-----------------------------------------------
 # ### Story lifecycle
@@ -184,5 +183,5 @@ mainStory = new Story
   parents: []
   src: 'storyboard'
   title: title
-  levelNum: k.LEVEL_STR_TO_NUM.FATAL
+  levelNum: k.LEVEL_STR_TO_NUM.SIGN
 module.exports = mainStory

@@ -115,7 +115,7 @@ _Story = React.createClass
       if fDirectChild
         return if action is 'CREATED'
         return if (not @props.fShowClosedActions) and (action is 'CLOSED')
-      return <Line key={id}
+      return <Line key={"#{storyId}_#{id}"}
         record={record}
         level={@props.level}
         fDirectChild={fDirectChild}
@@ -128,17 +128,19 @@ _Story = React.createClass
     out
 
   renderAttachment: (record) -> 
+    {storyId, id} = record
     props = _.pick @props, ['level', 'timeType', 'setTimeType', 'quickFind', 'seqFullRefresh']
     return record.obj.map (line, idx) ->
-      <AttachmentLine key={"#{record.id}_#{idx}"}
+      <AttachmentLine key={"#{storyId}_#{id}_#{idx}"}
         record={record}
         {...props}
         msg={line}
       />
 
   renderRepetitions: (record) ->
+    {storyId, id} = record
     props = _.pick @props, ['level', 'timeType', 'setTimeType', 'quickFind', 'seqFullRefresh']
-    <RepetitionLine key={"#{record.id}_repetitions"}
+    <RepetitionLine key={"#{storyId}_#{id}_repetitions"}
       record={record}
       {...props}
     />

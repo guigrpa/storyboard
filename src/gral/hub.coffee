@@ -25,6 +25,8 @@ addListener = (listenerFactory, config) ->
   listener = listenerFactory.create listenerConfig
   _listeners.push listener
   listener.init?()
+  for record in _buf
+    listener.process record
   listener
 
 removeListener = (listener) ->

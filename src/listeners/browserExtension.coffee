@@ -1,18 +1,10 @@
 timm        = require 'timm'
 ifExtension = require './interfaceExtension'
 treeLines   = require '../gral/treeLines'
+serializeAttachments = require './serializeAttachments'
 k           = require '../gral/constants'
 
 DEFAULT_CONFIG = {}
-
-#-------------------------------------------------
-# ## Helpers
-#-------------------------------------------------
-# Process client-side attachments, exactly the same
-# way as in the WS Server listener
-_preprocessAttachments = (record) -> 
-  return record if not record.obj?
-  return timm.set record, 'obj', treeLines(record.obj)
 
 #-------------------------------------------------
 # ## API
@@ -23,7 +15,7 @@ create = (baseConfig) ->
     type: 'BROWSER_EXTENSION'
     init: -> 
     process: (record) -> 
-      ifExtension.tx {type: 'RECORDS', data: [_preprocessAttachments record]}
+      ifExtension.tx {type: 'RECORDS', data: [serializeAttachments record]}
     ## config: (newConfig) -> config = timm.merge config, newConfig
   listener
 

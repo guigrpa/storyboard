@@ -1,10 +1,14 @@
-{mainStory, chalk} = require '../storyboard'  # you'd write: `'storyboard'`
+{mainStory, chalk, addListener} = require '../noPlugins'  # you'd write: `'storyboard/lib/noPlugins'`
+addListener require('../listeners/wsClient'),
+  uploadClientStories: true
 
 mainStory.info 'client', 'Running client...'
 
 nodeButton = document.getElementById 'refresh'
 nodeItems  = document.getElementById 'items'
 nodeButton.addEventListener 'click', -> _refresh 'Click on Refresh'
+
+window.onunload = -> mainStory.close()
 
 _refresh = (storyTitle) ->
   seq = Math.floor(Math.random() * 100)

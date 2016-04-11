@@ -44,7 +44,14 @@ _getTimeStr = (record, config) ->
 # ## Main processing function
 #-------------------------------------------------
 _process = (record, config) ->
-  {src, storyId, level, fStory, obj, objExpanded, objLevel, objOptions} = record
+  {
+    src, storyId, level, fStory, fServer
+    obj, objExpanded, objLevel, objOptions
+  } = record
+
+  # Do not pollute server logs with uploaded client logs
+  return if (not k.IS_BROWSER) and (not fServer)
+
   [timeStr, extraTimeStr] = _getTimeStr record, config
   levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[level]
   if fStory
@@ -90,7 +97,7 @@ _outputLog = (text, level, extraTimeStr) ->
   else
     args = [text]
   if extraTimeStr? then _console.log "      #{extraTimeStr}"
-  output = if (level? and level >= 50) then 'error' else 'log'
+  output = if (level? and level >= 50 and level <= 60) then 'error' else 'log'
   _console[output].apply _console, args
 
 #-------------------------------------------------

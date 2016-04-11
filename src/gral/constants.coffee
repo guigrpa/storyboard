@@ -7,6 +7,7 @@ module.exports =
     40: 'WARN'
     50: 'ERROR'
     60: 'FATAL'
+    70: 'SIGN'
   LEVEL_STR_TO_NUM:
     TRACE: 10
     DEBUG: 20
@@ -14,6 +15,7 @@ module.exports =
     WARN: 40
     ERROR: 50
     FATAL: 60
+    SIGN: 70
 
   # WebSockets
   WS_NAMESPACE: '/STORYBOARD'
