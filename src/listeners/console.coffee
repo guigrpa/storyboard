@@ -42,12 +42,13 @@ _getTimeStr = (record, config) ->
 #-------------------------------------------------
 _process = (record, config) ->
   {
-    src, storyId, level, fStory, fServer
-    obj, objExpanded, objLevel, objOptions
+    src, storyId, level, fStory, fServer,
+    obj, objExpanded, objLevel, objOptions,
+    uploadedBy,
   } = record
 
   # Do not pollute server logs with uploaded client logs
-  return if (not k.IS_BROWSER) and (not fServer)
+  return if (not k.IS_BROWSER) and uploadedBy?
 
   [timeStr, extraTimeStr] = _getTimeStr record, config
   levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[level]
