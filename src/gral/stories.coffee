@@ -1,8 +1,10 @@
-uuid        = require 'node-uuid'
-_           = require '../vendor/lodash'
-k           = require './constants'
-filters     = require './filters'
-hub         = require './hub'
+uuid          = require 'node-uuid'
+platform      = require 'platform'
+chalk         = require 'chalk'
+_             = require '../vendor/lodash'
+k             = require './constants'
+filters       = require './filters'
+hub           = require './hub'
 
 DEFAULT_SRC = 'main'
 DEFAULT_CHILD_TITLE = ''
@@ -176,12 +178,20 @@ _completeRecord = (record) ->
 _emit = (record) -> hub.emit record
 
 #-----------------------------------------------
-# ### API
+# ### Create the main story
 #-----------------------------------------------
-title = (if k.IS_BROWSER then 'BROWSER' else 'SERVER') + ' ROOT STORY'
+title = "ROOT STORY: #{chalk.italic.blue.bold platform.description}"
 mainStory = new Story 
   parents: []
   src: 'storyboard'
   title: title
-  levelNum: k.LEVEL_STR_TO_NUM.SIGN
+  levelNum: k.LEVEL_STR_TO_NUM.INFO
+
+### istanbul ignore next ###
+try
+  window.addEventListener 'beforeunload', -> mainStory.close()
+
+#-----------------------------------------------
+# ### API
+#-----------------------------------------------
 module.exports = mainStory
