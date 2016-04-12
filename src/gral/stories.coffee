@@ -190,6 +190,8 @@ mainStory = new Story
 ### istanbul ignore next ###
 try
   window.addEventListener 'beforeunload', -> mainStory.close()
+try
+  process.on 'exit', -> mainStory.close()
 
 #-----------------------------------------------
 # ### API
