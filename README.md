@@ -11,12 +11,12 @@ Demo: http://storyboard-demo.herokuapp.com/
 ## Why?
 
 * **Hierarchical stories**: put logs in context (*stories*), and group stories/logs within stories. Such groupings are extremely useful with concurrent user actions.
-* Get the whole picture with **end-to-end stories**: see all **client and server** tasks triggered by a user action (a click on the *Login* button, maybe) in a single place.
-* Use the **Storyboard DevTools Chrome extension** to view client and server logs with a clean and detail-rich interface.
+* Get the whole picture with *end-to-end stories*: see all **client and server tasks** triggered by a user action (a click on the *Login* button, maybe) **in a single place**.
+* Use the **Storyboard DevTools Chrome extension** to view client and server logs with a clean and detail-rich interface. Now with **remote client log monitoring for mobile devices** and non-Chrome browsers.
 * Watch server logs being pushed in **real time** to the Storyboard DevTools extension via WebSockets.
 * Ask for **authentication** to see server logs; hook up your own auth function.
 * **Attach anything** to your logs for further investigation.
-* Integrate your app with Storyboard's **flexible plugin architecture**. Three plugins are available out of the box: Console, WebSocket Server and WebSocket Client. Just use what you need: most features are optional!
+* Integrate your app with Storyboard's **flexible plugin architecture**. Four plugins are available out of the box: Console, WebSocket Server & Client and Browser Extension. Just use what you need: most features are optional!
 * Give logs **source and severity** attributes and apply **coarse- or fine-grained filtering**, with white and black lists.
 * Use **color** to highlight what's important. Storyboard extends the popular [chalk](https://github.com/chalk/chalk) library so that it can also be used on the browser.
 * Enjoy the **simple-yet-powerful API** (I hope!).
@@ -40,20 +40,20 @@ Feel free to check out the [example](https://github.com/guigrpa/storyboard/blob/
 ### Basic usage
 
 ```js
-var {mainStory: story} = require("storyboard");
-story.info("Hello world!");
+import { mainStory: story } from 'storyboard';
+story.info('Hello world!');
 ```
 
 
 ### Severity levels
 
 ```js
-story.trace("Teeny-weeny detail: x = 3, y = 4");
-story.debug("Called login()");
-story.info("User 'admin' authenticated successfully");
-story.warn("Sad we can't show colors in GFM");
-story.error("User 'admin' could not be authenticated", {attach: err});
-story.fatal("Ooops! Crashed! Mayday!", {attach: fatalError});
+story.trace('Teeny-weeny detail: x = 3, y = 4');
+story.debug('Called login()');
+story.info('User "admin" authenticated successfully');
+story.warn('Sad we can\'t show colors in GFM');
+story.error('User "admin" could not be authenticated', { attach: err });
+story.fatal('Ooops! Crashed! Mayday!', { attach: fatalError });
 // ...
 // 2016-03-09T16:18:19.659Z           main WARN  Sad we can't show colors in GFM
 // 2016-03-09T16:18:19.672Z           main ERROR User 'admin' could not be authenticated
@@ -72,8 +72,8 @@ Maybe you noticed that the `trace` call produces no output by default. See [Log 
 Namespace your logs for readability, as well as to allow finer-grained [filtering](#log-filtering) later on.
 
 ```js
-story.info("http", "GET /api/item/25");
-story.info("db", "Fetching item 25...");
+story.info('http', 'GET /api/item/25');
+story.info('db', 'Fetching item 25...');
 // 2016-03-09T16:29:51.943Z           http INFO  GET /api/item/25
 // 2016-03-09T16:31:52.231Z             db INFO  Fetching item 25...
 ```
@@ -84,8 +84,8 @@ story.info("db", "Fetching item 25...");
 Use colors to highlight important parts of your logs:
 
 ```js
-story.info("http", `GET ${chalk.green.bold("/api/item/26")}`);
-story.info("db", `Fetching item ${chalk.green.bold("26")}...`);
+story.info('http', `GET ${chalk.green.bold('/api/item/26')}`);
+story.info('db', `Fetching item ${chalk.green.bold('26')}...`);
 // 2016-03-09T16:29:51.943Z           http INFO  GET /api/item/26
 // 2016-03-09T16:31:52.231Z             db INFO  Fetching item 26...
 ```
@@ -100,10 +100,12 @@ Attach anything to your logs that might provide additional context: an object, a
 You can also use the `attachLevel` option to control the (severity) level of the detailed object logs (by default: the same level of the main logged line).
 
 ```js
-story.info("test", "A simple object", {attachInline: obj1})
+story.info('test', 'A simple object', { attachInline: obj1 });
 // 2016-03-09T16:51:16.436Z           test INFO  A simple object -- {"foo":2,"bar":3}
-story.info("test", "An object with a circular reference", 
-  {attach: obj2, attachLevel: "debug"})
+story.info('test', 'An object with a circular reference', {
+  attach: obj2, 
+  attachLevel: 'debug',
+});
 // 2016-03-09T16:52:48.882Z           test INFO  An object with a circular reference
 // 2016-03-09T16:52:48.882Z           test DEBUG   foo: 2
 // 2016-03-09T16:52:48.882Z           test DEBUG   bar: 3
@@ -124,7 +126,7 @@ Inspired by the popular [debug](https://github.com/visionmedia/debug) library, S
 * `foo, bar:INFO, -test, *:WARN` will include logs from `foo` (`DEBUG` or higher), `bar` (`INFO` or higher), and all other sources (`WARN` or higher), but exclude source `test`.
 * `ba*:*, -basket` will include all logs from `bar`, `baz`, etc. but exclude source `basket`.
 
-In Node, you can configure log filtering via the `STORYBOARD` environment variable:
+In Node, you can configure log filtering via the `STORYBOARD` environment variable (have a look at [cross-env](https://github.com/kentcdodds/cross-env) for a cross-platform setup):
 
 ```bash
 # OS X / Linux
@@ -142,8 +144,8 @@ localStorage.STORYBOARD = "*:*"
 Alternatively, you can configure the log filters programatically:
 
 ```js
-var storyboard = require("storyboard");
-storyboard.config({filter: "*:*"});
+import storyboard from 'storyboard';
+storyboard.config({ filter: '*:*' });
 ```
 
 
@@ -152,10 +154,14 @@ storyboard.config({filter: "*:*"});
 Create child stories by calling `child()` on the parent story and passing an options argument. Don't forget to `close()` the child story when you're done with it! More on child stories [here](#remote-access-to-server-stories).
 
 ```js
-var childStory = story.child({src: "lib", title: "Little Red Riding Hood", level: 'DEBUG'});
-childStory.info("Once upon a time...");
-childStory.warn("...a wolf appeared!...");
-childStory.info("...and they lived happily ever after.");
+const childStory = story.child({
+  src: 'lib',
+  title: 'Little Red Riding Hood',
+  level: 'DEBUG',
+});
+childStory.info('Once upon a time...');
+childStory.warn('...a wolf appeared!...');
+childStory.info('...and they lived happily ever after.');
 childStory.close();
 // 2016-03-19T14:10:14.080Z        lib DEBUG ┌── Little Red Riding Hood [CREATED]
 // 2016-03-19T14:10:14.083Z       main INFO  Once upon a time...
@@ -167,17 +173,21 @@ childStory.close();
 *Note: Child stories have `INFO` level by default, and can be completely hidden by [log filtering](#log-filtering). However, when a log with level `WARN` or higher is added to a hidden story, the story and all of its ancestors will become visible. You will not miss any errors, nor the actions that led to them!*
 
 
-### Listeners
+### Listeners (plugins)
 
-Logs emitted by stories are relayed by the Storyboard `hub` module to all attached *listeners*. Three listeners come built-in:
+Logs emitted by stories are relayed by the Storyboard `hub` module to all attached *listeners*. Several listeners come built-in:
 
-* **Console**: formats logs and sends them to `console.log` or `console.error`. You've already seen this listener in action above. Automatically enabled in the server, and in development mode in the browser (set the `NODE_ENV` environment variable to `development` while bundling).
+* **Console**: formats logs and sends them to `console.log` or `console.error`. You've already seen this listener in action above. Automatically enabled in the server, and in development mode in the browser (set the `NODE_ENV` environment variable to `production` to exclude it from your bundle).
+
+* **Browser Extension**: relays local (client) logs to the [Storyboard DevTools](#storyboard-devtools). Automatically enabled in the browser in development mode.
 
 * **WebSocket Server**: encapsulates logs and pushes them in real time to WebSocket clients. Disabled by default; enable it for [remote access to server stories](#remote-access-to-server-stories).
 
-* **WebSocket Client**: takes logs pushed from the server, as well as local client logs and relays them to the [Storyboard DevTools](#storyboard-devtools). Automatically enabled in the browser.
+* **WebSocket Client**: relays logs pushed from the server to the [Storyboard DevTools](#storyboard-devtools). It can also [upload client logs to the server for remote monitoring](#remote-access-to-client-stories). Automatically enabled in the browser in development mode.
 
-More listeners can be added by the user, e.g. to persist logs in a database, publish them online, etc. Get inspired by [winston](https://github.com/winstonjs/winston)'s or [bunyan](https://github.com/trentm/node-bunyan)'s plugins.
+More listeners can be added by the user, e.g. to persist logs in a database, publish them online, etc. Get inspired by [winston](https://github.com/winstonjs/winston)'s and [bunyan](https://github.com/trentm/node-bunyan)'s plugins.
+
+*Note: If you don't want any listeners to be enabled, just import `'storyboard/lib/noPlugins'` instead of `'storyboard'`. See ["Remote access to client stories" below](#remote-access-to-client-stories) for a particular case in which this is useful. In the future, it is quite probable that `noPlugins` becomes the default option.*
 
 
 ### Remote access to server stories
@@ -185,15 +195,15 @@ More listeners can be added by the user, e.g. to persist logs in a database, pub
 Adding remote access to a Node application is easy; just attach the WebSocket Server listener as follows:
 
 ```js
-var storyboard = require("storyboard");
-var wsServer = require("storyboard/lib/listeners/wsServer");
-storyboard.addListener(wsServer);
+import { mainStory, addListener } from 'storyboard';
+import wsServer from 'storyboard/lib/listeners/wsServer';
+addListener(wsServer);
 ```
 
 You can call `addListener()` with an additional `options` object overriding the following defaults or including additional parameters:
 
 ```js
-var options = {
+const options = {
   port: 8090,           // port for standalone log server
   throttle: 200,        // [ms] send logs at most every X ms
   authenticate: null,   // no authentication function
@@ -207,12 +217,12 @@ You'll probably want to configure the `authenticate` function (without it, your 
 ```js
 // Example #1: synchronous
 storyboard.addListener(wsServer, {
-  authenticate: ({login, password}) => true
+  authenticate: ({ login, password }) => true,
 });
 
 // Example #2: asynchronous (returning a promise)
 storyboard.addListener(wsServer, {
-  authenticate: ({login, password}) => Promise.resolve(true)
+  authenticate: ({ login, password }) => Promise.resolve(true),
 });
 ```
 
@@ -220,26 +230,45 @@ You'll also probably want to supercharge your **main application HTTP server for
 
 ```js
 // If you don't use WebSockets:
-var app = require("express")();
-var httpServer = require("http").createServer(app);
+import express from 'express';
+import http from 'http';
+const httpServer = http.createServer(express());
 httpServer.listen(3000);
-storyboard.addListener(wsServer, {httpServer});
+storyboard.addListener(wsServer, { httpServer });
 
-// If you use socket.io WebSockets:
-var socketServer = socketio(httpServer);
-storyboard.addListener(wsServer, {socketServer});
+// If you use socket.io WebSockets (without socket authentication):
+import socketio from 'socket.io';
+const socketServer = socketio(httpServer);
+storyboard.addListener(wsServer, { socketServer });
 
 // If you use socket authentication, namespace the main app's
-// sockets so that it does not interfere with the log server:
+// sockets so that they don't clash with the log server's:
 // At the server...
-var io = socketServer.of("/myApp");
-io.use(socketAuthenticate);
-io.on("connection", socketConnect);
+const io = socketServer.of('/myApp');
+io.use(myAuthMiddleware);
+io.on('connection', myConnectFunction);
 // ...and at the client:
-var socket = socketio.connect("/myApp")
+const socket = socketio.connect('/myApp')
 ```
 
 You can also change the port of the **standalone log server** (independent from your main application's HTTP server) by modifying `options.port`. Disable it entirely by setting the attribute to `null`.
+
+
+### Remote access to client stories
+
+In some cases, you may want to remotely monitor client logs, e.g. if you are building a mobile web app, or you want to see the logs generated in non-Chrome browsers for which there is (currently) no [browser extension](#storyboard-devtools).
+
+For these cases, you can configure your WebSocket Client listener so that it uploads its logs to the server, which can then provide remote access to them:
+
+```js
+import { mainStory, addListener } from 'storyboard/lib/noPlugins';
+import wsClient from 'storyboard/lib/listeners/wsClient';
+addListener(wsClient, { uploadClientStories: true });
+```
+
+Client logs will not pollute the server's own log, and will appear under a dedicated *browser root story* in the Storyboard DevTools, along with a short description on the client's platform:
+
+![Remote monitoring](https://github.com/guigrpa/storyboard/blob/master/docs/05-Remote%20monitoring?raw=true)
 
 
 ### End-to-end stories
@@ -252,24 +281,28 @@ For this to work, the client's `storyId` must be transmitted to the server *some
 
 ```js
 // Client:
-var story = mainStory.child({src: "itemList", title: "User click on Refresh"});
-story.info("itemList", "Fetching items...");
+const story = mainStory.child({
+  src: 'itemList',
+  title: 'User click on Refresh',
+});
+story.info('itemList', 'Fetching items...');
 fetch(`/items?storyId=${story.storyId}`)
 .then(response => response.json())
-.then(items => story.info("itemList", `Fetched ${items.length} items`))
+.then(items => story.info('itemList', `Fetched ${items.length} items`))
 .finally(() => story.close());  // using Bluebird's terse API
 
 // Server (using Express):
-var app = require("express")();
-app.get("/items", function(req, res){
-  var {storyId} = req.query;
-  var extraParents = (storyId !== undefined) ? [storyId] : undefined;
-  var story = mainStory.child({
-    src: "http", 
+import express from 'express';
+const app = express();
+app.get('/items', (req, res) => {
+  const { storyId } = req.query;
+  const extraParents = (storyId != null) ? [storyId] : undefined;
+  const story = mainStory.child({
+    src: 'http', 
     title: `HTTP request ${req.url}`,
-    extraParents
+    extraParents,
   });
-  story.info("http", "Processing request...")
+  story.info('http', 'Processing request...');
   // ...
   res.json(items);
   story.close();
@@ -283,7 +316,7 @@ Want to see the end-to-end story? Use the Storyboard DevTools extension.
 
 ### Storyboard DevTools
 
-Using the extension should be pretty straightforward. After [installing it](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc), open the Chrome DevTools, select the Storyboard pane and point your browser at either:
+Using the browser extension should be pretty straightforward. After [installing it](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc), open the Chrome DevTools, select the Storyboard pane and point your browser at either:
 
 * Your standard application URL, to see both server and client logs
 * Port 8090 (configurable) of your server, to see server logs only
