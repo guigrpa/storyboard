@@ -3,6 +3,7 @@
 *[M]: major change; [m]: minor change*
 
 * Lib:
+    - [M] Add **remote log monitoring**: logs can be uploaded by the WS Client listener, e.g. from mobile devices or non-Chrome browsers, and monitored from a remote Storyboard DevTools somewhere else.
     - [M] Split WS Client listener in two:
         + WS Client listener (dedicated just to WebSockets)
         + Browser Extension listener (relays client-side logs to the browser extension)
