@@ -30,9 +30,6 @@ describe 'storyboard', ->
 
     beforeEach -> storyboard.config {filter: '*:*'}
 
-    it 'should have the highest level', ->
-      expect(mainStory.level).to.equal k.LEVEL_STR_TO_NUM.SIGN
-    
     it 'should emit a record when logging', ->
       mainStory.info 'src1', 'msg1'
       expect(_spy).to.have.been.calledOnce
