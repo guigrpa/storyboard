@@ -20,13 +20,13 @@
 
     <section class="main-content">
       <h1>
-<a id="storyboard---" class="anchor" href="#storyboard---" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>storyboard <a href="https://travis-ci.org/guigrpa/storyboard"><img src="https://travis-ci.org/guigrpa/storyboard.svg" alt="Build Status"></a> <a href="https://coveralls.io/github/guigrpa/storyboard?branch=master"><img src="https://coveralls.io/repos/github/guigrpa/storyboard/badge.svg?branch=master" alt="Coverage Status"></a> <a href="https://www.npmjs.com/package/storyboard"><img src="https://img.shields.io/npm/v/storyboard.svg" alt="npm version"></a>
+<a id="storyboard---" class="anchor" href="#storyboard---" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>storyboard <a href="https://travis-ci.org/guigrpa/storyboard"><img src="https://travis-ci.org/guigrpa/storyboard.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/github/guigrpa/storyboard?branch=master"><img src="https://coveralls.io/repos/github/guigrpa/storyboard/badge.svg?branch=master" alt="Coverage Status"></a> <a href="https://www.npmjs.com/package/storyboard"><img src="https://img.shields.io/npm/v/storyboard.svg" alt="npm version"></a>
 </h1>
 
 <h2>
 <a id="what" class="anchor" href="#what" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What?</h2>
 
-<p><img src="https://github.com/guigrpa/storyboard/blob/master/docs/Storyboard.gif?raw=true" alt="Storyboard DevTools"></p>
+<p><img src="https://raw.githubusercontent.com/guigrpa/storyboard/master/docs/Storyboard.gif" alt="Storyboard DevTools"></p>
 
 <p>A library, plus a <a href="https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc">Chrome DevTools extension</a>.</p>
 
@@ -38,13 +38,13 @@
 <ul>
 <li>
 <strong>Hierarchical stories</strong>: put logs in context (<em>stories</em>), and group stories/logs within stories. Such groupings are extremely useful with concurrent user actions.</li>
-<li>Get the whole picture with <strong>end-to-end stories</strong>: see all <strong>client and server</strong> tasks triggered by a user action (a click on the <em>Login</em> button, maybe) in a single place.</li>
-<li>Use the <strong>Storyboard DevTools Chrome extension</strong> to view client and server logs with a clean and detail-rich interface.</li>
+<li>Get the whole picture with <em>end-to-end stories</em>: see all <strong>client and server tasks</strong> triggered by a user action (a click on the <em>Login</em> button, maybe) <strong>in a single place</strong>.</li>
+<li>Use the <strong>Storyboard DevTools Chrome extension</strong> to view client and server logs with a clean and detail-rich interface. Now with <strong>remote client log monitoring for mobile devices</strong> and non-Chrome browsers.</li>
 <li>Watch server logs being pushed in <strong>real time</strong> to the Storyboard DevTools extension via WebSockets.</li>
 <li>Ask for <strong>authentication</strong> to see server logs; hook up your own auth function.</li>
 <li>
 <strong>Attach anything</strong> to your logs for further investigation.</li>
-<li>Integrate your app with Storyboard's <strong>flexible plugin architecture</strong>. Three plugins are available out of the box: Console, WebSocket Server and WebSocket Client. Just use what you need: most features are optional!</li>
+<li>Integrate your app with Storyboard's <strong>flexible plugin architecture</strong>. Four plugins are available out of the box: Console, WebSocket Server &amp; Client and Browser Extension. Just use what you need: most features are optional!</li>
 <li>Give logs <strong>source and severity</strong> attributes and apply <strong>coarse- or fine-grained filtering</strong>, with white and black lists.</li>
 <li>Use <strong>color</strong> to highlight what's important. Storyboard extends the popular <a href="https://github.com/chalk/chalk">chalk</a> library so that it can also be used on the browser.</li>
 <li>Enjoy the <strong>simple-yet-powerful API</strong> (I hope!).</li>
@@ -68,18 +68,18 @@
 <h3>
 <a id="basic-usage" class="anchor" href="#basic-usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Basic usage</h3>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> {mainStory<span class="pl-k">:</span> story} <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>storyboard<span class="pl-pds">"</span></span>);
-<span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>Hello world!<span class="pl-pds">"</span></span>);</pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">mainStory</span>: <span class="pl-smi">story</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>storyboard<span class="pl-pds">'</span></span>;
+<span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">'</span>Hello world!<span class="pl-pds">'</span></span>);</pre></div>
 
 <h3>
 <a id="severity-levels" class="anchor" href="#severity-levels" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Severity levels</h3>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-smi">story</span>.<span class="pl-en">trace</span>(<span class="pl-s"><span class="pl-pds">"</span>Teeny-weeny detail: x = 3, y = 4<span class="pl-pds">"</span></span>);
-<span class="pl-smi">story</span>.<span class="pl-en">debug</span>(<span class="pl-s"><span class="pl-pds">"</span>Called login()<span class="pl-pds">"</span></span>);
-<span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>User 'admin' authenticated successfully<span class="pl-pds">"</span></span>);
-<span class="pl-smi">story</span>.<span class="pl-en">warn</span>(<span class="pl-s"><span class="pl-pds">"</span>Sad we can't show colors in GFM<span class="pl-pds">"</span></span>);
-<span class="pl-smi">story</span>.<span class="pl-en">error</span>(<span class="pl-s"><span class="pl-pds">"</span>User 'admin' could not be authenticated<span class="pl-pds">"</span></span>, {attach<span class="pl-k">:</span> err});
-<span class="pl-smi">story</span>.<span class="pl-en">fatal</span>(<span class="pl-s"><span class="pl-pds">"</span>Ooops! Crashed! Mayday!<span class="pl-pds">"</span></span>, {attach<span class="pl-k">:</span> fatalError});
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">story</span>.<span class="pl-en">trace</span>(<span class="pl-s"><span class="pl-pds">'</span>Teeny-weeny detail: x = 3, y = 4<span class="pl-pds">'</span></span>);
+<span class="pl-smi">story</span>.<span class="pl-en">debug</span>(<span class="pl-s"><span class="pl-pds">'</span>Called login()<span class="pl-pds">'</span></span>);
+<span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">'</span>User "admin" authenticated successfully<span class="pl-pds">'</span></span>);
+<span class="pl-smi">story</span>.<span class="pl-en">warn</span>(<span class="pl-s"><span class="pl-pds">'</span>Sad we can<span class="pl-cce">\'</span>t show colors in GFM<span class="pl-pds">'</span></span>);
+<span class="pl-smi">story</span>.<span class="pl-en">error</span>(<span class="pl-s"><span class="pl-pds">'</span>User "admin" could not be authenticated<span class="pl-pds">'</span></span>, { attach<span class="pl-k">:</span> err });
+<span class="pl-smi">story</span>.<span class="pl-en">fatal</span>(<span class="pl-s"><span class="pl-pds">'</span>Ooops! Crashed! Mayday!<span class="pl-pds">'</span></span>, { attach<span class="pl-k">:</span> fatalError });
 <span class="pl-c">// ...</span>
 <span class="pl-c">// 2016-03-09T16:18:19.659Z           main WARN  Sad we can't show colors in GFM</span>
 <span class="pl-c">// 2016-03-09T16:18:19.672Z           main ERROR User 'admin' could not be authenticated</span>
@@ -96,8 +96,8 @@
 
 <p>Namespace your logs for readability, as well as to allow finer-grained <a href="#log-filtering">filtering</a> later on.</p>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>http<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>GET /api/item/25<span class="pl-pds">"</span></span>);
-<span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>db<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Fetching item 25...<span class="pl-pds">"</span></span>);
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">'</span>http<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>GET /api/item/25<span class="pl-pds">'</span></span>);
+<span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">'</span>db<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Fetching item 25...<span class="pl-pds">'</span></span>);
 <span class="pl-c">// 2016-03-09T16:29:51.943Z           http INFO  GET /api/item/25</span>
 <span class="pl-c">// 2016-03-09T16:31:52.231Z             db INFO  Fetching item 25...</span></pre></div>
 
@@ -106,8 +106,8 @@
 
 <p>Use colors to highlight important parts of your logs:</p>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>http<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">`</span>GET <span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">chalk</span>.<span class="pl-smi">green</span>.<span class="pl-c1">bold</span>(<span class="pl-s"><span class="pl-pds">"</span>/api/item/26<span class="pl-pds">"</span></span>)<span class="pl-pse">}</span></span><span class="pl-pds">`</span></span>);
-<span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>db<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">`</span>Fetching item <span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">chalk</span>.<span class="pl-smi">green</span>.<span class="pl-c1">bold</span>(<span class="pl-s"><span class="pl-pds">"</span>26<span class="pl-pds">"</span></span>)<span class="pl-pse">}</span></span>...<span class="pl-pds">`</span></span>);
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">'</span>http<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">`</span>GET <span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">chalk</span>.<span class="pl-smi">green</span>.<span class="pl-c1">bold</span>(<span class="pl-s"><span class="pl-pds">'</span>/api/item/26<span class="pl-pds">'</span></span>)<span class="pl-pse">}</span></span><span class="pl-pds">`</span></span>);
+<span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">'</span>db<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">`</span>Fetching item <span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">chalk</span>.<span class="pl-smi">green</span>.<span class="pl-c1">bold</span>(<span class="pl-s"><span class="pl-pds">'</span>26<span class="pl-pds">'</span></span>)<span class="pl-pse">}</span></span>...<span class="pl-pds">`</span></span>);
 <span class="pl-c">// 2016-03-09T16:29:51.943Z           http INFO  GET /api/item/26</span>
 <span class="pl-c">// 2016-03-09T16:31:52.231Z             db INFO  Fetching item 26...</span></pre></div>
 
@@ -120,10 +120,12 @@
 
 <p>You can also use the <code>attachLevel</code> option to control the (severity) level of the detailed object logs (by default: the same level of the main logged line).</p>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>test<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>A simple object<span class="pl-pds">"</span></span>, {attachInline<span class="pl-k">:</span> obj1})
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>A simple object<span class="pl-pds">'</span></span>, { attachInline<span class="pl-k">:</span> obj1 });
 <span class="pl-c">// 2016-03-09T16:51:16.436Z           test INFO  A simple object -- {"foo":2,"bar":3}</span>
-<span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>test<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>An object with a circular reference<span class="pl-pds">"</span></span>, 
-  {attach<span class="pl-k">:</span> obj2, attachLevel<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>debug<span class="pl-pds">"</span></span>})
+<span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>An object with a circular reference<span class="pl-pds">'</span></span>, {
+  attach<span class="pl-k">:</span> obj2, 
+  attachLevel<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>debug<span class="pl-pds">'</span></span>,
+});
 <span class="pl-c">// 2016-03-09T16:52:48.882Z           test INFO  An object with a circular reference</span>
 <span class="pl-c">// 2016-03-09T16:52:48.882Z           test DEBUG   foo: 2</span>
 <span class="pl-c">// 2016-03-09T16:52:48.882Z           test DEBUG   bar: 3</span>
@@ -151,7 +153,7 @@
 <code>ba*:*, -basket</code> will include all logs from <code>bar</code>, <code>baz</code>, etc. but exclude source <code>basket</code>.</li>
 </ul>
 
-<p>In Node, you can configure log filtering via the <code>STORYBOARD</code> environment variable:</p>
+<p>In Node, you can configure log filtering via the <code>STORYBOARD</code> environment variable (have a look at <a href="https://github.com/kentcdodds/cross-env">cross-env</a> for a cross-platform setup):</p>
 
 <div class="highlight highlight-source-shell"><pre><span class="pl-c"># OS X / Linux</span>
 STORYBOARD=<span class="pl-k">*</span>:<span class="pl-k">*</span> node myScript
@@ -164,18 +166,22 @@ STORYBOARD=<span class="pl-k">*</span>:<span class="pl-k">*</span> node myScript
 
 <p>Alternatively, you can configure the log filters programatically:</p>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> storyboard <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>storyboard<span class="pl-pds">"</span></span>);
-<span class="pl-smi">storyboard</span>.<span class="pl-en">config</span>({filter<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>*:*<span class="pl-pds">"</span></span>});</pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> <span class="pl-smi">storyboard</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>storyboard<span class="pl-pds">'</span></span>;
+<span class="pl-smi">storyboard</span>.<span class="pl-en">config</span>({ filter<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>*:*<span class="pl-pds">'</span></span> });</pre></div>
 
 <h3>
 <a id="children-stories" class="anchor" href="#children-stories" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Children stories</h3>
 
 <p>Create child stories by calling <code>child()</code> on the parent story and passing an options argument. Don't forget to <code>close()</code> the child story when you're done with it! More on child stories <a href="#remote-access-to-server-stories">here</a>.</p>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> childStory <span class="pl-k">=</span> <span class="pl-smi">story</span>.<span class="pl-en">child</span>({src<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>lib<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Little Red Riding Hood<span class="pl-pds">"</span></span>, level<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>DEBUG<span class="pl-pds">'</span></span>});
-<span class="pl-smi">childStory</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>Once upon a time...<span class="pl-pds">"</span></span>);
-<span class="pl-smi">childStory</span>.<span class="pl-en">warn</span>(<span class="pl-s"><span class="pl-pds">"</span>...a wolf appeared!...<span class="pl-pds">"</span></span>);
-<span class="pl-smi">childStory</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>...and they lived happily ever after.<span class="pl-pds">"</span></span>);
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">childStory</span> <span class="pl-k">=</span> <span class="pl-smi">story</span>.<span class="pl-en">child</span>({
+  src<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>lib<span class="pl-pds">'</span></span>,
+  title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>Little Red Riding Hood<span class="pl-pds">'</span></span>,
+  level<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>DEBUG<span class="pl-pds">'</span></span>,
+});
+<span class="pl-smi">childStory</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">'</span>Once upon a time...<span class="pl-pds">'</span></span>);
+<span class="pl-smi">childStory</span>.<span class="pl-en">warn</span>(<span class="pl-s"><span class="pl-pds">'</span>...a wolf appeared!...<span class="pl-pds">'</span></span>);
+<span class="pl-smi">childStory</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">'</span>...and they lived happily ever after.<span class="pl-pds">'</span></span>);
 <span class="pl-smi">childStory</span>.<span class="pl-c1">close</span>();
 <span class="pl-c">// 2016-03-19T14:10:14.080Z        lib DEBUG ┌── Little Red Riding Hood [CREATED]</span>
 <span class="pl-c">// 2016-03-19T14:10:14.083Z       main INFO  Once upon a time...</span>
@@ -186,30 +192,33 @@ STORYBOARD=<span class="pl-k">*</span>:<span class="pl-k">*</span> node myScript
 <p><em>Note: Child stories have <code>INFO</code> level by default, and can be completely hidden by <a href="#log-filtering">log filtering</a>. However, when a log with level <code>WARN</code> or higher is added to a hidden story, the story and all of its ancestors will become visible. You will not miss any errors, nor the actions that led to them!</em></p>
 
 <h3>
-<a id="listeners" class="anchor" href="#listeners" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Listeners</h3>
+<a id="listeners-plugins" class="anchor" href="#listeners-plugins" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Listeners (plugins)</h3>
 
-<p>Logs emitted by stories are relayed by the Storyboard <code>hub</code> module to all attached <em>listeners</em>. Three listeners come built-in:</p>
+<p>Logs emitted by stories are relayed by the Storyboard <code>hub</code> module to all attached <em>listeners</em>. Several listeners come built-in:</p>
 
 <ul>
-<li><p><strong>Console</strong>: formats logs and sends them to <code>console.log</code> or <code>console.error</code>. You've already seen this listener in action above. Automatically enabled in the server, and in development mode in the browser (set the <code>NODE_ENV</code> environment variable to <code>development</code> while bundling).</p></li>
+<li><p><strong>Console</strong>: formats logs and sends them to <code>console.log</code> or <code>console.error</code>. You've already seen this listener in action above. Automatically enabled in the server, and in development mode in the browser (set the <code>NODE_ENV</code> environment variable to <code>production</code> to exclude it from your bundle).</p></li>
+<li><p><strong>Browser Extension</strong>: relays local (client) logs to the <a href="#storyboard-devtools">Storyboard DevTools</a>. Automatically enabled in the browser in development mode.</p></li>
 <li><p><strong>WebSocket Server</strong>: encapsulates logs and pushes them in real time to WebSocket clients. Disabled by default; enable it for <a href="#remote-access-to-server-stories">remote access to server stories</a>.</p></li>
-<li><p><strong>WebSocket Client</strong>: takes logs pushed from the server, as well as local client logs and relays them to the <a href="#storyboard-devtools">Storyboard DevTools</a>. Automatically enabled in the browser.</p></li>
+<li><p><strong>WebSocket Client</strong>: relays logs pushed from the server to the <a href="#storyboard-devtools">Storyboard DevTools</a>. It can also <a href="#remote-access-to-client-stories">upload client logs to the server for remote monitoring</a>. Automatically enabled in the browser in development mode.</p></li>
 </ul>
 
-<p>More listeners can be added by the user, e.g. to persist logs in a database, publish them online, etc. Get inspired by <a href="https://github.com/winstonjs/winston">winston</a>'s or <a href="https://github.com/trentm/node-bunyan">bunyan</a>'s plugins.</p>
+<p>More listeners can be added by the user, e.g. to persist logs in a database, publish them online, etc. Get inspired by <a href="https://github.com/winstonjs/winston">winston</a>'s and <a href="https://github.com/trentm/node-bunyan">bunyan</a>'s plugins.</p>
+
+<p><em>Note: If you don't want any listeners to be enabled, just import <code>'storyboard/lib/noPlugins'</code> instead of <code>'storyboard'</code>. See <a href="#remote-access-to-client-stories">"Remote access to client stories" below</a> for a particular case in which this is useful. In the future, it is quite probable that <code>noPlugins</code> becomes the default option.</em></p>
 
 <h3>
 <a id="remote-access-to-server-stories" class="anchor" href="#remote-access-to-server-stories" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Remote access to server stories</h3>
 
 <p>Adding remote access to a Node application is easy; just attach the WebSocket Server listener as follows:</p>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> storyboard <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>storyboard<span class="pl-pds">"</span></span>);
-<span class="pl-k">var</span> wsServer <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>storyboard/lib/listeners/wsServer<span class="pl-pds">"</span></span>);
-<span class="pl-smi">storyboard</span>.<span class="pl-en">addListener</span>(wsServer);</pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">mainStory</span>, <span class="pl-smi">addListener</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>storyboard<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">wsServer</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>storyboard/lib/listeners/wsServer<span class="pl-pds">'</span></span>;
+<span class="pl-en">addListener</span>(wsServer);</pre></div>
 
 <p>You can call <code>addListener()</code> with an additional <code>options</code> object overriding the following defaults or including additional parameters:</p>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> options <span class="pl-k">=</span> {
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">options</span> <span class="pl-k">=</span> {
   port<span class="pl-k">:</span> <span class="pl-c1">8090</span>,           <span class="pl-c">// port for standalone log server</span>
   throttle<span class="pl-k">:</span> <span class="pl-c1">200</span>,        <span class="pl-c">// [ms] send logs at most every X ms</span>
   authenticate<span class="pl-k">:</span> <span class="pl-c1">null</span>,   <span class="pl-c">// no authentication function</span>
@@ -221,36 +230,53 @@ STORYBOARD=<span class="pl-k">*</span>:<span class="pl-k">*</span> node myScript
 
 <div class="highlight highlight-source-js"><pre><span class="pl-c">// Example #1: synchronous</span>
 <span class="pl-smi">storyboard</span>.<span class="pl-en">addListener</span>(wsServer, {
-  <span class="pl-en">authenticate</span><span class="pl-k">:</span> ({login, password}) <span class="pl-k">=&gt;</span> <span class="pl-c1">true</span>
+  <span class="pl-en">authenticate</span><span class="pl-k">:</span> ({ login, password }) <span class="pl-k">=&gt;</span> <span class="pl-c1">true</span>,
 });
 
 <span class="pl-c">// Example #2: asynchronous (returning a promise)</span>
 <span class="pl-smi">storyboard</span>.<span class="pl-en">addListener</span>(wsServer, {
-  <span class="pl-en">authenticate</span><span class="pl-k">:</span> ({login, password}) <span class="pl-k">=&gt;</span> <span class="pl-smi">Promise</span>.<span class="pl-en">resolve</span>(<span class="pl-c1">true</span>)
+  <span class="pl-en">authenticate</span><span class="pl-k">:</span> ({ login, password }) <span class="pl-k">=&gt;</span> <span class="pl-smi">Promise</span>.<span class="pl-en">resolve</span>(<span class="pl-c1">true</span>),
 });</pre></div>
 
 <p>You'll also probably want to supercharge your <strong>main application HTTP server for <a href="#end-to-end-stories">end-to-end stories</a></strong>. Just pass your <code>http</code> <code>Server</code> instance as <code>options.httpServer</code>, or your <a href="http://socket.io/"><code>socket.io</code></a> <code>Server</code> instance as <code>options.socketServer</code>, depending on your case:</p>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-c">// If you don't use WebSockets:</span>
-<span class="pl-k">var</span> app <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>express<span class="pl-pds">"</span></span>)();
-<span class="pl-k">var</span> httpServer <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>http<span class="pl-pds">"</span></span>).<span class="pl-en">createServer</span>(app);
+<span class="pl-k">import</span> <span class="pl-smi">express</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>express<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">http</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>http<span class="pl-pds">'</span></span>;
+<span class="pl-k">const</span> <span class="pl-c1">httpServer</span> <span class="pl-k">=</span> <span class="pl-smi">http</span>.<span class="pl-en">createServer</span>(<span class="pl-en">express</span>());
 <span class="pl-smi">httpServer</span>.<span class="pl-en">listen</span>(<span class="pl-c1">3000</span>);
-<span class="pl-smi">storyboard</span>.<span class="pl-en">addListener</span>(wsServer, {httpServer});
+<span class="pl-smi">storyboard</span>.<span class="pl-en">addListener</span>(wsServer, { httpServer });
 
-<span class="pl-c">// If you use socket.io WebSockets:</span>
-<span class="pl-k">var</span> socketServer <span class="pl-k">=</span> <span class="pl-en">socketio</span>(httpServer);
-<span class="pl-smi">storyboard</span>.<span class="pl-en">addListener</span>(wsServer, {socketServer});
+<span class="pl-c">// If you use socket.io WebSockets (without socket authentication):</span>
+<span class="pl-k">import</span> <span class="pl-smi">socketio</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>socket.io<span class="pl-pds">'</span></span>;
+<span class="pl-k">const</span> <span class="pl-c1">socketServer</span> <span class="pl-k">=</span> <span class="pl-en">socketio</span>(httpServer);
+<span class="pl-smi">storyboard</span>.<span class="pl-en">addListener</span>(wsServer, { socketServer });
 
 <span class="pl-c">// If you use socket authentication, namespace the main app's</span>
-<span class="pl-c">// sockets so that it does not interfere with the log server:</span>
+<span class="pl-c">// sockets so that they don't clash with the log server's:</span>
 <span class="pl-c">// At the server...</span>
-<span class="pl-k">var</span> io <span class="pl-k">=</span> <span class="pl-smi">socketServer</span>.<span class="pl-en">of</span>(<span class="pl-s"><span class="pl-pds">"</span>/myApp<span class="pl-pds">"</span></span>);
-<span class="pl-smi">io</span>.<span class="pl-en">use</span>(socketAuthenticate);
-<span class="pl-smi">io</span>.<span class="pl-en">on</span>(<span class="pl-s"><span class="pl-pds">"</span>connection<span class="pl-pds">"</span></span>, socketConnect);
+<span class="pl-k">const</span> <span class="pl-c1">io</span> <span class="pl-k">=</span> <span class="pl-smi">socketServer</span>.<span class="pl-en">of</span>(<span class="pl-s"><span class="pl-pds">'</span>/myApp<span class="pl-pds">'</span></span>);
+<span class="pl-smi">io</span>.<span class="pl-en">use</span>(myAuthMiddleware);
+<span class="pl-smi">io</span>.<span class="pl-en">on</span>(<span class="pl-s"><span class="pl-pds">'</span>connection<span class="pl-pds">'</span></span>, myConnectFunction);
 <span class="pl-c">// ...and at the client:</span>
-<span class="pl-k">var</span> socket <span class="pl-k">=</span> <span class="pl-smi">socketio</span>.<span class="pl-en">connect</span>(<span class="pl-s"><span class="pl-pds">"</span>/myApp<span class="pl-pds">"</span></span>)</pre></div>
+<span class="pl-k">const</span> <span class="pl-c1">socket</span> <span class="pl-k">=</span> <span class="pl-smi">socketio</span>.<span class="pl-en">connect</span>(<span class="pl-s"><span class="pl-pds">'</span>/myApp<span class="pl-pds">'</span></span>)</pre></div>
 
 <p>You can also change the port of the <strong>standalone log server</strong> (independent from your main application's HTTP server) by modifying <code>options.port</code>. Disable it entirely by setting the attribute to <code>null</code>.</p>
+
+<h3>
+<a id="remote-access-to-client-stories" class="anchor" href="#remote-access-to-client-stories" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Remote access to client stories</h3>
+
+<p>In some cases, you may want to remotely monitor client logs, e.g. if you are building a mobile web app, or you want to see the logs generated in non-Chrome browsers for which there is (currently) no <a href="#storyboard-devtools">browser extension</a>.</p>
+
+<p>For these cases, you can configure your WebSocket Client listener so that it uploads its logs to the server, which can then provide remote access to them:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { <span class="pl-smi">mainStory</span>, <span class="pl-smi">addListener</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>storyboard/lib/noPlugins<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">wsClient</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>storyboard/lib/listeners/wsClient<span class="pl-pds">'</span></span>;
+<span class="pl-en">addListener</span>(wsClient, { uploadClientStories<span class="pl-k">:</span> <span class="pl-c1">true</span> });</pre></div>
+
+<p>Client logs will not pollute the server's own log, and will appear under a dedicated <em>browser root story</em> in the Storyboard DevTools, along with a short description on the client's platform:</p>
+
+<p><img src="https://raw.githubusercontent.com/guigrpa/storyboard/master/docs/05-Remote%20monitoring.png" alt="Remote monitoring"></p>
 
 <h3>
 <a id="end-to-end-stories" class="anchor" href="#end-to-end-stories" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>End-to-end stories</h3>
@@ -262,24 +288,28 @@ STORYBOARD=<span class="pl-k">*</span>:<span class="pl-k">*</span> node myScript
 <p>For this to work, the client's <code>storyId</code> must be transmitted to the server <em>somehow</em>. This example uses the URL query string for simplicity, but feel free to use whatever technique you want (the body of a <code>POST</code> request, your own WebSocket messaging scheme, etc.):</p>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-c">// Client:</span>
-<span class="pl-k">var</span> story <span class="pl-k">=</span> <span class="pl-smi">mainStory</span>.<span class="pl-en">child</span>({src<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>itemList<span class="pl-pds">"</span></span>, title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>User click on Refresh<span class="pl-pds">"</span></span>});
-<span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>itemList<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Fetching items...<span class="pl-pds">"</span></span>);
+<span class="pl-k">const</span> <span class="pl-c1">story</span> <span class="pl-k">=</span> <span class="pl-smi">mainStory</span>.<span class="pl-en">child</span>({
+  src<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>itemList<span class="pl-pds">'</span></span>,
+  title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>User click on Refresh<span class="pl-pds">'</span></span>,
+});
+<span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">'</span>itemList<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Fetching items...<span class="pl-pds">'</span></span>);
 <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">`</span>/items?storyId=<span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">story</span>.<span class="pl-smi">storyId</span><span class="pl-pse">}</span></span><span class="pl-pds">`</span></span>)
 .<span class="pl-en">then</span>(<span class="pl-smi">response</span> <span class="pl-k">=&gt;</span> <span class="pl-smi">response</span>.<span class="pl-en">json</span>())
-.<span class="pl-en">then</span>(<span class="pl-smi">items</span> <span class="pl-k">=&gt;</span> <span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>itemList<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">`</span>Fetched <span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">items</span>.<span class="pl-c1">length</span><span class="pl-pse">}</span></span> items<span class="pl-pds">`</span></span>))
+.<span class="pl-en">then</span>(<span class="pl-smi">items</span> <span class="pl-k">=&gt;</span> <span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">'</span>itemList<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">`</span>Fetched <span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">items</span>.<span class="pl-c1">length</span><span class="pl-pse">}</span></span> items<span class="pl-pds">`</span></span>))
 .<span class="pl-en">finally</span>(() <span class="pl-k">=&gt;</span> <span class="pl-smi">story</span>.<span class="pl-c1">close</span>());  <span class="pl-c">// using Bluebird's terse API</span>
 
 <span class="pl-c">// Server (using Express):</span>
-<span class="pl-k">var</span> app <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>express<span class="pl-pds">"</span></span>)();
-<span class="pl-smi">app</span>.<span class="pl-en">get</span>(<span class="pl-s"><span class="pl-pds">"</span>/items<span class="pl-pds">"</span></span>, <span class="pl-k">function</span>(<span class="pl-smi">req</span>, <span class="pl-smi">res</span>){
-  <span class="pl-k">var</span> {storyId} <span class="pl-k">=</span> <span class="pl-smi">req</span>.<span class="pl-smi">query</span>;
-  <span class="pl-k">var</span> extraParents <span class="pl-k">=</span> (storyId <span class="pl-k">!==</span> <span class="pl-c1">undefined</span>) <span class="pl-k">?</span> [storyId] <span class="pl-k">:</span> <span class="pl-c1">undefined</span>;
-  <span class="pl-k">var</span> story <span class="pl-k">=</span> <span class="pl-smi">mainStory</span>.<span class="pl-en">child</span>({
-    src<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>http<span class="pl-pds">"</span></span>, 
+<span class="pl-k">import</span> <span class="pl-smi">express</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>express<span class="pl-pds">'</span></span>;
+<span class="pl-k">const</span> <span class="pl-c1">app</span> <span class="pl-k">=</span> <span class="pl-en">express</span>();
+<span class="pl-smi">app</span>.<span class="pl-en">get</span>(<span class="pl-s"><span class="pl-pds">'</span>/items<span class="pl-pds">'</span></span>, (<span class="pl-smi">req</span>, <span class="pl-smi">res</span>) <span class="pl-k">=&gt;</span> {
+  <span class="pl-k">const</span> { <span class="pl-c1">storyId</span> } <span class="pl-k">=</span> <span class="pl-smi">req</span>.<span class="pl-smi">query</span>;
+  <span class="pl-k">const</span> <span class="pl-c1">extraParents</span> <span class="pl-k">=</span> (storyId <span class="pl-k">!=</span> <span class="pl-c1">null</span>) <span class="pl-k">?</span> [storyId] <span class="pl-k">:</span> <span class="pl-c1">undefined</span>;
+  <span class="pl-k">const</span> <span class="pl-c1">story</span> <span class="pl-k">=</span> <span class="pl-smi">mainStory</span>.<span class="pl-en">child</span>({
+    src<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>http<span class="pl-pds">'</span></span>, 
     title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">`</span>HTTP request <span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">req</span>.<span class="pl-smi">url</span><span class="pl-pse">}</span></span><span class="pl-pds">`</span></span>,
-    extraParents
+    extraParents,
   });
-  <span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">"</span>http<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Processing request...<span class="pl-pds">"</span></span>)
+  <span class="pl-smi">story</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">'</span>http<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Processing request...<span class="pl-pds">'</span></span>);
   <span class="pl-c">// ...</span>
   <span class="pl-smi">res</span>.<span class="pl-en">json</span>(items);
   <span class="pl-smi">story</span>.<span class="pl-c1">close</span>();
@@ -292,7 +322,7 @@ STORYBOARD=<span class="pl-k">*</span>:<span class="pl-k">*</span> node myScript
 <h3>
 <a id="storyboard-devtools" class="anchor" href="#storyboard-devtools" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Storyboard DevTools</h3>
 
-<p>Using the extension should be pretty straightforward. After <a href="https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc">installing it</a>, open the Chrome DevTools, select the Storyboard pane and point your browser at either:</p>
+<p>Using the browser extension should be pretty straightforward. After <a href="https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc">installing it</a>, open the Chrome DevTools, select the Storyboard pane and point your browser at either:</p>
 
 <ul>
 <li>Your standard application URL, to see both server and client logs</li>
