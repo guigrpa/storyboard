@@ -114,14 +114,14 @@ _rxRecords = (state, action, settings) ->
 
 _rxStory = (state, record, options) ->
   {fPastRecords} = options
-  {storyId, fUploaded} = record
+  {storyId} = record
   newStoryPathStr = null
 
   # We ignore root stories in most cases:
   # - Always for server-side root stories
   # - Almost always for client-side root stories, except when they are
   #   flagged as 'uploaded' (we use this to group sessions from other clients)
-  if (storyId[0] is '*') and (not record.fUploaded)
+  if (storyId[0] is '*') and (not record.uploadedBy)
     return [state, newStoryPathStr]
 
   # Check if we already have a story object for this `storyId`

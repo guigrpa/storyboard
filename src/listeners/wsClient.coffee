@@ -8,6 +8,8 @@ serializeAttachments = require './serializeAttachments'
 DEFAULT_CONFIG = 
   uploadClientStories: false
 
+_uploaderId = null
+
 #-------------------------------------------------
 # ## Extension I/O
 #-------------------------------------------------
@@ -44,9 +46,12 @@ _socketInit = (config) ->
     _socketio.on 'MSG', _rxMsg
   _socketio.sbConfig = config
 
-_rxMsg = (msg) -> ifExtension.tx msg
+_rxMsg = (msg) -> 
+  if msg.type is 'RECORDS'
+    msg.data = _.filter msg.data, (o) -> o.uploadedBy isnt _uploaderId
+  ifExtension.tx msg
 _txMsg = (msg) ->
-  ### istanbul ignore if ###
+  ### istanbul ignore next ###
   if not _socketio
     console.error "Cannot send '#{msg.type}' message to server: socket unavailable"
     return
@@ -54,6 +59,7 @@ _txMsg = (msg) ->
 
 _uploadBuf = []
 _uploadPending = ->
+  ### istanbul ignore next ###
   return if not _fSocketConnected
   _txMsg {type: 'UPLOAD_RECORDS', data: [].concat(_uploadBuf)}
   _uploadBuf.length = 0
@@ -61,7 +67,7 @@ _uploadPending = ->
 _uploadRecord = (record, config) ->
   return if not config.uploadClientStories
   record = serializeAttachments record
-  record = timm.set record, 'fUploaded', true
+  record = timm.set record, 'uploadedBy', _uploaderId
   if _uploadBuf.length < 2000
     _uploadBuf.push record
   _uploadPending()
@@ -71,6 +77,7 @@ _uploadRecord = (record, config) ->
 #-------------------------------------------------
 create = (baseConfig) ->
   config = timm.addDefaults baseConfig, DEFAULT_CONFIG
+  _uploaderId = config.mainStory.storyId ? '_SOMEBODY_'
   listener =
     type: 'WS_CLIENT'
     init: -> 
