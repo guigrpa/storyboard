@@ -35,6 +35,7 @@
     "travis": "coffee package.coffee && npm run compile && npm run test",
     "test": "npm run testCov",
     "testCov": "npm run testCovPrepare && npm run testDev && npm run testProd && npm run testBrowser && npm run testCovReport",
+    "testCovFast": "npm run testCovPrepare && npm run testDev && npm run testCovReport",
     "testCovPrepare": "rm -rf ./coverage .nyc_output .nyc_tmp && mkdir .nyc_tmp",
     "testDev": "cross-env NODE_ENV=development nyc node_modules/mocha/bin/_mocha && mv .nyc_output/* .nyc_tmp/",
     "testProd": "cross-env NODE_ENV=production nyc node_modules/mocha/bin/_mocha && mv .nyc_output/* .nyc_tmp/",
@@ -47,6 +48,7 @@
     "express": "^4.13.4",
     "lodash": "^4.5.0",
     "node-uuid": "^1.4.7",
+    "platform": "^1.3.1",
     "socket.io": "^1.4.5",
     "timm": "^0.6.0"
   },
@@ -71,6 +73,7 @@
     "envify": "3.4.0",
     "file-loader": "0.8.5",
     "font-awesome": "4.5.0",
+    "isomorphic-fetch": "2.2.1",
     "mocha": "2.4.5",
     "moment": "^2.11.2",
     "node-sass": "3.4.2",
