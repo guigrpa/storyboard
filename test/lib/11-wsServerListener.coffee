@@ -59,6 +59,20 @@ describe "wsServerListener", ->
         expect(msg.data).to.have.length 1
         expect(msg.data[0].msg).to.contain 'Msg through web sockets'
 
+    it "should relay uploaded log records (through the hub)", ->
+      _socket.emit 'MSG', 
+        type: 'UPLOAD_RECORDS'
+        data: [
+          {src: 'fontana di trevi', msg: 'water1', uploadedBy: 'unga'}
+        ]
+      h.waitUntil(1000, -> _spy.callCount > 0)
+      .then (res) ->
+        expect(_spy).to.have.been.calledOnce
+        msg = _spy.args[0][0]
+        expect(msg.type).to.equal 'RECORDS'
+        expect(msg.data).to.have.length 1
+        expect(msg.data[0].msg).to.equal 'water1'
+
     it "should ignore a log out", ->
       _socket.emit 'MSG', {type: 'LOG_OUT'}
       Promise.delay(200)

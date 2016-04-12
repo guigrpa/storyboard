@@ -129,3 +129,15 @@ describe "consoleListener", ->
       expect(_spyError.args[0]).to.contain 'color: #cc0000;font-weight: bold'
     else
       expect(_spyError.args[0][0]).to.contain '\u001b[31m\u001b[1mError!'
+
+  it "should not show uploaded client logs at the server", ->
+    return if process.env.TEST_BROWSER
+    _listener.process
+      src: 'any'
+      storyId: '*'
+      level: 70
+      fStory: false
+      fServer: false
+      msg: 'testMsg'
+      uploadedBy: 'client-side'
+    expect(_spyLog).not.to.have.been.called
