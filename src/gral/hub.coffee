@@ -14,6 +14,7 @@ init = (deps, options) ->
   ### istanbul ignore if ###
   if not(mainStory?)
     throw new Error 'MISSING_DEPENDENCIES'
+  ### istanbul ignore if ###
   if options? then config options
   return
 
