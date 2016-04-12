@@ -1,8 +1,10 @@
-uuid        = require 'node-uuid'
-_           = require '../vendor/lodash'
-k           = require './constants'
-filters     = require './filters'
-hub         = require './hub'
+uuid          = require 'node-uuid'
+platform      = require 'platform'
+chalk         = require 'chalk'
+_             = require '../vendor/lodash'
+k             = require './constants'
+filters       = require './filters'
+hub           = require './hub'
 
 DEFAULT_SRC = 'main'
 DEFAULT_CHILD_TITLE = ''
@@ -23,7 +25,7 @@ _getRecordId = -> if k.IS_BROWSER then "c#{_recordId++}" else "s#{_recordId++}"
 Story = ({parents, src, title, levelNum, fHiddenByFilter}) ->
   @parents = parents
   @fRoot = not parents.length
-  @storyId = if @fRoot then '*' else _getStoryId()
+  @storyId = (if @fRoot then '*/' else '') + _getStoryId()
   @src = src
   @title = title
   @level = levelNum
@@ -34,8 +36,7 @@ Story = ({parents, src, title, levelNum, fHiddenByFilter}) ->
   @hiddenRecords = []
   @fHiddenByFilter = fHiddenByFilter or (not filters.passesFilter @src, @level)
   if @fHiddenByFilter then _hiddenStories[@storyId] = @
-  if not @fRoot
-    @emitAction 'CREATED', @t
+  @emitAction 'CREATED', @t
 
 #-----------------------------------------------
 # ### Story lifecycle
@@ -177,12 +178,20 @@ _completeRecord = (record) ->
 _emit = (record) -> hub.emit record
 
 #-----------------------------------------------
-# ### API
+# ### Create the main story
 #-----------------------------------------------
-title = (if k.IS_BROWSER then 'BROWSER' else 'SERVER') + ' ROOT STORY'
+title = "ROOT STORY: #{chalk.italic.blue.bold platform.description}"
 mainStory = new Story 
   parents: []
   src: 'storyboard'
   title: title
-  levelNum: k.LEVEL_STR_TO_NUM.FATAL
+  levelNum: k.LEVEL_STR_TO_NUM.INFO
+
+### istanbul ignore next ###
+try
+  window.addEventListener 'beforeunload', -> mainStory.close()
+
+#-----------------------------------------------
+# ### API
+#-----------------------------------------------
 module.exports = mainStory

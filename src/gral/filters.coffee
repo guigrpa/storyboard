@@ -9,7 +9,6 @@ _init = ->
   _excluded = []
   _cachedThreshold = {}
   filter = _getFilter()
-  return if not filter.length
   specs = filter.split /[\s,]+/
   for spec in specs
     continue if not spec.length

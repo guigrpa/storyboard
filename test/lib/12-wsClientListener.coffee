@@ -82,6 +82,44 @@ describe "wsClientListener", ->
       expect(msg.data).to.deep.equal {a: 3}
 
   #-====================================================
+  # ### Upload mechanism
+  #-====================================================
+  it "should allow uploading client logs (and not relay them to the extension)", ->
+    _spyServerRxMsg.reset()
+    _spyClientWinTxMsg.reset()
+    Promise.resolve()
+    .then -> mainStory.info 'foo0'
+    .delay 200
+    .then -> expect(_spyServerRxMsg).not.to.have.been.called
+    .then ->
+      _listener.config {uploadClientStories: true}
+      mainStory.info 'foo1'
+      return h.waitUntil(1000, -> _spyServerRxMsg.callCount > 0)
+    .then ->
+      msg = _spyServerRxMsg.args[0][0]
+      expect(msg.type).to.equal 'UPLOAD_RECORDS'
+      expect(msg.data).to.have.length 1
+      expect(msg.data[0].msg).to.equal 'foo1'
+    .delay 100
+    # uploaded message should not be relayed by this listener to the browser extension
+    # (that will be handled by the Browser Extension listener, if enabled)
+    .then -> expect(_spyClientWinTxMsg).not.to.have.been.called
+
+  it "should relay records from other clients to the extension", ->
+    _spyServerRxMsg.reset()
+    _serverSocket.emit 'MSG', 
+      type: 'RECORDS'
+      data: [
+        {src: 'fontana di trevi', msg: 'water1', uploadedBy: 'unga'}
+        {src: 'fontana di neptuno', msg: 'water2', uploadedBy: 'graorg'}
+      ]
+    h.waitUntil(1000, -> _spyClientWinTxMsg.callCount > 0)
+    .then ->
+      msg = _spyClientWinTxMsg.args[0][0]
+      expect(msg.type).to.equal 'RECORDS'
+      expect(msg.data).to.have.length 2
+
+  #-====================================================
   # ### Low-level tests for the extension interface
   #-====================================================
   describe "extension interface", ->

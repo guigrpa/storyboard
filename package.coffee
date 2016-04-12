@@ -44,7 +44,7 @@ specs =
     compile: _runMultiple [
       "rm -rf lib"
       "coffee --no-header -o lib -c src/storyboard.coffee"
-      "coffee --no-header -o lib -c src/light.coffee"
+      "coffee --no-header -o lib -c src/noPlugins.coffee"
       "coffee --no-header -o lib/gral -c src/gral"
       "coffee --no-header -o lib/listeners -c src/listeners"
       "coffee --no-header -o lib/vendor -c src/vendor"
@@ -98,6 +98,11 @@ specs =
       "npm run testBrowser"
       "npm run testCovReport"
     ]
+    testCovFast:              _runMultiple [
+      "npm run testCovPrepare"
+      "npm run testDev"
+      "npm run testCovReport"
+    ]
     testCovPrepare:           _runMultiple [
       "rm -rf ./coverage .nyc_output .nyc_tmp"
       "mkdir .nyc_tmp"
@@ -121,6 +126,7 @@ specs =
     "socket.io": "^1.4.5"
     "node-uuid": "^1.4.7"
     "lodash": "^4.5.0"
+    "platform": "^1.3.1"
 
   #-================================================================
   # ## Other dependencies
@@ -161,6 +167,7 @@ specs =
     # ### Extra deps used in the example
     #-----------------------------------------------------------------
     "body-parser": "1.15.0"
+    "isomorphic-fetch": "2.2.1"
 
     #-----------------------------------------------------------------
     # ### Pure dev dependencies

@@ -117,9 +117,12 @@ _rxStory = (state, record, options) ->
   {storyId} = record
   newStoryPathStr = null
 
-  # We ignore root stories, both client- and server-side
-  # (we have our own root stories)
-  return [state, newStoryPathStr] if storyId is '*'
+  # We ignore root stories in most cases:
+  # - Always for server-side root stories
+  # - Almost always for client-side root stories, except when they are
+  #   flagged as 'uploaded' (we use this to group sessions from other clients)
+  if (storyId[0] is '*') and (not record.uploadedBy)
+    return [state, newStoryPathStr]
 
   # Check if we already have a story object for this `storyId`
   # and update it with this record. Normally we only
@@ -204,8 +207,8 @@ _addLog = (state, pathStr, record, options) ->
   fDuplicate = false
   state = timm.updateIn state, path, (prevRecords) -> 
     if fPastRecords
-      {id} = record
-      if _.find(prevRecords, (o) -> o.id is id)?
+      {storyId, id} = record
+      if _.find(prevRecords, (o) -> (o.storyId is storyId) and (o.id is id))?
         return prevRecords
     if (fShorthandForDuplicates ? true) and
        (not record.fStory)

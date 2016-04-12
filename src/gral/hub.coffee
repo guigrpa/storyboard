@@ -14,6 +14,7 @@ init = (deps, options) ->
   ### istanbul ignore if ###
   if not(mainStory?)
     throw new Error 'MISSING_DEPENDENCIES'
+  ### istanbul ignore if ###
   if options? then config options
   return
 
@@ -25,6 +26,8 @@ addListener = (listenerFactory, config) ->
   listener = listenerFactory.create listenerConfig
   _listeners.push listener
   listener.init?()
+  for record in _buf
+    listener.process record
   listener
 
 removeListener = (listener) ->

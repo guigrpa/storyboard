@@ -10,7 +10,7 @@ _tree = (node, options, prefix, stack) ->
   postponedArrayAttrs = []
   postponedObjectAttrs = []
   for key, val of node
-    continue if key in options.ignoreKeys
+    continue if options.ignoreKeys.indexOf(key) >= 0
     finalPrefix = if key is WRAPPER_KEY then prefix else "#{prefix}#{key}: "
     if _.isObject(val) and _.includes(stack, val)  # Avoid circular dependencies
       out.push "#{finalPrefix}#{chalk.green.bold '[CIRCULAR]'}"

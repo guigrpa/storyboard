@@ -1,5 +1,5 @@
 chalk = require 'chalk'
-{expect} = require './imports'
+{expect, sinon} = require './imports'
 treeLines = require '../../lib/gral/treeLines'
 
 describe 'treeLines', ->
@@ -85,3 +85,9 @@ describe 'treeLines', ->
     expect(lines[1]).to.contain 'message'
     expect(lines[2]).to.contain 'stack'
 
+  it 'should provide simple console output', ->
+    sinon.spy console, 'log'
+    treeLines.log {a: 3}
+    expect(console.log).to.have.been.calledOnce
+    expect(console.log.args[0][0]).to.include 'a:'
+    console.log.restore()

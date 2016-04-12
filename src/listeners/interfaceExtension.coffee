@@ -46,7 +46,9 @@ _txMsg = (msg) ->
   else
     _msgQueue.push msg
 _txPendingMsgs = ->
-  return if not _fExtensionReady
+  if not _fExtensionReady
+    ### istanbul ignore next ###
+    return
   _doTxMsg msg for msg in _msgQueue
   _msgQueue.length = 0
 _doTxMsg = (msg) -> _window?.postMessage msg, '*'

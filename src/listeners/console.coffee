@@ -16,9 +16,6 @@ TIME_COL_RELATIVE_EMPTY = _.padStart '', TIME_COL_RELATIVE_LENGTH
 TIME_COL_ABSOLUTE_LENGTH = new Date().toISOString().length
 TIME_COL_ABSOLUTE_EMPTY = _.padStart '', TIME_COL_ABSOLUTE_LENGTH
 
-_console = console
-_setConsole = (o) -> _console = o
-
 #-------------------------------------------------
 # ## Helpers
 #-------------------------------------------------
@@ -44,7 +41,15 @@ _getTimeStr = (record, config) ->
 # ## Main processing function
 #-------------------------------------------------
 _process = (record, config) ->
-  {src, storyId, level, fStory, obj, objExpanded, objLevel, objOptions} = record
+  {
+    src, storyId, level, fStory, fServer,
+    obj, objExpanded, objLevel, objOptions,
+    uploadedBy,
+  } = record
+
+  # Do not pollute server logs with uploaded client logs
+  return if (not k.IS_BROWSER) and uploadedBy?
+
   [timeStr, extraTimeStr] = _getTimeStr record, config
   levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[level]
   if fStory
@@ -89,9 +94,9 @@ _outputLog = (text, level, extraTimeStr) ->
     args = _getBrowserConsoleArgs text
   else
     args = [text]
-  if extraTimeStr? then _console.log "      #{extraTimeStr}"
-  output = if (level? and level >= 50) then 'error' else 'log'
-  _console[output].apply _console, args
+  if extraTimeStr? then console.log "      #{extraTimeStr}"
+  output = if (level? and level >= 50 and level <= 60) then 'error' else 'log'
+  console[output].apply console, args
 
 #-------------------------------------------------
 # ## API
@@ -107,7 +112,4 @@ create = (baseConfig) ->
 
 module.exports = {
   create,
-
-  # Just for unit testing
-  _setConsole,
 }

@@ -6,7 +6,7 @@ socketio    = require 'socket.io'
 Promise     = require 'bluebird'
 chalk       = require 'chalk'
 timm        = require 'timm'
-treeLines   = require '../gral/treeLines'
+serializeAttachments = require './serializeAttachments'
 k           = require '../gral/constants'
 
 DEFAULT_CONFIG = 
@@ -124,6 +124,11 @@ _socketRxMsg = (socket, msg) ->
         type: 'LOGIN_REQUIRED_RESPONSE'
         result: 'SUCCESS'
         data: {fLoginRequired: socket.sbConfig.authenticate?}
+    when 'UPLOAD_RECORDS'
+      process.nextTick ->
+        for record in msg.data
+          hub.emit record
+        return
     else
       process.nextTick -> mainStory.warn LOG_SRC, "Unknown message type '#{type}'"
   return
@@ -139,16 +144,12 @@ _socketBroadcast = ->
 
 # Get the (long) list of buffered records from the hub.
 # Process their `obj` fields so that they don't include circular references
-_getBufferedRecords = (hub) -> hub.getBufferedRecords().map _preprocessAttachments
+_getBufferedRecords = (hub) -> hub.getBufferedRecords().map serializeAttachments
 
 # Manage the (short) broadcast buffer (note that `socketBroadcast` is 
 # normally throttled)
 _broadcastBuf = []
-_enqueueRecord = (record, config) -> _broadcastBuf.push _preprocessAttachments record
-
-_preprocessAttachments = (record) -> 
-  return record if not record.hasOwnProperty 'obj'
-  return timm.set record, 'obj', treeLines(record.obj, record.objOptions)
+_enqueueRecord = (record, config) -> _broadcastBuf.push serializeAttachments record
 
 #-------------------------------------------------
 # ## Main processing function
