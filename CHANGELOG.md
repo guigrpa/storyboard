@@ -2,6 +2,11 @@
 
 *[M]: major change; [m]: minor change*
 
+## 1.1.1 (Apr. 12, 2016)
+
+* Lib:
+    - [M] Fix a regression concerning the client side of the server logs (standalone) app: plugins were not included in the minified/production version.
+
 ## 1.1.0 (Apr. 12, 2016)
 
 * Lib:

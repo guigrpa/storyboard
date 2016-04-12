@@ -4,7 +4,7 @@
   "short_name": "Storyboard DevTools",
   "description": "Gives you access to end-to-end stories (logs) for Storyboard-equipped applications",
   "author": "Guillermo Grau Panea",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "content_scripts": [
     {
       "matches": [
