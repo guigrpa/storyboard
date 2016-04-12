@@ -2,7 +2,7 @@
 
 ## What?
 
-![Storyboard DevTools](https://github.com/guigrpa/storyboard/blob/master/docs/Storyboard.gif?raw=true)
+![Storyboard DevTools](https://raw.githubusercontent.com/guigrpa/storyboard/master/docs/Storyboard.gif)
 
 A library, plus a [Chrome DevTools extension](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc).
 
@@ -268,7 +268,7 @@ addListener(wsClient, { uploadClientStories: true });
 
 Client logs will not pollute the server's own log, and will appear under a dedicated *browser root story* in the Storyboard DevTools, along with a short description on the client's platform:
 
-![Remote monitoring](https://github.com/guigrpa/storyboard/blob/master/docs/05-Remote%20monitoring?raw=true)
+![Remote monitoring](https://raw.githubusercontent.com/guigrpa/storyboard/master/docs/05-Remote%20monitoring.png)
 
 
 ### End-to-end stories
