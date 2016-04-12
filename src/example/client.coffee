@@ -1,3 +1,5 @@
+require 'babel-polyfill'    # for IE
+require 'isomorphic-fetch'  # for IE
 {mainStory, chalk} = require '../storyboard'  # you'd write: `'storyboard'`
 
 mainStory.info 'client', 'Running client...'
