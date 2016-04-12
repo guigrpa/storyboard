@@ -2,6 +2,8 @@
 
 *[M]: major change; [m]: minor change*
 
+## 1.1.0 (Apr. 12, 2016)
+
 * Lib:
     - [M] Add **remote log monitoring**: logs can be uploaded by the WS Client listener, e.g. from mobile devices or non-Chrome browsers, and monitored from a remote Storyboard DevTools somewhere else.
     - [M] Split WS Client listener in two:
