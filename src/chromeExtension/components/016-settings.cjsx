@@ -90,6 +90,17 @@ Settings = React.createClass
         </label>
       </div>
       <div>
+        <input 
+          id="fDiscardRemoteClientLogs"
+          type="checkbox"
+          checked={@state.fDiscardRemoteClientLogs}
+          onChange={@onClickDiscardRemoteClientLogs}
+        />
+        <label htmlFor="fDiscardRemoteClientLogs">
+          Discard stories from remote clients upon receipt
+        </label>
+      </div>
+      <div>
         <label htmlFor="maxRecords">
           Number of logs and stories to remember:
         </label>
@@ -150,6 +161,8 @@ Settings = React.createClass
     @setState {fCollapseAllNewStories: ev.target.checked}
   onClickExpandAllNewAttachments: (ev) -> 
     @setState {fExpandAllNewAttachments: ev.target.checked}
+  onClickDiscardRemoteClientLogs: (ev) ->
+    @setState {fDiscardRemoteClientLogs: ev.target.checked}
   onChangeMaxRecords: (ev) -> 
     @setState {maxRecords: ev.target.value}
   onChangeForgetHysteresis: (ev) -> 

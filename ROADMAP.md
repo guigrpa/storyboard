@@ -1,6 +1,5 @@
 - [ ] Chrome extension:
     + Bubble up errors/ warnings, showing a flag in parent stories (up to, but not including, the client/server root stories)
-    + Allow the user to filter out client root stories from other clients
     + Someday...
         * [ ] Better approach for app reducer? Handle actions in a single place. Check this: http://www.code-experience.com/problems-with-flux/
         * [ ] Client-server clock calibration

@@ -6,6 +6,7 @@ INITIAL_STATE =
   fShorthandForDuplicates: true
   fCollapseAllNewStories: false
   fExpandAllNewAttachments: false
+  fDiscardRemoteClientLogs: false
   maxRecords: 800
   forgetHysteresis: 0.25
 

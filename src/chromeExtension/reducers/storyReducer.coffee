@@ -113,15 +113,21 @@ _rxRecords = (state, action, settings) ->
   state
 
 _rxStory = (state, record, options) ->
-  {fPastRecords} = options
+  {fPastRecords, fDiscardRemoteClientLogs} = options
   {storyId} = record
   newStoryPathStr = null
 
-  # We ignore root stories in most cases:
-  # - Always for server-side root stories
-  # - Almost always for client-side root stories, except when they are
-  #   flagged as 'uploaded' (we use this to group sessions from other clients)
-  if (storyId[0] is '*') and (not record.uploadedBy)
+  # We ignore root stories (beginning by '*') always when they are not
+  # flagged as uploaded, i.e. it server root stories and the local client root story
+  if (storyId[0] is '*') 
+    if not record.uploadedBy
+      return [state, newStoryPathStr]
+    title = record.title.replace 'ROOT STORY', 'REMOTE CLIENT'
+    record = timm.set record, 'title', title
+
+  # We also ignore stories (not only root ones) when they have been
+  # uploaded and the user doesn't want to see them
+  if fDiscardRemoteClientLogs and record.uploadedBy
     return [state, newStoryPathStr]
 
   # Check if we already have a story object for this `storyId`
@@ -192,7 +198,9 @@ _addStory = (state, parentStoryPathStr, record, options) ->
   return [state, pathStr]
 
 _rxLog = (state, record, options) ->
-  {storyId, fServer} = record
+  {storyId, fServer, uploadedBy} = record
+  {fDiscardRemoteClientLogs} = options
+  return state if fDiscardRemoteClientLogs and uploadedBy
   pathStr = state.openStories[storyId] ? _mainStoryPathStr(fServer)
   {state, fDuplicate} = _addLog state, pathStr, record, options
   if not fDuplicate
