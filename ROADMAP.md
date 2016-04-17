@@ -7,6 +7,6 @@
         * [ ] Algorithm for fixing server stories received *before* their parent client stories (e.g. when uploading: server stories that happen before the socket is established): save story IDs for which the client-parent is unavailable for later (a hash, just like `openStories` and `closedStories`: `pendingClientParentStories`? :) ). When the client-parent appears, move the story and delete the story ID from the list.
 - **Lib**:
     + [ ] Make storyboard main depend on noPlugins
-    + [ ] Remove storyboard-core dependencies, contents -- and add warning to readme.md
+    + [ ] Why doesn't example-ctrl-C close storyboard cleanly?
     + [ ] Better console behaviour in FF
     + [ ] Try to get all WS Server unit tests back to work

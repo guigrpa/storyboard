@@ -1,4 +1,5 @@
 _                 = require '../../vendor/lodash'
+timm              = require 'timm'
 React             = require 'react'
 ReactRedux        = require 'react-redux'
 Login             = require './010-login'
@@ -7,8 +8,12 @@ actions           = require '../actions/actions'
 
 mapStateToProps = (state) -> 
   settings:       state.settings
+  serverFilter:   state.cx.serverFilter
+  localClientFilter: state.cx.localClientFilter
 mapDispatchToProps = (dispatch) ->
   updateSettings: (settings) -> dispatch actions.updateSettings settings
+  setServerFilter: (filter) -> dispatch actions.setServerFilter filter
+  setLocalClientFilter: (filter) -> dispatch actions.setLocalClientFilter filter
 
 Settings = React.createClass
   displayName: 'Settings'
@@ -18,21 +23,34 @@ Settings = React.createClass
     onClose:                    React.PropTypes.func.isRequired
     # From Redux.connect
     settings:                   React.PropTypes.object.isRequired
+    serverFilter:               React.PropTypes.string
+    localClientFilter:          React.PropTypes.string
     updateSettings:             React.PropTypes.func.isRequired
+    setServerFilter:            React.PropTypes.func.isRequired
+    setLocalClientFilter:       React.PropTypes.func.isRequired
   getInitialState: ->
     _fCanSave: true
 
-  componentWillMount: -> @setState @props.settings
+  componentWillMount: -> 
+    @setState timm.merge @props.settings,
+      serverFilter: @props.serverFilter
+      localClientFilter: @props.localClientFilter
   componentDidMount: -> @checkLocalStorage()
 
   componentWillUnmount: -> 
     settings = {}
     for key, val of @state
       continue if key[0] is '_'
+      continue if key in ['serverFilter', 'localClientFilter']
       settings[key] = switch key
         when 'maxRecords', 'forgetHysteresis' then Number(val)
         else val
     @props.updateSettings settings
+    if @state.serverFilter isnt @props.serverFilter
+      @props.setServerFilter @state.serverFilter
+    if @state.localClientFilter isnt @props.localClientFilter
+      @props.setLocalClientFilter @state.localClientFilter
+    return
 
   #-----------------------------------------------------
   render: -> 
@@ -50,7 +68,7 @@ Settings = React.createClass
           id="fShowClosedActions"
           type="checkbox"
           checked={@state.fShowClosedActions}
-          onChange={@onClickShowClosedActions}
+          onChange={@onChangeCheckbox}
         />
         <label htmlFor="fShowClosedActions">
           Show <i>CLOSED</i> actions
@@ -61,7 +79,7 @@ Settings = React.createClass
           id="fShorthandForDuplicates"
           type="checkbox"
           checked={@state.fShorthandForDuplicates}
-          onChange={@onClickShorthandForDuplicates}
+          onChange={@onChangeCheckbox}
         />
         <label htmlFor="fShorthandForDuplicates">
           Use shorthand notation for identical consecutive logs
@@ -72,7 +90,7 @@ Settings = React.createClass
           id="fCollapseAllNewStories"
           type="checkbox"
           checked={@state.fCollapseAllNewStories}
-          onChange={@onClickCollapseAllNewStories}
+          onChange={@onChangeCheckbox}
         />
         <label htmlFor="fCollapseAllNewStories">
           Collapse all new stories (even if they are still open)
@@ -83,7 +101,7 @@ Settings = React.createClass
           id="fExpandAllNewAttachments"
           type="checkbox"
           checked={@state.fExpandAllNewAttachments}
-          onChange={@onClickExpandAllNewAttachments}
+          onChange={@onChangeCheckbox}
         />
         <label htmlFor="fExpandAllNewAttachments">
           Expand all attachments upon receipt
@@ -94,7 +112,7 @@ Settings = React.createClass
           id="fDiscardRemoteClientLogs"
           type="checkbox"
           checked={@state.fDiscardRemoteClientLogs}
-          onChange={@onClickDiscardRemoteClientLogs}
+          onChange={@onChangeCheckbox}
         />
         <label htmlFor="fDiscardRemoteClientLogs">
           Discard stories from remote clients upon receipt
@@ -110,7 +128,7 @@ Settings = React.createClass
           type="number"
           step={1}
           value={@state.maxRecords}
-          onChange={@onChangeMaxRecords}
+          onChange={@onChangeInput}
           style={{display: 'inline-block', width: 50}}
         />
         {' '}
@@ -123,7 +141,7 @@ Settings = React.createClass
           type="number"
           step={.05}
           value={@state.forgetHysteresis}
-          onChange={@onChangeForgetHysteresis}
+          onChange={@onChangeInput}
           style={{display: 'inline-block', width: 50}}
         />
         {' '}
@@ -133,6 +151,35 @@ Settings = React.createClass
           style={_style.maxLogsDesc}
         />
       </div>
+      <div>Log filters:</div>
+      <ul style={_style.filters.list}>
+        <li>
+          <label htmlFor="serverFilter" style={_style.filters.itemLabel}>
+            Server:
+          </label>
+          {' '}
+          <input 
+            id="serverFilter"
+            type="text"
+            value={@state.serverFilter}
+            onChange={@onChangeInput}
+            style={{display: 'inline-block', width: 150}}
+          />
+        </li>
+        <li>
+          <label htmlFor="localClientFilter" style={_style.filters.itemLabel}>
+            Local client:
+          </label>
+          {' '}
+          <input 
+            id="localClientFilter"
+            type="text"
+            value={@state.localClientFilter}
+            onChange={@onChangeInput}
+            style={{display: 'inline-block', width: 150}}
+          />
+        </li>
+      </ul>
     </div>
 
   renderLocalStorageWarning: ->
@@ -153,20 +200,8 @@ Settings = React.createClass
       "start forgetting old stuff until it goes below #{lo}"
 
   #-----------------------------------------------------
-  onClickShowClosedActions: (ev) -> 
-    @setState {fShowClosedActions: ev.target.checked}
-  onClickShorthandForDuplicates: (ev) -> 
-    @setState {fShorthandForDuplicates: ev.target.checked}
-  onClickCollapseAllNewStories: (ev) -> 
-    @setState {fCollapseAllNewStories: ev.target.checked}
-  onClickExpandAllNewAttachments: (ev) -> 
-    @setState {fExpandAllNewAttachments: ev.target.checked}
-  onClickDiscardRemoteClientLogs: (ev) ->
-    @setState {fDiscardRemoteClientLogs: ev.target.checked}
-  onChangeMaxRecords: (ev) -> 
-    @setState {maxRecords: ev.target.value}
-  onChangeForgetHysteresis: (ev) -> 
-    @setState {forgetHysteresis: ev.target.value}
+  onChangeCheckbox: (ev) -> @setState {"#{ev.target.id}": ev.target.checked}
+  onChangeInput:    (ev) -> @setState {"#{ev.target.id}": ev.target.value}
 
   #-----------------------------------------------------
   checkLocalStorage: ->
@@ -202,6 +237,12 @@ _style =
     borderRadius: 2
   maxLogsDesc:
     cursor: 'pointer'
+  filters:
+    list:
+      marginTop: 0
+    itemLabel:
+      display: 'inline-block'
+      width: 80
 
 #-----------------------------------------------------
 connect = ReactRedux.connect mapStateToProps, mapDispatchToProps

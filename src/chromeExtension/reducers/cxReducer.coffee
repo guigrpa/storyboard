@@ -2,7 +2,9 @@ timm = require 'timm'
 
 INITIAL_STATE =
   cxState: 'DISCONNECTED'   # connection with the WsClient listener ("the" page)
-  fLoginRequired: false
+  fLoginRequired: null
+  serverFilter: null
+  localClientFilter: null
   loginState: 'LOGGED_OUT'
   wsState: 'DISCONNECTED'   # connection btw WsClient listener and WsServer listener
   login: null
@@ -47,6 +49,17 @@ reducer = (state = INITIAL_STATE, action) ->
 
     when 'LOGGED_OUT'
       return timm.merge state, {login: null, loginState: 'LOGGED_OUT'}
+
+    #-------------------------------------------------
+    # ## Filters
+    #-------------------------------------------------
+    when 'SERVER_FILTER'
+      {filter} = action
+      return timm.set state, 'serverFilter', filter
+
+    when 'LOCAL_CLIENT_FILTER'
+      {filter} = action
+      return timm.set state, 'localClientFilter', filter
 
     else return state
 

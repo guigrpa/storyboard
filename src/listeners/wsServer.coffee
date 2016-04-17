@@ -7,6 +7,7 @@ Promise     = require 'bluebird'
 chalk       = require 'chalk'
 timm        = require 'timm'
 serializeAttachments = require './serializeAttachments'
+filters     = require '../gral/filters'
 k           = require '../gral/constants'
 
 DEFAULT_CONFIG = 
@@ -124,6 +125,16 @@ _socketRxMsg = (socket, msg) ->
         type: 'LOGIN_REQUIRED_RESPONSE'
         result: 'SUCCESS'
         data: {fLoginRequired: socket.sbConfig.authenticate?}
+    when 'GET_SERVER_FILTER', 'SET_SERVER_FILTER'
+      if type is 'SET_SERVER_FILTER'
+        newFilter = msg.data
+        filters.config newFilter
+        process.nextTick ->
+          mainStory.info LOG_SRC, "Server filter changed to: #{chalk.cyan.bold newFilter}"
+      _socketTxMsg socket,
+        type: 'SERVER_FILTER'
+        result: 'SUCCESS'
+        data: filter: filters.getConfig()
     when 'UPLOAD_RECORDS'
       process.nextTick ->
         for record in msg.data

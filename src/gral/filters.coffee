@@ -8,7 +8,7 @@ _init = ->
   _included = []
   _excluded = []
   _cachedThreshold = {}
-  filter = _getFilter()
+  filter = getConfig()
   specs = filter.split /[\s,]+/
   for spec in specs
     continue if not spec.length
@@ -21,7 +21,7 @@ _init = ->
       level = k.LEVEL_STR_TO_NUM[level] ? k.LEVEL_STR_TO_NUM.DEBUG
       _included.push {re: new RegExp("^#{src}$"), threshold: level}
 
-_getFilter = ->
+getConfig = ->
   store = window?.localStorage ? process.env
   _filter = store[k.FILTER_KEY]
   if (not _filter?) or (not _filter.length)
@@ -31,6 +31,7 @@ _getFilter = ->
 config = (filter) ->
   store = window?.localStorage ? process.env
   store[k.FILTER_KEY] = filter
+  _cachedThreshold = null
   _init()
 
 _calcThreshold = (src) ->
@@ -48,5 +49,6 @@ _init()
 
 module.exports = {
   config,
+  getConfig,
   passesFilter,
 }
