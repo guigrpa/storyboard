@@ -59,12 +59,9 @@ rxMsg = ->
         else if not fLoginRequired
           yield Saga.put {type: 'LOGIN_STARTED'}
           yield Saga.call _txMsg, 'LOGIN_REQUEST', {login: '', password: ''}
-      when 'SERVER_FILTER'
-        serverFilter = data.filter
-        yield Saga.put {type: 'UPDATE_SETTINGS', settings: {serverFilter}}
-      when 'LOCAL_CLIENT_FILTER'
-        localClientFilter = data.filter
-        yield Saga.put {type: 'UPDATE_SETTINGS', settings: {localClientFilter}}
+      when 'SERVER_FILTER', 'LOCAL_CLIENT_FILTER'
+        {filter} = data
+        yield Saga.put {type, filter}
       when 'LOGIN_RESPONSE' 
         if result is 'SUCCESS'
           {login, bufferedRecords} = data
@@ -97,6 +94,12 @@ logOut = -> (dispatch) ->
   dispatch {type: 'LOGGED_OUT'}
 
 #-------------------------------------------------
+# ## Filters
+#-------------------------------------------------
+setServerFilter = (filter) -> -> _txMsg 'SET_SERVER_FILTER', filter
+setLocalClientFilter = (filter) -> -> _txMsg 'SET_LOCAL_CLIENT_FILTER', filter
+
+#-------------------------------------------------
 # ## Helpers
 #-------------------------------------------------
 _txMsg = (type, data) -> _sendMsg {src: 'DT', type, data}
@@ -108,6 +111,7 @@ module.exports = {
   init,
   actions: {
     logIn, logOut,
+    setServerFilter, setLocalClientFilter,
   }
   sagas: [
     connect

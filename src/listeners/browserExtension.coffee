@@ -13,16 +13,12 @@ DEFAULT_CONFIG = {}
 _extensionRxMsg = (msg) ->
   {type, data} = msg
   switch type
-    when 'GET_LOCAL_CLIENT_FILTER'
+    when 'GET_LOCAL_CLIENT_FILTER', 'SET_LOCAL_CLIENT_FILTER'
+      if type is 'SET_LOCAL_CLIENT_FILTER' then filters.config msg.data
       ifExtension.tx
         type: 'LOCAL_CLIENT_FILTER'
         result: 'SUCCESS'
         data: filter: filters.getConfig()
-    when 'SET_LOCAL_CLIENT_FILTER'
-      filters.config msg.data
-      ifExtension.tx
-        type: 'SET_LOCAL_CLIENT_FILTER_RESULT'
-        result: 'SUCCESS'
     else
       return
   return

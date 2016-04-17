@@ -125,16 +125,16 @@ _socketRxMsg = (socket, msg) ->
         type: 'LOGIN_REQUIRED_RESPONSE'
         result: 'SUCCESS'
         data: {fLoginRequired: socket.sbConfig.authenticate?}
-    when 'GET_SERVER_FILTER'
+    when 'GET_SERVER_FILTER', 'SET_SERVER_FILTER'
+      if type is 'SET_SERVER_FILTER'
+        newFilter = msg.data
+        filters.config newFilter
+        process.nextTick ->
+          mainStory.info LOG_SRC, "Server filter changed to: #{chalk.cyan.bold newFilter}"
       _socketTxMsg socket,
         type: 'SERVER_FILTER'
         result: 'SUCCESS'
         data: filter: filters.getConfig()
-    when 'SET_SERVER_FILTER'
-      filters.config msg.data
-      _socketTxMsg socket,
-        type: 'SET_SERVER_FILTER_RESULT'
-        result: 'SUCCESS'
     when 'UPLOAD_RECORDS'
       process.nextTick ->
         for record in msg.data
