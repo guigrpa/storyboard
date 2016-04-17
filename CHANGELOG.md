@@ -3,6 +3,7 @@
 *[M]: major change; [m]: minor change*
 
 * Browser extension:
+    - [M] **Allow the user to configure the filters used by the server and local client**
     - [m] Allow the user to filter out client root stories from other clients
 
 ## 1.1.1 (Apr. 12, 2016)
