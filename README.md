@@ -323,6 +323,7 @@ Using the browser extension should be pretty straightforward. After [installing 
 
 Some highlighted features:
 
+* Modify the server's filter configuration, without restarting it.
 * Show a story chronologically (*flat*) or hierarchically (*tree*): hover on the story title for the button to appear.
 * Collapse/expand stories: click on the caret.
 * Open attachments, including exceptions: click on the folder icon.
