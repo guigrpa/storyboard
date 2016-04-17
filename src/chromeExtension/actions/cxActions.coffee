@@ -47,6 +47,8 @@ rxMsg = ->
           yield Saga.call _txMsg, 'CONNECT_RESPONSE'
         yield Saga.put {type: 'CX_CONNECTED', records: data}
         yield Saga.call _txMsg, 'LOGIN_REQUIRED_QUESTION'
+        yield Saga.call _txMsg, 'GET_SERVER_FILTER'
+        yield Saga.call _txMsg, 'GET_LOCAL_CLIENT_FILTER'
         # Too fast?
       when 'LOGIN_REQUIRED_RESPONSE'
         {fLoginRequired} = data
@@ -57,6 +59,12 @@ rxMsg = ->
         else if not fLoginRequired
           yield Saga.put {type: 'LOGIN_STARTED'}
           yield Saga.call _txMsg, 'LOGIN_REQUEST', {login: '', password: ''}
+      when 'SERVER_FILTER'
+        serverFilter = data.filter
+        yield Saga.put {type: 'UPDATE_SETTINGS', settings: {serverFilter}}
+      when 'LOCAL_CLIENT_FILTER'
+        localClientFilter = data.filter
+        yield Saga.put {type: 'UPDATE_SETTINGS', settings: {localClientFilter}}
       when 'LOGIN_RESPONSE' 
         if result is 'SUCCESS'
           {login, bufferedRecords} = data

@@ -133,6 +133,35 @@ Settings = React.createClass
           style={_style.maxLogsDesc}
         />
       </div>
+      <div>Log filters:</div>
+      <ul>
+        <li>
+          <label htmlFor="serverFilter">
+            Server:
+          </label>
+          {' '}
+          <input 
+            id="serverFilter"
+            type="text"
+            value={@state.serverFilter}
+            onChange={@onChangeServerFilter}
+            style={{display: 'inline-block', width: 150}}
+          />
+        </li>
+        <li>
+          <label htmlFor="localClientFilter">
+            Local client:
+          </label>
+          {' '}
+          <input 
+            id="localClientFilter"
+            type="text"
+            value={@state.localClientFilter}
+            onChange={@onChangeLocalClientFilter}
+            style={{display: 'inline-block', width: 150}}
+          />
+        </li>
+      </ul>
     </div>
 
   renderLocalStorageWarning: ->

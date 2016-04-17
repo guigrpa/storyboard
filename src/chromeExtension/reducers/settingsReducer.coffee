@@ -9,6 +9,8 @@ INITIAL_STATE =
   fDiscardRemoteClientLogs: false
   maxRecords: 800
   forgetHysteresis: 0.25
+  serverFilter: null
+  localClientFilter: null
 
 reducer = (state = INITIAL_STATE, action) ->
   switch action.type
