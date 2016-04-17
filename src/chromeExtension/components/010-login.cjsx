@@ -17,7 +17,7 @@ Login = React.createClass
   #-----------------------------------------------------
   propTypes:
     # From Redux.connect
-    fLoginRequired:         React.PropTypes.bool.isRequired
+    fLoginRequired:         React.PropTypes.bool
     loginState:             React.PropTypes.string.isRequired
     login:                  React.PropTypes.string
     onLogIn:                React.PropTypes.func.isRequired
@@ -29,6 +29,17 @@ Login = React.createClass
   #-----------------------------------------------------
   render: -> 
     {fLoginRequired, loginState} = @props
+    if not fLoginRequired?
+      return (
+        <div style={_style.outer()}>
+          <Icon 
+            icon="circle-o-notch" 
+            fFixedWidth
+            size="lg" 
+            style={_style.icon fDisabled: true}
+          />
+        </div>
+      )
     if not fLoginRequired
       return <div style={_style.outer()}><i>No login required to see server logs</i></div>
     if loginState is 'LOGGED_IN'

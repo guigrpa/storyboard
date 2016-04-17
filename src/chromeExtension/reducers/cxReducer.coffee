@@ -2,7 +2,7 @@ timm = require 'timm'
 
 INITIAL_STATE =
   cxState: 'DISCONNECTED'   # connection with the WsClient listener ("the" page)
-  fLoginRequired: false
+  fLoginRequired: null
   loginState: 'LOGGED_OUT'
   wsState: 'DISCONNECTED'   # connection btw WsClient listener and WsServer listener
   login: null
