@@ -148,6 +148,7 @@ import storyboard from 'storyboard';
 storyboard.config({ filter: '*:*' });
 ```
 
+Or even more convenient: leave the default and configure it remotely and without reloading by using the [Storyboard DevTools](#storyboard-devtools).
 
 ### Children stories
 
