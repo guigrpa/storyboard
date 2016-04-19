@@ -13,7 +13,7 @@ Demo: http://storyboard-demo.herokuapp.com/
 * **Hierarchical stories**: put logs in context (*stories*), and group stories/logs within stories. Such groupings are extremely useful with concurrent user actions.
 * Get the whole picture with *end-to-end stories*: see all **client and server tasks** triggered by a user action (a click on the *Login* button, maybe) **in a single place**.
 * Use the **Storyboard DevTools Chrome extension** to view client and server logs with a clean and detail-rich interface. Now with **remote client log monitoring for mobile devices** and non-Chrome browsers.
-* Watch server logs being pushed in **real time** to the Storyboard DevTools extension via WebSockets.
+* Watch server logs being pushed in **real time** to the Storyboard DevTools extension via WebSockets. Even more: **control the level of detail you get from various parts of your server remotely, without relaunching**.
 * Ask for **authentication** to see server logs; hook up your own auth function.
 * **Attach anything** to your logs for further investigation.
 * Integrate your app with Storyboard's **flexible plugin architecture**. Four plugins are available out of the box: Console, WebSocket Server & Client and Browser Extension. Just use what you need: most features are optional!
