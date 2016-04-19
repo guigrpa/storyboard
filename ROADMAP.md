@@ -1,6 +1,5 @@
 - **Chrome extension**:
     + Add config screenshot
-    + [x] Bubble up errors/ warnings, showing a flag in parent stories (up to, but not including, the client/server root stories)
     + Someday...
         * [ ] Better approach for app reducer? Handle actions in a single place. Check this: http://www.code-experience.com/problems-with-flux/
         * [ ] Client-server clock calibration

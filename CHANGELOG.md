@@ -2,11 +2,14 @@
 
 *[M]: major change; [m]: minor change*
 
+## 1.2.0 (Apr. 19, 2016)
+
 * Browser extension:
     - [M] **Allow the user to configure the filters used by the server and local client**
+    - [M] **Add warning icon to collapsed stories containing warnings/errors**
     - [m] Allow the user to filter out client root stories from other clients
 * Lib:
-    - [m] Internal: the Storyboard entry point now depends directly on the `noPlugins` base configuration and relays exactly the same `exports`.
+    - [m] Internal: the Storyboard entry point now just re-exports the `noPlugins` API, enabling listeners as in the previous version (hence, non-breaking change)
 
 ## 1.1.1 (Apr. 12, 2016)
 
