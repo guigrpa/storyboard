@@ -40,7 +40,7 @@
 <strong>Hierarchical stories</strong>: put logs in context (<em>stories</em>), and group stories/logs within stories. Such groupings are extremely useful with concurrent user actions.</li>
 <li>Get the whole picture with <em>end-to-end stories</em>: see all <strong>client and server tasks</strong> triggered by a user action (a click on the <em>Login</em> button, maybe) <strong>in a single place</strong>.</li>
 <li>Use the <strong>Storyboard DevTools Chrome extension</strong> to view client and server logs with a clean and detail-rich interface. Now with <strong>remote client log monitoring for mobile devices</strong> and non-Chrome browsers.</li>
-<li>Watch server logs being pushed in <strong>real time</strong> to the Storyboard DevTools extension via WebSockets.</li>
+<li>Watch server logs being pushed in <strong>real time</strong> to the Storyboard DevTools extension via WebSockets. Even more: <strong>control the level of detail you get from various parts of your server remotely, without relaunching</strong>.</li>
 <li>Ask for <strong>authentication</strong> to see server logs; hook up your own auth function.</li>
 <li>
 <strong>Attach anything</strong> to your logs for further investigation.</li>
@@ -168,6 +168,8 @@ STORYBOARD=<span class="pl-k">*</span>:<span class="pl-k">*</span> node myScript
 
 <div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> <span class="pl-smi">storyboard</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>storyboard<span class="pl-pds">'</span></span>;
 <span class="pl-smi">storyboard</span>.<span class="pl-en">config</span>({ filter<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>*:*<span class="pl-pds">'</span></span> });</pre></div>
+
+<p>Or even more convenient: leave the default and configure it remotely and without reloading by using the <a href="#storyboard-devtools">Storyboard DevTools</a>.</p>
 
 <h3>
 <a id="children-stories" class="anchor" href="#children-stories" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Children stories</h3>
@@ -332,6 +334,7 @@ STORYBOARD=<span class="pl-k">*</span>:<span class="pl-k">*</span> node myScript
 <p>Some highlighted features:</p>
 
 <ul>
+<li>Modify the server's filter configuration, without restarting it.</li>
 <li>Show a story chronologically (<em>flat</em>) or hierarchically (<em>tree</em>): hover on the story title for the button to appear.</li>
 <li>Collapse/expand stories: click on the caret.</li>
 <li>Open attachments, including exceptions: click on the folder icon.</li>
@@ -344,6 +347,10 @@ STORYBOARD=<span class="pl-k">*</span>:<span class="pl-k">*</span> node myScript
 <p>You can check your new extension navigating to: <a href="http://storyboard-demo.herokuapp.com/">http://storyboard-demo.herokuapp.com/</a></p>
 
 <p>Storyboard DevTools is built with <a href="https://facebook.github.io/react/">React</a>, <a href="http://redux.js.org/">Redux</a> and <a href="http://yelouafi.github.io/redux-saga/">Redux-Saga</a>.</p>
+
+<h2>
+<a id="whats-changed-since-version-x" class="anchor" href="#whats-changed-since-version-x" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="CHANGELOG.md">What's changed since version X?</a>
+</h2>
 
 <h2>
 <a id="shall-i--the-mit-license" class="anchor" href="#shall-i--the-mit-license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Shall I? — The MIT license</h2>
