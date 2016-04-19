@@ -18,7 +18,10 @@ _extensionRxMsg = (msg) ->
   if type is 'CONNECT_REQUEST'
     rspType = if _fSocketConnected then 'WS_CONNECTED' else 'WS_DISCONNECTED'
     ifExtension.tx {type: rspType}
-  if not (type in ['CONNECT_REQUEST', 'CONNECT_RESPONSE', 'GET_LOCAL_CLIENT_FILTER'])
+  if not (type in [
+    'CONNECT_REQUEST', 'CONNECT_RESPONSE', 
+    'GET_LOCAL_CLIENT_FILTER', 'SET_LOCAL_CLIENT_FILTER',
+  ])
     _txMsg {type, data}
   return
 
