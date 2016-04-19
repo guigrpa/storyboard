@@ -1,12 +1,9 @@
 - **Chrome extension**:
-    + Allow configuring server and client filter strings from within the extension
-    + Bubble up errors/ warnings, showing a flag in parent stories (up to, but not including, the client/server root stories)
+    + Add config screenshot
+    + [x] Bubble up errors/ warnings, showing a flag in parent stories (up to, but not including, the client/server root stories)
     + Someday...
         * [ ] Better approach for app reducer? Handle actions in a single place. Check this: http://www.code-experience.com/problems-with-flux/
         * [ ] Client-server clock calibration
         * [ ] Algorithm for fixing server stories received *before* their parent client stories (e.g. when uploading: server stories that happen before the socket is established): save story IDs for which the client-parent is unavailable for later (a hash, just like `openStories` and `closedStories`: `pendingClientParentStories`? :) ). When the client-parent appears, move the story and delete the story ID from the list.
 - **Lib**:
-    + [ ] Make storyboard main depend on noPlugins
-    + [ ] Why doesn't example-ctrl-C close storyboard cleanly?
-    + [ ] Better console behaviour in FF
     + [ ] Try to get all WS Server unit tests back to work

@@ -5,6 +5,8 @@
 * Browser extension:
     - [M] **Allow the user to configure the filters used by the server and local client**
     - [m] Allow the user to filter out client root stories from other clients
+* Lib:
+    - [m] Internal: the Storyboard entry point now depends directly on the `noPlugins` base configuration and relays exactly the same `exports`.
 
 ## 1.1.1 (Apr. 12, 2016)
 
