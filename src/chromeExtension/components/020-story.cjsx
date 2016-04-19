@@ -403,9 +403,9 @@ Line = React.createClass
       <Indent level={indentLevel}/>
       {@renderCaretOrSpace record}
       {@renderMsg fStoryObject, msg, record.level}
+      {@renderWarningIcon record}
       {if fStoryObject then @renderToggleHierarchical record}
       {spinner}
-      {' '}
       {@renderAttachmentIcon record}
     </div>
 
@@ -445,6 +445,17 @@ Line = React.createClass
     <HierarchicalToggle
       fHierarchical={story.fHierarchical}
       onToggleHierarchical={@props.onToggleHierarchical}
+    />
+
+  renderWarningIcon: (record) ->
+    return if record.fExpanded 
+    { fHasWarning, fHasError } = record
+    return if not(fHasWarning or fHasError)
+    title = "Story contains #{if fHasError then 'an error' else 'a warning'}"
+    <Icon 
+      icon="warning"
+      title={title}
+      style={_styleLine.warningIcon(if fHasError then 'error' else 'warning')}
     />
 
   renderAttachmentIcon: (record) ->
@@ -491,6 +502,10 @@ _styleLine =
   attachmentIcon:
     marginLeft: 8
     cursor: 'pointer'
+    display: 'inline'
+  warningIcon: (type) ->
+    marginLeft: 8
+    color: if type is 'warning' then '#ff6600' else '#cc0000'
     display: 'inline'
 
 #-====================================================
@@ -543,7 +558,7 @@ Time = React.createClass
     @props.setTimeType newTimeType
 
 _styleTime = (fRelativeTime) ->
-  display: 'inline-block'
+  display: 'inline'
   cursor: 'pointer'
   fontStyle: if fRelativeTime then 'italic'
 

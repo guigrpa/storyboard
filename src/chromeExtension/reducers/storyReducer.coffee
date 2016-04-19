@@ -1,4 +1,5 @@
 _ = require '../../vendor/lodash'
+k = require '../../gral/constants'
 timm = require 'timm'
 
 _mainStoryPathStr = (fServer) -> "records/#{if fServer then 1 else 0}"
@@ -214,12 +215,14 @@ _addLog = (state, pathStr, record, options) ->
   record = timm.set record, 'objExpanded', (fExpandAllNewAttachments ? false)
   fDuplicate = false
   state = timm.updateIn state, path, (prevRecords) -> 
+    # Handle duplicates when including past records
     if fPastRecords
       {storyId, id} = record
       if _.find(prevRecords, (o) -> (o.storyId is storyId) and (o.id is id))?
         return prevRecords
-    if (fShorthandForDuplicates ? true) and
-       (not record.fStory)
+
+    # Handle consecutive repetitions
+    if (fShorthandForDuplicates ? true) and (not record.fStory)
       idx = prevRecords.length - 1
       prevLastRecord = prevRecords[idx]
       if prevLastRecord? and 
@@ -232,8 +235,26 @@ _addLog = (state, pathStr, record, options) ->
           repetitions: repetitions + 1
           tLastRepetition: record.t
         nextRecords = timm.replaceAt prevRecords, idx, nextLastRecord
+
+    # Normal case
     nextRecords ?= timm.addLast prevRecords, record
     nextRecords
+
+  # Flag stories containing warnings and errors
+  fWarn = record.level is k.LEVEL_STR_TO_NUM.WARN
+  fError = record.level >= k.LEVEL_STR_TO_NUM.ERROR
+  if fWarn or fError
+    recurPath = [].concat path
+    while true
+      recurPath.pop()    # recurPath is now the story path
+      story = timm.getIn state, recurPath
+      break if story.fMain
+      if fWarn and not(story.fHasWarning)
+        state = timm.setIn(state, recurPath.concat(['fHasWarning']), true)
+      if fError and not(story.fHasError)
+        state = timm.setIn(state, recurPath.concat(['fHasError']), true)
+      recurPath.pop()
+
   return {state, fDuplicate}
 
 #-------------------------------------------------

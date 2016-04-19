@@ -59,3 +59,9 @@ mainStory.error 'server', "Example error", attach: new Error('EXAMPLE error mess
 setInterval -> 
   mainStory.debug 'server', "t: #{chalk.blue new Date().toISOString()}"
 , 60000
+
+story = mainStory.child {title: 'Example child story'}
+story.info 'Info'
+story.warn 'Warn'
+story.error 'Error!'
+story.close()
