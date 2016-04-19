@@ -151,7 +151,12 @@ Settings = React.createClass
           style={_style.maxLogsDesc}
         />
       </div>
-      <div>Log filters:</div>
+      <div>
+        Log filters, e.g. <b>foo, ba*:INFO, -test, *:WARN</b>{' '}
+        <a href="https://github.com/guigrpa/storyboard#log-filtering" target="_blank">
+          (more examples here)
+        </a>:
+      </div>
       <ul style={_style.filters.list}>
         <li>
           <label htmlFor="serverFilter" style={_style.filters.itemLabel}>
@@ -163,7 +168,7 @@ Settings = React.createClass
             type="text"
             value={@state.serverFilter}
             onChange={@onChangeInput}
-            style={{display: 'inline-block', width: 150}}
+            style={{display: 'inline-block', width: 300}}
           />
         </li>
         <li>
@@ -176,7 +181,7 @@ Settings = React.createClass
             type="text"
             value={@state.localClientFilter}
             onChange={@onChangeInput}
-            style={{display: 'inline-block', width: 150}}
+            style={{display: 'inline-block', width: 300}}
           />
         </li>
       </ul>
