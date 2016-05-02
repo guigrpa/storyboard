@@ -2,6 +2,9 @@
 
 *[M]: major change; [m]: minor change*
 
+* Lib:
+    - [m] Add `stdinLogger` tool (result from issue #11): use it to log via Storyboard the output of any command, e.g. `ls | node stdinLogger.js`
+
 ## 1.2.0 (Apr. 19, 2016)
 
 * Browser extension:

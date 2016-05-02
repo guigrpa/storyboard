@@ -21,7 +21,7 @@
     "url": "git+https://github.com/guigrpa/storyboard.git"
   },
   "scripts": {
-    "compile": "rm -rf lib && coffee --no-header -o lib -c src/storyboard.coffee && coffee --no-header -o lib -c src/noPlugins.coffee && coffee --no-header -o lib/gral -c src/gral && coffee --no-header -o lib/listeners -c src/listeners && coffee --no-header -o lib/vendor -c src/vendor && coffee --no-header -o lib/chromeExtension -c src/chromeExtension",
+    "compile": "rm -rf lib && coffee --no-header -o lib -c src/storyboard.coffee && coffee --no-header -o lib -c src/noPlugins.coffee && coffee --no-header -o lib -c src/stdinLogger.coffee && coffee --no-header -o lib/gral -c src/gral && coffee --no-header -o lib/listeners -c src/listeners && coffee --no-header -o lib/vendor -c src/vendor && coffee --no-header -o lib/chromeExtension -c src/chromeExtension",
     "buildServerLogsApp": "cross-env NODE_ENV=production webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress -p",
     "buildServerLogsAppWatch": "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --watch",
     "buildExtension": "cross-env NODE_ENV=production webpack --config src/chromeExtension/webpackConfig.coffee --colors --progress -p",
@@ -43,14 +43,15 @@
     "testCovReport": "cp .nyc_tmp/* .nyc_output/ && nyc report --reporter=html --reporter=lcov --reporter=text"
   },
   "dependencies": {
-    "bluebird": "^3.3.1",
-    "chalk": "^1.0.0",
-    "express": "^4.13.4",
-    "lodash": "^4.5.0",
-    "node-uuid": "^1.4.7",
-    "platform": "^1.3.1",
-    "socket.io": "^1.4.5",
-    "timm": "^0.6.0"
+    "bluebird": "3.3.1",
+    "chalk": "1.1.1",
+    "express": "4.13.4",
+    "lodash": "4.5.0",
+    "node-uuid": "1.4.7",
+    "platform": "1.3.1",
+    "socket.io": "1.4.5",
+    "split": "1.0.0",
+    "timm": "0.6.0"
   },
   "devDependencies": {
     "babel-core": "6.6.5",

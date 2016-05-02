@@ -45,6 +45,7 @@ specs =
       "rm -rf lib"
       "coffee --no-header -o lib -c src/storyboard.coffee"
       "coffee --no-header -o lib -c src/noPlugins.coffee"
+      "coffee --no-header -o lib -c src/stdinLogger.coffee"
       "coffee --no-header -o lib/gral -c src/gral"
       "coffee --no-header -o lib/listeners -c src/listeners"
       "coffee --no-header -o lib/vendor -c src/vendor"
@@ -119,14 +120,15 @@ specs =
   # ## Storyboard library dependencies
   #-================================================================
   dependencies:
-    "timm": "^0.6.0"
-    "chalk": "^1.0.0"
-    "bluebird": "^3.3.1"
-    "express": "^4.13.4"
-    "socket.io": "^1.4.5"
-    "node-uuid": "^1.4.7"
-    "lodash": "^4.5.0"
-    "platform": "^1.3.1"
+    "timm": "0.6.0"
+    "chalk": "1.1.1"
+    "bluebird": "3.3.1"
+    "express": "4.13.4"
+    "socket.io": "1.4.5"
+    "node-uuid": "1.4.7"
+    "lodash": "4.5.0"
+    "platform": "1.3.1"
+    "split": "1.0.0"
 
   #-================================================================
   # ## Other dependencies
