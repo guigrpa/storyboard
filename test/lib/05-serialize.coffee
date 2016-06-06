@@ -3,7 +3,7 @@ chalk = require 'chalk'
 {expect} = require './imports'
 {serialize, CIRCULAR_PLACEHOLDER} = require '../../lib/gral/serialize'
 
-describe.only 'serialize', ->
+describe 'serialize', ->
 
   it 'should return the same object for null', ->
     expect(serialize(null)).to.be.null
