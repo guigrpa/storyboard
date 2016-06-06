@@ -50,6 +50,7 @@ specs =
       "coffee --no-header -o lib/listeners -c src/listeners"
       "coffee --no-header -o lib/vendor -c src/vendor"
       "coffee --no-header -o lib/chromeExtension -c src/chromeExtension"
+      "babel -d lib src"
     ]
 
     # Server logs app
@@ -180,10 +181,11 @@ specs =
     "coffee-script": "1.10.0"
 
     # Babel + plugins
-    "babel-core":           "6.6.5"     # es6
-    "babel-preset-es2015":  "6.6.0"     # for ES2015 (a.k.a. ES6)
-    "babel-preset-react":   "6.5.0"     # for React
-    "babel-preset-stage-2": "6.5.0"     # to replace the "stage" of support option in a Webpack config    
+    "babel-cli":            "6.9.0"
+    "babel-core":           "6.9.1"
+    "babel-preset-es2015":  "6.9.0"
+    "babel-preset-react":   "6.5.0"
+    "babel-preset-stage-2": "6.5.0"
 
     # Webpack + loaders (+ related stuff)
     "webpack": "1.12.13"
