@@ -194,7 +194,7 @@ specs =
     "css-loader": "0.23.1"
     "style-loader": "0.13.0"
     "sass-loader": "3.1.2"
-    "node-sass": "3.4.2"
+    "node-sass": "3.7.0"
 
     # Testing
     "chai": "3.5.0"

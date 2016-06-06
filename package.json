@@ -78,7 +78,7 @@
     "isomorphic-fetch": "2.2.1",
     "mocha": "2.4.5",
     "moment": "^2.11.2",
-    "node-sass": "3.4.2",
+    "node-sass": "3.7.0",
     "nyc": "6.1.1",
     "react": "15.0.1",
     "react-addons-perf": "15.0.1",
