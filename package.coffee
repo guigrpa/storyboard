@@ -84,6 +84,7 @@ specs =
       "npm run test"
       "npm run zipExtension"
       "npm run buildExampleHeroku"
+      "npm run xxl"
       "echo 'Remember to update Heroku package.json with the latest SB version!'"
     ]
     travis:                   _runMultiple [
@@ -115,6 +116,8 @@ specs =
       "cp .nyc_tmp/* .nyc_output/"
       "nyc report --reporter=html --reporter=lcov --reporter=text"
     ]
+
+    xxl:                      "xxl --src \"[\\\"src\\\"]\""
 
   #-================================================================
   # ## Storyboard library dependencies
@@ -208,6 +211,7 @@ specs =
     "cross-env": "1.0.7"
     "uglifyjs": "2.4.10"
     "bestzip": "1.1.3"
+    "xxl": "0.1.1"
 
 #-================================================================
 # ## Build package.json

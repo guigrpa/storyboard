@@ -31,7 +31,7 @@
     "buildExampleHeroku": "rm -f example/heroku/client/*.eot example/heroku/client/*.ttf example/heroku/client/*.woff* example/heroku/client/*.svg example/heroku/client/*.js && cross-env NODE_ENV=production webpack --config src/example/webpackConfig.coffee --colors --progress -p && cp example/*.eot example/*.ttf example/*.woff* example/*.svg example/*.js example/heroku/client/",
     "buildExampleWatch": "webpack --config src/example/webpackConfig.coffee --colors --progress --watch",
     "example": "coffee src/example/server.coffee",
-    "build": "coffee package.coffee && npm run compile && npm run buildServerLogsApp && npm run buildExtension && npm run test && npm run zipExtension && npm run buildExampleHeroku && echo 'Remember to update Heroku package.json with the latest SB version!'",
+    "build": "coffee package.coffee && npm run compile && npm run buildServerLogsApp && npm run buildExtension && npm run test && npm run zipExtension && npm run buildExampleHeroku && npm run xxl && echo 'Remember to update Heroku package.json with the latest SB version!'",
     "travis": "coffee package.coffee && npm run compile && npm run test",
     "test": "npm run testCov",
     "testCov": "npm run testCovPrepare && npm run testDev && npm run testProd && npm run testBrowser && npm run testCovReport",
@@ -40,7 +40,8 @@
     "testDev": "cross-env NODE_ENV=development nyc node_modules/mocha/bin/_mocha && mv .nyc_output/* .nyc_tmp/",
     "testProd": "cross-env NODE_ENV=production nyc node_modules/mocha/bin/_mocha && mv .nyc_output/* .nyc_tmp/",
     "testBrowser": "cross-env NODE_ENV=development TEST_BROWSER=true nyc node_modules/mocha/bin/_mocha && mv .nyc_output/* .nyc_tmp/",
-    "testCovReport": "cp .nyc_tmp/* .nyc_output/ && nyc report --reporter=html --reporter=lcov --reporter=text"
+    "testCovReport": "cp .nyc_tmp/* .nyc_output/ && nyc report --reporter=html --reporter=lcov --reporter=text",
+    "xxl": "xxl --src \"[\\\"src\\\"]\""
   },
   "dependencies": {
     "bluebird": "3.3.1",
@@ -99,6 +100,7 @@
     "style-loader": "0.13.0",
     "tinycolor2": "1.3.0",
     "uglifyjs": "2.4.10",
-    "webpack": "1.12.13"
+    "webpack": "1.12.13",
+    "xxl": "0.1.1"
   }
 }
