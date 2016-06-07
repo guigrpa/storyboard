@@ -21,7 +21,7 @@
     "url": "git+https://github.com/guigrpa/storyboard.git"
   },
   "scripts": {
-    "compile": "rm -rf lib && coffee --no-header -o lib -c src/storyboard.coffee && coffee --no-header -o lib -c src/noPlugins.coffee && coffee --no-header -o lib -c src/stdinLogger.coffee && coffee --no-header -o lib/gral -c src/gral && coffee --no-header -o lib/listeners -c src/listeners && coffee --no-header -o lib/vendor -c src/vendor && coffee --no-header -o lib/chromeExtension -c src/chromeExtension",
+    "compile": "rm -rf lib && coffee --no-header -o lib -c src && babel -d lib src",
     "buildServerLogsApp": "cross-env NODE_ENV=production webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress -p",
     "buildServerLogsAppWatch": "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --watch",
     "buildExtension": "cross-env NODE_ENV=production webpack --config src/chromeExtension/webpackConfig.coffee --colors --progress -p",
@@ -30,7 +30,7 @@
     "buildExample": "webpack --config src/example/webpackConfig.coffee --colors --progress",
     "buildExampleHeroku": "rm -f example/heroku/client/*.eot example/heroku/client/*.ttf example/heroku/client/*.woff* example/heroku/client/*.svg example/heroku/client/*.js && cross-env NODE_ENV=production webpack --config src/example/webpackConfig.coffee --colors --progress -p && cp example/*.eot example/*.ttf example/*.woff* example/*.svg example/*.js example/heroku/client/",
     "buildExampleWatch": "webpack --config src/example/webpackConfig.coffee --colors --progress --watch",
-    "example": "coffee src/example/server.coffee",
+    "example": "npm run compile && node lib/example/server",
     "build": "coffee package.coffee && npm run compile && npm run buildServerLogsApp && npm run buildExtension && npm run test && npm run zipExtension && npm run buildExampleHeroku && npm run xxl && echo 'Remember to update Heroku package.json with the latest SB version!'",
     "travis": "coffee package.coffee && npm run compile && npm run test",
     "test": "npm run testCov",
@@ -45,20 +45,21 @@
   },
   "dependencies": {
     "bluebird": "3.3.1",
-    "chalk": "1.1.1",
+    "chalk": "1.1.3",
     "express": "4.13.4",
     "lodash": "4.5.0",
     "node-uuid": "1.4.7",
     "platform": "1.3.1",
     "socket.io": "1.4.5",
     "split": "1.0.0",
-    "timm": "0.6.0"
+    "timm": "0.6.1"
   },
   "devDependencies": {
-    "babel-core": "6.6.5",
+    "babel-cli": "6.9.0",
+    "babel-core": "6.9.1",
     "babel-loader": "6.2.4",
-    "babel-polyfill": "6.6.1",
-    "babel-preset-es2015": "6.6.0",
+    "babel-polyfill": "6.9.1",
+    "babel-preset-es2015": "6.9.0",
     "babel-preset-react": "6.5.0",
     "babel-preset-stage-2": "6.5.0",
     "bestzip": "1.1.3",
@@ -100,7 +101,7 @@
     "style-loader": "0.13.0",
     "tinycolor2": "1.3.0",
     "uglifyjs": "2.4.10",
-    "webpack": "1.12.13",
+    "webpack": "1.13.1",
     "xxl": "0.1.1"
   }
 }

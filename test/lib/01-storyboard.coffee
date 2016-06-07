@@ -50,7 +50,7 @@ describe 'storyboard', ->
       expect(_spy).to.have.been.calledOnce
       record = _spy.args[0][0]
       expect(record.msg).to.equal 'msg3'
-      expect(record.obj).to.equal obj
+      expect(record.obj).to.deep.equal obj
 
   describe 'creating a child story', ->
 

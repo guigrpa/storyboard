@@ -43,13 +43,8 @@ specs =
 
     compile: _runMultiple [
       "rm -rf lib"
-      "coffee --no-header -o lib -c src/storyboard.coffee"
-      "coffee --no-header -o lib -c src/noPlugins.coffee"
-      "coffee --no-header -o lib -c src/stdinLogger.coffee"
-      "coffee --no-header -o lib/gral -c src/gral"
-      "coffee --no-header -o lib/listeners -c src/listeners"
-      "coffee --no-header -o lib/vendor -c src/vendor"
-      "coffee --no-header -o lib/chromeExtension -c src/chromeExtension"
+      "coffee --no-header -o lib -c src"
+      "babel -d lib src"
     ]
 
     # Server logs app
@@ -73,7 +68,10 @@ specs =
       "cp example/*.eot example/*.ttf example/*.woff* example/*.svg example/*.js #{HEROKU_CLIENT}/"
     ]
     buildExampleWatch:        "#{WEBPACK_EXAMPLE} --watch"
-    example:                  "coffee src/example/server.coffee"
+    example: _runMultiple [
+      "npm run compile"
+      "node lib/example/server"
+    ]
 
     # General
     build:                    _runMultiple [
@@ -123,8 +121,8 @@ specs =
   # ## Storyboard library dependencies
   #-================================================================
   dependencies:
-    "timm": "0.6.0"
-    "chalk": "1.1.1"
+    "timm": "0.6.1"
+    "chalk": "1.1.3"
     "bluebird": "3.3.1"
     "express": "4.13.4"
     "socket.io": "1.4.5"
@@ -141,7 +139,7 @@ specs =
     #-----------------------------------------------------------------
     # ### Packaged in the Chrome extension
     #-----------------------------------------------------------------
-    "babel-polyfill":       "6.6.1"     # es6
+    "babel-polyfill":       "6.9.1"     # es6
 
     # React
     "react":                          "15.0.1"
@@ -180,13 +178,14 @@ specs =
     "coffee-script": "1.10.0"
 
     # Babel + plugins
-    "babel-core":           "6.6.5"     # es6
-    "babel-preset-es2015":  "6.6.0"     # for ES2015 (a.k.a. ES6)
-    "babel-preset-react":   "6.5.0"     # for React
-    "babel-preset-stage-2": "6.5.0"     # to replace the "stage" of support option in a Webpack config    
+    "babel-cli":            "6.9.0"
+    "babel-core":           "6.9.1"
+    "babel-preset-es2015":  "6.9.0"
+    "babel-preset-react":   "6.5.0"
+    "babel-preset-stage-2": "6.5.0"
 
     # Webpack + loaders (+ related stuff)
-    "webpack": "1.12.13"
+    "webpack": "1.13.1"
     "babel-loader": "6.2.4"
     "coffee-loader": "0.7.2"
     "cjsx-loader": "2.1.0"

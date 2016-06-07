@@ -6,7 +6,6 @@ socketio    = require 'socket.io'
 Promise     = require 'bluebird'
 chalk       = require 'chalk'
 timm        = require 'timm'
-serializeAttachments = require './serializeAttachments'
 filters     = require '../gral/filters'
 k           = require '../gral/constants'
 
@@ -155,12 +154,12 @@ _socketBroadcast = ->
 
 # Get the (long) list of buffered records from the hub.
 # Process their `obj` fields so that they don't include circular references
-_getBufferedRecords = (hub) -> hub.getBufferedRecords().map serializeAttachments
+_getBufferedRecords = (hub) -> hub.getBufferedRecords()
 
 # Manage the (short) broadcast buffer (note that `socketBroadcast` is 
 # normally throttled)
 _broadcastBuf = []
-_enqueueRecord = (record, config) -> _broadcastBuf.push serializeAttachments record
+_enqueueRecord = (record, config) -> _broadcastBuf.push record
 
 #-------------------------------------------------
 # ## Main processing function

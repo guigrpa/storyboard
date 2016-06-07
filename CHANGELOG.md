@@ -3,6 +3,7 @@
 *[M]: major change; [m]: minor change*
 
 * Lib:
+    - [M] **Attach objects in their original shape (not simplified), after removal of possible circular refs**
     - [m] Add `stdinLogger` tool (result from issue #11): use it to log via Storyboard the output of any command, e.g. `ls | node stdinLogger.js`
 
 ## 1.2.0 (Apr. 19, 2016)

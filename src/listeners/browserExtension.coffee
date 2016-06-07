@@ -1,6 +1,5 @@
 timm        = require 'timm'
 ifExtension = require './interfaceExtension'
-serializeAttachments = require './serializeAttachments'
 ifExtension = require './interfaceExtension'
 filters     = require '../gral/filters'
 k           = require '../gral/constants'
@@ -34,7 +33,7 @@ create = (baseConfig) ->
     init: ->
       ifExtension.rx _extensionRxMsg
     process: (record) -> 
-      ifExtension.tx {type: 'RECORDS', data: [serializeAttachments record]}
+      ifExtension.tx {type: 'RECORDS', data: [record]}
     ## config: (newConfig) -> config = timm.merge config, newConfig
   listener
 

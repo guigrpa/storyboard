@@ -150,7 +150,7 @@ describe "wsServerListener", ->
           msg = _spy.args[0][0]
           expect(msg.type).to.equal 'RECORDS'
           expect(msg.data).to.have.length 1
-          expect(msg.data[0].obj).to.have.length 2
+          expect(msg.data[0].obj).to.deep.equal {a: 4, b: 3}
 
       it "should report invalid messages", ->
         _socket.emit 'MSG', {type: 'INVALID_MSG_TYPE'}

@@ -5,9 +5,16 @@ _             = require '../vendor/lodash'
 k             = require './constants'
 filters       = require './filters'
 hub           = require './hub'
+{ serialize } = require './serialize'
 
 DEFAULT_SRC = 'main'
 DEFAULT_CHILD_TITLE = ''
+
+# Record formats:
+# * 1 (or undefined): initial version
+# * 2: embeds objects directly, not their visual representation
+#   (does not call treeLines before attaching). Circular refs are removed
+RECORD_FORMAT_VERSION = 2
 
 _hiddenStories = {}
 
@@ -96,18 +103,8 @@ _.each k.LEVEL_STR_TO_NUM, (levelNum, levelStr) ->
       level: levelNum
       src: src
       msg: msg
-    if options.hasOwnProperty 'attach'
-      record.obj = options.attach
-      record.objExpanded = not(options.attachInline ? false)
-    else if options.hasOwnProperty 'attachInline'
-      record.obj = options.attachInline
-      record.objExpanded = false
-    if record.hasOwnProperty 'obj'
-      objLevel = k.LEVEL_STR_TO_NUM[options.attachLevel?.toUpperCase()] ? levelNum
-      record.objLevel = objLevel
-      record.objOptions = _.pick options, ['ignoreKeys']
-      record.objIsError = _.isError record.obj
-    record = _completeRecord record
+    _processAttachments record, options
+    _completeRecord record
 
     # Filtering rule #2
     if @fHiddenByFilter
@@ -123,7 +120,7 @@ _.each k.LEVEL_STR_TO_NUM, (levelNum, levelStr) ->
 # ### Story helpers
 #-----------------------------------------------
 Story::emitAction = (action, t) ->
-  record = _completeRecord
+  record =
     parents: @parents
     fRoot: @fRoot
     storyId: @storyId
@@ -136,6 +133,7 @@ Story::emitAction = (action, t) ->
     status: @status
     fStory: true
     action: action
+  _completeRecord record
   if @fHiddenByFilter
     @hiddenRecords.push record
     return
@@ -171,9 +169,25 @@ Story::reveal = ->
 # * `objIsError: bool?` (only for logs)
 _completeRecord = (record) ->
   record.id = _getRecordId()
+  record.version = RECORD_FORMAT_VERSION
   record.t ?= new Date().getTime()
   record.fServer = not k.IS_BROWSER
-  record
+  return
+
+_processAttachments = (record, options) ->
+  if options.hasOwnProperty 'attach'
+    record.obj = options.attach
+    record.objExpanded = not(options.attachInline ? false)
+  else if options.hasOwnProperty 'attachInline'
+    record.obj = options.attachInline
+    record.objExpanded = false
+  if record.hasOwnProperty 'obj'
+    objLevel = k.LEVEL_STR_TO_NUM[options.attachLevel?.toUpperCase()] ? record.level
+    record.objLevel = objLevel
+    record.objOptions = _.pick options, ['ignoreKeys']
+    record.objIsError = _.isError record.obj
+    record.obj = serialize record.obj
+  return
 
 _emit = (record) -> hub.emit record
 

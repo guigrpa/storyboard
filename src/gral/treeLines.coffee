@@ -1,5 +1,6 @@
 chalk = require 'chalk'
 _ = require '../vendor/lodash'
+{CIRCULAR_REF} = require './serialize'
 
 WRAPPER_KEY = '__wrapper__'
 
@@ -12,7 +13,8 @@ _tree = (node, options, prefix, stack) ->
   for key, val of node
     continue if options.ignoreKeys.indexOf(key) >= 0
     finalPrefix = if key is WRAPPER_KEY then prefix else "#{prefix}#{key}: "
-    if _.isObject(val) and _.includes(stack, val)  # Avoid circular dependencies
+    if (_.isObject(val) and _.includes(stack, val)) or  # Avoid circular dependencies
+       (val is CIRCULAR_REF)
       out.push "#{finalPrefix}#{chalk.green.bold '[CIRCULAR]'}"
     else if _.isArray(val) and val.length is 0
       out.push "#{finalPrefix}#{chalk.bold '[]'}"
