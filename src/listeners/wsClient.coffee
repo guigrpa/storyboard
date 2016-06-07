@@ -3,7 +3,6 @@ timm        = require 'timm'
 _           = require '../vendor/lodash'
 k           = require '../gral/constants'
 ifExtension = require './interfaceExtension'
-serializeAttachments = require './serializeAttachments'
 
 DEFAULT_CONFIG = 
   uploadClientStories: false
@@ -69,7 +68,6 @@ _uploadPending = ->
 
 _uploadRecord = (record, config) ->
   return if not config.uploadClientStories
-  record = serializeAttachments record
   record = timm.set record, 'uploadedBy', _uploaderId
   if _uploadBuf.length < 2000
     _uploadBuf.push record

@@ -48,12 +48,11 @@ describe "browserExtensionListener", ->
         expect(msg.type).to.equal 'RECORDS'
         expect(msg.data[0].msg).to.contain 'rainbow'
 
-    it "should preprocess attachments through treeLines", ->
+    it "should not preprocess attachments", ->
       _spyClientWinTxMsg.reset()
       mainStory.info "We can be heroes...", attach: just: "for one day"
       h.waitUntil(1000, -> _spyClientWinTxMsg.callCount > 0)
       .then ->
         record = _spyClientWinTxMsg.args[0][0].data[0]
         expect(record.msg).to.contain 'heroes'
-        expect(record.obj[0]).to.contain 'just'
-        expect(record.obj[0]).to.contain 'one day'
+        expect(record.obj).to.deep.equal {just: 'for one day'}
