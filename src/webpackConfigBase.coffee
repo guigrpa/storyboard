@@ -1,3 +1,5 @@
+require 'babel-core/register'
+path = require 'path'
 webpack = require 'webpack'
 
 LANGS = ['en_gb']
@@ -23,6 +25,10 @@ module.exports =
     ,
       test: /\.coffee$/
       loader: 'babel!coffee'
+    ,
+      test: /\.js$/
+      exclude: path.resolve(process.cwd(), 'node_modules')
+      loader: 'babel'
     ,
       test: /\.(otf|eot|svg|ttf|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/
       loader: 'file'

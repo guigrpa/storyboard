@@ -121,8 +121,8 @@ specs =
   # ## Storyboard library dependencies
   #-================================================================
   dependencies:
-    "timm": "0.6.0"
-    "chalk": "1.1.1"
+    "timm": "0.6.1"
+    "chalk": "1.1.3"
     "bluebird": "3.3.1"
     "express": "4.13.4"
     "socket.io": "1.4.5"
@@ -139,7 +139,7 @@ specs =
     #-----------------------------------------------------------------
     # ### Packaged in the Chrome extension
     #-----------------------------------------------------------------
-    "babel-polyfill":       "6.6.1"     # es6
+    "babel-polyfill":       "6.9.1"     # es6
 
     # React
     "react":                          "15.0.1"
@@ -185,7 +185,7 @@ specs =
     "babel-preset-stage-2": "6.5.0"
 
     # Webpack + loaders (+ related stuff)
-    "webpack": "1.12.13"
+    "webpack": "1.13.1"
     "babel-loader": "6.2.4"
     "coffee-loader": "0.7.2"
     "cjsx-loader": "2.1.0"
