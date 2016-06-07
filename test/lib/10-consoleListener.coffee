@@ -13,21 +13,23 @@ describe "consoleListener", ->
   _spyError = null
   before -> 
     storyboard.removeAllListeners()
+    sinon.stub console, 'log'
     storyboard.addListener consoleListener
+    console.log.restore()
     storyboard.config filter: '*:*'
     _listener = storyboard.getListeners()[0]
-    sinon.spy console, 'log'
-    sinon.spy console, 'error'
-    _spyLog   = console.log
-    _spyError = console.error
-
-  after ->
-    console.log.restore()
-    console.error.restore()
 
   beforeEach -> 
-    _spyLog.reset()
-    _spyError.reset()
+    consoleLog = console.log
+    consoleError = console.error
+    _spyLog   = sinon.stub console, 'log', (txt) ->
+      if txt.length and txt[0] is ' ' then consoleLog.apply console, arguments
+    _spyError = sinon.stub console, 'error', (txt) ->
+      if txt.length and txt[0] is ' ' then consoleError.apply console, arguments
+
+  afterEach ->
+    console.log.restore()
+    console.error.restore()
 
   it "should output log lines", ->
     mainStory.info "testSrc", "Test message"
@@ -78,14 +80,14 @@ describe "consoleListener", ->
       msg = _spyLog.args[0][0]
       expect(msg).to.contain JSON.stringify obj
 
-    it "when JSON.stringify is impossible, it should expand the object tree", ->
+    it "when attachments have circular refs, they should still be inlined", ->
       obj = {oneAttr: 5}
       obj.b = obj
       mainStory.info "Inline attachment with circular ref", {attachInline: obj}
-      expect(_spyLog).to.have.been.calledThrice
+      expect(_spyLog).to.have.been.calledOnce
       expect(_spyLog.args[0][0]).to.contain "circular ref"
-      expect(_spyLog.args[1][0]).to.contain "oneAttr"
-      expect(_spyLog.args[2][0]).to.contain "[CIRCULAR]"
+      expect(_spyLog.args[0][0]).to.contain "oneAttr"
+      expect(_spyLog.args[0][0]).to.contain "[CIRCULAR]"
 
     it "should also allow the user to always expand an attachment", ->
       obj = {attr1: 8}

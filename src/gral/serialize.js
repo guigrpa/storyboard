@@ -1,22 +1,28 @@
-import {
-  isObject,
-  cloneDeep,
-} from '../vendor/lodash';
+import { isObject, cloneDeep } from '../vendor/lodash';
 
-const CIRCULAR_PLACEHOLDER = '__CIRCULAR__';
+const CIRCULAR_REF = '[[CIRCULAR]]';
 
-const removeCycles = (obj) => {
+const removeCycles = (obj, stack, visited) => {
+  if (!isObject(obj)) return obj;
+  if (stack.indexOf(obj) >= 0) return CIRCULAR_REF
+  if (visited.indexOf(obj) >= 0) return obj;
+  stack.push(obj);
+  visited.push(obj);
+  Object.keys(obj).forEach(key => {
+    obj[key] = removeCycles(obj[key], stack, visited);
+  });
+  stack.pop();
   return obj;
 }
 
-const serialize = (obj) => {
+const serialize = obj => {
   if (!isObject(obj)) return obj;
   let out = cloneDeep(obj);
-  out = removeCycles(out);
+  out = removeCycles(out, [], []);
   return out;
 }
 
 export {
   serialize,
-  CIRCULAR_PLACEHOLDER,
+  CIRCULAR_REF,
 };

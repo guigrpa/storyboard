@@ -10,6 +10,7 @@ ColoredText       = require './030-coloredText'
 Icon              = require './910-icon'
 actions           = require '../actions/actions'
 ansiColors        = require '../../gral/ansiColors'
+treeLines         = require '../../gral/treeLines'
 k                 = require '../../gral/constants'
 
 _quickFind = (msg, quickFind) ->
@@ -128,9 +129,10 @@ _Story = React.createClass
     out
 
   renderAttachment: (record) -> 
-    {storyId, id} = record
+    {storyId, id, obj, objOptions, version} = record
     props = _.pick @props, ['level', 'timeType', 'setTimeType', 'quickFind', 'seqFullRefresh']
-    return record.obj.map (line, idx) ->
+    lines = if version >= 2 then treeLines(obj, objOptions) else obj
+    return lines.map (line, idx) ->
       <AttachmentLine key={"#{storyId}_#{id}_#{idx}"}
         record={record}
         {...props}

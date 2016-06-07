@@ -21,7 +21,7 @@
     "url": "git+https://github.com/guigrpa/storyboard.git"
   },
   "scripts": {
-    "compile": "rm -rf lib && coffee --no-header -o lib -c src/storyboard.coffee && coffee --no-header -o lib -c src/noPlugins.coffee && coffee --no-header -o lib -c src/stdinLogger.coffee && coffee --no-header -o lib/gral -c src/gral && coffee --no-header -o lib/listeners -c src/listeners && coffee --no-header -o lib/vendor -c src/vendor && coffee --no-header -o lib/chromeExtension -c src/chromeExtension && babel -d lib src",
+    "compile": "rm -rf lib && coffee --no-header -o lib -c src && babel -d lib src",
     "buildServerLogsApp": "cross-env NODE_ENV=production webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress -p",
     "buildServerLogsAppWatch": "webpack --config src/serverLogsApp/webpackConfig.coffee --colors --progress --watch",
     "buildExtension": "cross-env NODE_ENV=production webpack --config src/chromeExtension/webpackConfig.coffee --colors --progress -p",
@@ -30,7 +30,7 @@
     "buildExample": "webpack --config src/example/webpackConfig.coffee --colors --progress",
     "buildExampleHeroku": "rm -f example/heroku/client/*.eot example/heroku/client/*.ttf example/heroku/client/*.woff* example/heroku/client/*.svg example/heroku/client/*.js && cross-env NODE_ENV=production webpack --config src/example/webpackConfig.coffee --colors --progress -p && cp example/*.eot example/*.ttf example/*.woff* example/*.svg example/*.js example/heroku/client/",
     "buildExampleWatch": "webpack --config src/example/webpackConfig.coffee --colors --progress --watch",
-    "example": "coffee src/example/server.coffee",
+    "example": "npm run compile && node lib/example/server",
     "build": "coffee package.coffee && npm run compile && npm run buildServerLogsApp && npm run buildExtension && npm run test && npm run zipExtension && npm run buildExampleHeroku && npm run xxl && echo 'Remember to update Heroku package.json with the latest SB version!'",
     "travis": "coffee package.coffee && npm run compile && npm run test",
     "test": "npm run testCov",

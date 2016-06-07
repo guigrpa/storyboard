@@ -43,13 +43,7 @@ specs =
 
     compile: _runMultiple [
       "rm -rf lib"
-      "coffee --no-header -o lib -c src/storyboard.coffee"
-      "coffee --no-header -o lib -c src/noPlugins.coffee"
-      "coffee --no-header -o lib -c src/stdinLogger.coffee"
-      "coffee --no-header -o lib/gral -c src/gral"
-      "coffee --no-header -o lib/listeners -c src/listeners"
-      "coffee --no-header -o lib/vendor -c src/vendor"
-      "coffee --no-header -o lib/chromeExtension -c src/chromeExtension"
+      "coffee --no-header -o lib -c src"
       "babel -d lib src"
     ]
 
@@ -74,7 +68,10 @@ specs =
       "cp example/*.eot example/*.ttf example/*.woff* example/*.svg example/*.js #{HEROKU_CLIENT}/"
     ]
     buildExampleWatch:        "#{WEBPACK_EXAMPLE} --watch"
-    example:                  "coffee src/example/server.coffee"
+    example: _runMultiple [
+      "npm run compile"
+      "node lib/example/server"
+    ]
 
     # General
     build:                    _runMultiple [
