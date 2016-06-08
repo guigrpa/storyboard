@@ -1,7 +1,7 @@
 React             = require 'react'
 ReactRedux        = require 'react-redux'
+{ Icon, Spinner } = require 'giu'
 actions           = require '../actions/actions'
-Icon              = require './910-icon'
 
 RETURN_KEY = 13
 
@@ -32,12 +32,7 @@ Login = React.createClass
     if not fLoginRequired?
       return (
         <div style={_style.outer()}>
-          <Icon 
-            icon="circle-o-notch" 
-            fFixedWidth
-            size="lg" 
-            style={_style.icon fDisabled: true}
-          />
+          <Spinner size="lg" fixedWidth />
         </div>
       )
     if not fLoginRequired
@@ -57,9 +52,8 @@ Login = React.createClass
         icon="sign-out" 
         title="Log out"
         size="lg" 
-        fFixedWidth
+        fixedWidth
         onClick={@logOut}
-        style={_style.icon()}
       />
     </div>
 
@@ -71,17 +65,14 @@ Login = React.createClass
           icon="sign-in" 
           title="Log in"
           size="lg" 
-          fFixedWidth
+          fixedWidth
           onClick={@logIn}
-          style={_style.icon()}
         />
       when 'LOGGING_IN' 
-        <Icon 
-          icon="circle-o-notch" 
+        <Spinner 
           title="Logging in"
-          fFixedWidth
           size="lg" 
-          style={_style.icon fDisabled: true}
+          fixedWidth
         />
       else ''
     fError = loginState is 'LOGGED_OUT_WITH_ERROR'
@@ -127,8 +118,6 @@ _style =
   outer: (fHighlight) ->
     padding: "4px 10px"
     backgroundColor: if fHighlight then '#d6ecff'
-  icon: ({fDisabled} = {}) ->
-    cursor: if not fDisabled then 'pointer'
   field: (fError) ->
     marginRight: 4
     width: 70

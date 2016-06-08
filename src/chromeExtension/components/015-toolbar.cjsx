@@ -1,9 +1,9 @@
 _                 = require '../../vendor/lodash'
 React             = require 'react'
 ReactRedux        = require 'react-redux'
+{ Icon }          = require 'giu'
 Login             = require './010-login'
 Settings          = require './016-settings'
-Icon              = require './910-icon'
 actions           = require '../actions/actions'
 
 mapStateToProps = (state) -> 
@@ -124,6 +124,7 @@ _style =
     marginRight: 5
     marginLeft: 10
     color: if fConnected then 'green' else 'red'
+    cursor: 'default'
   placeholder:
     height: 30
   left:

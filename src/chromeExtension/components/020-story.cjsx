@@ -6,8 +6,8 @@ timm              = require 'timm'
 tinycolor         = require 'tinycolor2'
 moment            = require 'moment'
 chalk             = require 'chalk'
+{ Icon, Spinner } = require 'giu'
 ColoredText       = require './030-coloredText'
-Icon              = require './910-icon'
 actions           = require '../actions/actions'
 ansiColors        = require '../../gral/ansiColors'
 treeLines         = require '../../gral/treeLines'
@@ -388,7 +388,7 @@ Line = React.createClass
       className = 'storyTitle'
       style = _styleLine.titleRow level
       indentLevel = level - 1
-      if fOpen then spinner = <Icon icon="circle-o-notch" style={_styleLine.spinner}/>
+      if fOpen then spinner = <Spinner style={_styleLine.spinner}/>
     else
       className = 'log'
       style = _styleLine.log record

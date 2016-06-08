@@ -1,9 +1,13 @@
 _                 = require '../../vendor/lodash'
 React             = require 'react'
 ReactRedux        = require 'react-redux'
+{
+  Floats,
+  LargeMessage,
+  Spinner,
+}                 = require 'giu'
 Toolbar           = require './015-toolbar'
 Story             = require './020-story'
-LargeMessage      = require './900-largeMessage'
 if process.env.NODE_ENV isnt 'production'
   ReduxDevTools   = require '../components/990-reduxDevTools'
 
@@ -56,6 +60,7 @@ App = React.createClass
     ##   reduxDevTools = <ReduxDevTools/>
     fConnected = @props.cxState is 'CONNECTED'
     <div ref="outer" id="appRoot" style={_style.outer}>
+      <Floats />
       {if not fConnected then @renderConnecting()}
       {if fConnected then <Toolbar/>}
       {if fConnected then @renderStories()}
@@ -73,8 +78,8 @@ App = React.createClass
 
   renderConnecting: ->
     <LargeMessage>
-      Connecting to Storyboard... <br/>
-      Navigate to your Storyboard-equipped app (and log in if required)
+      <div><Spinner /> Connecting to Storyboard... </div>
+      <div>Navigate to your Storyboard-equipped app (and log in if required)</div>
     </LargeMessage>
 
 #-----------------------------------------------------
