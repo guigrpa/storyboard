@@ -1,15 +1,17 @@
 React             = require 'react'
 ReactRedux        = require 'react-redux'
-{ Icon, Spinner } = require 'giu'
+{
+  notify,
+  TextInput, PasswordInput,
+  Icon, Spinner,
+}                 = require 'giu'
+Promise           = require 'bluebird'
 actions           = require '../actions/actions'
 
 RETURN_KEY = 13
 
 mapStateToProps = ({cx: {fLoginRequired, loginState, login}}) -> 
   return {fLoginRequired, loginState, login}
-mapDispatchToProps = (dispatch) ->
-  onLogIn: (credentials) -> dispatch actions.logIn credentials
-  onLogOut: -> dispatch actions.logOut()
 
 Login = React.createClass
   displayName: 'Login'
@@ -20,11 +22,8 @@ Login = React.createClass
     fLoginRequired:         React.PropTypes.bool
     loginState:             React.PropTypes.string.isRequired
     login:                  React.PropTypes.string
-    onLogIn:                React.PropTypes.func.isRequired
-    onLogOut:               React.PropTypes.func.isRequired
-  getInitialState: ->
-    login:                  ''
-    password:               ''
+    logIn:                  React.PropTypes.func.isRequired
+    logOut:                 React.PropTypes.func.isRequired
 
   #-----------------------------------------------------
   render: -> 
@@ -60,7 +59,7 @@ Login = React.createClass
   renderLogIn: ->
     {loginState} = @props
     btn = switch loginState
-      when 'LOGGED_OUT', 'LOGGED_OUT_WITH_ERROR'
+      when 'LOGGED_OUT'
         <Icon 
           icon="sign-in" 
           title="Log in"
@@ -75,54 +74,48 @@ Login = React.createClass
           fixedWidth
         />
       else ''
-    fError = loginState is 'LOGGED_OUT_WITH_ERROR'
     <div style={_style.outer true}>
       <b>Server logs:</b>
       {' '}
-      <span>
-        <input ref="login"
-          id="login"
-          type="text"
-          value={@state.login}
-          placeholder="Login"
-          onChange={@onChangeCredentials}
-          onKeyUp={@onKeyUpCredentials}
-          style={_style.field fError}
-        />
-        <input ref="password"
-          id="password"
-          type="password"
-          value={@state.password}
-          placeholder="Password"
-          onChange={@onChangeCredentials}
-          onKeyUp={@onKeyUpCredentials}
-          style={_style.field fError}
-        />
-        {btn}
-      </span>
+      <TextInput ref="login"
+        id="login"
+        placeholder="Login"
+        onKeyUp={@onKeyUpCredentials}
+        style={_style.field}
+        required errorZ={12}
+      />
+      <PasswordInput ref="password"
+        id="password"
+        placeholder="Password"
+        onKeyUp={@onKeyUpCredentials}
+        style={_style.field}
+        required errorZ={12}
+      />
+      {btn}
     </div>
 
   #-----------------------------------------------------
-  logIn: -> @props.onLogIn @state 
-  logOut: ->
-    @setState {login: '', password: ''}
-    @props.onLogOut()
+  logIn: ->
+    credentials = {}
+    Promise.map ['login', 'password'], (key) =>
+      this.refs[key].validateAndGetValue()
+      .then (val) -> credentials[key] = val
+    .then => @props.logIn credentials
+    return
+
+  logOut: -> @props.logOut()
 
   onKeyUpCredentials: (ev) -> @logIn() if ev.which is RETURN_KEY
-
-  onChangeCredentials: (ev) -> 
-    @setState {"#{ev.target.id}": ev.target.value}
 
 #-----------------------------------------------------
 _style = 
   outer: (fHighlight) ->
     padding: "4px 10px"
     backgroundColor: if fHighlight then '#d6ecff'
-  field: (fError) ->
+  field:
     marginRight: 4
     width: 70
-    backgroundColor: if fError then 'blanchedalmond'
 
 #-----------------------------------------------------
-connect = ReactRedux.connect mapStateToProps, mapDispatchToProps
+connect = ReactRedux.connect mapStateToProps, actions
 module.exports = connect Login

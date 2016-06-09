@@ -140,7 +140,7 @@ specs =
     # ### Packaged in the Chrome extension
     #-----------------------------------------------------------------
     "babel-polyfill": "6.9.1"
-    "giu": "0.5.0"
+    "giu": "0.6.0"
 
     # React
     "react":                          "15.0.1"

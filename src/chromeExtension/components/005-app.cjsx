@@ -2,7 +2,7 @@ _                 = require '../../vendor/lodash'
 React             = require 'react'
 ReactRedux        = require 'react-redux'
 {
-  Floats,
+  Floats, Notifications,
   LargeMessage,
   Spinner,
 }                 = require 'giu'
@@ -12,7 +12,6 @@ if process.env.NODE_ENV isnt 'production'
   ReduxDevTools   = require '../components/990-reduxDevTools'
 
 require './app.sass'
-require 'font-awesome/css/font-awesome.css'
 
 mapStateToProps = (state) -> 
   fRelativeTime:  state.settings.timeType is 'RELATIVE'
@@ -61,6 +60,7 @@ App = React.createClass
     fConnected = @props.cxState is 'CONNECTED'
     <div ref="outer" id="appRoot" style={_style.outer}>
       <Floats />
+      <Notifications />
       {if not fConnected then @renderConnecting()}
       {if fConnected then <Toolbar/>}
       {if fConnected then @renderStories()}

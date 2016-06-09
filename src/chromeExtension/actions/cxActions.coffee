@@ -1,5 +1,6 @@
 Promise = require 'bluebird'
 Saga    = require 'redux-saga/effects'
+{notify} = require 'giu'
 actions = require './actions'
 require 'babel-polyfill'
 
@@ -71,8 +72,13 @@ rxMsg = ->
               type: 'RECORDS_RECEIVED' 
               records: bufferedRecords
               fPastRecords: true
-        else 
-          yield Saga.put {type: 'LOGIN_FAILED'}
+        else
+          notify
+            title: 'Log-in failed'
+            msg: 'Please try again'
+            type: 'error'
+            icon: 'user'
+          yield Saga.put {type: 'LOGGED_OUT'}
           _lastCredentials = null
       when 'RECORDS' 
         yield Saga.put {type: 'RECORDS_RECEIVED', records: data}

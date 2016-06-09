@@ -7,6 +7,7 @@ ReactRedux        = require 'react-redux'
   Modal,
   Checkbox, TextInput, NumberInput,
 }                 = require 'giu'
+Promise           = require 'bluebird'
 Login             = require './010-login'
 actions           = require '../actions/actions'
 
@@ -14,10 +15,6 @@ mapStateToProps = (state) ->
   settings:       state.settings
   serverFilter:   state.cx.serverFilter
   localClientFilter: state.cx.localClientFilter
-mapDispatchToProps = (dispatch) ->
-  updateSettings: (settings) -> dispatch actions.updateSettings settings
-  setServerFilter: (filter) -> dispatch actions.setServerFilter filter
-  setLocalClientFilter: (filter) -> dispatch actions.setLocalClientFilter filter
 
 Settings = React.createClass
   displayName: 'Settings'
@@ -35,10 +32,6 @@ Settings = React.createClass
   getInitialState: ->
     _fCanSave: true
 
-  componentWillMount: -> 
-    @setState timm.merge @props.settings,
-      serverFilter: @props.serverFilter
-      localClientFilter: @props.localClientFilter
   componentDidMount: -> @checkLocalStorage()
 
   #-----------------------------------------------------
@@ -52,63 +45,49 @@ Settings = React.createClass
       onEsc={@props.onClose}
     >
       {@renderLocalStorageWarning()}
-      <Checkbox 
-        id="fShowClosedActions"
+      <Checkbox ref="fShowClosedActions"
         label={<span>Show <i>CLOSED</i> actions</span>}
-        value={@state.fShowClosedActions}
-        onChange={@onChangeCheckbox}
+        value={@props.settings.fShowClosedActions}
       /><br />
-      <Checkbox 
-        id="fShorthandForDuplicates"
+      <Checkbox ref="fShorthandForDuplicates"
         label="Use shorthand notation for identical consecutive logs"
-        checked={@state.fShorthandForDuplicates}
-        onChange={@onChangeCheckbox}
+        value={@props.settings.fShorthandForDuplicates}
       /><br />
-      <Checkbox 
-        id="fCollapseAllNewStories"
+      <Checkbox ref="fCollapseAllNewStories"
         label="Collapse all new stories (even if they are still open)"
-        checked={@state.fCollapseAllNewStories}
-        onChange={@onChangeCheckbox}
+        value={@props.settings.fCollapseAllNewStories}
       /><br />
-      <Checkbox 
-        id="fExpandAllNewAttachments"
+      <Checkbox ref="fExpandAllNewAttachments"
         label="Expand all attachments upon receipt"
-        checked={@state.fExpandAllNewAttachments}
-        onChange={@onChangeCheckbox}
+        value={@props.settings.fExpandAllNewAttachments}
       /><br />
-      <Checkbox 
-        id="fDiscardRemoteClientLogs"
+      <Checkbox ref="fDiscardRemoteClientLogs"
         label="Discard stories from remote clients upon receipt"
-        checked={@state.fDiscardRemoteClientLogs}
-        onChange={@onChangeCheckbox}
+        value={@props.settings.fDiscardRemoteClientLogs}
       />
       <br />
       <br />
       <div>
         <label htmlFor="maxRecords">
           Number of logs and stories to remember:
-        </label>
-        {' '}
-        <NumberInput 
+        </label>{' '}
+        <NumberInput ref="maxRecords"
           id="maxRecords"
-          step={1}
-          value={@state.maxRecords}
-          onChange={@onChangeInput}
+          step={1} min={0}
+          value={@props.settings.maxRecords}
           style={{width: 50}}
-        />
-        {' '}
+          required errorZ={52}
+        />{' '}
         <label htmlFor="forgetHysteresis">
           with hysteresis:
-        </label>
-        {' '}
-        <NumberInput 
+        </label>{' '}
+        <NumberInput ref="forgetHysteresis"
           id="forgetHysteresis"
-          step={.05}
-          value={@state.forgetHysteresis}
-          onChange={@onChangeInput}
+          step={.05} min={0} max={1}
+          value={@props.settings.forgetHysteresis}
           style={{width: 50}}
-        />
-        {' '}
+          required errorZ={52}
+        />{' '}
         <Icon 
           icon="info-circle"
           title={@maxLogsDesc()}
@@ -126,24 +105,22 @@ Settings = React.createClass
         <li>
           <label htmlFor="serverFilter" style={_style.filters.itemLabel}>
             Server:
-          </label>
-          {' '}
-          <TextInput 
+          </label>{' '}
+          <TextInput ref="serverFilter"
             id="serverFilter"
-            value={@state.serverFilter}
-            onChange={@onChangeInput}
+            value={@props.serverFilter}
+            required errorZ={52}
             style={{width: 300}}
           />
         </li>
         <li>
           <label htmlFor="localClientFilter" style={_style.filters.itemLabel}>
             Local client:
-          </label>
-          {' '}
-          <TextInput 
+          </label>{' '}
+          <TextInput ref="localClientFilter"
             id="localClientFilter"
-            value={@state.localClientFilter}
-            onChange={@onChangeInput}
+            value={@props.localClientFilter}
+            required errorZ={52}
             style={{width: 300}}
           />
         </li>
@@ -168,23 +145,29 @@ Settings = React.createClass
       "start forgetting old stuff until it goes below #{lo}"
 
   #-----------------------------------------------------
-  onChangeCheckbox: (ev) -> @setState {"#{ev.target.id}": ev.target.checked}
-  onChangeInput:    (ev) -> @setState {"#{ev.target.id}": ev.target.value}
-
   onSubmit: ->
     settings = {}
-    for key, val of @state
-      continue if key[0] is '_'
-      continue if key in ['serverFilter', 'localClientFilter']
-      settings[key] = switch key
-        when 'maxRecords', 'forgetHysteresis' then Number(val)
-        else val
-    @props.updateSettings settings
-    if @state.serverFilter isnt @props.serverFilter
-      @props.setServerFilter @state.serverFilter
-    if @state.localClientFilter isnt @props.localClientFilter
-      @props.setLocalClientFilter @state.localClientFilter
-    @props.onClose()
+    keys = [
+      'fShowClosedActions',
+      'fShorthandForDuplicates',
+      'fCollapseAllNewStories',
+      'fExpandAllNewAttachments',
+      'fDiscardRemoteClientLogs',
+      'maxRecords', 'forgetHysteresis',
+      'serverFilter', 'localClientFilter',
+    ]
+    Promise.map keys, (key) =>
+      ref = this.refs[key]
+      if not(ref) then throw new Error('Could not read form')
+      this.refs[key].validateAndGetValue()
+      .then (val) -> settings[key] = val
+    .then =>
+      @props.updateSettings timm.omit(settings, ['serverFilter', 'localClientFilter'])
+      if settings.serverFilter isnt @props.serverFilter
+        @props.setServerFilter settings.serverFilter
+      if settings.localClientFilter isnt @props.localClientFilter
+        @props.setLocalClientFilter settings.localClientFilter
+      @props.onClose()
     return
 
   #-----------------------------------------------------
@@ -213,5 +196,5 @@ _style =
       width: 80
 
 #-----------------------------------------------------
-connect = ReactRedux.connect mapStateToProps, mapDispatchToProps
+connect = ReactRedux.connect mapStateToProps, actions
 module.exports = connect Settings
