@@ -63,11 +63,6 @@ describe 'cxReducer', ->
       expect(state.loginState).to.equal 'LOGGED_IN'
       expect(state.login).to.equal 'John'
 
-    it 'should process LOGIN_FAILED', ->
-      state = reducer state, {type: 'LOGIN_FAILED'}
-      expect(state.loginState).to.equal 'LOGGED_OUT_WITH_ERROR'
-      expect(state.login).to.be.null
-
     it 'should process LOGGED_OUT', ->
       state = reducer state, {type: 'LOGIN_SUCCEEDED', login: 'John'}
       state = reducer state, {type: 'LOGGED_OUT'}
