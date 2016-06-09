@@ -2,6 +2,8 @@
 
 *[M]: major change; [m]: minor change*
 
+## 1.3.0 (June 9, 2016)
+
 * Browser extension:
     - [m] Use [Giu](guigrpa.github.io/giu/) components for the UI
     - [m] Add some validation on the settings
