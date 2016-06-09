@@ -1,7 +1,5 @@
 # storyboard [![Build Status](https://travis-ci.org/guigrpa/storyboard.svg?branch=master)](https://travis-ci.org/guigrpa/storyboard) [![Coverage Status](https://coveralls.io/repos/github/guigrpa/storyboard/badge.svg?branch=master)](https://coveralls.io/github/guigrpa/storyboard?branch=master) [![npm version](https://img.shields.io/npm/v/storyboard.svg)](https://www.npmjs.com/package/storyboard) 
 
-## What?
-
 ![Storyboard DevTools](https://raw.githubusercontent.com/guigrpa/storyboard/master/docs/Storyboard.gif)
 
 A library, plus a [Chrome DevTools extension](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc).
@@ -22,9 +20,7 @@ Demo: http://storyboard-demo.herokuapp.com/
 * Enjoy the **simple-yet-powerful API** (I hope!).
 
 
-## How?
-
-### Installation
+## Installation
 
 To install the **Storyboard library** in your project:
 
@@ -36,6 +32,8 @@ To install the **Storyboard DevTools** Chrome extension, [get it from the Chrome
 
 Feel free to check out the [example](https://github.com/guigrpa/storyboard/blob/master/src/example): just clone the repo and run `npm install && npm run buildExample && npm run example`.
 
+
+## Usage
 
 ### Basic usage
 
@@ -315,7 +313,7 @@ Want to see the end-to-end story? Use the Storyboard DevTools extension.
 *Note: end-to-end stories work better when server and client system clocks are not too different. Servers are typically NTP-synchronised, as are most modern PCs with Internet access. If this is not the case, your story hierarchy will be OK but mixed client-server stories might be out of order.*
 
 
-### Storyboard DevTools
+## Storyboard DevTools
 
 Using the browser extension should be pretty straightforward. After [installing it](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc), open the Chrome DevTools, select the Storyboard pane and point your browser at either:
 
@@ -340,7 +338,9 @@ Storyboard DevTools is built with [React](https://facebook.github.io/react/), [R
 
 ## [What's changed since version X?](https://github.com/guigrpa/storyboard/blob/master/CHANGELOG.md)
 
-## Shall I? — The MIT license
+## [Changelog](https://github.com/guigrpa/storyboard/blob/master/CHANGELOG.md)
+
+## License (MIT)
 
 Copyright (c) [Guillermo Grau Panea](https://github.com/guigrpa) 2016
 
