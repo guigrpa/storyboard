@@ -2,9 +2,15 @@
 
 *[M]: major change; [m]: minor change*
 
+* Browser extension:
+    - [m] Use [Giu](guigrpa.github.io/giu/) components for the UI
+    - [m] Add some validation on the settings
+    - [m] Simplify cxReducer state
+    - [m] Fix panel charset (required for Redux devtools)
 * Lib:
     - [M] **Attach objects in their original shape (not simplified), after removal of possible circular refs**
     - [m] Add `stdinLogger` tool (result from issue #11): use it to log via Storyboard the output of any command, e.g. `ls | node stdinLogger.js`
+    - [m] Fix incorrect filter config when user enters a blank string
 
 ## 1.2.0 (Apr. 19, 2016)
 
