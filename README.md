@@ -336,8 +336,6 @@ You can check your new extension navigating to: http://storyboard-demo.herokuapp
 Storyboard DevTools is built with [React](https://facebook.github.io/react/), [Redux](http://redux.js.org/) and [Redux-Saga](http://yelouafi.github.io/redux-saga/).
 
 
-## [What's changed since version X?](https://github.com/guigrpa/storyboard/blob/master/CHANGELOG.md)
-
 ## [Changelog](https://github.com/guigrpa/storyboard/blob/master/CHANGELOG.md)
 
 ## License (MIT)
