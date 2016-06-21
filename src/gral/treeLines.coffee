@@ -69,7 +69,7 @@ treeLines = (obj, options = {}) ->
   prefix = options.prefix ? ''
   if _.isError obj
     obj = _.pick obj, ['name', 'message', 'stack']
-  else if not _.isObject obj 
+  else if (not _.isObject obj) or (obj instanceof Buffer)
     obj = {"#{WRAPPER_KEY}": obj}
   return _tree obj, options, prefix, []
 
