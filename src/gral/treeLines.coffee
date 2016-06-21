@@ -24,6 +24,11 @@ _tree = (node, options, prefix, stack) ->
       out.push "#{finalPrefix}#{strVal}"
     else if _.isDate(val)
       out.push "#{finalPrefix}#{chalk.magenta.bold val.toISOString()}"
+    else if val instanceof Buffer
+      str = val.slice(0, 50).toString('hex').toUpperCase().match(/(..)/g).join(' ')
+      if val.length > 50 then str += '...'
+      str = "Buffer [#{val.length}]: #{str}"
+      out.push "#{finalPrefix}#{chalk.magenta str}"
     else if _.isObject(val) and Object.keys(val).length is 0
       out.push "#{finalPrefix}#{chalk.bold '{}'}"
     else if _.isArray val
