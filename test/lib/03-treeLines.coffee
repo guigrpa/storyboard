@@ -85,6 +85,20 @@ describe 'treeLines', ->
     expect(lines[1]).to.contain 'message'
     expect(lines[2]).to.contain 'stack'
 
+  it 'should handle buffers (top level)', ->
+    lines = treeLines Buffer.from [0, 1, 2]
+    expect(lines).to.have.length 1
+    expect(lines[0].indexOf('Buffer [3]')).to.be.at.least 0
+
+  it 'should handle buffers (nested)', ->
+    lines = treeLines 
+      a: Buffer.from [0, 1, 2]
+      b: Buffer.from(x for x in [0...1000])
+    expect(lines).to.have.length 2
+    expect(lines[0].indexOf('Buffer [3]')).to.be.at.least 0
+    expect(lines[1].indexOf('Buffer [1000]')).to.be.at.least 0
+    expect(lines[1]).to.contain '...'
+
   it 'should provide simple console output', ->
     sinon.spy console, 'log'
     treeLines.log {a: 3}

@@ -2,6 +2,8 @@
 
 *[M]: major change; [m]: minor change*
 
+* [m] Show **buffers** nicely within attachments
+
 ## 1.3.0 (June 9, 2016)
 
 * Browser extension:
