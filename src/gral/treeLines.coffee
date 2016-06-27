@@ -3,6 +3,7 @@ _ = require '../vendor/lodash'
 {CIRCULAR_REF} = require './serialize'
 
 WRAPPER_KEY = '__wrapper__'
+BUFFER_EXPLICIT_LIMIT = 40
 
 _tree = (node, options, prefix, stack) ->
   out = []
@@ -25,9 +26,9 @@ _tree = (node, options, prefix, stack) ->
     else if _.isDate(val)
       out.push "#{finalPrefix}#{chalk.magenta.bold val.toISOString()}"
     else if val instanceof Buffer
-      str = val.slice(0, 50).toString('hex').toUpperCase().match(/(..)/g).join(' ')
-      if val.length > 50 then str += '...'
-      str = "Buffer [#{val.length}]: #{str}"
+      str = val.slice(0, BUFFER_EXPLICIT_LIMIT).toString('hex').toUpperCase().match(/(..)/g).join(' ')
+      if val.length > BUFFER_EXPLICIT_LIMIT then str += '...'
+      str = "Buffer [#{val.length}]: #{str}"
       out.push "#{finalPrefix}#{chalk.magenta str}"
     else if _.isObject(val) and Object.keys(val).length is 0
       out.push "#{finalPrefix}#{chalk.bold '{}'}"

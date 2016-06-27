@@ -49,6 +49,8 @@ someInfo =
     foo: undefined
     bar: null
     values: [1, 2]
+  shortBuffer: Buffer.from([0, 1, 2, 3])
+  longBuffer: Buffer.from(x for x in [0...1000])
 someInfo.nested.configOptions.mainInfo = someInfo
 mainStory.debug 'server', "Example info:", 
   attach: someInfo
