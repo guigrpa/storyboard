@@ -153,7 +153,6 @@ _socketBroadcast = ->
   return
 
 # Get the (long) list of buffered records from the hub.
-# Process their `obj` fields so that they don't include circular references
 _getBufferedRecords = (hub) -> hub.getBufferedRecords()
 
 # Manage the (short) broadcast buffer (note that `socketBroadcast` is 

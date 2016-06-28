@@ -1,3 +1,5 @@
+- Bugs:
+    + [not easily reproducible] When user auth is disabled and the server is relaunched, logs appear again and clicking on the second version of the same attachment opens the first one
 - **Chrome extension**:
     + Add config screenshot
     + Someday...

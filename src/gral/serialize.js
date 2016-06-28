@@ -23,8 +23,12 @@ const serialize = obj => {
 };
 
 const customCloner = (o) => {
-  if (!isError(o)) return undefined;
-  return pick(o, ['name', 'message', 'stack']);
+  if (isError(o)) {
+    return pick(o, ['name', 'message', 'stack']);
+  } else if(o instanceof Buffer) {
+    return o.toJSON();  // e.g. { type: 'Buffer', data: [3,4,5,6] }
+  }
+  return undefined;
 };
 
 export {

@@ -5,6 +5,8 @@ _ = require '../vendor/lodash'
 WRAPPER_KEY = '__wrapper__'
 BUFFER_EXPLICIT_LIMIT = 40
 
+_isBuffer = (val) -> _.isObject(val) and (val.type is 'Buffer')
+
 _tree = (node, options, prefix, stack) ->
   out = []
   options.ignoreKeys ?= []
@@ -25,7 +27,8 @@ _tree = (node, options, prefix, stack) ->
       out.push "#{finalPrefix}#{strVal}"
     else if _.isDate(val)
       out.push "#{finalPrefix}#{chalk.magenta.bold val.toISOString()}"
-    else if val instanceof Buffer
+    else if _isBuffer(val)
+      val = Buffer.from(val.data)
       str = val.slice(0, BUFFER_EXPLICIT_LIMIT).toString('hex').toUpperCase().match(/(..)/g).join(' ')
       if val.length > BUFFER_EXPLICIT_LIMIT then str += '...'
       str = "Buffer [#{val.length}]: #{str}"
@@ -70,7 +73,7 @@ treeLines = (obj, options = {}) ->
   prefix = options.prefix ? ''
   if _.isError obj
     obj = _.pick obj, ['name', 'message', 'stack']
-  else if (not _.isObject obj) or (obj instanceof Buffer)
+  else if (not _.isObject obj) or _isBuffer(obj)
     obj = {"#{WRAPPER_KEY}": obj}
   return _tree obj, options, prefix, []
 
