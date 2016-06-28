@@ -34,6 +34,7 @@
     "build": "coffee package.coffee && npm run compile && npm run buildServerLogsApp && npm run buildExtension && npm run test && npm run zipExtension && npm run buildExampleHeroku && npm run xxl && echo 'Remember to update Heroku package.json with the latest SB version!'",
     "travis": "coffee package.coffee && npm run compile && npm run test",
     "test": "npm run testCov",
+    "testFast": "mocha",
     "testCov": "npm run testCovPrepare && npm run testDev && npm run testProd && npm run testBrowser && npm run testCovReport",
     "testCovFast": "npm run testCovPrepare && npm run testDev && npm run testCovReport",
     "testCovPrepare": "rm -rf ./coverage .nyc_output .nyc_tmp && mkdir .nyc_tmp",

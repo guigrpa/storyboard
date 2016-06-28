@@ -91,6 +91,7 @@ specs =
       "npm run test"
     ]
     test:                     "npm run testCov"
+    testFast:                 "mocha"
     testCov:                  _runMultiple [
       "npm run testCovPrepare"
       "npm run testDev"
