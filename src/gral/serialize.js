@@ -1,4 +1,4 @@
-import { isObject, cloneDeep } from '../vendor/lodash';
+import { isObject, cloneDeepWith, isError, pick } from '../vendor/lodash';
 
 const CIRCULAR_REF = '[[CIRCULAR]]';
 
@@ -13,14 +13,19 @@ const removeCycles = (obj, stack, visited) => {
   });
   stack.pop();
   return obj;
-}
+};
 
 const serialize = obj => {
   if (!isObject(obj)) return obj;
-  let out = cloneDeep(obj);
+  let out = cloneDeepWith(obj, customCloner);
   out = removeCycles(out, [], []);
   return out;
-}
+};
+
+const customCloner = (o) => {
+  if (!isError(o)) return undefined;
+  return pick(o, ['name', 'message', 'stack']);
+};
 
 export {
   serialize,

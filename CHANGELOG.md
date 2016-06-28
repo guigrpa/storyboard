@@ -2,7 +2,8 @@
 
 *[M]: major change; [m]: minor change*
 
-* [m] Show **buffers** nicely within attachments
+* [m] Show **buffers** nicely within attachments.
+* Bugfix: Correct serialization of exceptions.
 
 ## 1.3.0 (June 9, 2016)
 

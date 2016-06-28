@@ -17,6 +17,9 @@ describe 'serialize', ->
     expect(serialize(true)).to.equal true
     expect(serialize(false)).to.equal false
 
+  it 'should return a trimmed-down object for errors', ->
+    expect(serialize(new Error('MY_ERROR'))).to.have.all.keys ['name', 'message', 'stack']
+
   describe 'with objects', ->
     it 'should clone the object', ->
       obj = {a: 3, b: {b1: 3}}

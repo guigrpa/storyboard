@@ -2,6 +2,7 @@ module.exports =
   ## camelCase:    require 'lodash/camelCase'
   clone:        require 'lodash/clone'
   cloneDeep:    require 'lodash/cloneDeep'
+  cloneDeepWith: require 'lodash/cloneDeepWith'
   debounce:     require 'lodash/debounce'
   defaults:     require 'lodash/defaults'
   each:         require 'lodash/each'
