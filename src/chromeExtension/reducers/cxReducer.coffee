@@ -13,7 +13,7 @@ reducer = (state = INITIAL_STATE, action) ->
   switch action.type
 
     #-------------------------------------------------
-    # ## Connection-related actions
+    # ## Connection-related actions (page-extension connection)
     #-------------------------------------------------
     when 'CX_CONNECTED'
       return timm.set state, 'cxState', 'CONNECTED'

@@ -41,16 +41,26 @@ rxMsg = ->
     {src, type, result, data} = msg
     console.log "[DT] RX #{src}/#{type}", data
     switch type
+      # Page-extension connection
       when 'CX_DISCONNECTED'
         yield Saga.put {type: 'CX_DISCONNECTED'}
+        yield Saga.put {type: 'WS_DISCONNECTED'}
       when 'CONNECT_REQUEST', 'CONNECT_RESPONSE'
         if type is 'CONNECT_REQUEST' 
           yield Saga.call _txMsg, 'CONNECT_RESPONSE'
         yield Saga.put {type: 'CX_CONNECTED', records: data}
-        yield Saga.call _txMsg, 'LOGIN_REQUIRED_QUESTION'
-        yield Saga.call _txMsg, 'GET_SERVER_FILTER'
-        yield Saga.call _txMsg, 'GET_LOCAL_CLIENT_FILTER'
-        # Too fast?
+
+      # WebSocket connection
+      when 'WS_CONNECTED'
+        if not yield Saga.call _isWsConnected
+          yield Saga.put {type: 'WS_CONNECTED'}
+          yield Saga.call _txMsg, 'LOGIN_REQUIRED_QUESTION'
+          yield Saga.call _txMsg, 'GET_SERVER_FILTER'
+          yield Saga.call _txMsg, 'GET_LOCAL_CLIENT_FILTER'
+      when 'WS_DISCONNECTED'
+        yield Saga.put {type: 'WS_DISCONNECTED'}
+
+      # Logging in
       when 'LOGIN_REQUIRED_RESPONSE'
         {fLoginRequired} = data
         yield Saga.put {type: 'LOGIN_REQUIRED', fLoginRequired}
@@ -80,11 +90,15 @@ rxMsg = ->
             icon: 'user'
           yield Saga.put {type: 'LOGGED_OUT'}
           _lastCredentials = null
+
+      # Records
       when 'RECORDS' 
         yield Saga.put {type: 'RECORDS_RECEIVED', records: data}
-
-      when 'WS_CONNECTED', 'WS_DISCONNECTED' then yield Saga.put {type}
   return
+
+_isWsConnected = -> 
+  wsState = yield Saga.select (state) -> state.cx.wsState
+  return wsState is 'CONNECTED'
 
 #-------------------------------------------------
 # ## Login/logout actions
