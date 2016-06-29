@@ -2,6 +2,8 @@
 
 *[M]: major change; [m]: minor change*
 
+## 1.4.0 (June 29, 2016)
+
 * Browser extension:
     - [M] **Improve behaviour when server restarts** (always download the server's new records)
     - [m] Click on the warning icon in a story title to expand the story.
