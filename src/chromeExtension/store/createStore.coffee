@@ -18,7 +18,9 @@ createStore = ->
     devToolsEnhancer = DevTools.instrument()
 
   ##   createLogger = require 'redux-logger'
-  ##   logger = createLogger()
+  ##   logger = createLogger
+  ##     predicate: (getState, action) -> 
+  ##       return not(action.type in ['EFFECT_TRIGGERED', 'EFFECT_RESOLVED', 'MSG_RECEIVED'])
   ##   addMiddlewares = Redux.applyMiddleware thunk, saga, logger
   ## 
   ##   # Use Chrome extension "Redux DevTools", if available
