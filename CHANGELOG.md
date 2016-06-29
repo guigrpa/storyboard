@@ -17,7 +17,7 @@
 ## 1.3.0 (June 9, 2016)
 
 * Browser extension:
-    - [m] Use [Giu](guigrpa.github.io/giu/) components for the UI
+    - [m] Use [Giu](http://guigrpa.github.io/giu/) components for the UI
     - [m] Add some validation on the settings
     - [m] Simplify cxReducer state
     - [m] Fix panel charset (required for Redux devtools)
