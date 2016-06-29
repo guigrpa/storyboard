@@ -4,6 +4,7 @@
 
 * [m] Show **buffers** nicely within attachments.
 * Bugfix: Correct serialization of exceptions.
+* Bugfix: Fix an issue in the browser extension where an incorrect attachment would be open when clicked upon after a server reset.
 
 ## 1.3.0 (June 9, 2016)
 

@@ -21,10 +21,8 @@ _hiddenStories = {}
 #-----------------------------------------------
 # ### Helpers
 #-----------------------------------------------
-_storyId = 0
 _getStoryId = -> (if k.IS_BROWSER then "cs/" else "ss/") + uuid.v4()
-_recordId = 0
-_getRecordId = -> if k.IS_BROWSER then "c#{_recordId++}" else "s#{_recordId++}"
+_getRecordId = -> (if k.IS_BROWSER then 'c-' else 's-') + uuid.v4()
 
 #-----------------------------------------------
 # ## Story
