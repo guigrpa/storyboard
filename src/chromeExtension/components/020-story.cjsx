@@ -457,6 +457,7 @@ Line = React.createClass
     <Icon 
       icon="warning"
       title={title}
+      onClick={@props.onToggleExpanded}
       style={_styleLine.warningIcon(if fHasError then 'error' else 'warning')}
     />
 
