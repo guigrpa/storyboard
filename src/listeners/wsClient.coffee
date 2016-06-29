@@ -42,7 +42,6 @@ _socketInit = (config) ->
       ifExtension.tx {type: 'WS_DISCONNECTED'}
       _fSocketConnected = false
     _socketio.on 'connect', socketConnected
-    _socketio.on 'reconnect', socketConnected
     _socketio.on 'disconnect', socketDisconnected
     _socketio.on 'error', socketDisconnected
     _socketio.on 'MSG', _rxMsg
