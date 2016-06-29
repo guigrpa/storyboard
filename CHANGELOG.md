@@ -2,6 +2,8 @@
 
 *[M]: major change; [m]: minor change*
 
+## 1.3.1 (June 29, 2016)
+
 * [m] Show **buffers** nicely within attachments.
 * Bugfix: Correct serialization of exceptions.
 * Bugfix: Fix an issue in the browser extension where an incorrect attachment would be open when clicked upon after a server reset.

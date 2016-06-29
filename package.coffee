@@ -8,7 +8,7 @@ HEROKU_ROOT = "example/heroku"
 HEROKU_CLIENT = "#{HEROKU_ROOT}/client"
 HEROKU_SERVER = "#{HEROKU_ROOT}/server"
 
-VERSION = "1.3.0"
+VERSION = "1.3.1"
 
 _runMultiple = (arr) -> arr.join ' && '
 
