@@ -39,14 +39,6 @@ const config = (options = {}) => {
   })
 };
 
-export default {
-  mainStory,
-  chalk,
-  config,
-  addListener,
-  removeListener, removeAllListeners,
-  getListeners,
-};
 export {
   mainStory,
   chalk,

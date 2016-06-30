@@ -3,7 +3,8 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import express from 'express';
 
-import storyboard, { mainStory, chalk } from '../storyboard'; // you'd write: `storyboard`
+import { mainStory, chalk } from '../storyboard'; // you'd write: `storyboard`
+import * as storyboard from '../storyboard'; // you'd write: `storyboard`
 import consoleListener from '../listeners/console';  // you'd write: `storyboard/lib/listeners/console`
 import wsServer from '../listeners/wsServer'; // you'd write: `storyboard/lib/listeners/wsServer`
 
