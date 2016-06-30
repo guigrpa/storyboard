@@ -122,13 +122,13 @@ specs =
   # ## Storyboard library dependencies
   #-================================================================
   dependencies:
-    "timm": "0.6.1"
+    "timm": "1.0.0"
     "chalk": "1.1.3"
-    "bluebird": "3.3.1"
-    "express": "4.13.4"
-    "socket.io": "1.4.5"
+    "bluebird": "3.4.1"
+    "express": "4.14.0"
+    "socket.io": "1.4.8"
     "node-uuid": "1.4.7"
-    "lodash": "4.5.0"
+    "lodash": "4.13.1"
     "platform": "1.3.1"
     "split": "1.0.0"
 
