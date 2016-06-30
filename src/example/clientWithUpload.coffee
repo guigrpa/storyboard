@@ -1,6 +1,6 @@
 require 'babel-polyfill'    # for IE
 require 'isomorphic-fetch'  # for IE
-{mainStory, chalk, addListener} = require '../noPlugins'  # you'd write: `'storyboard/lib/noPlugins'`
+{mainStory, chalk, addListener} = require '../storyboard'  # you'd write: `'storyboard/lib/noPlugins'`
 addListener require('../listeners/browserExtension')
 addListener require('../listeners/wsClient'), {uploadClientStories: true}
 
@@ -33,19 +33,3 @@ _refresh = (storyTitle) ->
 _refresh 'Initial fetch'
 
 setInterval (-> mainStory.debug "Repeated message"), 5000
-
-# Enable the following block to mount the developer tools 
-# in the main page (for faster development)
-if false
-  devToolsApp = require '../chromeExtension/devToolsApp'
-
-  # Emulate the content script for page -> devtools messages
-  window.addEventListener 'message', (event) ->
-    return if event.source isnt window
-    msg = event.data
-    return if msg.src isnt 'PAGE'
-    devToolsApp.processMsg msg
-
-  # Emulate the content script for devtools -> page messages
-  devToolsApp.init
-    sendMsg: (msg) -> window.postMessage msg, '*'

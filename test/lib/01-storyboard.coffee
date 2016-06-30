@@ -12,6 +12,11 @@ _listenerFactory =
 #-====================================================
 # ## Tests
 #-====================================================
+describe 'storyboard v2', ->
+
+  it 'should include no listeners by default', ->
+    expect(storyboard.getListeners()).to.have.length 0
+    
 describe 'storyboard', ->
   
   before -> 

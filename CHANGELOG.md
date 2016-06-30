@@ -2,6 +2,30 @@
 
 *[M]: major change; [m]: minor change*
 
+**Breaking changes**
+
+* Library:
+    - [M] **No listeners are installed by default**. If you need the old behaviour, just add:
+
+    ```js
+    import { addListener } from 'storyboard';
+
+    // Server
+    import consoleListener from 'storyboard/lib/listeners/console';
+    addListener(consoleListener);
+
+    // Client
+    if (process.env.NODE_ENV !== 'production') {
+        addListener(require('storyboard/lib/listeners/console'));
+        addListener(require('storyboard/lib/listeners/browserExtension'));
+        addListener(require('storyboard/lib/listeners/wsClient'));
+    }
+    ```
+
+**Other changes**
+
+* Internal: ongoing migration from CoffeeScript to JS.
+
 ## 1.4.0 (June 29, 2016)
 
 * Browser extension:
