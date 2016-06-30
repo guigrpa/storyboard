@@ -38,7 +38,10 @@ Feel free to check out the [example](https://github.com/guigrpa/storyboard/blob/
 ### Basic usage
 
 ```js
-import { mainStory: story } from 'storyboard';
+import { mainStory: story, addListener } from 'storyboard';
+import consoleListener from 'storyboard/lib/listeners/console';
+addListener(consoleListener);
+
 story.info('Hello world!');
 ```
 
@@ -82,13 +85,14 @@ story.info('db', 'Fetching item 25...');
 Use colors to highlight important parts of your logs:
 
 ```js
+import { mainStory: story, chalk } from 'storyboard';
 story.info('http', `GET ${chalk.green.bold('/api/item/26')}`);
 story.info('db', `Fetching item ${chalk.green.bold('26')}...`);
 // 2016-03-09T16:29:51.943Z           http INFO  GET /api/item/26
 // 2016-03-09T16:31:52.231Z             db INFO  Fetching item 26...
 ```
 
-We recommend using the popular [chalk](https://github.com/chalk/chalk) library by Sindre Sorhus. Chalk is automatically extended by Storyboard for use in the browser. If you prefer another ANSI-color library, make sure it's universal and doesn't disable itself in the browser.
+As seen above, we recommend using the popular [chalk](https://github.com/chalk/chalk) library by Sindre Sorhus. Chalk is automatically extended by Storyboard for use in the browser. If you prefer another ANSI-color library, make sure it's universal and doesn't disable itself in the browser.
 
 
 ### Attachments
@@ -142,7 +146,7 @@ localStorage.STORYBOARD = "*:*"
 Alternatively, you can configure the log filters programatically:
 
 ```js
-import storyboard from 'storyboard';
+import * as storyboard from 'storyboard';
 storyboard.config({ filter: '*:*' });
 ```
 

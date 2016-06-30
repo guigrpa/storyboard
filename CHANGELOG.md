@@ -5,7 +5,7 @@
 **Breaking changes**
 
 * Library:
-    - [M] **No listeners are installed by default**. If you need the old default behaviour, just add:
+    - [M] **No listeners are installed by default**. The default behaviour in v1 was to automatically install the console listener at the server side, and the console, browserExtension and wsClient listeners at the client side (but only in development mode). This was very convenient out of the box, but made it harder to customize the configuration in certain setups. If you need the old default behaviour, just add:
 
     ```js
     import { addListener } from 'storyboard';
