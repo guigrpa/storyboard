@@ -5,7 +5,7 @@
 **Breaking changes**
 
 * Library:
-    - [M] **No listeners are installed by default**. If you need the old behaviour, just add:
+    - [M] **No listeners are installed by default**. If you need the old default behaviour, just add:
 
     ```js
     import { addListener } from 'storyboard';

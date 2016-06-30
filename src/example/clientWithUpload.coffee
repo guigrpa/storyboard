@@ -1,6 +1,6 @@
 require 'babel-polyfill'    # for IE
 require 'isomorphic-fetch'  # for IE
-{mainStory, chalk, addListener} = require '../storyboard'  # you'd write: `'storyboard/lib/noPlugins'`
+{mainStory, chalk, addListener} = require '../storyboard'  # you'd write: `'storyboard'`
 addListener require('../listeners/browserExtension')
 addListener require('../listeners/wsClient'), {uploadClientStories: true}
 
