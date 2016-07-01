@@ -9,8 +9,10 @@
 - **Lib**:
     + [ ] Add listener to write to file
     + [ ] Add listener to write to database (choose a simple one)
+    + [ ] getConfig for listener
     + [ ] Update docs
     + [ ] Publish 2.0.0-rc1
+    + [ ] Embeddable components (without requiring extension)
     + [ ] Try to get all WS Server unit tests back to work
     + Working with out-of-order logs:
         * [ ] When revealing a hidden story (error/warning): include a separator line in the log to indicate that those records are FROM THE PAST

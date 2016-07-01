@@ -1,8 +1,8 @@
-## WEBPACK_OPTS            = "--colors --progress --display-modules --display-chunks"
-WEBPACK_OPTS            = "--colors --progress"
+WEBPACK_OPTS            = "--colors --progress --display-modules --display-chunks"
+## WEBPACK_OPTS            = "--colors --progress"
 WEBPACK_EXTENSION       = "webpack --config src/chromeExtension/webpackConfig.coffee #{WEBPACK_OPTS}"
-WEBPACK_SERVER_LOGS_APP = "webpack --config src/serverLogsApp/webpackConfig.coffee #{WEBPACK_OPTS}"
-WEBPACK_EXAMPLE         = "webpack --config src/example/webpackConfig.coffee #{WEBPACK_OPTS}"
+WEBPACK_SERVER_LOGS_APP = "webpack --config src/serverLogsApp/webpackConfig #{WEBPACK_OPTS}"
+WEBPACK_EXAMPLE         = "webpack --config src/example/webpackConfig #{WEBPACK_OPTS}"
 
 HEROKU_ROOT = "example/heroku"
 HEROKU_CLIENT = "#{HEROKU_ROOT}/client"
