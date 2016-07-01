@@ -53,6 +53,9 @@ describe "wsClientListener", ->
         source: _mockWindow
         data: {src: 'DT', type: 'CONNECT_RESPONSE'}
 
+    # Prevent setup from possibly interfering with tests
+    .delay 250
+
   after -> 
     storyboard.removeListener _listener
     _httpServer.close()
