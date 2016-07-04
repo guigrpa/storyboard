@@ -1,7 +1,7 @@
 {storyboard, expect, sinon, Promise, h} = require './imports'
 chalk             = require 'chalk'
 browserExtensionListener = require '../../lib/listeners/browserExtension'
-ifExtension       = require '../../lib/listeners/interfaceExtension'
+ifExtension       = require '../../lib/listeners/helpers/interfaceExtension'
 k                 = require '../../lib/gral/constants'
 
 {mainStory} = storyboard

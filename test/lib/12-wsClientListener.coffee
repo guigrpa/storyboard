@@ -3,7 +3,7 @@ chalk             = require 'chalk'
 http              = require 'http'
 socketio          = require 'socket.io'
 wsClientListener  = require '../../lib/listeners/wsClient'
-ifExtension       = require '../../lib/listeners/interfaceExtension'
+ifExtension       = require '../../lib/listeners/helpers/interfaceExtension'
 k                 = require '../../lib/gral/constants'
 
 {mainStory} = storyboard

@@ -2,7 +2,7 @@ socketio    = require 'socket.io-client'
 timm        = require 'timm'
 _           = require '../vendor/lodash'
 k           = require '../gral/constants'
-ifExtension = require './interfaceExtension'
+ifExtension = require './helpers/interfaceExtension'
 
 DEFAULT_CONFIG = 
   uploadClientStories: false

@@ -1,6 +1,5 @@
 timm        = require 'timm'
-ifExtension = require './interfaceExtension'
-ifExtension = require './interfaceExtension'
+ifExtension = require './helpers/interfaceExtension'
 filters     = require '../gral/filters'
 k           = require '../gral/constants'
 
