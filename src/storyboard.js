@@ -17,7 +17,7 @@ import hub, {
   addListener,
   removeListener, removeAllListeners,
   getListeners,
-} from './gral/hub'
+} from './gral/hub';
 
 chalk.enabled = true;
 

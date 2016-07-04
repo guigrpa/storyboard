@@ -40,7 +40,7 @@ app.post('/animals', (req, res, next) => {
 });
 const httpServer = http.createServer(app);
 httpServer.listen(PORT);
-mainStory.info('httpServer', "Listening on port ${chalk.cyan(PORT)}...");
+mainStory.info('httpServer', `Listening on port ${chalk.cyan(PORT)}...`);
 
 // Allow remote access to server logs via WebSockets 
 // (asking for credentials)
