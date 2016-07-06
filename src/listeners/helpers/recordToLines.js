@@ -1,15 +1,15 @@
-import * as _ from '../../vendor/lodash';
 import { merge } from 'timm';
 import chalk from 'chalk';
+import { padStart } from '../../vendor/lodash';
 import ansiColors from '../../gral/ansiColors';
 import k from '../../gral/constants';
 import filters from '../../gral/filters';
 import treeLines from '../../gral/treeLines';
 
 const TIME_COL_RELATIVE_LENGTH = 7;
-const TIME_COL_RELATIVE_EMPTY = _.padStart('', TIME_COL_RELATIVE_LENGTH);
+const TIME_COL_RELATIVE_EMPTY = padStart('', TIME_COL_RELATIVE_LENGTH);
 const TIME_COL_ABSOLUTE_LENGTH = new Date().toISOString().length;
-const TIME_COL_ABSOLUTE_EMPTY = _.padStart('', TIME_COL_ABSOLUTE_LENGTH);
+const TIME_COL_ABSOLUTE_EMPTY = padStart('', TIME_COL_ABSOLUTE_LENGTH);
 
 const recordToLines = (record, options) => {
   const {
@@ -21,6 +21,7 @@ const recordToLines = (record, options) => {
   const {
     moduleNameLength,
     relativeTime,
+    colors = true,
   } = options;
   const out = [];
 
@@ -48,7 +49,7 @@ const recordToLines = (record, options) => {
     actionStr = '';
   }
   // const parentsStr = _.padEnd(parents.map(o => o.slice(0,7)).join(', '), 10);
-  const srcStr = ansiColors.getSrcChalkColor(src)(_.padStart(src, options.moduleNameLength));
+  const srcStr = ansiColors.getSrcChalkColor(src)(padStart(src, options.moduleNameLength));
   let objStr = '';
   if ((obj != null) && !objExpanded) {
     try {
@@ -63,14 +64,16 @@ const recordToLines = (record, options) => {
   } else if (level >= k.LEVEL_STR_TO_NUM.WARN) {
     msgStr = chalk.yellow.bold(msgStr);
   }
-  const finalMsg = `${timeStr} ${srcStr} ${levelStr}${msgStr}${actionStr}${objStr}`;
+  let finalMsg = `${timeStr} ${srcStr} ${levelStr}${msgStr}${actionStr}${objStr}`;
+  if (!colors) finalMsg = chalk.stripColor(finalMsg);
   out.push({ text: finalMsg, level: record.level, fLongDelay });
   if (objExpanded && filters.passesFilter(src, objLevel)) {
     const lines = treeLines(obj, merge({ prefix: '  ' }, objOptions));
     const levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[objLevel];
     const emptyTimeStr = options.relativeTime ? TIME_COL_RELATIVE_EMPTY : TIME_COL_ABSOLUTE_EMPTY;
     lines.forEach(line => {
-      const text = `${emptyTimeStr} ${srcStr} ${levelStr}${line}`;
+      let text = `${emptyTimeStr} ${srcStr} ${levelStr}${line}`;
+      if (!colors) text = chalk.stripColor(text);
       out.push({ text, level: objLevel });
     });
   }
@@ -85,7 +88,7 @@ const getTimeStr = (record, options) => {
     const newTime = new Date(record.t);
     const dif = prevTime ? (newTime - prevTime) / 1000 : 0;
     timeStr = dif < 1 ? dif.toFixed(3) : dif.toFixed(1);
-    timeStr = _.padStart(timeStr, TIME_COL_RELATIVE_LENGTH);
+    timeStr = padStart(timeStr, TIME_COL_RELATIVE_LENGTH);
     fLongDelay = (dif > 1);
     if (dif < 0.010) timeStr = TIME_COL_RELATIVE_EMPTY;
   } else {

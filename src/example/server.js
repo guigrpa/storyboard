@@ -6,11 +6,13 @@ import express from 'express';
 import { mainStory, chalk } from '../storyboard'; // you'd write: `storyboard`
 import * as storyboard from '../storyboard'; // you'd write: `storyboard`
 import consoleListener from '../listeners/console';  // you'd write: `storyboard/lib/listeners/console`
-import wsServer from '../listeners/wsServer'; // you'd write: `storyboard/lib/listeners/wsServer`
+import fileListener from '../listeners/file';  // you'd write: `storyboard/lib/listeners/file`
+import wsServerListener from '../listeners/wsServer'; // you'd write: `storyboard/lib/listeners/wsServer`
 
 import db from './db';
 
 storyboard.addListener(consoleListener);
+storyboard.addListener(fileListener);
 storyboard.config({ filter: '*:*' });
 
 const PORT = process.env.PORT || 3000;
@@ -44,7 +46,7 @@ mainStory.info('httpServer', `Listening on port ${chalk.cyan(PORT)}...`);
 
 // Allow remote access to server logs via WebSockets 
 // (asking for credentials)
-storyboard.addListener(wsServer, {
+storyboard.addListener(wsServerListener, {
   httpServer: httpServer,
   authenticate: ({login, password}) => login !== 'unicorn',
 });

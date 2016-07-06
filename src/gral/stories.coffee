@@ -199,12 +199,6 @@ mainStory = new Story
   title: title
   levelNum: k.LEVEL_STR_TO_NUM.INFO
 
-### istanbul ignore next ###
-try
-  window.addEventListener 'beforeunload', -> mainStory.close()
-try
-  process.on 'exit', -> mainStory.close()
-
 #-----------------------------------------------
 # ### API
 #-----------------------------------------------

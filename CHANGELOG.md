@@ -16,14 +16,18 @@
 
     // Client
     if (process.env.NODE_ENV !== 'production') {
-        addListener(require('storyboard/lib/listeners/console'));
-        addListener(require('storyboard/lib/listeners/browserExtension'));
-        addListener(require('storyboard/lib/listeners/wsClient'));
+        addListener(require('storyboard/lib/listeners/console').default);
+        addListener(require('storyboard/lib/listeners/browserExtension').default);
+        addListener(require('storyboard/lib/listeners/wsClient').default);
     }
     ```
 
+    - [M] **Listeners have been migrated to ES6**. Notice above the different way to use them, depending on whether you `import` them (ES6 module) or `require` them (CommonJS).
+
 **Other changes**
 
+* Library:
+    - [M] **Add file listener**: stores all logs to file.
 * Internal: ongoing migration from CoffeeScript to JS.
 
 ## 1.4.0 (June 29, 2016)

@@ -87,6 +87,4 @@ create = (baseConfig) ->
     config: (newConfig) -> _.extend config, newConfig
   listener
 
-module.exports = {
-  create,
-}
+module.exports = create

@@ -39,6 +39,19 @@ const config = (options = {}) => {
   })
 };
 
+const gracefulExit = () => {
+  mainStory.close();
+  removeAllListeners();
+};
+/* istanbul ignore next */
+try {
+  window.addEventListener('beforeunload', gracefulExit);
+} catch (err) { /* ignore */ }
+try {
+  process.on('exit', gracefulExit);
+} catch (err) { /* ignore */ }
+
+
 export {
   mainStory,
   chalk,

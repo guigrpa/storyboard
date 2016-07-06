@@ -1,24 +1,23 @@
 import fs from 'fs';
 import { addDefaults } from 'timm';
-import chalk from 'chalk';
-import _ from '../vendor/lodash';
-import ansiColors from '../gral/ansiColors';
 import k from '../gral/constants';
-import filters from '../gral/filters';
-import treeLines from '../gral/treeLines';
+import recordToLines from './helpers/recordToLines';
 
 
 const DEFAULT_CONFIG = {
   filePath: 'storyboard.log',
-  ansiColors: false,
+  colors: false,
   moduleNameLength: 20,
 };
 
+// -----------------------------------------
+// Listener
+// -----------------------------------------
 function FileListener(config) {
   this.type = 'FILE';
   this.config = config;
   this.fd = null;
-};
+}
 
 FileListener.prototype.init = function() {
   const { filePath } = this.config;
@@ -31,13 +30,17 @@ FileListener.prototype.tearDown = function() {
 };
 
 FileListener.prototype.process = function(record) {
-  if (this.fd == null) return;
-  const { format, ansiColors } = this.config;
-  
+  // Don't save client logs uploaded to the server
+  if (!k.IS_BROWSER && record.uploadedBy != null) return;
+  const { fd } = this;
+  if (fd == null) return;
+  const lines = recordToLines(record, this.config);
+  lines.forEach(({ text }) => fs.write(fd, `${text}\n`, null, 'utf8'));
 };
 
+// -----------------------------------------
+// API
+// -----------------------------------------
 const create = config => new FileListener(addDefaults(config, DEFAULT_CONFIG));
 
-module.exports = {
-  create,
-};
+export default create;

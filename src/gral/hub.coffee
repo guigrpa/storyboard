@@ -23,7 +23,7 @@ config = (options) ->
 
 addListener = (listenerFactory, config) ->
   listenerConfig = timm.merge {mainStory, hub}, config
-  listener = listenerFactory.create listenerConfig
+  listener = listenerFactory listenerConfig
   _listeners.push listener
   listener.init?()
   for record in _buf

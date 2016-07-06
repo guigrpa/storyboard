@@ -1,5 +1,5 @@
 {storyboard, expect, sinon, Promise} = require './imports'
-consoleListener = require '../../lib/listeners/console'
+consoleListener = require('../../lib/listeners/console').default
 
 {mainStory} = storyboard
 
@@ -13,9 +13,11 @@ describe "consoleListener", ->
   _spyError = null
   before -> 
     storyboard.removeAllListeners()
+
     sinon.stub console, 'log'
     storyboard.addListener consoleListener
     console.log.restore()
+
     storyboard.config filter: '*:*'
     _listener = storyboard.getListeners()[0]
 
@@ -24,8 +26,10 @@ describe "consoleListener", ->
     consoleError = console.error
     _spyLog   = sinon.stub console, 'log', (txt) ->
       if txt.length and txt[0] is ' ' then consoleLog.apply console, arguments
+      # consoleLog.apply console, arguments
     _spyError = sinon.stub console, 'error', (txt) ->
       if txt.length and txt[0] is ' ' then consoleError.apply console, arguments
+      # consoleError.apply console, arguments
 
   afterEach ->
     console.log.restore()
@@ -100,8 +104,8 @@ describe "consoleListener", ->
 
   describe "in relative-time mode", ->
 
-    before -> _listener.config relativeTime: true
-    after  -> _listener.config relativeTime: false
+    before -> _listener.configure relativeTime: true
+    after  -> _listener.configure relativeTime: false
 
     it "should include an ellipsis when more than 1s ellapses between lines", ->
       mainStory.info "Msg A"

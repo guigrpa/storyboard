@@ -7,6 +7,7 @@ k = require './constants'
 # ## Map severity level to a colored string
 #-------------------------------------------------
 LEVEL_NUM_TO_COLORED_STR = {}
+LEVEL_NUM_TO_PADDED_STR = {}
 _.each k.LEVEL_NUM_TO_STR, (str, num) ->
   num = Number num
   col = chalk.grey
@@ -14,7 +15,9 @@ _.each k.LEVEL_NUM_TO_STR, (str, num) ->
     col = if k.IS_BROWSER then chalk.bold else chalk.white
   else if num is 40 then col = chalk.yellow
   else if num >= 50 then col = chalk.red
-  LEVEL_NUM_TO_COLORED_STR[num] = col _.padEnd(str, 6)
+  paddedStr = _.padEnd(str, 6)
+  LEVEL_NUM_TO_COLORED_STR[num] = col paddedStr
+  LEVEL_NUM_TO_PADDED_STR[num] = paddedStr
 
 #-------------------------------------------------
 # ## Get a color for a given src (cached)
@@ -172,7 +175,7 @@ _toSegmentStyle = (styles) ->
 # ## Public API
 #-------------------------------------------------
 module.exports = {
-  LEVEL_NUM_TO_COLORED_STR,
+  LEVEL_NUM_TO_COLORED_STR, LEVEL_NUM_TO_PADDED_STR,
   getSrcChalkColor,
   getBrowserConsoleArgs,
   getStyledSegments,

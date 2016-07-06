@@ -3,10 +3,9 @@ hub = require '../../lib/gral/hub'
 k   = require '../../lib/gral/constants'
 
 _spy = sinon.spy()
-_listenerFactory = 
-  create: ->
-    init: ->
-    process: _spy
+_listenerFactory = ->
+  init: ->
+  process: _spy
 {mainStory} = storyboard
 
 #-====================================================

@@ -185,6 +185,4 @@ create = (baseConfig) ->
     tearDown: -> _socketShutDown config
   listener
 
-module.exports = {
-  create,
-}
+module.exports = create
