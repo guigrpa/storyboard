@@ -11,9 +11,9 @@ import wsServerListener from '../listeners/wsServer'; // you'd write: `storyboar
 
 import db from './db';
 
-storyboard.addListener(consoleListener);
-storyboard.addListener(fileListener);
-storyboard.config({ filter: '*:*' });
+storyboard.addPlugin(consoleListener);
+storyboard.addPlugin(fileListener);
+storyboard.configure({ filter: '*:*' });
 
 const PORT = process.env.PORT || 3000;
 
@@ -46,7 +46,7 @@ mainStory.info('httpServer', `Listening on port ${chalk.cyan(PORT)}...`);
 
 // Allow remote access to server logs via WebSockets 
 // (asking for credentials)
-storyboard.addListener(wsServerListener, {
+storyboard.addPlugin(wsServerListener, {
   httpServer: httpServer,
   authenticate: ({login, password}) => login !== 'unicorn',
 });

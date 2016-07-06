@@ -13,17 +13,17 @@
 import chalk from 'chalk';
 import mainStory from './gral/stories';
 import filters from './gral/filters';
-import hub, {
-  addListener,
-  removeListener, removeAllListeners,
-  getListeners,
+import {
+  init as hubInit,
+  configure as hubConfigure,
+  getPlugins, addPlugin, removePlugin, removeAllPlugins,
 } from './gral/hub';
 
 chalk.enabled = true;
 
-hub.init({ mainStory });
+hubInit({ mainStory });
 
-const config = (options = {}) => {
+const configure = (options = {}) => {
   Object.keys(options).forEach(key => {
     const val = options[key];
     switch (key) {
@@ -31,7 +31,7 @@ const config = (options = {}) => {
         filters.config(val);
         break;
       case 'bufSize':
-        hub.config({ bufSize: val });
+        hubConfigure({ bufSize: val });
         break;
       default:
         break;
@@ -41,7 +41,7 @@ const config = (options = {}) => {
 
 const gracefulExit = () => {
   mainStory.close();
-  removeAllListeners();
+  removeAllPlugins();
 };
 /* istanbul ignore next */
 try {
@@ -51,12 +51,12 @@ try {
   process.on('exit', gracefulExit);
 } catch (err) { /* ignore */ }
 
-
+// -------------------------------------
+// API
+// -------------------------------------
 export {
   mainStory,
   chalk,
-  config,
-  addListener,
-  removeListener, removeAllListeners,
-  getListeners,
+  configure,
+  getPlugins, addPlugin, removePlugin, removeAllPlugins,
 };

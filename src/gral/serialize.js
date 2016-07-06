@@ -31,6 +31,9 @@ const customCloner = (o) => {
   return undefined;
 };
 
+// -------------------------------------
+// API
+// -------------------------------------
 export {
   serialize,
   CIRCULAR_REF,

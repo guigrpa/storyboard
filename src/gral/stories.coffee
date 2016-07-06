@@ -17,6 +17,7 @@ DEFAULT_CHILD_TITLE = ''
 RECORD_FORMAT_VERSION = 2
 
 _hiddenStories = {}
+_hubId = hub.getHubId()
 
 #-----------------------------------------------
 # ### Helpers
@@ -150,6 +151,7 @@ Story::reveal = ->
 
 # Records can be logs or stories:
 # * `id: string` (a unique record id)
+# * `hubId: string`
 # * `fStory: boolean`
 # * `fServer: boolean`
 # * `storyId: string`
@@ -167,6 +169,7 @@ Story::reveal = ->
 # * `objIsError: bool?` (only for logs)
 _completeRecord = (record) ->
   record.id = _getRecordId()
+  record.hubId = _hubId
   record.version = RECORD_FORMAT_VERSION
   record.t ?= new Date().getTime()
   record.fServer = not k.IS_BROWSER
