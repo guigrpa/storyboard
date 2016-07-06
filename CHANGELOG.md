@@ -28,6 +28,7 @@
 
 * Library:
     - [M] **Add file listener**: stores all logs to file.
+    - [m] Improve graceful exits, tearing down all listeners if possible. Previously, we only closed the main story.
 * Internal: ongoing migration from CoffeeScript to JS.
 
 ## 1.4.0 (June 29, 2016)
