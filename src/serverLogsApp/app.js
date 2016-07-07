@@ -1,6 +1,6 @@
-import { mainStory, addPlugin } from '../storyboard';
+import { mainStory, addListener } from '../storyboard';
 import browserExtension from '../listeners/browserExtension';
 import wsClient from '../listeners/wsClient';
 
-addPlugin(browserExtension);
-addPlugin(wsClient);
+addListener(browserExtension);
+addListener(wsClient);

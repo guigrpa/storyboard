@@ -16,14 +16,14 @@ import filters from './gral/filters';
 import {
   init as hubInit,
   configure as hubConfigure,
-  getPlugins, addPlugin, removePlugin, removeAllPlugins,
+  getListeners, addListener, removeListener, removeAllListeners,
 } from './gral/hub';
 
 chalk.enabled = true;
 
 hubInit({ mainStory });
 
-const configure = (options = {}) => {
+const config = (options = {}) => {
   Object.keys(options).forEach(key => {
     const val = options[key];
     switch (key) {
@@ -41,7 +41,7 @@ const configure = (options = {}) => {
 
 const gracefulExit = () => {
   mainStory.close();
-  removeAllPlugins();
+  removeAllListeners();
 };
 /* istanbul ignore next */
 try {
@@ -57,6 +57,6 @@ try {
 export {
   mainStory,
   chalk,
-  configure,
-  getPlugins, addPlugin, removePlugin, removeAllPlugins,
+  config,
+  getListeners, addListener, removeListener, removeAllListeners,
 };

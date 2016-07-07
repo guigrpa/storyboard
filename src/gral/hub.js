@@ -5,7 +5,7 @@ const DEFAULT_CONFIG = {
   bufSize: 1000
 };
 
-let plugins = [];
+let listeners = [];
 let bufRecords = [];
 let mainStory = null;
 
@@ -29,27 +29,27 @@ const getHubId = () => hubId;
 const configure = options => { config = merge(config, options); };
 
 // -------------------------------------
-// Managing plugins
+// Managing listeners
 // -------------------------------------
-const getPlugins = () => plugins;
+const getListeners = () => listeners;
 
-const addPlugin = (pluginCreate, config) => {
-  const pluginConfig = merge({ mainStory, hub: hubApiForPlugins }, config);
-  const plugin = pluginCreate(pluginConfig);
-  plugins.push(plugin);
-  if (plugin.init) plugin.init();
-  bufRecords.forEach(record => plugin.process(record));
-  return plugin;
+const addListener = (listenerCreate, config) => {
+  const listenerConfig = merge({ mainStory, hub: hubApiForListeners }, config);
+  const listener = listenerCreate(listenerConfig);
+  listeners.push(listener);
+  if (listener.init) listener.init();
+  bufRecords.forEach(record => listener.process(record));
+  return listener;
 };
 
-const removePlugin = plugin => {
-  if (plugin.tearDown) plugin.tearDown();
-  plugins = plugins.filter(o => o !== plugin);
+const removeListener = listener => {
+  if (listener.tearDown) listener.tearDown();
+  listeners = listeners.filter(o => o !== listener);
 };
 
-const removeAllPlugins = () => {
-  plugins.forEach(removePlugin);
-  plugins = [];
+const removeAllListeners = () => {
+  listeners.forEach(removeListener);
+  listeners = [];
 };
 
 // -------------------------------------
@@ -59,19 +59,19 @@ const emit = record => {
   bufRecords.push(record);
   const bufLen = config.bufSize;
   if (bufRecords.length > bufLen) bufRecords.splice(0, bufRecords.length - bufLen);
-  plugins.forEach(plugin => plugin.process(record));
+  listeners.forEach(listener => listener.process(record));
 };
 
 const emitMsgWithFields = (src, type, data) => emitMsg({ src, hubId, type, data });
-const emitMsg = (msg, srcPlugin) => {
+const emitMsg = (msg, srcListener) => {
   if (msg.type === 'RECORDS') {
     bufRecords = bufRecords.concat(msg.data);
     const { bufSize } = config;
     if (bufRecords.length > bufSize) bufRecords = bufRecords.slice(-bufSize);
   }
-  plugins.forEach(plugin => {
-    if (plugin === srcPlugin) return;
-    plugin.rxMsgFromHub(msg);
+  listeners.forEach(listener => {
+    if (listener === srcListener) return;
+    listener.rxMsgFromHub(msg);
   });
 };
 
@@ -80,7 +80,7 @@ const getBufferedRecords = () => [].concat(bufRecords);
 // -------------------------------------
 // APIs
 // -------------------------------------
-const hubApiForPlugins = {
+const hubApiForListeners = {
   emit, emitMsgWithFields, emitMsg,
   getBufferedRecords,
   getHubId,
@@ -90,7 +90,7 @@ export {
   init,
   getHubId,
   configure,
-  getPlugins, addPlugin, removePlugin, removeAllPlugins,
+  getListeners, addListener, removeListener, removeAllListeners,
   emit, emitMsgWithFields, emitMsg,
   getBufferedRecords,
 };
