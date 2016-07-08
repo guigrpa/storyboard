@@ -26,6 +26,7 @@ const rx = listener => { listeners.push(listener); };
 const init = () => {
   if (_window == null) return;
   _window.addEventListener('message', event => {
+    console.log(event)
     const { source, data: msg } = event;
     if (source !== _window) return;
     rxMsg(msg);
