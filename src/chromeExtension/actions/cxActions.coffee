@@ -38,7 +38,7 @@ _isConnected = ->
 rxMsg = ->
   while true
     {msg} = yield Saga.take 'MSG_RECEIVED'
-    {src, type, result, data} = msg
+    {src, type, result, data, hubId} = msg
     console.log "[DT] RX #{src}/#{type}", data
     switch type
       # Page-extension connection
@@ -48,7 +48,7 @@ rxMsg = ->
       when 'CONNECT_REQUEST', 'CONNECT_RESPONSE'
         if type is 'CONNECT_REQUEST' 
           yield Saga.call _txMsg, 'CONNECT_RESPONSE'
-        yield Saga.put {type: 'CX_CONNECTED', records: data}
+        yield Saga.put {type: 'CX_CONNECTED', hubId}
 
       # WebSocket connection
       when 'WS_CONNECTED'
@@ -79,7 +79,7 @@ rxMsg = ->
           yield Saga.put {type: 'LOGIN_SUCCEEDED', login}
           if bufferedRecords?.length 
             yield Saga.put 
-              type: 'RECORDS_RECEIVED' 
+              type: 'RECORDS_RECEIVED'
               records: bufferedRecords
               fPastRecords: true
         else

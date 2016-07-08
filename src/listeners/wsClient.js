@@ -74,9 +74,6 @@ WsClientListener.prototype.socketTx = function(type, data) {
 };
 
 WsClientListener.prototype.addToUploadBuffer = function(records) {
-  // records.forEach(record => {
-  //   this.bufUpload.push(timmSet(record, 'uploadedBy', this.hubId));
-  // });
   this.bufUpload = this.bufUpload.concat(records);
   if (this.bufUpload.length > BUF_UPLOAD_LENGTH) {
     this.bufUpload = this.bufUpload.slice(-BUF_UPLOAD_LENGTH);

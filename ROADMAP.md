@@ -3,7 +3,6 @@
 - **Chrome extension**:
     + Add config screenshot
     + Someday...
-        * [ ] Client-server clock calibration
         * [ ] Better approach for app reducer? Handle actions in a single place. Check this: http://www.code-experience.com/problems-with-flux/
         * [ ] Algorithm for fixing server stories received *before* their parent client stories (e.g. when uploading: server stories that happen before the socket is established): save story IDs for which the client-parent is unavailable for later (a hash, just like `openStories` and `closedStories`: `pendingClientParentStories`? :) ). When the client-parent appears, move the story and delete the story ID from the list.
 - **Lib**:
@@ -13,12 +12,13 @@
     + [x] Update all listeners to use the new hub API (both for tx and rx)
     + [x] Change WsClient listener so that it doesn't use interfaceExtension (sends messages through the hub)
     + [x] Merge browserExtension and interfaceExtension. In the CONNECTION_REQUEST and CONNECTION_RESPONSE sent by the hub, include the hubId.
-    + [ ] Use the browserExtension's hubId to better determine which root stories are to be removed by the storyReducer
+    + [x] Use the browserExtension's hubId to better determine which root stories are to be removed by the storyReducer
     + [ ] Remove process.nextTick() from WsServerListener
     + [ ] Throttle log generation at the very source??
 
     + [ ] Add listener to write to database (choose a simple one)
     + [ ] Update docs
+    + [ ] Client-server clock calibration
     + [ ] Publish 2.0.0-rc1
     + [ ] Migrate client and clientWithUpload.coffee
     + [ ] React App: embeddable SB components (without requiring extension)

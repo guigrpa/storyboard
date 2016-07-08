@@ -25,7 +25,8 @@ _mainStory = (fServer) ->
     numRecords: 0
   story
 
-_buildInitialState = ->
+_buildInitialState = (localHubId) ->
+  localHubId: localHubId
   mainStory:
     fWrapper: true
     fOpen: true
@@ -47,7 +48,8 @@ reducer = (state = _buildInitialState(), action, settings = {}) ->
 
     # Clean up the main story after connecting
     # (we don't want to carry over logs from a previous page)
-    when 'CX_CONNECTED', 'CLEAR_LOGS' then return _buildInitialState()
+    when 'CX_CONNECTED' then return _buildInitialState(action.hubId)
+    when 'CLEAR_LOGS' then return _buildInitialState()
 
     when 'RECORDS_RECEIVED' then return _rxRecords state, action, settings
 
@@ -118,10 +120,11 @@ _rxStory = (state, record, options) ->
   {storyId} = record
   newStoryPathStr = null
 
-  # We ignore root stories (beginning by '*') always when they are not
-  # flagged as uploaded, i.e. server root stories and the local client root story
-  if (storyId[0] is '*') 
-    if not record.uploadedBy
+  # We ignore root stories (beginning by '*') when they are server-side
+  # OR they belong to our local hub
+  if (storyId[0] is '*')
+    {localHubId} = state
+    if record.fServer or (record.hubId is localHubId)
       return [state, newStoryPathStr]
     title = record.title.replace 'ROOT STORY', 'REMOTE CLIENT'
     record = timm.set record, 'title', title
