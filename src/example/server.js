@@ -13,7 +13,7 @@ import db from './db';
 
 storyboard.addListener(consoleListener);
 storyboard.addListener(fileListener);
-storyboard.configure({ filter: '*:*' });
+storyboard.config({ filter: '*:*' });
 
 const PORT = process.env.PORT || 3000;
 

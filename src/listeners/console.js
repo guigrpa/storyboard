@@ -17,6 +17,15 @@ function ConsoleListener(config) {
   this.prevTime = 0;
 }
 
+ConsoleListener.prototype.configure = function(config) {
+  this.config = merge(this.config, config);
+};
+
+// No init() or tearDown() is required
+
+// -----------------------------------------
+// Main processing function
+// -----------------------------------------
 ConsoleListener.prototype.process = function(record) {
   // Don't show client logs uploaded to the server
   if (!k.IS_BROWSER && record.uploadedBy != null) return;
@@ -24,10 +33,6 @@ ConsoleListener.prototype.process = function(record) {
   const lines = recordToLines(record, options);
   this.prevTime = new Date(record.t);
   lines.forEach(({ text, level, fLongDelay }) => outputLog(text, level, fLongDelay));
-};
-
-ConsoleListener.prototype.configure = function(config) {
-  this.config = merge(this.config, config);
 };
 
 // -----------------------------------------

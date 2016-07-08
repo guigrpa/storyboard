@@ -3,7 +3,7 @@ require 'isomorphic-fetch'  # for IE
 {mainStory, chalk, addListener} = require '../storyboard'  # you'd write: `'storyboard'`
 addListener require('../listeners/console').default
 addListener require('../listeners/browserExtension').default
-addListener require('../listeners/wsClient')
+addListener require('../listeners/wsClient').default
 
 mainStory.info 'client', 'Running client...'
 

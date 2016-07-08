@@ -29,6 +29,9 @@ FileListener.prototype.tearDown = function() {
   this.fd = null;
 };
 
+// -----------------------------------------
+// Main processing function
+// -----------------------------------------
 FileListener.prototype.process = function(record) {
   // Don't save client logs uploaded to the server
   if (!k.IS_BROWSER && record.uploadedBy != null) return;

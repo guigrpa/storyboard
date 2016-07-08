@@ -1,142 +1,126 @@
-var DEFAULT_CONFIG, _, _extensionRxMsg, _fSocketConnected, _rxMsg, _socketInit, _socketio, _txMsg, _uploadBuf, _uploadPending, _uploadRecord, _uploaderId, create, ifExtension, k, socketio, timm;
+import socketio from 'socket.io-client';
+import { merge, addDefaults, set as timmSet } from 'timm';
+import { throttle } from '../vendor/lodash';
+import { WS_NAMESPACE } from '../gral/constants';
+import ifExtension from './helpers/interfaceExtension';
 
-socketio = require('socket.io-client');
+const DEFAULT_CONFIG = {
+  uploadClientStories: false,
+  throttleUpload: null,
+};
+const BUF_UPLOAD_LENGTH = 2000;
 
-timm = require('timm');
+// -----------------------------------------
+// Listener
+// -----------------------------------------
+function WsClientListener(config, { hub, mainStory }) {
+  this.type = 'WS_CLIENT';
+  this.config = config;
+  this.hub = hub;
+  this.uploaderId = mainStory.storyId || '_SOMEBODY_';
+  this.socket = null;
+  this.fSocketConnected = false;
+  // Short buffer for records to be uploaded
+  // (accumulated during the throttle period)
+  this.bufUpload = [];
+  const { throttleUpload: throttlePeriod } = config;
+  if (throttlePeriod) {
+    this.socketUpload = throttle(this.socketUpload, throttlePeriod).bind(this);
+  }
+}
 
-_ = require('../vendor/lodash');
-
-k = require('../gral/constants');
-
-ifExtension = require('./helpers/interfaceExtension');
-
-DEFAULT_CONFIG = {
-  uploadClientStories: false
+WsClientListener.prototype.configure = function(config) {
+  this.config = merge(this.config, config);
 };
 
-_uploaderId = null;
+WsClientListener.prototype.init = function() {
+  this.socketInit();
+  ifExtension.rx(msg => this.extensionRx(msg));
+};
 
 // -----------------------------------------
 // Extension I/O
 // -----------------------------------------
-_extensionRxMsg = function(msg) {
-  var data, rspType, type;
-  type = msg.type, data = msg.data;
+WsClientListener.prototype.extensionRx = function(msg) {
+  const { type, data } = msg;
   if (type === 'CONNECT_REQUEST') {
-    rspType = _fSocketConnected ? 'WS_CONNECTED' : 'WS_DISCONNECTED';
-    ifExtension.tx({
-      type: rspType
-    });
+    const rspType = this.fSocketConnected ? 'WS_CONNECTED' : 'WS_DISCONNECTED';
+    ifExtension.tx({ type: rspType });
   }
-  if (!(type === 'CONNECT_REQUEST' || type === 'CONNECT_RESPONSE' || type === 'GET_LOCAL_CLIENT_FILTER' || type === 'SET_LOCAL_CLIENT_FILTER')) {
-    _txMsg({
-      type: type,
-      data: data
-    });
+  if (!(type === 'CONNECT_REQUEST' || type === 'CONNECT_RESPONSE' ||
+        type === 'GET_LOCAL_CLIENT_FILTER' || type === 'SET_LOCAL_CLIENT_FILTER')) {
+    this.socketTx({ type, data });
   }
 };
 
 // -----------------------------------------
 // Websocket I/O
 // -----------------------------------------
-_socketio = null;
-
-_fSocketConnected = false;
-
-_socketInit = function(config) {
-  var socketConnected, socketDisconnected, url;
-  if (!_socketio) {
-    url = k.WS_NAMESPACE;
-    if (process.env.TEST_BROWSER) {
-      url = "http://localhost:8090" + k.WS_NAMESPACE;
-    }
-    _socketio = socketio.connect(url);
-    socketConnected = function() {
-      ifExtension.tx({
-        type: 'WS_CONNECTED'
-      });
-      return _fSocketConnected = true;
-    };
-    socketDisconnected = function() {
-      ifExtension.tx({
-        type: 'WS_DISCONNECTED'
-      });
-      return _fSocketConnected = false;
-    };
-    _socketio.on('connect', socketConnected);
-    _socketio.on('disconnect', socketDisconnected);
-    _socketio.on('error', socketDisconnected);
-    _socketio.on('MSG', _rxMsg);
+WsClientListener.prototype.socketInit = function() {
+  if (this.socket) return;
+  let url = WS_NAMESPACE;
+  if (process.env.TEST_BROWSER) {
+    url = `http://localhost:8090${WS_NAMESPACE}`;
   }
-  return _socketio.sbConfig = config;
+  this.socket = socketio.connect(url);
+  const socketConnected = () => {
+    ifExtension.tx({ type: 'WS_CONNECTED' });
+    this.fSocketConnected = true;
+  };
+  const socketDisconnected = () => {
+    ifExtension.tx({ type: 'WS_DISCONNECTED' });
+    this.fSocketConnected = false;
+  };
+  this.socket.on('connect', socketConnected);
+  this.socket.on('disconnect', socketDisconnected);
+  this.socket.on('error', socketDisconnected);
+  this.socket.on('MSG', this.socketRx);
 };
 
-_rxMsg = function(msg) {
+// Mutates the message: filters out records that we have uploaded ourselves
+WsClientListener.prototype.socketRx = function(msg) {
   if (msg.type === 'RECORDS') {
-    msg.data = _.filter(msg.data, function(o) {
-      return o.uploadedBy !== _uploaderId;
-    });
+    msg.data = msg.data.filter(o => o.uploadedBy !== this.uploaderId);
   }
-  return ifExtension.tx(msg);
+  ifExtension.tx(msg);
 };
 
-_txMsg = function(msg) {
-
+WsClientListener.prototype.socketTx = function(msg) {
   /* istanbul ignore next */
-  if (!_socketio) {
-    console.error("Cannot send '" + msg.type + "' message to server: socket unavailable");
+  if (!this.socket) {
+    console.error(`Cannot send '${msg.type}' message to server: socket unavailable`);
     return;
   }
-  return _socketio.emit('MSG', msg);
+  this.socket.emit('MSG', msg);
 };
 
-_uploadBuf = [];
+WsClientListener.prototype.addToUploadBuffer = function(record0) {
+  if (this.bufUpload.length < BUF_UPLOAD_LENGTH) {
+    const record = timmSet(record0, 'uploadedBy', this.uploaderId);
+    this.bufUpload.push(record);
+  }
+};
 
-_uploadPending = function() {
-
+WsClientListener.prototype.socketUpload = function() {
   /* istanbul ignore next */
-  if (!_fSocketConnected) {
-    return;
-  }
-  _txMsg({
-    type: 'UPLOAD_RECORDS',
-    data: [].concat(_uploadBuf)
-  });
-  return _uploadBuf.length = 0;
+  if (!this.fSocketConnected) return;
+  this.socketTx({ type: 'UPLOAD_RECORDS', data: this.bufUpload });
+  this.bufUpload.length = 0;
 };
 
-_uploadRecord = function(record, config) {
-  if (!config.uploadClientStories) {
-    return;
-  }
-  record = timm.set(record, 'uploadedBy', _uploaderId);
-  if (_uploadBuf.length < 2000) {
-    _uploadBuf.push(record);
-  }
-  return _uploadPending();
+// -----------------------------------------
+// Main processing function
+// -----------------------------------------
+WsClientListener.prototype.process = function(record) {
+  if (!this.config.uploadClientStories) return;
+  this.addToUploadBuffer(record);
+  this.socketUpload(); // may be throttled
 };
 
 // -----------------------------------------
 // API
 // -----------------------------------------
-create = function(baseConfig) {
-  var config, listener, ref;
-  config = timm.addDefaults(baseConfig, DEFAULT_CONFIG);
-  _uploaderId = (ref = config.mainStory.storyId) != null ? ref : '_SOMEBODY_';
-  listener = {
-    type: 'WS_CLIENT',
-    init: function() {
-      _socketInit(config);
-      return ifExtension.rx(_extensionRxMsg);
-    },
-    process: function(record) {
-      return _uploadRecord(record, config);
-    },
-    config: function(newConfig) {
-      return _.extend(config, newConfig);
-    }
-  };
-  return listener;
-};
+const create = (userConfig, context) =>
+  new WsClientListener(addDefaults(userConfig, DEFAULT_CONFIG), context);
 
-module.exports = create;
+export default create;

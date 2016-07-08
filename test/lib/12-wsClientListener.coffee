@@ -2,7 +2,7 @@
 chalk             = require 'chalk'
 http              = require 'http'
 socketio          = require 'socket.io'
-wsClientListener  = require '../../lib/listeners/wsClient'
+wsClientListener  = require('../../lib/listeners/wsClient').default
 ifExtension       = require '../../lib/listeners/helpers/interfaceExtension'
 k                 = require '../../lib/gral/constants'
 
@@ -95,7 +95,7 @@ describe "wsClientListener", ->
     .delay 200
     .then -> expect(_spyServerRxMsg).not.to.have.been.called
     .then ->
-      _listener.config {uploadClientStories: true}
+      _listener.configure {uploadClientStories: true}
       mainStory.info 'foo1'
       return h.waitUntil(1000, -> _spyServerRxMsg.callCount > 0)
     .then ->

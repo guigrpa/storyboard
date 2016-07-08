@@ -33,9 +33,8 @@ const configure = options => { config = merge(config, options); };
 // -------------------------------------
 const getListeners = () => listeners;
 
-const addListener = (listenerCreate, config) => {
-  const listenerConfig = merge({ mainStory, hub: hubApiForListeners }, config);
-  const listener = listenerCreate(listenerConfig);
+const addListener = (listenerCreate, config = {}) => {
+  const listener = listenerCreate(config, { mainStory, hub: hubApiForListeners });
   listeners.push(listener);
   if (listener.init) listener.init();
   bufRecords.forEach(record => listener.process(record));
