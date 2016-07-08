@@ -11,7 +11,7 @@
     + [x] Migrate to JS: WS listeners, so that their APIs are all the same
     + [x] Change hub.emit() to emit different types of messages, not records
     + [x] Update all listeners to use the new hub API (both for tx and rx)
-    + [ ] Change WsClient listener so that it doesn't use interfaceExtension (sends messages through the hub)
+    + [x] Change WsClient listener so that it doesn't use interfaceExtension (sends messages through the hub)
     + [ ] Merge browserExtension and interfaceExtension. In the CONNECTION_REQUEST and CONNECTION_RESPONSE sent by the hub, include the hubId.
     + [ ] Use the browserExtension's hubId to better determine which root stories are to be removed by the storyReducer
     + [ ] Remove process.nextTick() from WsServerListener

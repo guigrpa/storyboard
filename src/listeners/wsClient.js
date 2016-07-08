@@ -2,7 +2,6 @@ import socketio from 'socket.io-client';
 import { merge, addDefaults, set as timmSet } from 'timm';
 import { throttle } from '../vendor/lodash';
 import { WS_NAMESPACE } from '../gral/constants';
-import ifExtension from './helpers/interfaceExtension';
 
 const DEFAULT_CONFIG = {
   uploadClientStories: false,
@@ -25,7 +24,7 @@ function WsClientListener(config, { hub, mainStory }) {
   this.bufUpload = [];
   const { throttleUpload: throttlePeriod } = config;
   if (throttlePeriod) {
-    this.socketUpload = throttle(this.socketUpload, throttlePeriod).bind(this);
+    this.socketUploadRecords = throttle(this.socketUploadRecords, throttlePeriod).bind(this);
   }
 }
 
@@ -34,29 +33,6 @@ WsClientListener.prototype.configure = function(config) {
 };
 
 WsClientListener.prototype.init = function() {
-  this.socketInit();
-  ifExtension.rx(msg => this.extensionRx(msg));
-};
-
-// -----------------------------------------
-// Extension I/O
-// -----------------------------------------
-WsClientListener.prototype.extensionRx = function(msg) {
-  const { type, data } = msg;
-  if (type === 'CONNECT_REQUEST') {
-    const rspType = this.fSocketConnected ? 'WS_CONNECTED' : 'WS_DISCONNECTED';
-    ifExtension.tx({ type: rspType });
-  }
-  if (!(type === 'CONNECT_REQUEST' || type === 'CONNECT_RESPONSE' ||
-        type === 'GET_LOCAL_CLIENT_FILTER' || type === 'SET_LOCAL_CLIENT_FILTER')) {
-    this.socketTx(type, data);
-  }
-};
-
-// -----------------------------------------
-// Websocket I/O
-// -----------------------------------------
-WsClientListener.prototype.socketInit = function() {
   if (this.socket) return;
   let url = WS_NAMESPACE;
   if (process.env.TEST_BROWSER) {
@@ -64,23 +40,27 @@ WsClientListener.prototype.socketInit = function() {
   }
   this.socket = socketio.connect(url);
   const socketConnected = () => {
-    ifExtension.tx({ type: 'WS_CONNECTED' });
+    this.hubTx('WS_CONNECTED');
     this.fSocketConnected = true;
   };
   const socketDisconnected = () => {
-    ifExtension.tx({ type: 'WS_DISCONNECTED' });
+    this.hubTx('WS_DISCONNECTED');
     this.fSocketConnected = false;
   };
   this.socket.on('connect', socketConnected);
   this.socket.on('disconnect', socketDisconnected);
   this.socket.on('error', socketDisconnected);
-  this.socket.on('MSG', this.socketRx);
+  this.socket.on('MSG', msg => this.socketRx(msg));
 };
 
+// -----------------------------------------
+// Websocket I/O
+// -----------------------------------------
+// Ignore messages that originate from our own hub.
+// Relay others to the hub, untouched
 WsClientListener.prototype.socketRx = function(msg) {
-  // Ignore messages that originate from our own hub
   if (msg.hubId === this.hubId) return;
-  ifExtension.tx(msg);
+  this.hub.emitMsg(msg, this);
 };
 
 WsClientListener.prototype.socketTx = function(type, data) {
@@ -94,15 +74,16 @@ WsClientListener.prototype.socketTx = function(type, data) {
 };
 
 WsClientListener.prototype.addToUploadBuffer = function(records) {
-  records.forEach(record => {
-    this.bufUpload.push(timmSet(record, 'uploadedBy', this.hubId));
-  });
+  // records.forEach(record => {
+  //   this.bufUpload.push(timmSet(record, 'uploadedBy', this.hubId));
+  // });
+  this.bufUpload = this.bufUpload.concat(records);
   if (this.bufUpload.length > BUF_UPLOAD_LENGTH) {
     this.bufUpload = this.bufUpload.slice(-BUF_UPLOAD_LENGTH);
   }
 };
 
-WsClientListener.prototype.socketUpload = function() {
+WsClientListener.prototype.socketUploadRecords = function() {
   /* istanbul ignore next */
   if (!this.fSocketConnected) return;
   this.socketTx('RECORDS', this.bufUpload);
@@ -113,13 +94,45 @@ WsClientListener.prototype.socketUpload = function() {
 // Main processing function
 // -----------------------------------------
 WsClientListener.prototype.process = function(msg) {
-  // TODO: in the future, we will be receiving not only RECORDS
-  // but also browser extension messages
+  switch (msg.type) {
+
+    // Depending on the configuration, we may upload the records
+    case 'RECORDS':
+      this.processRecords(msg);
+      break;
+
+    // We are not handling the connection with the extension,
+    // but we will report on the WS connection
+    case 'CONNECT_REQUEST':
+      this.processExtensionCxRequest(msg);
+      break;
+
+    // Messages to the WS Server
+    case 'LOGIN_REQUEST':
+    case 'LOG_OUT':
+    case 'LOGIN_REQUIRED_QUESTION':
+    case 'GET_SERVER_FILTER':
+    case 'GET_SERVER_FILTER':
+      this.socketTx(msg.type, msg.data);
+      break;
+    default:
+      break;
+  }
+};
+
+WsClientListener.prototype.processRecords = function(msg) {
   if (!this.config.uploadClientStories) return;
-  if (msg.type !== 'RECORDS') return;
   const { data: records } = msg;
   this.addToUploadBuffer(records);
-  this.socketUpload(); // may be throttled
+  this.socketUploadRecords(); // may be throttled
+};
+
+WsClientListener.prototype.processExtensionCxRequest = function(msg) {
+  this.hubTx(this.fSocketConnected ? 'WS_CONNECTED' : 'WS_DISCONNECTED');
+};
+
+WsClientListener.prototype.hubTx = function(type, data) {
+  this.hub.emitMsgWithFields('WS_CLIENT', type, data, this);
 };
 
 // -----------------------------------------

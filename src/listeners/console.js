@@ -30,7 +30,7 @@ ConsoleListener.prototype.configure = function(config) {
 // -----------------------------------------
 ConsoleListener.prototype.process = function(msg) {
   if (msg.type !== 'RECORDS') return;
-  //if (msg.hubId !== this.hubId) return; // only log local records
+  if (msg.hubId !== this.hubId) return; // only log local records
   msg.data.forEach(record => this.processRecord(record));
 };
 

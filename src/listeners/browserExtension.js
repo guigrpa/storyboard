@@ -15,7 +15,7 @@ function BrowserExtensionListener(config, { hub }) {
 }
 
 BrowserExtensionListener.prototype.init = function() {
-  ifExtension.rx(this.extensionRx);
+  ifExtension.rx(msg => this.extensionRx(msg));
 }
 
 // From the hub
@@ -37,6 +37,7 @@ BrowserExtensionListener.prototype.extensionRx = function(msg) {
       });
       break;
     default:
+      this.hub.emitMsg(msg, this);
       break;
   }
 };
