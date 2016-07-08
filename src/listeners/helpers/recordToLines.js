@@ -15,7 +15,6 @@ const recordToLines = (record, options) => {
   const {
     src, storyId, level, fStory, fServer,
     obj, objLevel, objOptions,
-    uploadedBy,
   } = record;
   let { objExpanded } = record;
   const {
