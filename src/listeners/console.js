@@ -11,9 +11,11 @@ const DEFAULT_CONFIG = {
 // -----------------------------------------
 // Listener
 // -----------------------------------------
-function ConsoleListener(config) {
+function ConsoleListener(config, { hub }) {
   this.type = 'CONSOLE';
   this.config = config;
+  this.hub = hub;
+  this.hubId = hub.getHubId();
   this.prevTime = 0;
 }
 
@@ -26,9 +28,13 @@ ConsoleListener.prototype.configure = function(config) {
 // -----------------------------------------
 // Main processing function
 // -----------------------------------------
-ConsoleListener.prototype.process = function(record) {
-  // Don't show client logs uploaded to the server
-  if (!k.IS_BROWSER && record.uploadedBy != null) return;
+ConsoleListener.prototype.process = function(msg) {
+  if (msg.type !== 'RECORDS') return;
+  //if (msg.hubId !== this.hubId) return; // only log local records
+  msg.data.forEach(record => this.processRecord(record));
+};
+
+ConsoleListener.prototype.processRecord = function(record) {
   const options = timmSet(this.config, 'prevTime', this.prevTime);
   const lines = recordToLines(record, options);
   this.prevTime = new Date(record.t);
@@ -50,6 +56,7 @@ const outputLog = function(text, level, fLongDelay) {
 // -----------------------------------------
 // API
 // -----------------------------------------
-const create = config => new ConsoleListener(addDefaults(config, DEFAULT_CONFIG));
+const create = (userConfig, context) =>
+  new ConsoleListener(addDefaults(userConfig, DEFAULT_CONFIG), context);
 
 export default create;

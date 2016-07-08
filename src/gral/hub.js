@@ -1,17 +1,15 @@
 import uuid from 'node-uuid';
-import { merge } from 'timm';
+import { merge, addLast } from 'timm';
 
 const DEFAULT_CONFIG = {
-  bufSize: 1000
+  bufMsgSize: 1000,
+  bufSize: 1000,
 };
-
-let listeners = [];
-let bufRecords = [];
-let mainStory = null;
 
 // -------------------------------------
 // Init and config
 // -------------------------------------
+let mainStory = null;
 let config = DEFAULT_CONFIG;
 const hubId = uuid.v4();
 
@@ -22,7 +20,7 @@ const init = (deps, options) => {
     throw new Error('MISSING_DEPENDENCIES');
   }
   /* istanbul ignore if */
-  if (options != null) config(options);
+  if (options != null) configure(options);
 };
 
 const getHubId = () => hubId;
@@ -31,13 +29,15 @@ const configure = options => { config = merge(config, options); };
 // -------------------------------------
 // Managing listeners
 // -------------------------------------
+let listeners = [];
+
 const getListeners = () => listeners;
 
 const addListener = (listenerCreate, config = {}) => {
   const listener = listenerCreate(config, { mainStory, hub: hubApiForListeners });
   listeners.push(listener);
   if (listener.init) listener.init();
-  bufRecords.forEach(record => listener.process(record));
+  getBufferedMessages().forEach(msg => listener.process(msg));
   return listener;
 };
 
@@ -52,37 +52,50 @@ const removeAllListeners = () => {
 };
 
 // -------------------------------------
-// Emitting messages
+// Message buffer
 // -------------------------------------
-const emit = record => {
-  bufRecords.push(record);
-  const bufLen = config.bufSize;
-  if (bufRecords.length > bufLen) bufRecords.splice(0, bufRecords.length - bufLen);
-  listeners.forEach(listener => listener.process(record));
-};
+let bufMessages = [];
+let bufRecords = [];
 
-const emitMsgWithFields = (src, type, data) => emitMsg({ src, hubId, type, data });
-const emitMsg = (msg, srcListener) => {
+const addToMsgBuffers = msg => {
+  bufMessages.push(msg);
+  const { bufMsgSize } = config;
+  if (bufMessages.length > bufMsgSize) bufMessages = bufMessages.slice(-bufMsgSize);
   if (msg.type === 'RECORDS') {
-    bufRecords = bufRecords.concat(msg.data);
+    const { data: records } = msg;
     const { bufSize } = config;
+    bufRecords = bufRecords.concat(records);
     if (bufRecords.length > bufSize) bufRecords = bufRecords.slice(-bufSize);
   }
-  listeners.forEach(listener => {
-    if (listener === srcListener) return;
-    listener.rxMsgFromHub(msg);
-  });
+}
+
+const getBufferedMessages = () => bufMessages;
+const getBufferedRecords = () => bufRecords;
+
+// -------------------------------------
+// Emitting messages
+// -------------------------------------
+const emitMsgWithFields = (src, type, data, srcListener) => {
+  emitMsg({ src, hubId, type, data }, srcListener);
 };
 
-const getBufferedRecords = () => [].concat(bufRecords);
+// Add message to buffer and broadcast it (to all but the sender)
+const emitMsg = (msg, srcListener) => {
+  addToMsgBuffers(msg);
+  listeners.forEach(listener => {
+    if (listener === srcListener) return;
+    listener.process(msg);
+  });
+};
 
 // -------------------------------------
 // APIs
 // -------------------------------------
 const hubApiForListeners = {
-  emit, emitMsgWithFields, emitMsg,
-  getBufferedRecords,
   getHubId,
+  emitMsgWithFields, emitMsg,
+  getBufferedMessages,
+  getBufferedRecords,
 };
 
 export {
@@ -90,6 +103,7 @@ export {
   getHubId,
   configure,
   getListeners, addListener, removeListener, removeAllListeners,
-  emit, emitMsgWithFields, emitMsg,
+  emitMsgWithFields, emitMsg,
+  getBufferedMessages,
   getBufferedRecords,
 };

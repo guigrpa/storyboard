@@ -119,7 +119,7 @@ _rxStory = (state, record, options) ->
   newStoryPathStr = null
 
   # We ignore root stories (beginning by '*') always when they are not
-  # flagged as uploaded, i.e. it server root stories and the local client root story
+  # flagged as uploaded, i.e. server root stories and the local client root story
   if (storyId[0] is '*') 
     if not record.uploadedBy
       return [state, newStoryPathStr]

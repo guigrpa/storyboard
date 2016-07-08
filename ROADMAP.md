@@ -9,15 +9,18 @@
 - **Lib**:
     + [x] Add listener to write to file
     + [x] Migrate to JS: WS listeners, so that their APIs are all the same
-    + [ ] Change hub.emit() to emit different types of messages, not records. Update all listeners
+    + [x] Change hub.emit() to emit different types of messages, not records
+    + [x] Update all listeners to use the new hub API (both for tx and rx)
     + [ ] Change WsClient listener so that it doesn't use interfaceExtension (sends messages through the hub)
-    + [ ] Use hubId to recognize our own logs and those that have travelled further
-    + [ ] Merge browserExtension and interfaceExtension
+    + [ ] Merge browserExtension and interfaceExtension. In the CONNECTION_REQUEST and CONNECTION_RESPONSE sent by the hub, include the hubId.
+    + [ ] Use the browserExtension's hubId to better determine which root stories are to be removed by the storyReducer
+    + [ ] Remove process.nextTick() from WsServerListener
 
     + [ ] Add listener to write to database (choose a simple one)
     + [ ] Update docs
     + [ ] Publish 2.0.0-rc1
-    + [ ] Embeddable components (without requiring extension)
+    + [ ] Migrate client and clientWithUpload.coffee
+    + [ ] React App: embeddable SB components (without requiring extension)
     + [ ] Try to get all WS Server unit tests back to work
     + Working with out-of-order logs:
         * [ ] When revealing a hidden story (error/warning): include a separator line in the log to indicate that those records are FROM THE PAST

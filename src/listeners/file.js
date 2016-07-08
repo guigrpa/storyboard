@@ -13,9 +13,11 @@ const DEFAULT_CONFIG = {
 // -----------------------------------------
 // Listener
 // -----------------------------------------
-function FileListener(config) {
+function FileListener(config, { hub }) {
   this.type = 'FILE';
   this.config = config;
+  this.hub = hub;
+  this.hubId = hub.getHubId();
   this.fd = null;
 }
 
@@ -32,9 +34,13 @@ FileListener.prototype.tearDown = function() {
 // -----------------------------------------
 // Main processing function
 // -----------------------------------------
-FileListener.prototype.process = function(record) {
-  // Don't save client logs uploaded to the server
-  if (!k.IS_BROWSER && record.uploadedBy != null) return;
+FileListener.prototype.process = function(msg) {
+  if (msg.type !== 'RECORDS') return;
+  if (msg.hubId !== this.hubId) return; // only save local records
+  msg.data.forEach(record => this.processRecord(record));
+};
+
+FileListener.prototype.processRecord = function(record) {
   const { fd } = this;
   if (fd == null) return;
   const lines = recordToLines(record, this.config);
@@ -44,6 +50,7 @@ FileListener.prototype.process = function(record) {
 // -----------------------------------------
 // API
 // -----------------------------------------
-const create = config => new FileListener(addDefaults(config, DEFAULT_CONFIG));
+const create = (userConfig, context) =>
+  new FileListener(addDefaults(userConfig, DEFAULT_CONFIG), context);
 
 export default create;

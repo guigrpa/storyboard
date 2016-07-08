@@ -12,7 +12,8 @@ import { WS_NAMESPACE } from '../gral/constants';
 const DEFAULT_CONFIG = {
   port: 8090,
   throttle: 200,
-  authenticate: null
+  authenticate: null,
+  broadcastUploaded: true,
 };
 
 const LOG_SRC = 'storyboard';
@@ -25,6 +26,7 @@ function WsServerListener(config, { hub, mainStory }) {
   this.type = 'WS_SERVER';
   this.config = config;
   this.hub = hub;
+  this.hubId = hub.getHubId();
   this.mainStory = mainStory;
   this.ioStandaloneServer = null;
   this.ioStandaloneNamespace = null;
@@ -106,7 +108,6 @@ WsServerListener.prototype.socketRx = function(socket, msg) {
   const { type, data } = msg;
   const { mainStory, hub, config } = this;
   let newFilter;
-  // let rsp;
   switch (type) {
     case 'LOGIN_REQUEST':
       this.socketLogin(socket, msg);
@@ -115,22 +116,9 @@ WsServerListener.prototype.socketRx = function(socket, msg) {
       this.socketLogout(socket);
       break;
     case 'LOGIN_REQUIRED_QUESTION':
-      this.socketTx(socket, {
-        type: 'LOGIN_REQUIRED_RESPONSE',
-        result: 'SUCCESS',
-        data: { fLoginRequired: config.authenticate != null },
-      });
+      this.socketTx(socket, 'LOGIN_REQUIRED_RESPONSE', 'SUCCESS',
+        { fLoginRequired: config.authenticate != null });
       break;
-    // case 'BUFFERED_RECORDS_REQUEST':
-    //   rsp = { type: 'BUFFERED_RECORDS_RESPONSE' };
-    //   if socket.sbAuthenticated {
-    //     rsp.result = 'SUCCESS';
-    //     rsp.data = hub.getBufferedRecords();
-    //   } else {
-    //     rsp.result = 'ERROR';
-    //     rsp.error = 'AUTH_REQUIRED';
-    //   }
-    //   this.socketTx(socket, rsp);
     case 'GET_SERVER_FILTER':
     case 'SET_SERVER_FILTER':
       if (type === 'SET_SERVER_FILTER') {
@@ -140,16 +128,16 @@ WsServerListener.prototype.socketRx = function(socket, msg) {
           mainStory.info(LOG_SRC, `Server filter changed to: ${chalk.cyan.bold(newFilter)}`);
         });
       }
-      this.socketTx(socket, {
-        type: 'SERVER_FILTER',
-        result: 'SUCCESS',
-        data: { filter: filters.getConfig() },
-      });
+      this.socketTx(socket, 'SERVER_FILTER', 'SUCCESS', { filter: filters.getConfig() });
       break;
-    case 'UPLOAD_RECORDS':
-      process.nextTick(() => {
-        msg.data.forEach(record => { hub.emit(record); });
-      });
+
+    // Uploaded records:
+    // - Relay to the hub (some listeners may be interested)
+    // - Re-broadcast (for other clients)
+    case 'RECORDS':
+      // process.nextTick(() => { hub.emitMsg(msg, this); });
+      hub.emitMsg(msg, this);
+      if (config.broadcastUploaded) this.socketDoBroadcast(msg);
       break;
     default:
       process.nextTick(() => {
@@ -166,24 +154,25 @@ WsServerListener.prototype.socketLogin = function(socket, msg) {
   const fPreAuthenticated = socket.sbAuthenticated || authenticate == null;
   Promise.resolve(fPreAuthenticated || authenticate(credentials))
   .then(fAuthValid => {
-    const rsp = { type: 'LOGIN_RESPONSE' };
+    let result;
+    let rspData;
     if (fAuthValid) {
-      rsp.result = 'SUCCESS';
+      result = 'SUCCESS';
       socket.sbAuthenticated = true;
       socket.join(SOCKET_ROOM);
       const bufferedRecords = hub.getBufferedRecords();
-      rsp.data = { login, bufferedRecords };
+      rspData = { login, bufferedRecords };
       process.nextTick(() => {
         mainStory.info(LOG_SRC, `User '${login}' authenticated successfully`);
         // mainStory.debug(LOG_SRC, `Piggybacked ${chalk.cyan(bufferedRecords.length)} records`);
       });
     } else {
-      rsp.result = 'ERROR';
+      result = 'ERROR';
       process.nextTick(() => {
         mainStory.warn(LOG_SRC, `User '${login}' authentication failed`);
       });
     }
-    this.socketTx(socket, rsp);
+    this.socketTx(socket, 'LOGIN_RESPONSE', result, rspData);
   });
 };
 
@@ -195,30 +184,42 @@ WsServerListener.prototype.socketLogout = function(socket) {
   }
 };
 
-WsServerListener.prototype.socketTx = function(socket, msg) {
+WsServerListener.prototype.socketTx = function(socket, type, result, data) {
+  const msg = this.buildMsg(type, result, data);
   socket.emit('MSG', msg);
 };
 
 
-WsServerListener.prototype.addToBroadcastBuffer = function(record) {
-  this.bufBroadcast.push(record);
+WsServerListener.prototype.addToBroadcastBuffer = function(records) {
+  this.bufBroadcast = this.bufBroadcast.concat(records);
 };
 
 // Send records (buffered since the last call to this function)
 // both through the standalone server and the piggybacked one
 WsServerListener.prototype.socketBroadcast = function() {
   const { ioStandaloneNamespace, ioServerAdaptor } = this;
-  const msg = { type: 'RECORDS', data: this.bufBroadcast };
+  const msg = this.buildMsg('RECORDS', undefined, this.bufBroadcast);
+  this.socketDoBroadcast(msg);
+  this.bufBroadcast.length = 0;
+};
+
+WsServerListener.prototype.socketDoBroadcast = function(msg) {
+  const { ioStandaloneNamespace, ioServerAdaptor } = this;
   if (ioStandaloneNamespace) ioStandaloneNamespace.to(SOCKET_ROOM).emit('MSG', msg);
   if (ioServerAdaptor) ioServerAdaptor.to(SOCKET_ROOM).emit('MSG', msg);
-  this.bufBroadcast.length = 0;
+};
+
+WsServerListener.prototype.buildMsg = function(type, result, data) {
+  return { src: 'WS_SERVER', hubId: this.hubId, type, result, data };
 };
 
 // -----------------------------------------
 // Main processing function
 // -----------------------------------------
-WsServerListener.prototype.process = function(record) {
-  this.addToBroadcastBuffer(record);
+WsServerListener.prototype.process = function(msg) {
+  if (msg.type !== 'RECORDS') return;
+  const { data: records } = msg;
+  this.addToBroadcastBuffer(records);
   this.socketBroadcast(); // may be throttled
 };
 

@@ -7,22 +7,24 @@ const DEFAULT_CONFIG = {};
 // -----------------------------------------
 // Listener
 // -----------------------------------------
-function BrowserExtensionListener(config) {
+function BrowserExtensionListener(config, { hub }) {
   this.type = 'BROWSER_EXTENSION';
   this.config = config;
+  this.hub = hub;
+  this.hubId = hub.getHubId();
 }
 
 BrowserExtensionListener.prototype.init = function() {
-  ifExtension.rx(this.extensionRxMsg);
+  ifExtension.rx(this.extensionRx);
 }
 
-// To the extension
-BrowserExtensionListener.prototype.process = function(record) {
-  ifExtension.tx({ type: 'RECORDS', data: [record] });
+// From the hub
+BrowserExtensionListener.prototype.process = function(msg) {
+  ifExtension.tx(msg);
 };
 
 // From the extension
-BrowserExtensionListener.prototype.extensionRxMsg = function(msg) {
+BrowserExtensionListener.prototype.extensionRx = function(msg) {
   const { type, data } = msg;
   switch (type) {
     case 'GET_LOCAL_CLIENT_FILTER':
@@ -54,6 +56,7 @@ const outputLog = function(text, level, fLongDelay) {
 // -----------------------------------------
 // API
 // -----------------------------------------
-const create = config => new BrowserExtensionListener(addDefaults(config, DEFAULT_CONFIG));
+const create = (userConfig, context) =>
+  new BrowserExtensionListener(addDefaults(userConfig, DEFAULT_CONFIG), context);
 
 export default create;

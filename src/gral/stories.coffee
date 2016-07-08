@@ -190,7 +190,7 @@ _processAttachments = (record, options) ->
     record.obj = serialize record.obj
   return
 
-_emit = (record) -> hub.emit record
+_emit = (record) -> hub.emitMsgWithFields 'STORIES', 'RECORDS', [record]
 
 #-----------------------------------------------
 # ### Create the main story

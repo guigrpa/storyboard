@@ -17,7 +17,7 @@ function WsClientListener(config, { hub, mainStory }) {
   this.type = 'WS_CLIENT';
   this.config = config;
   this.hub = hub;
-  this.uploaderId = mainStory.storyId || '_SOMEBODY_';
+  this.hubId = hub.getHubId();
   this.socket = null;
   this.fSocketConnected = false;
   // Short buffer for records to be uploaded
@@ -49,7 +49,7 @@ WsClientListener.prototype.extensionRx = function(msg) {
   }
   if (!(type === 'CONNECT_REQUEST' || type === 'CONNECT_RESPONSE' ||
         type === 'GET_LOCAL_CLIENT_FILTER' || type === 'SET_LOCAL_CLIENT_FILTER')) {
-    this.socketTx({ type, data });
+    this.socketTx(type, data);
   }
 };
 
@@ -77,43 +77,48 @@ WsClientListener.prototype.socketInit = function() {
   this.socket.on('MSG', this.socketRx);
 };
 
-// Mutates the message: filters out records that we have uploaded ourselves
 WsClientListener.prototype.socketRx = function(msg) {
-  if (msg.type === 'RECORDS') {
-    msg.data = msg.data.filter(o => o.uploadedBy !== this.uploaderId);
-  }
+  // Ignore messages that originate from our own hub
+  if (msg.hubId === this.hubId) return;
   ifExtension.tx(msg);
 };
 
-WsClientListener.prototype.socketTx = function(msg) {
+WsClientListener.prototype.socketTx = function(type, data) {
   /* istanbul ignore next */
   if (!this.socket) {
     console.error(`Cannot send '${msg.type}' message to server: socket unavailable`);
     return;
   }
+  const msg = { src: 'WS_CLIENT', hubId: this.hubId, type, data };
   this.socket.emit('MSG', msg);
 };
 
-WsClientListener.prototype.addToUploadBuffer = function(record0) {
-  if (this.bufUpload.length < BUF_UPLOAD_LENGTH) {
-    const record = timmSet(record0, 'uploadedBy', this.uploaderId);
-    this.bufUpload.push(record);
+WsClientListener.prototype.addToUploadBuffer = function(records) {
+  records.forEach(record => {
+    this.bufUpload.push(timmSet(record, 'uploadedBy', this.hubId));
+  });
+  if (this.bufUpload.length > BUF_UPLOAD_LENGTH) {
+    this.bufUpload = this.bufUpload.slice(-BUF_UPLOAD_LENGTH);
   }
 };
 
 WsClientListener.prototype.socketUpload = function() {
   /* istanbul ignore next */
   if (!this.fSocketConnected) return;
-  this.socketTx({ type: 'UPLOAD_RECORDS', data: this.bufUpload });
+  this.socketTx('RECORDS', this.bufUpload);
   this.bufUpload.length = 0;
 };
 
 // -----------------------------------------
 // Main processing function
 // -----------------------------------------
-WsClientListener.prototype.process = function(record) {
+WsClientListener.prototype.process = function(msg) {
+  // TODO: in the future, we will be receiving not only RECORDS
+  // but also browser extension messages
   if (!this.config.uploadClientStories) return;
-  this.addToUploadBuffer(record);
+  if (msg.type !== 'RECORDS') return;
+  const { data: records } = msg;
+  this.addToUploadBuffer(records);
   this.socketUpload(); // may be throttled
 };
 
