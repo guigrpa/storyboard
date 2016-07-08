@@ -47,7 +47,7 @@ BrowserExtensionListener.prototype.extensionRx = function(event) {
   if (source !== _window) return;
   const { src, type, data } = msg;
   if (src !== 'DT') return;
-  console.log(`[PG] RX ${src}/${type}`, data);
+  // console.log(`[PG] RX ${src}/${type}`, data);
   switch (type) {
 
     // CONNECT_XX are replied here, but are also relayed to the hub
