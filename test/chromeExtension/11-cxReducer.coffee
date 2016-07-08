@@ -68,3 +68,13 @@ describe 'cxReducer', ->
       state = reducer state, {type: 'LOGGED_OUT'}
       expect(state.loginState).to.equal 'LOGGED_OUT'
       expect(state.login).to.be.null
+
+  describe 'filters', ->
+
+    it 'should process SERVER_FILTER', ->
+      state = reducer state, {type: 'SERVER_FILTER', filter: 'abcd:*'}
+      expect(state.serverFilter).to.equal 'abcd:*'
+
+    it 'should process LOCAL_CLIENT_FILTER', ->
+      state = reducer state, {type: 'LOCAL_CLIENT_FILTER', filter: 'dcba:*'}
+      expect(state.localClientFilter).to.equal 'dcba:*'

@@ -1,7 +1,7 @@
 {storyboard, expect, sinon, Promise, h} = require './imports'
 chalk             = require 'chalk'
 browserExtensionListener = require('../../lib/listeners/browserExtension').default
-ifExtension       = require '../../lib/listeners/helpers/interfaceExtension'
+# ifExtension       = require '../../lib/listeners/helpers/interfaceExtension'
 k                 = require '../../lib/gral/constants'
 
 {mainStory} = storyboard
@@ -13,7 +13,7 @@ if not process.env.TEST_BROWSER
   console.log "Skipping #{chalk.cyan.bold 'browserExtensionListener'} tests in #{chalk.cyan.bold 'non-browser environment'}..."
   return
 
-describe "browserExtensionListener", ->
+describe.skip "browserExtensionListener", ->
 
   _spyClientWinTxMsg = null
   _clientWinRxEvent = null

@@ -13,9 +13,9 @@ VERSION = "1.4.0"
 _runMultiple = (arr) -> arr.join ' && '
 
 _runMochaCov = (env) ->
-  envStr = if env? then "#{env} " else ''
+  envStr = if env? then " #{env}" else ''
   return _runMultiple [
-    "cross-env #{envStr}nyc node_modules/mocha/bin/_mocha"
+    "cross-env#{envStr} nyc node_modules/mocha/bin/_mocha"
     "mv .nyc_output/* .nyc_tmp/"
   ]
 
@@ -35,6 +35,11 @@ specs =
   repository:
     type: "git"
     url: "git+https://github.com/guigrpa/storyboard.git"
+
+  nyc:
+    exclude: [
+      'lib/vendor/**'
+    ]
 
   #-================================================================
   # ## Scripts

@@ -28,9 +28,9 @@ getConfig = ->
     _filter = k.DEFAULT_FILTER
   _filter
 
-config = (filter = '') ->
+config = (filter) ->
   store = window?.localStorage ? process.env
-  store[k.FILTER_KEY] = filter
+  store[k.FILTER_KEY] = filter || ''
   _cachedThreshold = null
   _init()
 

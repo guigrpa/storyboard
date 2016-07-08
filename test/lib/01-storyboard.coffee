@@ -2,10 +2,10 @@
 hub = require '../../lib/gral/hub'
 k   = require '../../lib/gral/constants'
 
-_spy = sinon.spy()
+_spyListenerProcess = sinon.spy()
 _listenerFactory = ->
   init: ->
-  process: _spy
+  process: _spyListenerProcess
 {mainStory} = storyboard
 
 #-====================================================
@@ -24,7 +24,7 @@ describe 'storyboard', ->
     storyboard.config {bufSize: 5}
     expect(storyboard.getListeners()).to.have.length 1
 
-  beforeEach -> _spy.reset()
+  beforeEach -> _spyListenerProcess.reset()
 
   it 'sanity', ->
     expect(mainStory).to.exist
@@ -36,23 +36,28 @@ describe 'storyboard', ->
 
     it 'should emit a record when logging', ->
       mainStory.info 'src1', 'msg1'
-      expect(_spy).to.have.been.calledOnce
-      record = _spy.args[0][0]
+      expect(_spyListenerProcess).to.have.been.calledOnce
+      msg = _spyListenerProcess.args[0][0]
+      {data: records} = msg
+      expect(records).to.have.length 1
+      record = records[0]
       expect(record.src).to.equal 'src1'
       expect(record.msg).to.equal 'msg1'
       expect(record.level).to.equal k.LEVEL_STR_TO_NUM.INFO
 
     it 'should allow omitting the source', ->
       mainStory.info 'msg2'
-      expect(_spy).to.have.been.calledOnce
-      record = _spy.args[0][0]
+      expect(_spyListenerProcess).to.have.been.calledOnce
+      msg = _spyListenerProcess.args[0][0]
+      record = msg.data[0]
       expect(record.msg).to.equal 'msg2'
 
     it 'should allow attaching an object', ->
       obj = {b: 3}
       mainStory.info 'msg3', {attach: obj}
-      expect(_spy).to.have.been.calledOnce
-      record = _spy.args[0][0]
+      expect(_spyListenerProcess).to.have.been.calledOnce
+      msg = _spyListenerProcess.args[0][0]
+      record = msg.data[0]
       expect(record.msg).to.equal 'msg3'
       expect(record.obj).to.deep.equal obj
 
@@ -67,8 +72,9 @@ describe 'storyboard', ->
       expect(childStory.parents).to.deep.equal [mainStory.storyId]
       expect(childStory.title).to.equal ''
       expect(childStory.fOpen).to.be.true
-      expect(_spy).to.have.been.calledOnce
-      record = _spy.args[0][0]
+      expect(_spyListenerProcess).to.have.been.calledOnce
+      msg = _spyListenerProcess.args[0][0]
+      record = msg.data[0]
       expect(record.fStory).to.be.true
       expect(record.action).to.equal 'CREATED'
 
@@ -76,7 +82,8 @@ describe 'storyboard', ->
       expect(childStory.level).to.equal k.LEVEL_STR_TO_NUM.INFO
 
     it 'should publish actions with the same level as the story itself', ->
-      record = _spy.args[0][0]
+      msg = _spyListenerProcess.args[0][0]
+      record = msg.data[0]
       expect(record.fStory).to.be.true
       expect(record.action).to.equal 'CREATED'
       expect(record.level).to.equal k.LEVEL_STR_TO_NUM.INFO
@@ -92,8 +99,9 @@ describe 'storyboard', ->
     it 'should allow closing a story', ->
       childStory.close()
       expect(childStory.fOpen).to.be.false
-      expect(_spy).to.have.been.calledTwice
-      record = _spy.args[1][0]
+      expect(_spyListenerProcess).to.have.been.calledTwice
+      msg = _spyListenerProcess.args[1][0]
+      record = msg.data[0]
       expect(record.fStory).to.be.true
       expect(record.action).to.equal 'CLOSED'
 
@@ -127,23 +135,25 @@ describe 'storyboard', ->
 
     it 'should NOT emit action records', ->
       foo.close()
-      expect(_spy).to.not.have.been.called
+      expect(_spyListenerProcess).to.not.have.been.called
 
     it 'should NOT emit logs <= INFO', ->
       foo.debug "foo", "msg1"
       foo.info "foo", "msg2"
       foo.debug "interesting", "msg3"
       foo.info "interesting", "msg4"
-      expect(_spy).to.not.have.been.called
+      expect(_spyListenerProcess).to.not.have.been.called
 
     it 'should emit logs >= WARN (and make the story visible)', ->
       foo.warn 'whatever', 'Warning, warning!'
-      expect(_spy).to.have.been.calledTwice
-      record = _spy.args[0][0]
+      expect(_spyListenerProcess).to.have.been.calledTwice
+      msg = _spyListenerProcess.args[0][0]
+      record = msg.data[0]
       expect(record.src).to.equal 'foo'
       expect(record.action).to.equal 'CREATED'
       expect(record.level).to.equal k.LEVEL_STR_TO_NUM.DEBUG
-      record = _spy.args[1][0]
+      msg = _spyListenerProcess.args[1][0]
+      record = msg.data[0]
       expect(record.src).to.equal 'whatever'
       expect(record.level).to.equal k.LEVEL_STR_TO_NUM.WARN
 
@@ -154,30 +164,34 @@ describe 'storyboard', ->
         fooChild = foo.child {src: 'child', title: 'Foo child'}
 
       it 'should NOT be visible (as a child of a hidden story)', ->
-        expect(_spy).to.not.have.been.called
+        expect(_spyListenerProcess).to.not.have.been.called
 
       it 'should NOT emit logs <= INFO', ->
         fooChild.debug "foo", "msg1"
         fooChild.info "foo", "msg2"
         fooChild.debug "interesting", "msg3"
         fooChild.info "interesting", "msg4"
-        expect(_spy).to.not.have.been.called
+        expect(_spyListenerProcess).to.not.have.been.called
 
       it 'should emit logs >= WARN (and make both ancestors visible)', ->
         fooChild.info 'whatever', 'Some operation'
         fooChild.warn 'whatever', 'Warning, warning!'
-        expect(_spy).to.have.callCount 4
-        record = _spy.args[0][0]
+        expect(_spyListenerProcess).to.have.callCount 4
+        msg = _spyListenerProcess.args[0][0]
+        record = msg.data[0]
         expect(record.src).to.equal 'foo'
         expect(record.action).to.equal 'CREATED'
         expect(record.level).to.equal k.LEVEL_STR_TO_NUM.DEBUG
-        record = _spy.args[1][0]
+        msg = _spyListenerProcess.args[1][0]
+        record = msg.data[0]
         expect(record.src).to.equal 'child'
         expect(record.action).to.equal 'CREATED'
         expect(record.level).to.equal k.LEVEL_STR_TO_NUM.INFO
-        record = _spy.args[2][0]
+        msg = _spyListenerProcess.args[2][0]
+        record = msg.data[0]
         expect(record.src).to.equal 'whatever'
         expect(record.level).to.equal k.LEVEL_STR_TO_NUM.INFO
-        record = _spy.args[3][0]
+        msg = _spyListenerProcess.args[3][0]
+        record = msg.data[0]
         expect(record.src).to.equal 'whatever'
         expect(record.level).to.equal k.LEVEL_STR_TO_NUM.WARN

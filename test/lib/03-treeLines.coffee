@@ -101,7 +101,7 @@ describe 'treeLines', ->
     expect(lines[1]).to.contain '...'
 
   it 'should provide simple console output', ->
-    sinon.spy console, 'log'
+    sinon.stub console, 'log'
     treeLines.log {a: 3}
     expect(console.log).to.have.been.calledOnce
     expect(console.log.args[0][0]).to.include 'a:'
