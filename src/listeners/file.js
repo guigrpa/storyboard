@@ -3,7 +3,6 @@ import { addDefaults } from 'timm';
 import k from '../gral/constants';
 import recordToLines from './helpers/recordToLines';
 
-
 const DEFAULT_CONFIG = {
   filePath: 'storyboard.log',
   colors: false,
