@@ -117,21 +117,21 @@ _rxRecords = (state, action, settings) ->
 
 _rxStory = (state, record, options) ->
   {fPastRecords, fDiscardRemoteClientLogs} = options
-  {storyId} = record
+  {storyId, fServer, hubId} = record
   newStoryPathStr = null
 
   # We ignore root stories (beginning by '*') when they are server-side
   # OR they belong to our local hub
   if (storyId[0] is '*')
     {localHubId} = state
-    if record.fServer or (record.hubId is localHubId)
+    if fServer or (hubId is localHubId)
       return [state, newStoryPathStr]
     title = record.title.replace 'ROOT STORY', 'REMOTE CLIENT'
     record = timm.set record, 'title', title
 
-  # We also ignore stories (not only root ones) when they have been
-  # uploaded and the user doesn't want to see them
-  if fDiscardRemoteClientLogs and record.uploadedBy
+  # We also ignore stories (not only root ones) when they belong to a remote
+  # client and the user doesn't want to see them
+  if fDiscardRemoteClientLogs and (not fServer) and (hubId isnt localHubId)
     return [state, newStoryPathStr]
 
   # Check if we already have a story object for this `storyId`
@@ -202,9 +202,10 @@ _addStory = (state, parentStoryPathStr, record, options) ->
   return [state, pathStr]
 
 _rxLog = (state, record, options) ->
-  {storyId, fServer, uploadedBy} = record
+  {localHubId} = state
+  {storyId, fServer, hubId} = record
   {fDiscardRemoteClientLogs} = options
-  return state if fDiscardRemoteClientLogs and uploadedBy
+  return state if fDiscardRemoteClientLogs and (not fServer) and (hubId isnt localHubId)
   pathStr = state.openStories[storyId] ? _mainStoryPathStr(fServer)
   {state, fDuplicate} = _addLog state, pathStr, record, options
   if not fDuplicate
