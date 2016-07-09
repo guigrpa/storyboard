@@ -4,32 +4,33 @@
 
 **Breaking changes**
 
-* Library:
-    - [M] **No listeners are installed by default**. The default behaviour in v1 was to automatically install the console listener at the server side, and the console, browserExtension and wsClient listeners at the client side (but only in development mode). This was very convenient out of the box, but made it harder to customize the configuration in certain setups. If you need the old default behaviour, just add:
+* **No listeners are installed by default**. The default behaviour in v1 was to automatically install the console listener at the server side, and the console, browserExtension and wsClient listeners at the client side (but only in development mode). This was very convenient out of the box, but made it harder to customize the configuration in certain setups. If you need the old default behaviour, just add:
 
-    ```js
-    import { addListener } from 'storyboard';
+```js
+import { addListener } from 'storyboard';
 
-    // Server
-    import consoleListener from 'storyboard/lib/listeners/console';
-    addListener(consoleListener);
+// Server
+import consoleListener from 'storyboard/lib/listeners/console';
+addListener(consoleListener);
 
-    // Client
-    if (process.env.NODE_ENV !== 'production') {
-        addListener(require('storyboard/lib/listeners/console').default);
-        addListener(require('storyboard/lib/listeners/browserExtension').default);
-        addListener(require('storyboard/lib/listeners/wsClient').default);
-    }
-    ```
+// Client
+if (process.env.NODE_ENV !== 'production') {
+    addListener(require('storyboard/lib/listeners/console').default);
+    addListener(require('storyboard/lib/listeners/browserExtension').default);
+    addListener(require('storyboard/lib/listeners/wsClient').default);
+}
+```
 
-    - [M] **Listeners have been migrated to ES6**. Notice above the different way to use them, depending on whether you `import` them (ES6 module) or `require` them (CommonJS).
+* **Listeners have been migrated to ES6**. Notice above the different way to use them, depending on whether you `import` them (ES6 module) or `require` them (CommonJS).
 
 **Other changes**
 
 * Library:
-    - [M] **Add file listener**: stores all logs to file.
+    - [M] **Add file listener**: stores all logs to a file, with or without ANSI color escapes (disabled by default).
+    - [M] A **refined listener architecture**, especially regarding the client side. The WsClient listener no longer interfaces directly with the browser extension, but rather relays its messages via the hub. The BrowserExtension listener has been merged with the interfaceExtension helper, since no other module can have access to this interface any more. The more architecture **is more flexible and will allow other uses of the library**, e.g. using the WsClient listener in a non-browser application to obtain logs from another process and offload database access or file storage.
     - [m] Improve graceful exits, tearing down all listeners if possible. Previously, we only closed the main story.
-* Internal: ongoing migration from CoffeeScript to JS.
+* Internal:
+    - Ongoing migration from CoffeeScript to JS.
 
 ## 1.4.0 (June 29, 2016)
 
