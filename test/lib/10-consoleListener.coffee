@@ -1,7 +1,15 @@
 {storyboard, expect, sinon, Promise} = require './imports'
-consoleListener = require '../../lib/listeners/console'
+consoleListener = require('../../lib/listeners/console').default
 
 {mainStory} = storyboard
+
+_isMochaOutput = (txt) ->
+  if txt.length is 0 then return false
+  if txt[0] isnt ' ' then return false
+  if txt.match(/^\s+\.\.\./) then return false
+  if txt.indexOf('THIS_AINT_NO_MOCHA_OUTPUT') >= 0 then return false
+  if txt.indexOf('%c') >= 0 then return false
+  return true
 
 #-====================================================
 # ## Tests
@@ -13,9 +21,11 @@ describe "consoleListener", ->
   _spyError = null
   before -> 
     storyboard.removeAllListeners()
+
     sinon.stub console, 'log'
     storyboard.addListener consoleListener
     console.log.restore()
+
     storyboard.config filter: '*:*'
     _listener = storyboard.getListeners()[0]
 
@@ -23,9 +33,11 @@ describe "consoleListener", ->
     consoleLog = console.log
     consoleError = console.error
     _spyLog   = sinon.stub console, 'log', (txt) ->
-      if txt.length and txt[0] is ' ' then consoleLog.apply console, arguments
+      if _isMochaOutput(txt) then consoleLog.apply console, arguments
+      # consoleLog.apply console, arguments
     _spyError = sinon.stub console, 'error', (txt) ->
-      if txt.length and txt[0] is ' ' then consoleError.apply console, arguments
+      if _isMochaOutput(txt) then consoleError.apply console, arguments
+      # consoleError.apply console, arguments
 
   afterEach ->
     console.log.restore()
@@ -90,29 +102,29 @@ describe "consoleListener", ->
       expect(_spyLog.args[0][0]).to.contain "[CIRCULAR]"
 
     it "should also allow the user to always expand an attachment", ->
-      obj = {attr1: 8}
+      obj = {THIS_AINT_NO_MOCHA_OUTPUT: 8}
       mainStory.info "Expanded attachment", {attach: obj, attachLevel: 'TRACE', attachExpanded: true}
       expect(_spyLog).to.have.been.calledTwice
       expect(_spyLog.args[0][0]).to.contain "INFO"
       expect(_spyLog.args[0][0]).to.contain "Expanded attachment"
       expect(_spyLog.args[1][0]).to.contain "TRACE"
-      expect(_spyLog.args[1][0]).to.contain "attr1"
+      expect(_spyLog.args[1][0]).to.contain "THIS_AINT_NO_MOCHA_OUTPUT"
 
   describe "in relative-time mode", ->
 
-    before -> _listener.config relativeTime: true
-    after  -> _listener.config relativeTime: false
+    before -> _listener.configure relativeTime: true
+    after  -> _listener.configure relativeTime: false
 
     it "should include an ellipsis when more than 1s ellapses between lines", ->
-      mainStory.info "Msg A"
+      mainStory.info "THIS_AINT_NO_MOCHA_OUTPUT A"
       Promise.delay 1100
       .then ->
-        mainStory.info "Msg B"
+        mainStory.info "THIS_AINT_NO_MOCHA_OUTPUT B"
         expect(_spyLog).to.have.callCount 3
         args = _spyLog.args
-        expect(args[0][0]).to.contain "Msg A"
+        expect(args[0][0]).to.contain "THIS_AINT_NO_MOCHA_OUTPUT A"
         expect(args[1][0]).to.contain "..."
-        expect(args[2][0]).to.contain "Msg B"
+        expect(args[2][0]).to.contain "THIS_AINT_NO_MOCHA_OUTPUT B"
 
   it "should highlight warning logs in yellow", ->
     mainStory.warn "Warning!"

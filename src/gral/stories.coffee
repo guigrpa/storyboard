@@ -17,6 +17,7 @@ DEFAULT_CHILD_TITLE = ''
 RECORD_FORMAT_VERSION = 2
 
 _hiddenStories = {}
+_hubId = hub.getHubId()
 
 #-----------------------------------------------
 # ### Helpers
@@ -150,6 +151,7 @@ Story::reveal = ->
 
 # Records can be logs or stories:
 # * `id: string` (a unique record id)
+# * `hubId: string`
 # * `fStory: boolean`
 # * `fServer: boolean`
 # * `storyId: string`
@@ -167,6 +169,7 @@ Story::reveal = ->
 # * `objIsError: bool?` (only for logs)
 _completeRecord = (record) ->
   record.id = _getRecordId()
+  record.hubId = _hubId
   record.version = RECORD_FORMAT_VERSION
   record.t ?= new Date().getTime()
   record.fServer = not k.IS_BROWSER
@@ -187,7 +190,7 @@ _processAttachments = (record, options) ->
     record.obj = serialize record.obj
   return
 
-_emit = (record) -> hub.emit record
+_emit = (record) -> hub.emitMsgWithFields 'STORIES', 'RECORDS', [record]
 
 #-----------------------------------------------
 # ### Create the main story
@@ -198,12 +201,6 @@ mainStory = new Story
   src: 'storyboard'
   title: title
   levelNum: k.LEVEL_STR_TO_NUM.INFO
-
-### istanbul ignore next ###
-try
-  window.addEventListener 'beforeunload', -> mainStory.close()
-try
-  process.on 'exit', -> mainStory.close()
 
 #-----------------------------------------------
 # ### API

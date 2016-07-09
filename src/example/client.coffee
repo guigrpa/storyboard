@@ -1,9 +1,9 @@
 require 'babel-polyfill'    # for IE
 require 'isomorphic-fetch'  # for IE
-{mainStory, chalk, addListener} = require '../noPlugins'  # you'd write: `'storyboard/lib/noPlugins'`
-addListener require '../listeners/console'
-addListener require '../listeners/browserExtension'
-addListener require '../listeners/wsClient'
+{mainStory, chalk, addListener} = require '../storyboard'  # you'd write: `'storyboard'`
+addListener require('../listeners/console').default
+addListener require('../listeners/browserExtension').default
+addListener require('../listeners/wsClient').default
 
 mainStory.info 'client', 'Running client...'
 

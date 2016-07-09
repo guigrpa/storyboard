@@ -1,7 +1,9 @@
 {storyboard, expect, sinon, Promise, h} = require './imports'
+{merge}           = require 'timm'
 chalk             = require 'chalk'
-browserExtensionListener = require '../../lib/listeners/browserExtension'
-ifExtension       = require '../../lib/listeners/interfaceExtension'
+browserExtModule  = require '../../lib/listeners/browserExtension'
+browserExtensionListener = browserExtModule.default
+setMockWindow            = browserExtModule._setWindow
 k                 = require '../../lib/gral/constants'
 
 {mainStory} = storyboard
@@ -15,44 +17,82 @@ if not process.env.TEST_BROWSER
 
 describe "browserExtensionListener", ->
 
-  _spyClientWinTxMsg = null
+  _spyClientWinTxMsg = _spyClientHub = null
   _clientWinRxEvent = null
   _listener = null
   _mockWindow = null
+  _extensionTxMsg = (msg) ->
+    _clientWinRxEvent
+      source: _mockWindow
+      data: merge msg, {src: 'DT'}
 
   before -> 
+    # Reset Storyboard and spies
     storyboard.removeAllListeners()
     storyboard.config {filter: '*:*'}
-    _spyClientWinTxMsg = sinon.spy()
+    _spyClientWinTxMsg = sinon.spy() # (ev) -> console.log ev
+    _spyClientHub = sinon.spy() # (msg) -> console.log msg.type
+
+    # Set up mock window
     _mockWindow = 
       postMessage: _spyClientWinTxMsg
       addEventListener: (evType, listener) -> _clientWinRxEvent = listener
-    ifExtension._setWindow _mockWindow
+      removeEventListener: (evType, listener) -> 
+    setMockWindow _mockWindow
+
+    # Create listener, and make it believe that the extension is ready
     _listener = storyboard.addListener browserExtensionListener
-    # Make the listener think that the extension is ready
-    _clientWinRxEvent
-      source: _mockWindow
-      data: {src: 'DT', type: 'CONNECT_RESPONSE'}
+    storyboard.addListener -> {process: _spyClientHub}
+    _extensionTxMsg {type: 'CONNECT_RESPONSE'}
+
+    # Prevent setup from possibly interfering with tests
+    return Promise.delay 250
 
   after -> 
-    storyboard.removeListener _listener
+    storyboard.removeAllListeners()
 
-  describe "client stories -> extension relay", ->
+  beforeEach ->
+    _spyClientWinTxMsg.reset()
+    _spyClientHub.reset()
 
-    it "should relay simple logs", ->
-      _spyClientWinTxMsg.reset()
-      mainStory.info "Somewhere over the rainbow..."
+  describe 'extension <- hub', ->
+    it "should relay all messages in this direction", ->
+      _listener.process {type: 'WHATEVER', data: {b: 4}}
       h.waitUntil(1000, -> _spyClientWinTxMsg.callCount > 0)
       .then ->
         msg = _spyClientWinTxMsg.args[0][0]
-        expect(msg.type).to.equal 'RECORDS'
-        expect(msg.data[0].msg).to.contain 'rainbow'
+        expect(msg.type).to.equal 'WHATEVER'
+        expect(msg.data).to.deep.equal {b: 4}
 
-    it "should not preprocess attachments", ->
-      _spyClientWinTxMsg.reset()
-      mainStory.info "We can be heroes...", attach: just: "for one day"
-      h.waitUntil(1000, -> _spyClientWinTxMsg.callCount > 0)
+  describe 'extension -> hub', ->
+    it "should relay messages by default", ->
+      _extensionTxMsg {type: 'WHATEVER', data: {b: 4}}
+      h.waitUntil(1000, -> _spyClientHub.callCount > 0)
       .then ->
-        record = _spyClientWinTxMsg.args[0][0].data[0]
-        expect(record.msg).to.contain 'heroes'
-        expect(record.obj).to.deep.equal {just: 'for one day'}
+        msg = _spyClientHub.args[0][0]
+        expect(msg.type).to.equal 'WHATEVER'
+        expect(msg.data).to.deep.equal {b: 4}
+
+    it "should respond to GET/SET_LOCAL_CLIENT_FILTER messages but not relay them", ->
+      _extensionTxMsg {type: 'GET_LOCAL_CLIENT_FILTER'}
+      Promise.delay(200)
+      .then -> expect(_spyClientHub).not.to.have.been.called
+      .then -> h.waitUntil(1000, -> _spyClientWinTxMsg.callCount > 0)
+      .then ->
+        msg = _spyClientWinTxMsg.args[0][0]
+        expect(msg.type).to.equal 'LOCAL_CLIENT_FILTER'
+        expect(msg.result).to.equal 'SUCCESS'
+
+    it "should respond to CONNECT_REQUEST messages with its hub ID; AND ALSO relay them", ->
+      _extensionTxMsg {type: 'CONNECT_REQUEST'}
+      Promise.resolve()
+      .then -> h.waitUntil(1000, -> _spyClientHub.callCount > 0)
+      .then -> 
+        msg = _spyClientHub.args[0][0]
+        expect(msg.type).to.equal 'CONNECT_REQUEST'
+      .then -> h.waitUntil(1000, -> _spyClientWinTxMsg.callCount > 0)
+      .then ->
+        msg = _spyClientWinTxMsg.args[0][0]
+        expect(msg.type).to.equal 'CONNECT_RESPONSE'
+        expect(msg.result).to.equal 'SUCCESS'
+        expect(msg.data.hubId).to.not.be.null

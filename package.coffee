@@ -1,8 +1,8 @@
-## WEBPACK_OPTS            = "--colors --progress --display-modules --display-chunks"
-WEBPACK_OPTS            = "--colors --progress"
+WEBPACK_OPTS            = "--colors --progress --display-modules --display-chunks"
+## WEBPACK_OPTS            = "--colors --progress"
 WEBPACK_EXTENSION       = "webpack --config src/chromeExtension/webpackConfig.coffee #{WEBPACK_OPTS}"
-WEBPACK_SERVER_LOGS_APP = "webpack --config src/serverLogsApp/webpackConfig.coffee #{WEBPACK_OPTS}"
-WEBPACK_EXAMPLE         = "webpack --config src/example/webpackConfig.coffee #{WEBPACK_OPTS}"
+WEBPACK_SERVER_LOGS_APP = "webpack --config src/serverLogsApp/webpackConfig #{WEBPACK_OPTS}"
+WEBPACK_EXAMPLE         = "webpack --config src/example/webpackConfig #{WEBPACK_OPTS}"
 
 HEROKU_ROOT = "example/heroku"
 HEROKU_CLIENT = "#{HEROKU_ROOT}/client"
@@ -13,9 +13,9 @@ VERSION = "1.4.0"
 _runMultiple = (arr) -> arr.join ' && '
 
 _runMochaCov = (env) ->
-  envStr = if env? then "#{env} " else ''
+  envStr = if env? then " #{env}" else ''
   return _runMultiple [
-    "cross-env #{envStr}nyc node_modules/mocha/bin/_mocha"
+    "cross-env#{envStr} nyc node_modules/mocha/bin/_mocha"
     "mv .nyc_output/* .nyc_tmp/"
   ]
 
@@ -35,6 +35,11 @@ specs =
   repository:
     type: "git"
     url: "git+https://github.com/guigrpa/storyboard.git"
+
+  nyc:
+    exclude: [
+      'lib/vendor/**'
+    ]
 
   #-================================================================
   # ## Scripts
@@ -104,6 +109,11 @@ specs =
       "npm run testDev"
       "npm run testCovReport"
     ]
+    testCovBrowser:           _runMultiple [
+      "npm run testCovPrepare"
+      "npm run testBrowser"
+      "npm run testCovReport"
+    ]
     testCovPrepare:           _runMultiple [
       "rm -rf ./coverage .nyc_output .nyc_tmp"
       "mkdir .nyc_tmp"
@@ -122,13 +132,13 @@ specs =
   # ## Storyboard library dependencies
   #-================================================================
   dependencies:
-    "timm": "0.6.1"
+    "timm": "1.0.0"
     "chalk": "1.1.3"
-    "bluebird": "3.3.1"
-    "express": "4.13.4"
-    "socket.io": "1.4.5"
+    "bluebird": "3.4.1"
+    "express": "4.14.0"
+    "socket.io": "1.4.8"
     "node-uuid": "1.4.7"
-    "lodash": "4.5.0"
+    "lodash": "4.13.1"
     "platform": "1.3.1"
     "split": "1.0.0"
 

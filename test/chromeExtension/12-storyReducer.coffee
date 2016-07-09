@@ -139,13 +139,31 @@ describe 'storyReducer', ->
         msg: "log with attachment"
         obj: treeLines attachment
         objExpanded: false 
+      logRecordWithError = _log
+        id: 'logWithError' 
+        storyId: openStoryRecord1.storyId
+        level: 50
+        msg: "an error has occurred"
+      logRecordWithWarning = _log
+        id: 'logWithWarning' 
+        storyId: openStoryRecord1.storyId
+        level: 40
+        msg: "warning, warning"
       state = reducer state, _recordsReceived [
         openStoryRecord0
         openStoryRecord1
         logRecord
+        logRecordWithWarning
+        logRecordWithError
       ]
       expect(state.mainStory.records[0].records[0].fExpanded).to.be.true
       expect(state.mainStory.records[0].records[0].records[1].fExpanded).to.be.true
+
+    it 'should correctly mark all stories containing (at any depth level) errors/warnings', ->
+      expect(state.mainStory.records[0].records[0].fHasWarning).to.be.true
+      expect(state.mainStory.records[0].records[0].fHasError).to.be.true
+      expect(state.mainStory.records[0].records[0].records[1].fHasWarning).to.be.true
+      expect(state.mainStory.records[0].records[0].records[1].fHasError).to.be.true
 
     it 'should allow expanding/collapsing all stories', ->
       state = reducer state, {type: 'COLLAPSE_ALL_STORIES'}
@@ -228,12 +246,12 @@ describe 'storyReducer', ->
         _closeStory _storyId
       ]
 
-    it 'with fPastRecords: false (should NOT include it in the closed story)', ->
+    it 'with fPastRecords = false (should NOT include it in the closed story)', ->
       state = reducer state, _recordsReceived([_openStory {title: "child", parents: [_storyId]}], false)
       expect(state.mainStory.records[0].records[0].records.length).to.equal 2 # CREATED and CLOSED
       expect(state.mainStory.records[0].records[1].title).to.equal 'child'
 
-    it 'with fPastRecords: true (should include it in the closed story)', ->
+    it 'with fPastRecords = true (should include it in the closed story)', ->
       state = reducer state, _recordsReceived([_openStory {title: "child", parents: [_storyId]}], true)
       expect(state.mainStory.records[0].records[0].records.length).to.equal 3
       expect(state.mainStory.records[0].records[0].records[2].title).to.equal 'child'
