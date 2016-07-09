@@ -6,6 +6,8 @@ A library, plus a [Chrome DevTools extension](https://chrome.google.com/webstore
 
 Demo: http://storyboard-demo.herokuapp.com/
 
+**Note that these are the docs for the upcoming Storyboard v2. The latest docs for v1.x can be recovered [here](https://github.com/guigrpa/storyboard/blob/v1.4.0/README.md). See also the [CHANGELOG](https://github.com/guigrpa/storyboard/blob/master/CHANGELOG.md) for details on new features and breaking changes.**
+
 ## Why?
 
 * **Hierarchical stories**: put logs in context (*stories*), and group stories/logs within stories. Stories are extremely useful with concurrent user actions and async events.
