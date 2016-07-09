@@ -33,6 +33,7 @@ const config = (options = {}) => {
       case 'bufSize':
         hubConfigure({ bufSize: val });
         break;
+      /* istanbul ignore next */
       default:
         break;
     }

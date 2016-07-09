@@ -13,7 +13,7 @@
     + [x] Change WsClient listener so that it doesn't use interfaceExtension (sends messages through the hub)
     + [x] Merge browserExtension and interfaceExtension. In the CONNECTION_REQUEST and CONNECTION_RESPONSE sent by the hub, include the hubId.
     + [x] Use the browserExtension's hubId to better determine which root stories are to be removed by the storyReducer
-    + [ ] Add new tests for browserExtension and wsClient listeners
+    + [x] Add new tests for browserExtension and wsClient listeners
     + [ ] Remove process.nextTick() from WsServerListener
     + [ ] Throttle log generation at the very source??
 

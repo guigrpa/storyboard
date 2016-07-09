@@ -109,18 +109,6 @@ BrowserExtensionListener.prototype.process = function(msg) {
 };
 
 // -----------------------------------------
-// Helpers
-// -----------------------------------------
-const outputLog = function(text, level, fLongDelay) {
-  const args = k.IS_BROWSER ?
-    ansiColors.getBrowserConsoleArgs(text) :
-    [text];
-  if (fLongDelay) console.log('          ...');
-  const output = (level >= 50 && level <= 60) ? 'error' : 'log';
-  console[output].apply(console, args);
-};
-
-// -----------------------------------------
 // API
 // -----------------------------------------
 const create = (userConfig, context) =>

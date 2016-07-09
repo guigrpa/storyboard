@@ -109,9 +109,10 @@ WsClientListener.prototype.process = function(msg) {
     case 'LOG_OUT':
     case 'LOGIN_REQUIRED_QUESTION':
     case 'GET_SERVER_FILTER':
-    case 'GET_SERVER_FILTER':
+    case 'SET_SERVER_FILTER':
       this.socketTx(msg.type, msg.data);
       break;
+
     default:
       break;
   }

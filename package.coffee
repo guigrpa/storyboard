@@ -109,6 +109,11 @@ specs =
       "npm run testDev"
       "npm run testCovReport"
     ]
+    testCovBrowser:           _runMultiple [
+      "npm run testCovPrepare"
+      "npm run testBrowser"
+      "npm run testCovReport"
+    ]
     testCovPrepare:           _runMultiple [
       "rm -rf ./coverage .nyc_output .nyc_tmp"
       "mkdir .nyc_tmp"

@@ -42,6 +42,7 @@
     "testFast": "mocha",
     "testCov": "npm run testCovPrepare && npm run testDev && npm run testProd && npm run testBrowser && npm run testCovReport",
     "testCovFast": "npm run testCovPrepare && npm run testDev && npm run testCovReport",
+    "testCovBrowser": "npm run testCovPrepare && npm run testBrowser && npm run testCovReport",
     "testCovPrepare": "rm -rf ./coverage .nyc_output .nyc_tmp && mkdir .nyc_tmp",
     "testDev": "cross-env NODE_ENV=development nyc node_modules/mocha/bin/_mocha && mv .nyc_output/* .nyc_tmp/",
     "testProd": "cross-env NODE_ENV=production nyc node_modules/mocha/bin/_mocha && mv .nyc_output/* .nyc_tmp/",
