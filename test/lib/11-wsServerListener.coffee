@@ -73,6 +73,19 @@ describe "wsServerListener", ->
         expect(msg.data).to.have.length 1
         expect(msg.data[0].msg).to.equal 'water1'
 
+    it "should allow setting a new server-side filter and reply", ->
+      _socket.emit 'MSG', 
+        type: 'SET_SERVER_FILTER'
+        data: '-*'
+      h.waitUntil(1000, -> _spySocketRx.callCount > 0)
+      .then ->
+        expect(_spySocketRx).to.have.been.calledOnce
+        msg = _spySocketRx.args[0][0]
+        expect(msg.type).to.equal 'SERVER_FILTER'
+        expect(msg.data).to.deep.equal {filter: '-*'}
+      .delay 200  # allow the log message to disappear
+      .then -> storyboard.config {filter: '*:*'}
+
     it "should ignore a log out (this is a server without auth)", ->
       _socket.emit 'MSG', {type: 'LOG_OUT'}
       Promise.delay(200)
