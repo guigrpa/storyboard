@@ -124,11 +124,11 @@ WsServerListener.prototype.socketRx = function(socket, msg) {
       if (type === 'SET_SERVER_FILTER') {
         newFilter = msg.data;
         filters.config(newFilter);
-        process.nextTick(() => {
-          mainStory.info(LOG_SRC, `Server filter changed to: ${chalk.cyan.bold(newFilter)}`);
-        });
       }
       this.socketTx(socket, 'SERVER_FILTER', 'SUCCESS', { filter: filters.getConfig() });
+      if (type === 'SET_SERVER_FILTER') {
+        this.log('info', `Server filter changed to: ${chalk.cyan.bold(newFilter)}`);
+      }
       break;
 
     // Uploaded records:
@@ -140,9 +140,7 @@ WsServerListener.prototype.socketRx = function(socket, msg) {
       if (config.broadcastUploaded) this.socketDoBroadcast(msg);
       break;
     default:
-      process.nextTick(() => {
-        mainStory.warn(LOG_SRC, `Unknown message type '${type}'`);
-      });
+      this.log('warn', `Unknown message type '${type}'`);
   }
 };
 
@@ -156,23 +154,23 @@ WsServerListener.prototype.socketLogin = function(socket, msg) {
   .then(fAuthValid => {
     let result;
     let rspData;
+    let bufferedRecords;
     if (fAuthValid) {
       result = 'SUCCESS';
       socket.sbAuthenticated = true;
       socket.join(SOCKET_ROOM);
-      const bufferedRecords = hub.getBufferedRecords();
+      bufferedRecords = hub.getBufferedRecords();
       rspData = { login, bufferedRecords };
-      process.nextTick(() => {
-        mainStory.info(LOG_SRC, `User '${login}' authenticated successfully`);
-        // mainStory.debug(LOG_SRC, `Piggybacked ${chalk.cyan(bufferedRecords.length)} records`);
-      });
     } else {
       result = 'ERROR';
-      process.nextTick(() => {
-        mainStory.warn(LOG_SRC, `User '${login}' authentication failed`);
-      });
     }
     this.socketTx(socket, 'LOGIN_RESPONSE', result, rspData);
+    if (result === 'SUCCESS') {
+      this.log('info', `User '${login}' authenticated successfully`);
+      // this.log('debug', `Piggybacked ${chalk.cyan(bufferedRecords.length)} records`);
+    } else {
+      this.log('warn', `User '${login}' authentication failed`);
+    }
   });
 };
 
@@ -211,6 +209,11 @@ WsServerListener.prototype.socketDoBroadcast = function(msg) {
 
 WsServerListener.prototype.buildMsg = function(type, result, data) {
   return { src: 'WS_SERVER', hubId: this.hubId, type, result, data };
+};
+
+WsServerListener.prototype.log = function(logLevel, msg) {
+  // process.nextTick(() => this.mainStory[logLevel](LOG_SRC, msg));
+  this.mainStory[logLevel](LOG_SRC, msg);
 };
 
 // -----------------------------------------
