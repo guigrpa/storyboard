@@ -4,8 +4,8 @@ const webpackConfig = require('../webpackConfigBase');
 
 module.exports = merge(webpackConfig, {
   entry: {
-    app: ['./src/example/client.coffee'],
-    exampleUpload: ['./src/example/clientWithUpload.coffee'],
+    app: ['./src/example/clientOld.coffee'],
+    exampleUpload: ['./src/example/clientWithUpload'],
   },
   output: {
     filename: '[name].js',

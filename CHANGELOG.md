@@ -4,7 +4,7 @@
 
 **Breaking changes**
 
-* **No listeners are installed by default**. The default behaviour in v1 was to automatically install the console listener at the server side, and the console, browserExtension and wsClient listeners at the client side (but only in development mode). This was very convenient out of the box, but made it harder to customize the configuration in certain setups. If you need the old default behaviour, just add:
+* **No listeners are installed by default**. The default behaviour in v1 was to automatically install the console listener at the server side, and the console, browserExtension and wsClient listeners at the client side (but only in development mode). This was very convenient out of the box, but made it harder to customize the configuration in certain setups. If you need the old default behaviour, use this (note that for conditionally including listeners we recommend sticking to `require`):
 
 ```js
 import { addListener } from 'storyboard';
@@ -21,7 +21,15 @@ if (process.env.NODE_ENV !== 'production') {
 }
 ```
 
-* **Listeners have been migrated to ES6**. Notice above the different way to use them, depending on whether you `import` them (ES6 module) or `require` them (CommonJS).
+* **Listeners have been migrated to ES6**. Notice above the different way to use them, depending on whether you `import` them (ES6 module) or `require` them (CommonJS):
+
+```js
+// ES6 module
+import fileListener from 'storyboard/lib/listeners/file';
+
+// CommonJS module
+const fileListener = require('storyboard/lib/listeners/file').default;
+```
 
 **Other changes**
 
