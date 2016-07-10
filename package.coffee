@@ -246,7 +246,7 @@ manifest =
   short_name: "Storyboard DevTools"
   description: "Gives you access to end-to-end stories (logs) for Storyboard-equipped applications"
   author: "Guillermo Grau Panea"
-  version: VERSION
+  version: VERSION.split('-')[0]
 
   content_scripts: [
     matches: ["<all_urls>"]
