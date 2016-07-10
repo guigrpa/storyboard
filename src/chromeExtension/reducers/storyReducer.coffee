@@ -118,12 +118,12 @@ _rxRecords = (state, action, settings) ->
 _rxStory = (state, record, options) ->
   {fPastRecords, fDiscardRemoteClientLogs} = options
   {storyId, fServer, hubId} = record
+  {localHubId} = state
   newStoryPathStr = null
 
   # We ignore root stories (beginning by '*') when they are server-side
   # OR they belong to our local hub
   if (storyId[0] is '*')
-    {localHubId} = state
     if fServer or (hubId is localHubId)
       return [state, newStoryPathStr]
     title = record.title.replace 'ROOT STORY', 'REMOTE CLIENT'
