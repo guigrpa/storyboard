@@ -1,5 +1,5 @@
 import uuid from 'node-uuid';
-import { merge, addLast } from 'timm';
+import { merge } from 'timm';
 
 const DEFAULT_CONFIG = {
   bufMsgSize: 1000,
@@ -33,8 +33,8 @@ let listeners = [];
 
 const getListeners = () => listeners;
 
-const addListener = (listenerCreate, config = {}) => {
-  const listener = listenerCreate(config, { mainStory, hub: hubApiForListeners });
+const addListener = (listenerCreate, userConfig = {}) => {
+  const listener = listenerCreate(userConfig, { mainStory, hub: hubApiForListeners });
   listeners.push(listener);
   if (listener.init) listener.init();
   getBufferedMessages().forEach(msg => listener.process(msg));
@@ -67,7 +67,7 @@ const addToMsgBuffers = msg => {
     bufRecords = bufRecords.concat(records);
     if (bufRecords.length > bufSize) bufRecords = bufRecords.slice(-bufSize);
   }
-}
+};
 
 const getBufferedMessages = () => bufMessages;
 const getBufferedRecords = () => bufRecords;

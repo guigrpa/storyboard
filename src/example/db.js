@@ -16,7 +16,7 @@ const getItems = ({ story = mainStory } = {}) => {
     story.debug('db', `Animals found: ${chalk.cyan(numAnimals + 1)}`);
     return animals;
   });
-}
+};
 
 export default {
   init,

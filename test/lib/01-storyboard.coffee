@@ -1,4 +1,5 @@
 {storyboard, expect, sinon} = require './imports'
+{STORYBOARD_TYPE_ATTR} = require '../../lib/gral/serialize'
 hub = require '../../lib/gral/hub'
 k   = require '../../lib/gral/constants'
 
@@ -60,6 +61,20 @@ describe 'storyboard', ->
       record = msg.data[0]
       expect(record.msg).to.equal 'msg3'
       expect(record.obj).to.deep.equal obj
+
+    it 'should allow attaching NO object', ->
+      mainStory.info 'msg3'
+      expect(_spyListenerProcess).to.have.been.calledOnce
+      msg = _spyListenerProcess.args[0][0]
+      record = msg.data[0]
+      expect(record.obj).to.be.undefined
+
+    it 'should allow attaching an UNDEFINED object', ->
+      mainStory.info 'msg3', {attach: undefined}
+      expect(_spyListenerProcess).to.have.been.calledOnce
+      msg = _spyListenerProcess.args[0][0]
+      record = msg.data[0]
+      expect(record.obj).to.deep.equal {"#{STORYBOARD_TYPE_ATTR}": 'UNDEFINED'}
 
   describe 'creating a child story', ->
 

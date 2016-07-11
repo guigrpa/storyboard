@@ -20,6 +20,7 @@ describe "wsServerListener", ->
   before -> 
     storyboard.removeAllListeners()
     storyboard.config {filter: '*:*'}
+    # _spySocketRx = sinon.spy((msg) -> console.log msg.type)
     _spySocketRx = sinon.spy()
 
   beforeEach -> _spySocketRx.reset()
@@ -178,6 +179,7 @@ describe "wsServerListener", ->
       it "should accept a log out and no longer send messages", ->
         _socket.emit 'MSG', {type: 'LOG_OUT'}
         Promise.resolve()
+        .delay 300
         .then -> mainStory.info "This message should not be received by the client"
         .delay 300
         .then -> expect(_spySocketRx).to.not.have.been.called
@@ -197,7 +199,7 @@ describe "wsServerListener", ->
           _socket.on 'MSG', _spySocketRx
         .then ->
           _socket.emit 'MSG', {type: 'LOGIN_REQUEST', data: {login: 'a', password: 'b'}}
-        .then -> h.waitUntil(1000, -> _spySocketRx.callCount > 1)  # LOGIN_RESPONSE, initial RECORDS
+        .then -> h.waitUntil(3000, -> _spySocketRx.callCount > 1)  # LOGIN_RESPONSE, initial RECORDS
 
       after -> storyboard.removeListener _listener
 
@@ -208,8 +210,13 @@ describe "wsServerListener", ->
           expect(_spySocketRx).to.have.been.calledOnce
           msg = _spySocketRx.args[0][0]
           expect(msg.type).to.equal 'RECORDS'
-          expect(msg.data).to.have.length 1
-          expect(msg.data[0].msg).to.contain 'Msg2 through web sockets'
+          # We don't know how many records we will have, just go through them
+          foundRecord = null
+          for record in msg.data
+            if record.msg.indexOf('Msg2 through web sockets') >= 0
+              foundRecord = record
+              break
+          expect(foundRecord).not.to.be.null
 
   #-====================================================
   # ### Attached server

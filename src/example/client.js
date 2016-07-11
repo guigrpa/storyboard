@@ -24,7 +24,7 @@ const refresh = storyTitle => {
   return fetch(`/animals?seq=${seq}`, {
     method: 'post',
     headers: {
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ storyId: story.storyId }),
@@ -43,21 +43,21 @@ const refresh = storyTitle => {
 
 refresh('Initial fetch');
 
-setInterval(() => mainStory.debug("Repeated message"), 5000);
+setInterval(() => mainStory.debug('Repeated message'), 5000);
 
-// Enable the following block to mount the developer tools 
+// Uncomment the following block to mount the developer tools
 // in the main page (for faster development)
-if (false) {
-  devToolsApp = require('../chromeExtension/devToolsApp');
+/*
+const devToolsApp = require('../chromeExtension/devToolsApp');
 
-  // Emulate the content script for page -> devtools messages
-  window.addEventListener('message', event => {
-    const { source, data: msg } = event;
-    if (source !== window) return;
-    if (msg.src !== 'PAGE') return;
-    devToolsApp.processMsg(msg);
-  });
+// Emulate the content script for page -> devtools messages
+window.addEventListener('message', event => {
+  const { source, data: msg } = event;
+  if (source !== window) return;
+  if (msg.src !== 'PAGE') return;
+  devToolsApp.processMsg(msg);
+});
 
-  // Emulate the content script for devtools -> page messages
-  devToolsApp.init({ sendMsg: msg => window.postMessage(msg, '*') });
-}
+// Emulate the content script for devtools -> page messages
+devToolsApp.init({ sendMsg: msg => window.postMessage(msg, '*') });
+*/

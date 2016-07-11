@@ -4,6 +4,7 @@ import { padStart } from '../../vendor/lodash';
 import ansiColors from '../../gral/ansiColors';
 import k from '../../gral/constants';
 import filters from '../../gral/filters';
+import { deserialize } from '../../gral/serialize';
 import treeLines from '../../gral/treeLines';
 
 const TIME_COL_RELATIVE_LENGTH = 7;
@@ -13,10 +14,10 @@ const TIME_COL_ABSOLUTE_EMPTY = padStart('', TIME_COL_ABSOLUTE_LENGTH);
 
 const recordToLines = (record, options) => {
   const {
-    src, storyId, level, fStory, fServer,
-    obj, objLevel, objOptions,
+    // storyId,
+    src, level, fStory,
+    obj, objLevel, objOptions, objExpanded,
   } = record;
-  let { objExpanded } = record;
   const {
     moduleNameLength,
     relativeTime,
@@ -48,15 +49,14 @@ const recordToLines = (record, options) => {
     actionStr = '';
   }
   // const parentsStr = _.padEnd(parents.map(o => o.slice(0,7)).join(', '), 10);
-  const srcStr = ansiColors.getSrcChalkColor(src)(padStart(src, options.moduleNameLength));
+  const srcStr = ansiColors.getSrcChalkColor(src)(padStart(src, moduleNameLength));
   let objStr = '';
-  if ((obj != null) && !objExpanded) {
+  const fHasObj = obj != null;
+  const deserializedObj = fHasObj ? deserialize(obj) : undefined;
+  if (fHasObj && !objExpanded) {
     try {
-      objStr = chalk.yellow(` -- ${JSON.stringify(obj)}`);
-    } catch (err) {
-      objStr = chalk.red(' -- [could not stringify object, expanding...]');
-      objExpanded = true;
-    }
+      objStr = chalk.yellow(` -- ${JSON.stringify(deserializedObj)}`);
+    } catch (err) { /* ignore */ }
   }
   if (level >= k.LEVEL_STR_TO_NUM.ERROR) {
     msgStr = chalk.red.bold(msgStr);
@@ -66,12 +66,12 @@ const recordToLines = (record, options) => {
   let finalMsg = `${timeStr} ${srcStr} ${levelStr}${msgStr}${actionStr}${objStr}`;
   if (!colors) finalMsg = chalk.stripColor(finalMsg);
   out.push({ text: finalMsg, level: record.level, fLongDelay });
-  if (objExpanded && filters.passesFilter(src, objLevel)) {
-    const lines = treeLines(obj, merge({ prefix: '  ' }, objOptions));
-    const levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[objLevel];
-    const emptyTimeStr = options.relativeTime ? TIME_COL_RELATIVE_EMPTY : TIME_COL_ABSOLUTE_EMPTY;
+  if (fHasObj && objExpanded && filters.passesFilter(src, objLevel)) {
+    const lines = treeLines(deserializedObj, merge({ prefix: '  ' }, objOptions));
+    const levelStr2 = ansiColors.LEVEL_NUM_TO_COLORED_STR[objLevel];
+    const emptyTimeStr = relativeTime ? TIME_COL_RELATIVE_EMPTY : TIME_COL_ABSOLUTE_EMPTY;
     lines.forEach(line => {
-      let text = `${emptyTimeStr} ${srcStr} ${levelStr}${line}`;
+      let text = `${emptyTimeStr} ${srcStr} ${levelStr2}${line}`;
       if (!colors) text = chalk.stripColor(text);
       out.push({ text, level: objLevel });
     });

@@ -1,8 +1,8 @@
 // export { default as camelCase }    from 'lodash/camelCase';
-export { default as clone }        from 'lodash/clone';
-export { default as cloneDeep }    from 'lodash/cloneDeep';
-export { default as cloneDeepWith } from 'lodash/cloneDeepWith';
-export { default as debounce }     from 'lodash/debounce';
+// export { default as clone }        from 'lodash/clone';
+// export { default as cloneDeep }    from 'lodash/cloneDeep';
+// export { default as cloneDeepWith } from 'lodash/cloneDeepWith';
+// export { default as debounce }     from 'lodash/debounce';
 export { default as defaults }     from 'lodash/defaults';
 export { default as each }         from 'lodash/each';
 // export { default as every }        from 'lodash/every';

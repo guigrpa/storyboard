@@ -37,7 +37,7 @@ const config = (options = {}) => {
       default:
         break;
     }
-  })
+  });
 };
 
 const gracefulExit = () => {

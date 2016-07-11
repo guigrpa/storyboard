@@ -125,7 +125,15 @@ Settings = React.createClass
           />
         </li>
       </ul>
+      {@renderVersion()}
     </Modal>
+
+  renderVersion: ->
+    return if not process.env.STORYBOARD_VERSION
+    <div style={_style.version}>
+      Storyboard DevTools v{process.env.STORYBOARD_VERSION}<br/>
+      (c) Guillermo Grau 2016
+    </div>
 
   renderLocalStorageWarning: ->
     return if @state._fCanSave
@@ -180,6 +188,11 @@ Settings = React.createClass
 
 #-----------------------------------------------------
 _style = 
+  version:
+    textAlign: 'right'
+    color: '#aaa'
+    marginTop: 8
+    marginBottom: 8
   localStorageWarning:
     color: 'red'
     border: "1px solid red"

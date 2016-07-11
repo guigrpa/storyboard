@@ -36,6 +36,7 @@ const fileListener = require('storyboard/lib/listeners/file').default;
 * Library:
     - [M] **Add file listener**: stores all logs to a file, with or without ANSI color escapes (disabled by default).
     - [M] A **refined listener architecture**, especially regarding the client side. The WsClient listener no longer interfaces directly with the browser extension, but rather relays its messages via the hub. The BrowserExtension listener has been merged with the interfaceExtension helper, since no other module can have access to this interface any more. The more architecture **is more flexible and will allow other uses of the library**, e.g. using the WsClient listener in a non-browser application to obtain logs from another process and offload database access or file storage.
+    - [M] **Better attachment serialization**. `undefined` values will no longer disappear from your attachments when they traverse the WebSocket interface between the WsServer and WsClient plugins.
     - [m] Improve graceful exits, tearing down all listeners if possible. Previously, we only closed the main story.
 * Internal:
     - Ongoing migration from CoffeeScript to JS.

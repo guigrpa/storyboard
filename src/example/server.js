@@ -3,11 +3,12 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import express from 'express';
 
-import { mainStory, chalk } from '../storyboard'; // you'd write: `storyboard`
-import * as storyboard from '../storyboard'; // you'd write: `storyboard`
-import consoleListener from '../listeners/console';  // you'd write: `storyboard/lib/listeners/console`
-import fileListener from '../listeners/file';  // you'd write: `storyboard/lib/listeners/file`
-import wsServerListener from '../listeners/wsServer'; // you'd write: `storyboard/lib/listeners/wsServer`
+// Here you'd write 'storyboard' or 'storyboard/lib/listeners/xxx':
+import * as storyboard from '../storyboard';
+const { mainStory, chalk } = storyboard;
+import consoleListener from '../listeners/console';
+import fileListener from '../listeners/file';
+import wsServerListener from '../listeners/wsServer';
 
 import db from './db';
 
@@ -23,7 +24,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(process.cwd(), 'example')));
-app.post('/animals', (req, res, next) => {
+app.post('/animals', (req, res) => {
   const { storyId } = req.body;
   let extraParents;
   if (storyId != null) extraParents = [storyId];
@@ -44,11 +45,11 @@ const httpServer = http.createServer(app);
 httpServer.listen(PORT);
 mainStory.info('httpServer', `Listening on port ${chalk.cyan(PORT)}...`);
 
-// Allow remote access to server logs via WebSockets 
+// Allow remote access to server logs via WebSockets
 // (asking for credentials)
 storyboard.addListener(wsServerListener, {
-  httpServer: httpServer,
-  authenticate: ({login, password}) => login !== 'unicorn',
+  httpServer,
+  authenticate: ({ login }) => login !== 'unicorn',
 });
 
 // Initialise our fake database
@@ -80,9 +81,10 @@ mainStory.debug('server', 'Example info:', {
   attachLevel: 'TRACE',
   ignoreKeys: ['dontShow'],
 });
+mainStory.debug('server', 'A message with an undefined attachment', { attach: undefined });
 mainStory.warn('server', 'Example warning');
 mainStory.error('server', 'Example error', { attach: new Error('EXAMPLE error message') });
-setInterval(() => { 
+setInterval(() => {
   mainStory.debug('server', `t: ${chalk.blue(new Date().toISOString())}`);
 }, 60000);
 

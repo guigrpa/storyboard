@@ -2,10 +2,10 @@ chalk = require 'chalk'
 _ = require '../vendor/lodash'
 {CIRCULAR_REF} = require './serialize'
 
-WRAPPER_KEY = '__wrapper__'
+WRAPPER_KEY = '__SB_WRAPPER__'
 BUFFER_EXPLICIT_LIMIT = 40
 
-_isBuffer = (val) -> _.isObject(val) and (val.type is 'Buffer')
+_isBuffer = (val) -> val instanceof Buffer
 
 _tree = (node, options, prefix, stack) ->
   out = []
@@ -28,7 +28,6 @@ _tree = (node, options, prefix, stack) ->
     else if _.isDate(val)
       out.push "#{finalPrefix}#{chalk.magenta.bold val.toISOString()}"
     else if _isBuffer(val)
-      val = Buffer.from(val.data)
       str = val.slice(0, BUFFER_EXPLICIT_LIMIT).toString('hex').toUpperCase().match(/(..)/g).join(' ')
       if val.length > BUFFER_EXPLICIT_LIMIT then str += '...'
       str = "Buffer [#{val.length}]: #{str}"
@@ -73,7 +72,7 @@ treeLines = (obj, options = {}) ->
   prefix = options.prefix ? ''
   if _.isError obj
     obj = _.pick obj, ['name', 'message', 'stack']
-  else if (not _.isObject obj) or _isBuffer(obj)
+  else if (not _.isObject(obj)) or _isBuffer obj
     obj = {"#{WRAPPER_KEY}": obj}
   return _tree obj, options, prefix, []
 

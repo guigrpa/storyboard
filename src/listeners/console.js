@@ -11,40 +11,47 @@ const DEFAULT_CONFIG = {
 // -----------------------------------------
 // Listener
 // -----------------------------------------
-function ConsoleListener(config, { hub }) {
-  this.type = 'CONSOLE';
-  this.config = config;
-  this.hub = hub;
-  this.hubId = hub.getHubId();
-  this.prevTime = 0;
+class ConsoleListener {
+  constructor(config, { hub }) {
+    this.type = 'CONSOLE';
+    this.config = config;
+    this.hub = hub;
+    this.hubId = hub.getHubId();
+    this.prevTime = 0;
+  }
+
+  configure(config) {
+    this.config = merge(this.config, config);
+  }
+
+  getConfig() {
+    return this.config;
+  }
+
+  // No init() or tearDown() is required
+
+  // -----------------------------------------
+  // Main processing function
+  // -----------------------------------------
+  process(msg) {
+    if (msg.type !== 'RECORDS') return;
+    if (msg.hubId !== this.hubId) return; // only log local records
+    msg.data.forEach(record => this.processRecord(record));
+  }
+
+  processRecord(record) {
+    const options = timmSet(this.config, 'prevTime', this.prevTime);
+    const lines = recordToLines(record, options);
+    this.prevTime = new Date(record.t);
+    lines.forEach(({ text, level, fLongDelay }) => outputLog(text, level, fLongDelay));
+  }
 }
-
-ConsoleListener.prototype.configure = function(config) {
-  this.config = merge(this.config, config);
-};
-
-// No init() or tearDown() is required
-
-// -----------------------------------------
-// Main processing function
-// -----------------------------------------
-ConsoleListener.prototype.process = function(msg) {
-  if (msg.type !== 'RECORDS') return;
-  if (msg.hubId !== this.hubId) return; // only log local records
-  msg.data.forEach(record => this.processRecord(record));
-};
-
-ConsoleListener.prototype.processRecord = function(record) {
-  const options = timmSet(this.config, 'prevTime', this.prevTime);
-  const lines = recordToLines(record, options);
-  this.prevTime = new Date(record.t);
-  lines.forEach(({ text, level, fLongDelay }) => outputLog(text, level, fLongDelay));
-};
 
 // -----------------------------------------
 // Helpers
 // -----------------------------------------
-const outputLog = function(text, level, fLongDelay) {
+/* eslint-disable no-console */
+const outputLog = (text, level, fLongDelay) => {
   const args = k.IS_BROWSER ?
     ansiColors.getBrowserConsoleArgs(text) :
     [text];
@@ -52,6 +59,7 @@ const outputLog = function(text, level, fLongDelay) {
   const output = (level >= 50 && level <= 60) ? 'error' : 'log';
   console[output].apply(console, args);
 };
+/* eslint-enable no-console */
 
 // -----------------------------------------
 // API

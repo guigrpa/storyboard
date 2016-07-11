@@ -1,4 +1,5 @@
 {storyboard, expect, sinon, Promise} = require './imports'
+{CIRCULAR_REF} = require '../../lib/gral/serialize';
 consoleListener = require('../../lib/listeners/console').default
 
 {mainStory} = storyboard
@@ -99,7 +100,7 @@ describe "consoleListener", ->
       expect(_spyLog).to.have.been.calledOnce
       expect(_spyLog.args[0][0]).to.contain "circular ref"
       expect(_spyLog.args[0][0]).to.contain "oneAttr"
-      expect(_spyLog.args[0][0]).to.contain "[CIRCULAR]"
+      expect(_spyLog.args[0][0]).to.contain CIRCULAR_REF
 
     it "should also allow the user to always expand an attachment", ->
       obj = {THIS_AINT_NO_MOCHA_OUTPUT: 8}

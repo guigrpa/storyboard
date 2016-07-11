@@ -22,7 +22,7 @@ const refresh = storyTitle => {
   return fetch(`/animals?seq=${seq}`, {
     method: 'post',
     headers: {
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ storyId: story.storyId }),
@@ -41,4 +41,4 @@ const refresh = storyTitle => {
 
 refresh('Initial fetch');
 
-setInterval(() => mainStory.debug("Repeated message"), 5000);
+setInterval(() => mainStory.debug('Repeated message'), 5000);

@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const pkg = require('../package.json');
 
 const LANGS = ['en_gb'];
 
@@ -15,8 +16,9 @@ module.exports = {
       new RegExp(`.[\\\/](${LANGS.join('|')})`)
     ),
     new webpack.DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
-      "process.env.TEST_BROWSER": JSON.stringify(false),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.env.TEST_BROWSER': JSON.stringify(false),
+      'process.env.STORYBOARD_VERSION': JSON.stringify(pkg.version),
     }),
   ],
 

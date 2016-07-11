@@ -1,0 +1,23 @@
+parser: babel-eslint
+extends: airbnb
+rules:
+  eqeqeq:
+    - error
+    - allow-null
+  no-unused-expressions:
+    - error
+    - allowShortCircuit: true
+  no-use-before-define: off
+  no-multi-spaces: off
+  no-nested-ternary: off
+  no-cond-assign:
+    - error
+    - except-parens
+  key-spacing:
+    - warn
+    - 
+      beforeColon: false
+      afterColon: true
+      mode: 'minimum'
+  react/sort-comp: off
+  import/no-unresolved: off  # since we are still migrating from CoffeeScript to JS

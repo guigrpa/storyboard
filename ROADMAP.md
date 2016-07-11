@@ -8,9 +8,9 @@
 - **Lib**:
     + [x] Remove process.nextTick() from WsServerListener
     + [x] Migrate client and clientWithUpload.coffee
+    + [x] Improve serialize/deserialize. Deserialize before calling treeLines. Improve serialize, support even undefined.
+    + [x] Lint
     + [ ] Throttle log generation at the very source??
-    + [ ] Improve serialize/deserialize. Desearialize before calling treeLines. Improve serialize, support even undefined.
-    + [ ] Lint
 
     + [ ] Add listener to write to database (choose a simple one)
     + [ ] Document listener API

@@ -87,12 +87,12 @@ describe 'treeLines', ->
     expect(lines[2]).to.contain 'stack'
 
   it 'should handle buffers (top level)', ->
-    lines = treeLines serialize Buffer.from [0, 1, 2]
+    lines = treeLines Buffer.from [0, 1, 2]
     expect(lines).to.have.length 1
     expect(lines[0].indexOf('Buffer [3]')).to.be.at.least 0
 
   it 'should handle buffers (nested)', ->
-    lines = treeLines serialize
+    lines = treeLines
       a: Buffer.from [0, 1, 2]
       b: Buffer.from(x for x in [0...1000])
     expect(lines).to.have.length 2
