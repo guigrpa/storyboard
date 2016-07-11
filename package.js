@@ -4,7 +4,7 @@
 // Basic config
 // ===============================================
 const NAME = 'storyboard';
-const VERSION = '2.0.0-alpha.1';
+const VERSION = '2.0.0-alpha.2';
 const DESCRIPTION = 'End-to-end, hierarchical, real-time, colorful logs and stories';
 const KEYWORDS = ['log', 'logging', 'websockets', 'console', 'isomorphic'];
 
@@ -187,7 +187,7 @@ const specs = {
 
     // Miscellaneous
     'font-awesome': '4.5.0',
-    'moment': '^2.11.2',
+    'moment': '2.14.1',
     'socket.io-client': '1.4.5',
     'tinycolor2': '1.3.0',
 
@@ -226,7 +226,7 @@ const specs = {
     'eslint-plugin-react': '5.2.2',
     'eslint-plugin-jsx-a11y': '1.5.3',
     'eslint-plugin-import': '1.9.2',
-    'babel-eslint': '^6.0.0',
+    'babel-eslint': '6.1.2',
 
     // Testing
     'chai': '3.5.0',
