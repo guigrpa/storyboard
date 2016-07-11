@@ -23,7 +23,7 @@ const runTestCov = env => {
 
 const WEBPACK_OPTS = '--colors --progress --display-modules --display-chunks';
 // const WEBPACK_OPTS            = '--colors --progress'
-const WEBPACK_EXTENSION = `webpack --config src/chromeExtension/webpackConfig.coffee ${WEBPACK_OPTS}`;
+const WEBPACK_EXTENSION = `webpack --config src/chromeExtension/webpackConfig ${WEBPACK_OPTS}`;
 const WEBPACK_SERVER_LOGS_APP = `webpack --config src/serverLogsApp/webpackConfig ${WEBPACK_OPTS}`;
 const WEBPACK_EXAMPLE = `webpack --config src/example/webpackConfig ${WEBPACK_OPTS}`;
 
