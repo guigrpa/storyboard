@@ -11,8 +11,8 @@ const KEYWORDS = ['log', 'logging', 'websockets', 'console', 'isomorphic'];
 // ===============================================
 // Helpers
 // ===============================================
-runMultiple = arr => arr.join(' && ');
-runTestCov = env => {
+const runMultiple = arr => arr.join(' && ');
+const runTestCov = env => {
   const envStr = env != null ? ` ${env}` : '';
   return runMultiple([
     `cross-env${envStr} nyc node_modules/mocha/bin/_mocha`,
@@ -29,12 +29,12 @@ const WEBPACK_EXAMPLE = `webpack --config src/example/webpackConfig ${WEBPACK_OP
 
 const HEROKU_ROOT = 'example/heroku';
 const HEROKU_CLIENT = `${HEROKU_ROOT}/client`;
-const HEROKU_SERVER = `${HEROKU_ROOT}/server`;
+// const HEROKU_SERVER = `${HEROKU_ROOT}/server`;
 
 // ===============================================
 // Specs
 // ===============================================
-specs = {
+const specs = {
   name: NAME,
   version: VERSION,
   description: DESCRIPTION,
@@ -152,7 +152,7 @@ specs = {
     'node-uuid': '1.4.7',
     'lodash': '4.13.1',
     'platform': '1.3.1',
-    'split': '1.0.0'
+    'split': '1.0.0',
   },
 
   // ===============================================
@@ -167,21 +167,21 @@ specs = {
     'giu': '0.6.0',
 
     // React
-    'react':                          '15.0.1',
-    'react-dom':                      '15.0.1',
-    'react-addons-pure-render-mixin': '15.0.1',
-    'react-addons-perf':              '15.0.1',
+    'react':                          '15.2.0',
+    'react-dom':                      '15.2.0',
+    'react-addons-pure-render-mixin': '15.2.0',
+    'react-addons-perf':              '15.2.0',
 
     // Redux
-    'redux': '3.3.1',
-    'react-redux': '4.4.1',
+    'redux': '3.5.2',
+    'react-redux': '4.4.5',
     'redux-saga': '0.9.4',
-    'redux-thunk': '1.0.3',
+    'redux-thunk': '2.1.0',
 
     // Redux devtools
-    'redux-devtools': '3.1.1',
-    'redux-devtools-dock-monitor': '1.1.0',
-    'redux-devtools-log-monitor': '1.0.5',
+    'redux-devtools': '3.3.1',
+    'redux-devtools-dock-monitor': '1.1.1',
+    'redux-devtools-log-monitor': '1.0.11',
     'redux-devtools-inspector': '0.3.1',
     'redux-logger': '2.6.1',
 
@@ -261,7 +261,7 @@ const sortDeps = deps => {
   const newDeps = {};
   Object.keys(deps).sort().forEach(key => {
     newDeps[key] = deps[key];
-  })
+  });
   return newDeps;
 };
 specs.dependencies = sortDeps(specs.dependencies);
@@ -272,7 +272,7 @@ require('fs').writeFileSync('package.json', packageJson);
 // ===============================================
 // Build manifest.json
 // ===============================================
-manifest = {
+const manifest = {
   manifest_version: 2,
 
   name: 'Storyboard DevTools',

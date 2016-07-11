@@ -27,7 +27,7 @@ ColoredText = React.createClass
       onClick={@props.onClick}
       style={@props.style}
     >
-      {_.map segments, @renderMsgSegment}
+      {segments.map((segment, idx) => @renderMsgSegment(segment, idx))}
     </span>
 
   renderMsgSegment: (segment, idx, extraProps = {}) ->

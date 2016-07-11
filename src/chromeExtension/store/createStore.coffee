@@ -1,6 +1,6 @@
 _                     = require 'lodash'
 Redux                 = require 'redux'
-thunk                 = require 'redux-thunk'
+thunk                 = require('redux-thunk').default
 Saga                  = require('redux-saga').default
 appReducer            = require '../reducers/appReducer'
 DevTools              = require '../components/990-reduxDevTools'
