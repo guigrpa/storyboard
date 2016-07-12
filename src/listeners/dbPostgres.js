@@ -93,16 +93,18 @@ class DbPostgresListener {
 
   saveRecords() {
     if (!this.fConnected) return;
-    const { insertQuery } = this;
+    const { insertQuery, config } = this;
     this.bufRecords.forEach(r => {
       const jsonObj = r.obj != null ? JSON.stringify(r.obj) : undefined;
-      const msg = this.config.colors ? r.msg : chalk.stripColor(r.msg);
+      const msg = config.colors ? r.msg : chalk.stripColor(r.msg);
+      let title = r.title;
+      if (!config.colors && title) title = chalk.stripColor(title);
       this.client.query(insertQuery, [
         // Common to stories and logs
         r.hubId, r.version, r.fStory, r.fServer,
         r.storyId, new Date(r.t), r.src, r.level,
         // Stories-only
-        r.fRoot, r.title, r.action, JSON.stringify(r.parents),
+        r.fRoot, title, r.action, JSON.stringify(r.parents),
         // Logs-only
         msg, jsonObj, r.objExpanded, r.objLevel, r.objOptions, r.objIsError,
       ])
