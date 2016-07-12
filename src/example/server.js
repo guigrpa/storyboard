@@ -1,6 +1,6 @@
 // Here you'd write 'storyboard' or 'storyboard/lib/listeners/xxx':
-import * as storyboard from '../storyboard';
-const { mainStory, chalk } = storyboard;
+import storyboard from '../storyboard';
+const { mainStory } = storyboard;
 import consoleListener from '../listeners/console';
 import fileListener from '../listeners/file';
 import wsServerListener from '../listeners/wsServer';
