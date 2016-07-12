@@ -1,4 +1,4 @@
-# storyboard [![Build Status](https://travis-ci.org/guigrpa/storyboard.svg?branch=master)](https://travis-ci.org/guigrpa/storyboard) [![Coverage Status](https://coveralls.io/repos/github/guigrpa/storyboard/badge.svg?branch=master)](https://coveralls.io/github/guigrpa/storyboard?branch=master) [![npm version](https://img.shields.io/npm/v/storyboard.svg)](https://www.npmjs.com/package/storyboard) 
+# Storyboard [![Build Status](https://travis-ci.org/guigrpa/storyboard.svg?branch=master)](https://travis-ci.org/guigrpa/storyboard) [![Coverage Status](https://coveralls.io/repos/github/guigrpa/storyboard/badge.svg?branch=master)](https://coveralls.io/github/guigrpa/storyboard?branch=master) [![npm version](https://img.shields.io/npm/v/storyboard.svg)](https://www.npmjs.com/package/storyboard) 
 
 _**These are the docs for the upcoming Storyboard v2. The latest docs for v1.x can be recovered [here](https://github.com/guigrpa/storyboard/blob/v1.4.0/README.md). See also the [CHANGELOG](https://github.com/guigrpa/storyboard/blob/master/CHANGELOG.md) for details on new features and breaking changes.**_
 
@@ -16,7 +16,7 @@ Demo: http://storyboard-demo.herokuapp.com/
 * Watch server logs being pushed in **real time** to the Storyboard DevTools extension via WebSockets. Even more: **control the level of detail you get from various parts of your server remotely, without relaunching**.
 * Ask for **authentication** to see server logs; hook up your own auth function.
 * **Attach anything** to your logs for further investigation.
-* Integrate your app with Storyboard's **flexible plugin architecture**. Several plugins are available out of the box: Console, WebSocket Server & Client and Browser Extension, with more coming up. Just use what you need: most features are optional!
+* Integrate your app with Storyboard's **flexible plugin architecture**. Several plugins are available out of the box: Console, WebSocket Server & Client, File, (Postgres) Database, and Browser Extension, with more coming up. Just use what you need: most features are optional!
 * Give logs **source and severity** attributes and apply **coarse- or fine-grained filtering**, with white and black lists.
 * Use **color** to highlight what's important. Storyboard extends the popular [chalk](https://github.com/chalk/chalk) library so that it can also be used on the browser.
 * Enjoy the **simple-yet-powerful API** (I hope!).
@@ -32,7 +32,7 @@ $ npm install --save storyboard
 
 To install the **Storyboard DevTools** Chrome extension, [get it from the Chrome Web Store](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc). Optional, but highly recommended! After installing it, open the Storyboard pane in the Chrome DevTools and point your browser to a Storyboard-equipped page (see below for how to use the library).
 
-Feel free to check out the [example](https://github.com/guigrpa/storyboard/blob/master/src/example): just clone the repo and run `npm install && npm run buildExample && npm run example`.
+Feel free to check out the [example](https://github.com/guigrpa/storyboard/blob/master/src/example): just clone the repo and run `npm install && npm run buildExample && npm run example`. You can also test-drive the PostgreSQL Database listener with `npm run exampleWithDb`, but make sure you run [these SQL scripts](https://github.com/guigrpa/storyboard/blob/master/src/example/db.sql) before on your DB and [customize the connection parameters](https://github.com/guigrpa/storyboard/blob/master/src/example/serverWithDb.js).
 
 
 ## Usage
@@ -47,7 +47,7 @@ addListener(consoleListener);
 mainStory.info('Hello world!');
 ```
 
-**Note this breaking change in v2.0.0:** Storyboard no longer enables plugins (listeners) by default, so you will need to do that manually upon startup.
+**_Note this breaking change in v2.0.0:_ As you can see above, Storyboard [no longer](https://github.com/guigrpa/storyboard/blob/master/CHANGELOG.md) enables listeners (plugins) by default, so you will need to do this manually upon startup.**
 
 
 ### Severity levels
@@ -101,9 +101,9 @@ As seen above, we recommend using the popular [chalk](https://github.com/chalk/c
 
 ### Attachments
 
-Attach anything to your logs that might provide additional context: an object, an array, an exception, a simple value... Don't worry about circular references or buffers! Use the `attach` option to display it as a tree, or `attachInline` for a more compact, `JSON.stringify`-ed version.
+Attach anything to your logs that might provide additional context: an object, an array, an exception, a simple value... Don't worry about circular references, buffers, or `undefined`! Use the `attach` option to display it as a tree, or `attachInline` for a more compact, `JSON.stringify`-ed version.
 
-You can also use the `attachLevel` option to control the (severity) level of the detailed object logs (by default: the same level of the main logged line). *Tip: use the `trace` level for long attachments (hidden by default), so that they don't pollute your console but are still accessible via the [Storyboard DevTools](#storyboard-devtools) extension.*
+You can also use the `attachLevel` option to control the (severity) level of the detailed object logs (by default: the same level of the main logged line). *Pro tip: use the `trace` level for long attachments ([hidden by default](#log-filtering)), so that they don't pollute your console but are still accessible via the [Storyboard DevTools](#storyboard-devtools) extension.*
 
 ```js
 mainStory.info('test', 'A simple object', { attachInline: obj1 });
@@ -151,11 +151,12 @@ localStorage.STORYBOARD = '*:*'
 Alternatively, you can configure the log filters programatically:
 
 ```js
-import * as storyboard from 'storyboard';
+import storyboard from 'storyboard';
 storyboard.config({ filter: '*:*' });
 ```
 
 And even more convenient: configure filters remotely and without reloading by using the [Storyboard DevTools](#storyboard-devtools).
+
 
 ### Children stories
 
@@ -183,29 +184,33 @@ story.close();
 
 ### Listeners (plugins)
 
-Logs emitted by stories are relayed by the Storyboard `hub` module to all attached *listeners*. Several listeners come built-in:
+Logs emitted by stories are relayed by the Storyboard `hub` module to all attached *listeners*. Several listeners come built-in (check out their [configuration options](https://github.com/guigrpa/storyboard/blob/master/docs/built-in-plugins.md), as well as the following sections):
 
 * **Console**: formats logs and sends them to `console.log` or `console.error`. You've already seen this listener in action above.
-
-* **Browser Extension**: relays local (client) logs to the [Storyboard DevTools](#storyboard-devtools).
 
 * **WebSocket Server**: encapsulates logs and pushes them in real time to WebSocket clients. Enable it for [remote access to server stories](#remote-access-to-server-stories).
 
 * **WebSocket Client**: relays logs pushed from the server to the [Storyboard DevTools](#storyboard-devtools). It can also [upload client logs to the server for remote monitoring](#remote-access-to-client-stories).
 
-More listeners can be added by the user, e.g. to persist logs in a database or file, publish them online, etc. Get inspired by [winston](https://github.com/winstonjs/winston)'s and [bunyan](https://github.com/trentm/node-bunyan)'s plugins. PRs are welcome!
+* **Browser Extension**: relays local (client) logs to the [Storyboard DevTools](#storyboard-devtools).
 
-**Note this breaking change in v2.0.0:** Storyboard no longer enables plugins (listeners) by default, so you will need to do that manually upon startup.
+* **File**: saves logs to file.
+
+* **PostgreSQL Database**: persists logs to a PostgreSQL database for later retrieval, including (serialized) attachments, story hierarchy, etc.
+
+More listeners can be added by the user (see [the API](https://github.com/guigrpa/storyboard/blob/master/docs/plugin-api.md)), e.g. to support different databases, integrate with other services, etc. Get inspired by [winston](https://github.com/winstonjs/winston)'s and [bunyan](https://github.com/trentm/node-bunyan)'s plugins. PRs are welcome!
+
+**_Note this breaking change in v2.0.0:_ Storyboard [no longer](https://github.com/guigrpa/storyboard/blob/master/CHANGELOG.md) enables listeners (plugins) by default, so you will need to do this manually upon startup.**
 
 
 ### Remote access to server stories
 
-Adding remote access to a Node application is easy; just attach the WebSocket Server listener as follows:
+To add remote access to a Node application, just enable the WebSocket Server listener:
 
 ```js
-import * as storyboard from 'storyboard';
+import { addListener } from 'storyboard';
 import wsServerListener from 'storyboard/lib/listeners/wsServer';
-storyboard.addListener(wsServerListener);
+addListener(wsServerListener);
 ```
 
 You can call `addListener()` with an additional `options` object overriding the following defaults or including additional parameters:
@@ -220,37 +225,31 @@ const options = {
 };
 ```
 
-You'll probably want to configure the `authenticate` function (without it, your server logs become public by enabling the listener):
+You'll probably want to configure the `authenticate` function (without it, your server logs become public by enabling the listener). Your authentication function can return a boolean or the promise of a boolean:
 
 ```js
-// Example #1: synchronous
-storyboard.addListener(wsServerListener, {
-  authenticate: ({ login, password }) => true,
-});
-
-// Example #2: asynchronous (returning a promise)
-storyboard.addListener(wsServerListener, {
-  authenticate: ({ login, password }) => Promise.resolve(true),
+addListener(wsServerListener, {
+  authenticate: ({ login, password }) => isAuthorized(login, password),
 });
 ```
 
 You'll also probably want to supercharge your **main application HTTP server for [end-to-end stories](#end-to-end-stories)**. Just pass your `http` `Server` instance as `options.httpServer`, or your [`socket.io`](http://socket.io/) `Server` instance as `options.socketServer`, depending on your case:
 
 ```js
-// If you don't use WebSockets:
+// If your application doesn't use WebSockets:
 import express from 'express';
 import http from 'http';
 const httpServer = http.createServer(express());
 httpServer.listen(3000);
-storyboard.addListener(wsServerListener, { httpServer });
+addListener(wsServerListener, { httpServer });
 
-// If you use socket.io WebSockets (without socket authentication):
+// If your application uses socket.io WebSockets without socket auth:
 import socketio from 'socket.io';
 const socketServer = socketio(httpServer);
-storyboard.addListener(wsServerListener, { socketServer });
+addListener(wsServerListener, { socketServer });
 
-// If you use socket authentication, namespace the main app's
-// sockets so that they don't clash with the log server's:
+// If your application uses sockets with auth, namespace them
+// so that they don't clash with the log server's:
 // At the server...
 const io = socketServer.of('/myApp');
 io.use(myAuthMiddleware);
@@ -269,9 +268,9 @@ In some cases, you may want to remotely monitor client logs, e.g. if you are bui
 For these cases, you can configure your WebSocket Client listener so that it uploads its logs to the server, which can then provide remote access to them:
 
 ```js
-import * as storyboard from 'storyboard';
+import { addListener } from 'storyboard';
 import wsClientListener from 'storyboard/lib/listeners/wsClient';
-storyboard.addListener(wsClientListener, { uploadClientStories: true });
+addListener(wsClientListener, { uploadClientStories: true });
 ```
 
 Client logs will not pollute the server's own log, and will appear under a dedicated *browser root story* in the Storyboard DevTools, along with a short description of the remote client's platform:
@@ -325,7 +324,15 @@ Want to see the end-to-end story? Use the Storyboard DevTools extension.
 
 ![Storyboard DevTools](https://raw.githubusercontent.com/guigrpa/storyboard/master/docs/Marquee.png)
 
-Using the browser extension should be pretty straightforward. After [installing it](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc), open the Chrome DevTools, select the Storyboard pane and point your browser at either:
+Enable the link to the browser extension in your application:
+
+```js
+import { addListener } from 'storyboard';
+import browserExtListener from 'storyboard/lib/listeners/browserExtension';
+addListener(browserExtListener);
+```
+
+After [installing the Chrome extension](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc), open the Chrome DevTools, select the Storyboard pane and point your browser at either:
 
 * Your standard application URL, to see both server and client logs
 * Port 8090 (configurable) of your server, to see server logs only
@@ -341,7 +348,7 @@ Some highlighted features:
 * See how identical, consecutive messages get squashed into a convenient summary line.
 * Configure when and how Storyboard *forgets* old logs and stories.
 
-You can check your new extension navigating to: http://storyboard-demo.herokuapp.com/
+You can check out your new extension navigating to: http://storyboard-demo.herokuapp.com/
 
 Storyboard DevTools is built with [React](https://facebook.github.io/react/), [Redux](http://redux.js.org/) and [Redux-Saga](http://yelouafi.github.io/redux-saga/).
 
@@ -352,20 +359,8 @@ Storyboard DevTools is built with [React](https://facebook.github.io/react/), [R
 
 Copyright (c) [Guillermo Grau Panea](https://github.com/guigrpa) 2016
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

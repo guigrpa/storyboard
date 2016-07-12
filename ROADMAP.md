@@ -11,10 +11,11 @@
     + [x] Improve serialize/deserialize. Deserialize before calling treeLines. Improve serialize, support even undefined.
     + [x] Lint
     + [x] Add listener to write to database (choose a simple one)
-    + [ ] Throttle log generation at the very source??
     + [ ] Document listener API and listener config options (separate page)
-    + [ ] Update docs
+    + [ ] Architecture diagram
+    + [ ] Improve connection of a non-Storyboard application to Storyboard, and document it
     + [ ] Client-server clock calibration
+    + [ ] Throttle log generation at the very source??
     + [ ] Publish 2.0.0-rc1
     + [ ] React App: embeddable SB components (without requiring extension)
     + Working with out-of-order logs:
