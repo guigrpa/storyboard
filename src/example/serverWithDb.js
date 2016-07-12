@@ -1,16 +1,20 @@
 // Here you'd write 'storyboard' or 'storyboard/lib/listeners/xxx':
 import * as storyboard from '../storyboard';
-const { mainStory, chalk } = storyboard;
+const { mainStory } = storyboard;
 import consoleListener from '../listeners/console';
-import fileListener from '../listeners/file';
 import wsServerListener from '../listeners/wsServer';
+import dbPostgresListener from '../listeners/dbPostgres';
 
 import createHttpServer from './httpServer';
 import db from './db';
 import writeSomeLogs from './writeSomeLogs';
 
 storyboard.addListener(consoleListener);
-storyboard.addListener(fileListener);
+storyboard.addListener(dbPostgresListener, {
+  user: 'postgres',
+  password: 's3cret',
+  database: 'storyboard',
+});
 storyboard.config({ filter: '*:*' });
 
 // Initialise our server

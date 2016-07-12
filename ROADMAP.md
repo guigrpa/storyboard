@@ -10,10 +10,9 @@
     + [x] Migrate client and clientWithUpload.coffee
     + [x] Improve serialize/deserialize. Deserialize before calling treeLines. Improve serialize, support even undefined.
     + [x] Lint
+    + [x] Add listener to write to database (choose a simple one)
     + [ ] Throttle log generation at the very source??
-
-    + [ ] Add listener to write to database (choose a simple one)
-    + [ ] Document listener API
+    + [ ] Document listener API and listener config options (separate page)
     + [ ] Update docs
     + [ ] Client-server clock calibration
     + [ ] Publish 2.0.0-rc1
