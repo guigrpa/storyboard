@@ -31,8 +31,13 @@ Settings = React.createClass
     setLocalClientFilter:       React.PropTypes.func.isRequired
   getInitialState: ->
     _fCanSave: true
+    maxRecords: @props.settings.maxRecords
+    forgetHysteresis: @props.settings.forgetHysteresis
 
   componentDidMount: -> @checkLocalStorage()
+  componentWillReceiveProps: (nextProps) ->
+    { maxRecords, forgetHysteresis } = nextProps.settings;
+    @setState({ maxRecords, forgetHysteresis })
 
   #-----------------------------------------------------
   render: -> 
@@ -50,7 +55,11 @@ Settings = React.createClass
         value={@props.settings.fShowClosedActions}
       /><br />
       <Checkbox ref="fShorthandForDuplicates"
-        label="Use shorthand notation for identical consecutive logs"
+        label={
+          <span>
+            Use shorthand notation for identical consecutive logs ( <Icon icon="copy" style={_style.icon} disabled /> )
+          </span>
+        }
         value={@props.settings.fShorthandForDuplicates}
       /><br />
       <Checkbox ref="fCollapseAllNewStories"
@@ -75,6 +84,7 @@ Settings = React.createClass
           id="maxRecords"
           step={1} min={0}
           value={@props.settings.maxRecords}
+          onChange={(ev, maxRecords) => @setState({ maxRecords })}
           style={{width: 50}}
           required errorZ={52}
         />{' '}
@@ -85,6 +95,7 @@ Settings = React.createClass
           id="forgetHysteresis"
           step={.05} min={0} max={1}
           value={@props.settings.forgetHysteresis}
+          onChange={(ev, forgetHysteresis) => @setState({ forgetHysteresis })}
           style={{width: 50}}
           required errorZ={52}
         />{' '}
@@ -97,7 +108,7 @@ Settings = React.createClass
       <br />
       <div style={{marginBottom: 5}}>
         Log filters, e.g. <b>foo, ba*:INFO, -test, *:WARN</b>{' '}
-        <a href="https://github.com/guigrpa/storyboard#log-filtering" target="_blank">
+        <a href="https://github.com/guigrpa/storyboard#log-filtering" target="_blank" style={_style.link}>
           (more examples here)
         </a>:
       </div>
@@ -132,7 +143,7 @@ Settings = React.createClass
     return if not process.env.STORYBOARD_VERSION
     <div style={_style.version}>
       Storyboard DevTools v{process.env.STORYBOARD_VERSION}<br/>
-      (c) Guillermo Grau 2016
+      (c) <a href="https://github.com/guigrpa" target="_blank" style={_style.link}>Guillermo Grau</a> 2016
     </div>
 
   renderLocalStorageWarning: ->
@@ -146,8 +157,9 @@ Settings = React.createClass
     </div>
 
   maxLogsDesc: ->
-    hyst = Number @state.forgetHysteresis
-    hi = Number @state.maxRecords
+    console.log @state
+    hyst = @state.forgetHysteresis
+    hi = @state.maxRecords
     lo = hi - hi * hyst
     return "When the backlog reaches #{hi}, Storyboard will " +
       "start forgetting old stuff until it goes below #{lo}"
@@ -190,9 +202,13 @@ Settings = React.createClass
 _style = 
   version:
     textAlign: 'right'
-    color: '#aaa'
+    color: '#888'
     marginTop: 8
     marginBottom: 8
+  link:
+    color: 'currentColor'
+  icon:
+    color: 'currentColor'
   localStorageWarning:
     color: 'red'
     border: "1px solid red"
