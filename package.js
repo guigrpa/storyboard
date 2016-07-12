@@ -99,6 +99,10 @@ const specs = {
                                   'npm run compile',
                                   'node lib/example/server',
                                 ]),
+    exampleWithDb:              runMultiple([
+                                  'npm run compile',
+                                  'node lib/example/serverWithDb',
+                                ]),
 
     // Static analysis
     lint:                       'eslint src',
@@ -153,6 +157,7 @@ const specs = {
     'lodash': '4.13.1',
     'platform': '1.3.1',
     'split': '1.0.0',
+    'pg': '6.0.2',
   },
 
   // ===============================================

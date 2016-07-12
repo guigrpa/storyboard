@@ -150,29 +150,36 @@ Story::reveal = ->
   return
 
 # Records can be logs or stories:
-# * `id: string` (a unique record id)
-# * `hubId: string`
-# * `fStory: boolean`
-# * `fServer: boolean`
-# * `storyId: string`
-# * `t: string` (if not in the record, added here) (for stories, creation time)
-# * `level: number`
-# * `src: string?`
-# * `msg: string`
-# * `action: string` (only for stories)
-# * `parents: Array` (only for stories)
-# * `title: string?` (only for stories)
-# * `obj: object?`       (only for logs)
-# * `objExpanded: bool?` (only for logs)
-# * `objLevel: string?`  (only for logs)
-# * `objOptions: object?`  (only for logs)
-# * `objIsError: bool?` (only for logs)
+# * Common to stories and logs:
+#   - `id: string` (a unique record id)
+#   - `hubId: string`
+#   - `version: integer`
+#   - `fStory: boolean`
+#   - `fServer: boolean`
+#   - `storyId: string`
+#   - `t: string` (for stories, creation time)
+#   - `src: string?`
+#   - `level: number`
+# * Only for stories:
+#   - `fRoot: boolean`
+#   - `title: string?`
+#   - `action: string`
+#   - `parents: Array`
+# * Only for logs:
+#   - `msg: string`
+#   - `obj: object?`
+#   - `objExpanded: bool?`
+#   - `objLevel: integer?`
+#   - `objOptions: object?`
+#   - `objIsError: bool?`
 _completeRecord = (record) ->
   record.id = _getRecordId()
   record.hubId = _hubId
   record.version = RECORD_FORMAT_VERSION
   record.t ?= new Date().getTime()
   record.fServer = not k.IS_BROWSER
+  record.fStory ?= false
+  record.fRoot ?= false
   return
 
 _processAttachments = (record, options) ->
