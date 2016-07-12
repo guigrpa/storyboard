@@ -184,19 +184,23 @@ story.close();
 
 ### Listeners (plugins)
 
-Logs emitted by stories are relayed by the Storyboard `hub` module to all attached *listeners*. Several listeners come built-in (check out their [configuration options](https://github.com/guigrpa/storyboard/blob/master/docs/built-in-plugins.md), as well as the following sections):
+Logs emitted by stories are relayed by the Storyboard *Hub* to all attached *listeners*. A Hub exists at the core of every Storyboard instance. Here is an example of a typical configuration, with a server-side Hub and a client-side Hub (other use cases have proved possible in production):
+
+**<< Figure TBC >>**
+
+Several listeners come built-in (check out their [configuration options](https://github.com/guigrpa/storyboard/blob/master/docs/built-in-plugins.md), as well as the following sections):
 
 * **Console**: formats logs and sends them to `console.log` or `console.error`. You've already seen this listener in action above.
 
-* **WebSocket Server**: encapsulates logs and pushes them in real time to WebSocket clients. Enable it for [remote access to server stories](#remote-access-to-server-stories).
+* **WebSocket Server**: encapsulates logs and pushes them in real time to WebSocket clients. Used jointly with the WebSocket Client and Browser Extension, it allows [remote access to server stories](#remote-access-to-server-stories).
 
-* **WebSocket Client**: relays logs pushed from the server to the [Storyboard DevTools](#storyboard-devtools). It can also [upload client logs to the server for remote monitoring](#remote-access-to-client-stories).
+* **WebSocket Client**: downloads server logs from the WebSocket Server, and optionally [uploads client logs to the server for remote monitoring](#remote-access-to-client-stories).
 
-* **Browser Extension**: relays local (client) logs to the [Storyboard DevTools](#storyboard-devtools).
+* **Browser Extension**: relays logs to the [Storyboard DevTools](#storyboard-devtools).
 
 * **File**: saves logs to file.
 
-* **PostgreSQL Database**: persists logs to a PostgreSQL database for later retrieval, including (serialized) attachments, story hierarchy, etc.
+* **PostgreSQL Database**: saves logs to a PostgreSQL database for later retrieval, including (serialized) attachments, story hierarchy, etc.
 
 More listeners can be added by the user (see [the API](https://github.com/guigrpa/storyboard/blob/master/docs/plugin-api.md)), e.g. to support different databases, integrate with other services, etc. Get inspired by [winston](https://github.com/winstonjs/winston)'s and [bunyan](https://github.com/trentm/node-bunyan)'s plugins. PRs are welcome!
 
@@ -205,27 +209,20 @@ More listeners can be added by the user (see [the API](https://github.com/guigrp
 
 ### Remote access to server stories
 
-To add remote access to a Node application, just enable the WebSocket Server listener:
+**Standalone log server**
+
+The simplest way to add remote access to a Node application's logs is to enable the WebSocket Server listener:
 
 ```js
+// Server
 import { addListener } from 'storyboard';
 import wsServerListener from 'storyboard/lib/listeners/wsServer';
 addListener(wsServerListener);
 ```
 
-You can call `addListener()` with an additional `options` object overriding the following defaults or including additional parameters:
+You now have a standalone HTTP server at port 8090 (by default) and can use the [Storyboard DevTools](#storyboard-devtools) to see your logs.
 
-```js
-const options = {
-  port: 8090,           // port for standalone log server
-  throttle: 200,        // [ms] send logs at most every X ms
-  authenticate: null,   // no authentication function
-  httpServer: null,     // no integration with existing HTTP server
-  socketServer: null,   // no integration with existing socket.io server
-};
-```
-
-You'll probably want to configure the `authenticate` function (without it, your server logs become public by enabling the listener). Your authentication function can return a boolean or the promise of a boolean:
+If you wish, you can add authentication:
 
 ```js
 addListener(wsServerListener, {
@@ -233,7 +230,21 @@ addListener(wsServerListener, {
 });
 ```
 
-You'll also probably want to supercharge your **main application HTTP server for [end-to-end stories](#end-to-end-stories)**. Just pass your `http` `Server` instance as `options.httpServer`, or your [`socket.io`](http://socket.io/) `Server` instance as `options.socketServer`, depending on your case:
+
+**Integrated log server**
+
+You can also integrate the log server functionality with your own application server. This may be desirable if you want to use a single port, or if you want to see [end-to-end stories](#end-to-end-stories). In this case, your client application should enable the WebSocket Client listener and Browser Extension listener:
+
+```js
+// Client
+import { addListener } from 'storyboard';
+import wsClientListener from 'storyboard/lib/listeners/wsClient';
+import browserExtListener from 'storyboard/lib/listeners/browserExtension';
+addListener(wsClientListener);
+addListener(browserExtListener);
+```
+
+At the server side, initialise the WebSocket Server listener with either your `http` `Server` instance, or your [socket.io](http://socket.io/) `Server` instance, depending on your case:
 
 ```js
 // If your application doesn't use WebSockets:
@@ -258,7 +269,7 @@ io.on('connection', myConnectFunction);
 const socket = socketio.connect('/myApp')
 ```
 
-You can also change the port of the **standalone log server** (independent from your main application's HTTP server) by modifying `options.port`. Disable it entirely by setting the attribute to `null`.
+Now when you open your client-side application, you can see both server *and* client logs in the Storyboard DevTools.
 
 
 ### Remote access to client stories
@@ -335,7 +346,7 @@ addListener(browserExtListener);
 After [installing the Chrome extension](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc), open the Chrome DevTools, select the Storyboard pane and point your browser at either:
 
 * Your standard application URL, to see both server and client logs
-* Port 8090 (configurable) of your server, to see server logs only
+* Port 8090 (configurable) of your server, to see server logs only (+ uploaded client logs)
 
 Some highlighted features:
 

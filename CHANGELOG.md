@@ -137,7 +137,7 @@
     - WS Client Listener: 
         + [m] Stop dumping internal Storyboard messages to the console
 * Browser extension: 
-    - [m] Swap severity and source columns for coherence wiht console output
+    - [m] Swap severity and source columns for coherence with console output
     - [m] Show story levels
     - [m] Tweak style of some components
 
