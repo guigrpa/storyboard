@@ -157,7 +157,7 @@ Story::reveal = ->
 #   - `fStory: boolean`
 #   - `fServer: boolean`
 #   - `storyId: string`
-#   - `t: string` (for stories, creation time)
+#   - `t: number` [ms] (for stories, creation time)
 #   - `src: string?`
 #   - `level: number`
 # * Only for stories:
