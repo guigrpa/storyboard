@@ -36,7 +36,7 @@ See [usage hints](https://github.com/guigrpa/storyboard/blob/master/README.md#re
 * **throttle** *number* (default: `200`): minimum interval to wait between consecutive broadcasts. Set to a falsy value for no throttling.
 * **authenticate** *function* (default: `null`): authentication function:
     - **credentials** *object*: `login` and `password`
-    - Return *boolean|Promise of boolean*: whether the user is authenticated or not
+    - Returns *boolean|Promise of boolean*: whether the user is authenticated or not
 * **httpServer** *object*: an `http` `Server` instance, which will be used to provide WebSocket services. *Provide either `httpServer`, `socketServer` or none.*
 * **socketServer** *object*: a [socket.io](http://socket.io/) `Server` instance, which will be used to provide WebSocket services. *Provide either `httpServer`, `socketServer` or none.*
 
