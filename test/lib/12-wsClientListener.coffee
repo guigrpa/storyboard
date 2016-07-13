@@ -7,6 +7,11 @@ k                 = require '../../lib/gral/constants'
 
 {mainStory} = storyboard
 
+SAMPLE_RECORDS = [
+  {t: new Date().getTime()}
+  {t: new Date().getTime() + 5}
+]
+
 #-====================================================
 # ## Tests
 #-====================================================
@@ -26,14 +31,21 @@ describe "wsClientListener", ->
     # Reset Storyboard and spies
     storyboard.removeAllListeners()
     storyboard.config {filter: '*:*'}
-    _spyServerRxMsg = sinon.spy()
+    _spyServerRxMsg = sinon.spy (msg) ->
+      # console.log msg.type
+      if msg.type is 'CLOCKSY'
+        {data} = msg
+        data.tServer = data.tTx
+        _serverSocket.emit 'MSG', {type: 'CLOCKSY', result: 'SUCCESS', data}
     _spyClientHub = sinon.spy()
 
-    # Set up mock HTTP + SocketIO server
+    # Set up mock HTTP server
     return new Promise (resolve, reject) ->
       _httpServer = http.createServer(->)
       _httpServer.on 'listening', resolve
       _httpServer.listen 8090
+
+    # Set up mock socket.io server and wait for a connection
     .then -> new Promise (resolve, reject) ->
       _io = socketio _httpServer
       _ioNamespace = _io.of k.WS_NAMESPACE
@@ -49,6 +61,9 @@ describe "wsClientListener", ->
         _listener = storyboard.addListener wsClientListener
         storyboard.addListener -> {process: _spyClientHub}
 
+    # Allow time for clock sync
+    .then -> h.waitUntil(1000, -> _listener.fSocketConnected)
+
     # Prevent setup from possibly interfering with tests
     .delay 250
 
@@ -61,14 +76,38 @@ describe "wsClientListener", ->
     _spyServerRxMsg.reset()
     _spyClientHub.reset()
 
+  it "sanity", ->
+    expect(_listener.getConfig().hasOwnProperty('uploadClientStories')).to.be.true
+
   describe "socket -> hub", ->
-  it "should relay all messages in this direction", ->
-    _serverSocket.emit 'MSG', {type: 'EXAMPLE_RESPONSE', result: 'success', data: {b: 4}}
-    h.waitUntil(1000, -> _spyClientHub.callCount > 0)
-    .then ->
-      msg = _spyClientHub.args[0][0]
-      expect(msg.type).to.equal 'EXAMPLE_RESPONSE'
-      expect(msg.data).to.deep.equal {b: 4}
+
+    it "should relay all messages in this direction", ->
+      _serverSocket.emit 'MSG', {type: 'EXAMPLE_RESPONSE', result: 'success', data: {b: 4}}
+      h.waitUntil(1000, -> _spyClientHub.callCount > 0)
+      .then ->
+        msg = _spyClientHub.args[0][0]
+        expect(msg.type).to.equal 'EXAMPLE_RESPONSE'
+        expect(msg.data).to.deep.equal {b: 4}
+
+    it "should correct time stamps in RECORDS messages", ->
+      _serverSocket.emit 'MSG', {type: 'RECORDS', data: SAMPLE_RECORDS}
+      h.waitUntil(1000, -> _spyClientHub.callCount > 0)
+      .then ->
+        msg = _spyClientHub.args[0][0]
+        expect(msg.type).to.equal 'RECORDS'
+        tDelta = _listener.tDelta
+        expect(msg.data[0].t).to.equal(SAMPLE_RECORDS[0].t - tDelta)
+        expect(msg.data[1].t).to.equal(SAMPLE_RECORDS[1].t - tDelta)
+
+    it "should correct time stamps in LOGIN_RESPONSE messages", ->
+      _serverSocket.emit 'MSG', {type: 'LOGIN_RESPONSE', data: {bufferedRecords: SAMPLE_RECORDS}}
+      h.waitUntil(1000, -> _spyClientHub.callCount > 0)
+      .then ->
+        msg = _spyClientHub.args[0][0]
+        expect(msg.type).to.equal 'LOGIN_RESPONSE'
+        tDelta = _listener.tDelta
+        expect(msg.data.bufferedRecords[0].t).to.equal(SAMPLE_RECORDS[0].t - tDelta)
+        expect(msg.data.bufferedRecords[1].t).to.equal(SAMPLE_RECORDS[1].t - tDelta)
 
   describe "socket <- hub", ->
     it "should report on its connection status when a CONNECT_REQUEST reaches it", ->
@@ -96,16 +135,27 @@ describe "wsClientListener", ->
 
     it "should not upload records if this function is disabled", ->
       _listener.configure uploadClientStories: false # this is the default
-      _listener.process {type: 'RECORDS', data: [{msg: 'record 1'}, {msg: 'record2'}]}
+      _listener.process {type: 'RECORDS', data: SAMPLE_RECORDS}
       Promise.delay(200)
       .then -> expect(_spyServerRxMsg).not.to.have.been.called
 
-    it "should upload records if this function is enabled", ->
-      _listener.configure uploadClientStories: true
-      _listener.process {type: 'RECORDS', data: [{msg: 'record 1'}, {msg: 'record2'}]}
-      h.waitUntil(1000, -> _spyServerRxMsg.callCount >= 1)
-      .then ->
+    describe "when enabling uploadClientStories", ->
+      before -> _listener.configure uploadClientStories: true
+      after -> _listener.configure uploadClientStories: false
+
+      beforeEach ->
+        _listener.process {type: 'RECORDS', data: SAMPLE_RECORDS}
+        return h.waitUntil(1000, -> _spyServerRxMsg.callCount >= 1)
+
+      it "should upload records", ->
         msg = _spyServerRxMsg.args[0][0]
         expect(msg.type).to.equal 'RECORDS'
         expect(msg.data).to.have.length 2
-        _listener.configure uploadClientStories: false
+
+      it "should apply timestamp corrections", ->
+        tDelta = _listener.tDelta
+        msg = _spyServerRxMsg.args[0][0]
+        expect(msg.type).to.equal 'RECORDS'
+        expect(msg.data[0].t).to.equal(SAMPLE_RECORDS[0].t + tDelta)
+        expect(msg.data[1].t).to.equal(SAMPLE_RECORDS[1].t + tDelta)
+        

@@ -1,5 +1,8 @@
 import socketio from 'socket.io-client';
-import { merge, addDefaults } from 'timm';
+import ms from 'ms';
+import { merge, addDefaults, setIn, set as timmSet } from 'timm';
+import chalk from 'chalk';
+import { ClocksyClient } from 'clocksy';
 import { throttle } from '../vendor/lodash';
 import { WS_NAMESPACE } from '../gral/constants';
 
@@ -21,6 +24,10 @@ class WsClientListener {
     this.mainStory = mainStory;
     this.socket = null;
     this.fSocketConnected = false;
+    this.clocksy = new ClocksyClient({
+      sendRequest: req => this.socketTx('CLOCKSY', req),
+    });
+    this.tDelta = null;
     // Short buffer for records to be uploaded
     // (accumulated during the throttle period)
     this.bufUpload = [];
@@ -45,28 +52,64 @@ class WsClientListener {
       url = `http://localhost:8090${WS_NAMESPACE}`;
     }
     this.socket = socketio.connect(url);
-    const socketConnected = () => {
-      this.hubTx('WS_CONNECTED');
-      this.fSocketConnected = true;
-    };
-    const socketDisconnected = () => {
-      this.hubTx('WS_DISCONNECTED');
-      this.fSocketConnected = false;
-    };
-    this.socket.on('connect', socketConnected);
-    this.socket.on('disconnect', socketDisconnected);
-    this.socket.on('error', socketDisconnected);
+    this.socket.on('connect', () => this.socketDidConnect());
+    this.socket.on('disconnect', () => this.socketDidDisconnect());
+    this.socket.on('error', () => this.socketDidDisconnect());
     this.socket.on('MSG', msg => this.socketRx(msg));
   }
 
   // -----------------------------------------
   // Websocket I/O
   // -----------------------------------------
-  // Ignore messages that originate from our own hub.
-  // Relay others to the hub, untouched
+  socketDidConnect() {
+    // Starting clocksy also immediately sends a clock sync request.
+    // Do it as fast as possible, before any records are up/downloaded.
+    this.clocksy.start();
+  }
+
+  socketDidSynchronize() {
+    this.fSocketConnected = true;
+    this.hubTx('WS_CONNECTED');
+  }
+
+  socketDidDisconnect() {
+    this.fSocketConnected = false;
+    this.clocksy.stop();
+    this.hubTx('WS_DISCONNECTED');
+  }
+
   socketRx(msg) {
+    const { type: msgType } = msg;
+
+    // Process clock sync messages
+    if (msgType === 'CLOCKSY') {
+      this.tDelta = this.clocksy.processResponse(msg.data);
+      if (!this.fSocketConnected) this.socketDidSynchronize();
+      const tDelta = Math.round(this.tDelta * 10) / 10;
+      this.mainStory.debug('storyboard', `Clock sync delta: ${chalk.blue(ms(tDelta))}`);
+      return;
+    }
+
+    // Discard messages that originate from our own hub
     if (msg.hubId === this.hubId) return;
-    this.hub.emitMsg(msg, this);
+
+    // Correct timestamps in downloaded records
+    let finalMsg = msg;
+    if (this.tDelta != null) {
+      const tCorrection = -this.tDelta;
+      if (msgType === 'RECORDS') {
+        const records = msg.data;
+        const correctedRecords = this.applyTimeDelta(records, tCorrection);
+        finalMsg = timmSet(msg, 'data', correctedRecords);
+      } else if (msgType === 'LOGIN_RESPONSE' && msg.data && msg.data.bufferedRecords) {
+        const records = msg.data.bufferedRecords;
+        const correctedRecords = this.applyTimeDelta(records, tCorrection);
+        finalMsg = setIn(msg, ['data', 'bufferedRecords'], correctedRecords);
+      }
+    }
+
+    // Relay all other messages to the hub
+    this.hub.emitMsg(finalMsg, this);
   }
 
   socketTx(type, data) {
@@ -80,7 +123,8 @@ class WsClientListener {
     this.socket.emit('MSG', msg);
   }
 
-  addToUploadBuffer(records) {
+  addToUploadBuffer(records0) {
+    const records = this.applyTimeDelta(records0, this.tDelta);
     this.bufUpload = this.bufUpload.concat(records);
     if (this.bufUpload.length > BUF_UPLOAD_LENGTH) {
       this.bufUpload = this.bufUpload.slice(-BUF_UPLOAD_LENGTH);
@@ -138,6 +182,15 @@ class WsClientListener {
 
   hubTx(type, data) {
     this.hub.emitMsgWithFields('WS_CLIENT', type, data, this);
+  }
+
+  // -----------------------------------------
+  // Helpers
+  // -----------------------------------------
+  applyTimeDelta(records, tDelta) {
+    /* istanbul ignore next */
+    if (!records) return records;
+    return records.map(record => timmSet(record, 't', record.t + tDelta));
   }
 }
 

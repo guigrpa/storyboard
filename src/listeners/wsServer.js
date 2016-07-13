@@ -5,6 +5,7 @@ import socketio from 'socket.io';
 import Promise from 'bluebird';
 import chalk from 'chalk';
 import { addDefaults } from 'timm';
+import { ClocksyServer } from 'clocksy';
 import { throttle } from '../vendor/lodash';
 import filters from '../gral/filters';
 import { WS_NAMESPACE } from '../gral/constants';
@@ -32,6 +33,7 @@ class WsServerListener {
     this.ioStandaloneServer = null;
     this.ioStandaloneNamespace = null;
     this.ioServerAdaptor = null;
+    this.clocksy = new ClocksyServer();
     // Short buffer for records to be broadcast
     // (accumulated during the throttle period)
     this.bufBroadcast = [];
@@ -112,6 +114,12 @@ class WsServerListener {
   }
 
   socketRx(socket, msg) {
+    // Clock sync requests must be handled as fast as possible
+    if (msg.type === 'CLOCKSY') {
+      this.socketTx(socket, 'CLOCKSY', 'SUCCESS',
+        this.clocksy.processRequest(msg.data));
+      return;
+    }
     const { type, data } = msg;
     const { hub, config } = this;
     switch (type) {

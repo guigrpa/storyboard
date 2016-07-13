@@ -55,6 +55,9 @@ describe "browserExtensionListener", ->
     _spyClientWinTxMsg.reset()
     _spyClientHub.reset()
 
+  it "sanity", ->
+    expect(_listener.getConfig()).to.deep.equal {}
+
   describe 'extension <- hub', ->
     it "should relay all messages in this direction", ->
       _listener.process {type: 'WHATEVER', data: {b: 4}}
