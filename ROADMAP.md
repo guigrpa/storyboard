@@ -15,6 +15,7 @@
     + [ ] Client-server clock calibration:
         * [x] First version
         * [ ] What happens when tab is in the background? sync starts to drift...
+        * [ ] When we're sure, set clock deltas to level `TRACE`
     + [ ] Document listener API
     + [ ] Architecture diagram, graphical vocabulary, different use cases
     + [ ] Improve connection of a non-Storyboard application to Storyboard, and document it
