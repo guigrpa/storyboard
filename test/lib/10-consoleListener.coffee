@@ -44,6 +44,9 @@ describe "consoleListener", ->
     console.log.restore()
     console.error.restore()
 
+  it "sanity", ->
+    expect(_listener.getConfig().hasOwnProperty('moduleNameLength')).to.be.true
+
   it "should output log lines", ->
     mainStory.info "testSrc", "Test message"
     expect(_spyLog).to.have.been.calledOnce

@@ -41,6 +41,9 @@ describe "wsServerListener", ->
 
     after -> storyboard.removeListener _listener
 
+    it "sanity", ->
+      expect(_listener.getConfig().hasOwnProperty('port')).to.be.true
+
     it "should not require a log in", ->
       _socket.emit 'MSG', {type: 'LOGIN_REQUIRED_QUESTION'}
       h.waitUntil(1000, -> _spySocketRx.callCount > 0)
