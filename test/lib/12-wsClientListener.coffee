@@ -58,7 +58,8 @@ describe "wsClientListener", ->
       # as well as a fake listener to serve as a spy
       Promise.delay 100
       .then ->
-        _listener = storyboard.addListener wsClientListener
+        _listener = storyboard.addListener wsClientListener,
+          clockSync: true
         storyboard.addListener -> {process: _spyClientHub}
 
     # Allow time for clock sync
