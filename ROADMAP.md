@@ -12,15 +12,17 @@
     + [x] Lint
     + [x] Add listener to write to database (choose a simple one)
     + [x] Document listener config options
-    + [ ] Client-server clock calibration:
+    + [x] Client-server clock calibration:
         * [x] First version
-        * [ ] What happens when tab is in the background? sync starts to drift...
-        * [ ] When we're sure, set clock deltas to level `TRACE`
-    + [ ] Document listener API
-    + [ ] Architecture diagram, graphical vocabulary, different use cases
+        * [x] What happens when tab is in the background? sync starts to drift...
+        * [x] Allow the user to disable clock sync (disabled by default)
+        * [x] When we're sure, only print initial clock delta, not subsequent ones (set them to `TRACE`)
+    + [x] Document listener API
     + [ ] Improve connection of a non-Storyboard application to Storyboard, and document it
-    + [ ] Throttle log generation at the very source??
+    + [ ] Architecture diagram, graphical vocabulary, different use cases
     + [ ] Publish 2.0.0-rc1
+    + [ ] Review docs
+    + [ ] Release 2.0.0
     + [ ] React App: embeddable SB components (without requiring extension)
     + Working with out-of-order logs:
         * [ ] When revealing a hidden story (error/warning): include a separator line in the log to indicate that those records are FROM THE PAST

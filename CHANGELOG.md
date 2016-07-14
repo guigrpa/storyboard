@@ -37,7 +37,7 @@
 
 * Library:
     - [M] Implement a **refined listener architecture**, affecting in particular the client side. These changes should be transparent to the user. The WsClient listener no longer interfaces directly with the browser extension, but rather relays its messages via the hub. The BrowserExtension listener has been merged with the interfaceExtension helper, since no other module can have access to this interface any more. This architecture **is more flexible and will allow other uses of the library**, e.g. using the WsClient listener in a non-browser application to obtain logs from another process and offload database access or file storage.
-    - [M] **WebSocket Server and Client now estimate their clock differences**, so that timestamps correspond to (approximately) the client's system clock.
+    - [M] **WebSocket Server and Client can now estimate their clock differences**, so that timestamps correspond to (approximately) the client's system clock. This functionality is disabled by default, but can be opted in by setting `clockSync: true` in the WebSocket Client configuration.
     - [M] **Add Postgres database listener**: stores logs to a PostgreSQL database, including attachments.
     - [M] **Add file listener**: stores all logs to a file, with or without ANSI color escapes (disabled by default).
     - [M] **Better attachment serialization**. `undefined` values will no longer disappear from your attachments when they traverse the WebSocket interface between the WsServer and WsClient plugins.

@@ -13,10 +13,10 @@ Demo: http://storyboard-demo.herokuapp.com/
 * **Hierarchical stories**: put logs in context (*stories*), and group stories/logs within stories. Stories are extremely useful with concurrent user actions and async events.
 * Get the whole picture with *end-to-end stories*: see all **client and server tasks** triggered by a user action (a click on the *Login* button, maybe) **in a single place**.
 * Use the **Storyboard DevTools Chrome extension** to view client and server logs with a clean and detail-rich interface. Now with **remote client log monitoring for mobile devices** and non-Chrome browsers.
-* Watch server logs being pushed in **real time** to the Storyboard DevTools extension via WebSockets. Even more: **control the level of detail you get from various parts of your server remotely, without relaunching**.
+* Watch server logs being pushed in **real time** to the Storyboard DevTools extension via WebSockets, with **opt-in client-server clock synchronization**. Even more: **control the level of detail you get from various parts of your server remotely, without relaunching**.
 * Ask for **authentication** to see server logs; hook up your own auth function.
 * **Attach anything** to your logs for further investigation.
-* Integrate your app with Storyboard's **flexible plugin architecture**. Several plugins are available out of the box: Console, WebSocket Server & Client, File, (Postgres) Database, and Browser Extension, with more coming up. Just use what you need: most features are optional!
+* Integrate your app with Storyboard's **flexible plugin architecture**. Several plugins are available out of the box: Console, WebSocket Server & Client, File, (PostgreSQL) Database, and Browser Extension, with more coming up. Just use what you need: most features are optional!
 * Give logs **source and severity** attributes and apply **coarse- or fine-grained filtering**, with white and black lists.
 * Use **color** to highlight what's important. Storyboard extends the popular [chalk](https://github.com/chalk/chalk) library so that it can also be used on the browser.
 * Enjoy the **simple-yet-powerful API** (I hope!).
@@ -244,7 +244,7 @@ addListener(wsClientListener);
 addListener(browserExtListener);
 ```
 
-At the server side, initialise the WebSocket Server listener with either your `http` `Server` instance, or your [socket.io](http://socket.io/) `Server` instance, depending on your case:
+At the server side, initialize the WebSocket Server listener with either your `http` `Server` instance, or your [socket.io](http://socket.io/) `Server` instance, depending on your case:
 
 ```js
 // If your application doesn't use WebSockets:
@@ -293,7 +293,7 @@ Client logs will not pollute the server's own log, and will appear under a dedic
 
 The icing on the cake is linking server- and client-side stories to get a complete picture of what is triggered by a user action (see video [at the top of this page](#what)).
 
-Storyboard provides a simple yet flexible way to achieve this: stories can have multiple parents, which are specified upon creation. This feature is leveraged by the [Storyboard DevTools](#storyboard-devtools): when it receives a new story from the server with multiple parents, it checks whether any of the parents is a client-side story. If so, it prioritises this parent for display purposes, since it is expected to provide more context.
+Storyboard provides a simple yet flexible way to achieve this: stories can have multiple parents, which are specified upon creation. This feature is leveraged by the [Storyboard DevTools](#storyboard-devtools): when it receives a new story from the server with multiple parents, it checks whether any of the parents is a client-side story. If so, it prioritizes this parent for display purposes, since it is expected to provide more context.
 
 For this to work, the client's `storyId` must be transmitted to the server *somehow*. This example uses the URL query string for simplicity, but feel free to use whatever technique you want (the body of a `POST` request, your own WebSocket messaging scheme, etc.):
 
@@ -328,7 +328,13 @@ app.get('/items', (req, res) => {
 
 Want to see the end-to-end story? Use the Storyboard DevTools extension.
 
-*Note: end-to-end stories work better when server and client system clocks are not too different. Servers are typically NTP-synchronised, as are most modern PCs with Internet access. If this is not the case, your story hierarchy will be OK but mixed client-server stories might be out of order.*
+*Note: end-to-end stories work better when server and client system clocks are not too different. Servers are typically NTP-synchronized, as are most modern PCs with Internet access. If this is not the case, enable Storyboard 2.x's time synchronisation function:*
+
+```js
+import { addListener } from 'storyboard';
+import wsClientListener from 'storyboard/lib/listeners/wsClient';
+addListener(wsClientListener, { clockSync: true });
+```
 
 
 ## Storyboard DevTools
