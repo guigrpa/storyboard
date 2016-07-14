@@ -343,7 +343,7 @@ RepetitionLine = React.createClass
       <Severity/>
       <Indent level={level}/>
       <CaretOrSpace/>
-      <Icon icon="copy"/>
+      <Icon icon="copy" disabled style={{color: 'currentColor'}}/>
       <ColoredText text={msg}/>
       <Time
         t={record.tLastRepetition}
