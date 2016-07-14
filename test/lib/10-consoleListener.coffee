@@ -15,10 +15,13 @@ _isMochaOutput = (txt) ->
 #-====================================================
 # ## Tests
 #-====================================================
+IS_BROWSER = process.env.TEST_BROWSER
+
 describe "consoleListener", ->
 
   _listener = null
   _spyLog   = null
+  _spyWarn  = null
   _spyError = null
   before -> 
     storyboard.removeAllListeners()
@@ -31,6 +34,7 @@ describe "consoleListener", ->
     _listener = storyboard.getListeners()[0]
 
   beforeEach -> 
+    _listener.configure useStderr: false
     consoleLog = console.log
     consoleError = console.error
     _spyLog   = sinon.stub console, 'log', (txt) ->
@@ -39,10 +43,13 @@ describe "consoleListener", ->
     _spyError = sinon.stub console, 'error', (txt) ->
       if _isMochaOutput(txt) then consoleError.apply console, arguments
       # consoleError.apply console, arguments
+    _spyWarn = sinon.stub console, 'warn'
 
   afterEach ->
+    _listener.configure useStderr: false
     console.log.restore()
     console.error.restore()
+    console.warn.restore()
 
   it "sanity", ->
     expect(_listener.getConfig().hasOwnProperty('moduleNameLength')).to.be.true
@@ -55,13 +62,40 @@ describe "consoleListener", ->
     expect(msg).to.contain 'INFO'
     expect(msg).to.contain 'Test message'
 
-  it "should use console.error for errors", ->
-    mainStory.error "testSrc", "Test error"
-    expect(_spyLog).not.to.have.been.called
-    expect(_spyError).to.have.been.calledOnce
-    msg = _spyError.args[0][0]
-    expect(msg).to.contain 'ERROR'
-    expect(msg).to.contain 'Test error'
+  if IS_BROWSER
+    describe "at the browser", ->
+      it "should always use console.error for errors", ->
+        mainStory.error "testSrc", "Test error"
+        expect(_spyError).to.have.been.calledOnce
+        expect(_spyLog).not.to.have.been.called
+        expect(_spyWarn).not.to.have.been.called
+        _listener.configure useStderr: true
+        mainStory.error "testSrc", "Test error"
+        expect(_spyError).to.have.been.calledTwice
+        expect(_spyLog).not.to.have.been.called
+        expect(_spyWarn).not.to.have.been.called
+      it "should always use console.warn for warnings", ->
+        mainStory.warn "testSrc", "Test warning"
+        expect(_spyWarn).to.have.been.calledOnce
+        expect(_spyLog).not.to.have.been.called
+        expect(_spyError).not.to.have.been.called
+        _listener.configure useStderr: true
+        mainStory.warn "testSrc", "Test warning"
+        expect(_spyWarn).to.have.been.calledTwice
+        expect(_spyLog).not.to.have.been.called
+        expect(_spyError).not.to.have.been.called
+
+  if not IS_BROWSER
+    describe "at the server", ->
+      it "should use stdout (console.log) for errors by default", ->
+        mainStory.error "testSrc", "Test error"
+        expect(_spyLog).to.have.been.calledOnce
+        expect(_spyError).not.to.have.been.called
+      it "should allow enabling stderr (console.error) for errors", ->
+        _listener.configure useStderr: true
+        mainStory.error "testSrc", "Test error"
+        expect(_spyError).to.have.been.calledOnce
+        expect(_spyLog).not.to.have.been.called
 
   it "should report creation of a story", ->
     childStory = mainStory.child {title: "Three piggies"}
@@ -132,24 +166,26 @@ describe "consoleListener", ->
 
   it "should highlight warning logs in yellow", ->
     mainStory.warn "Warning!"
-    expect(_spyLog).to.have.been.calledOnce
-    if process.env.TEST_BROWSER
-      expect(_spyLog.args[0][0]).to.contain '%c%cWarning!'
-      expect(_spyLog.args[0]).to.contain 'color: #ff6600;font-weight: bold'
+    mySpy = if IS_BROWSER then _spyWarn else _spyLog
+    expect(mySpy).to.have.been.calledOnce
+    if IS_BROWSER
+      expect(mySpy.args[0][0]).to.contain '%c%cWarning!'
+      expect(mySpy.args[0]).to.contain 'color: #ff6600;font-weight: bold'
     else
-      expect(_spyLog.args[0][0]).to.contain '\u001b[33m\u001b[1mWarning!'
+      expect(mySpy.args[0][0]).to.contain '\u001b[33m\u001b[1mWarning!'
 
   it "should highlight error logs in red", ->
     mainStory.error "Error!"
-    expect(_spyError).to.have.been.calledOnce
-    if process.env.TEST_BROWSER
-      expect(_spyError.args[0][0]).to.contain '%c%cError!'
-      expect(_spyError.args[0]).to.contain 'color: #cc0000;font-weight: bold'
+    mySpy = if IS_BROWSER then _spyError else _spyLog
+    expect(mySpy).to.have.been.calledOnce
+    if IS_BROWSER
+      expect(mySpy.args[0][0]).to.contain '%c%cError!'
+      expect(mySpy.args[0]).to.contain 'color: #cc0000;font-weight: bold'
     else
-      expect(_spyError.args[0][0]).to.contain '\u001b[31m\u001b[1mError!'
+      expect(mySpy.args[0][0]).to.contain '\u001b[31m\u001b[1mError!'
 
   it "should not show uploaded client logs at the server", ->
-    return if process.env.TEST_BROWSER
+    return if IS_BROWSER
     _listener.process
       src: 'any'
       storyId: '*'

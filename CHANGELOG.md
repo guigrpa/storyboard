@@ -33,6 +33,8 @@
     addListener(fileListener);
     ```
 
+* **The Console listener no longer uses `stderr` on Node, to avoid out-of-order logs** (see [this link](https://nodejs.org/api/console.html#console_asynchronous_vs_synchronous_consoles) for some background); it now uses `stdout` for all log levels. If you want the old behaviour, configure it with `useStderr: true`. On the browser, `console.error()` is used as before.
+
 **Other changes**
 
 * Library:
@@ -41,7 +43,6 @@
     - [M] **Add Postgres database listener**: stores logs to a PostgreSQL database, including attachments.
     - [M] **Add file listener**: stores all logs to a file, with or without ANSI color escapes (disabled by default).
     - [M] **Better attachment serialization**. `undefined` values will no longer disappear from your attachments when they traverse the WebSocket interface between the WsServer and WsClient plugins.
-    - [m] **Console Listener: allow the user to disable `stderr`** (using `stdout` instead for all log levels): this can help if you're getting logs out of order, due to the fact that, [depending on the platform](https://nodejs.org/api/console.html#console_asynchronous_vs_synchronous_consoles), Node may flush `stdout`/`stderr` asynchronously.
     - [m] Improve graceful exits, tearing down all listeners if possible. Previously, we only closed the main story.
 * Browser extension:
     - [m] Settings: show version.

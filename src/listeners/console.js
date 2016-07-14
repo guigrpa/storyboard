@@ -6,7 +6,7 @@ import recordToLines from './helpers/recordToLines';
 const DEFAULT_CONFIG = {
   moduleNameLength: 20,
   relativeTime: k.IS_BROWSER,
-  useStderr: true,
+  useStderr: false,
 };
 
 // -----------------------------------------
@@ -58,10 +58,25 @@ class ConsoleListener {
       ansiColors.getBrowserConsoleArgs(text) :
       [text];
     if (fLongDelay) console.log('          ...');
-    if (this.config.useStderr && level >= 50 && level <= 60) {
-      console.error.apply(console, args);
+    if (k.IS_BROWSER) {
+      switch (level) {
+        case 40:
+          console.warn.apply(console, args);
+          break;
+        case 50:
+        case 60:
+          console.error.apply(console, args);
+          break;
+        default:
+          console.log.apply(console, args);
+          break;
+      }
     } else {
-      console.log.apply(console, args);
+      if (this.config.useStderr && level >= 50) {
+        console.error.apply(console, args);
+      } else {
+        console.log.apply(console, args);
+      }
     }
   }
   /* eslint-enable no-console */

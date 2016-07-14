@@ -11,6 +11,8 @@ addListener(browserExtensionListener);
 addListener(wsClientListener);
 
 mainStory.info('client', 'Running client...');
+mainStory.warn('client', 'Example warning');
+mainStory.error('client', 'Example error', { attach: new Error('hi') });
 
 const nodeButton = document.getElementById('refresh');
 const nodeItems = document.getElementById('items');
