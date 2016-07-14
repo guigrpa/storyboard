@@ -9,6 +9,7 @@ import { WS_NAMESPACE } from '../gral/constants';
 const DEFAULT_CONFIG = {
   uploadClientStories: false,
   throttleUpload: null,
+  clockSync: false,
 };
 const BUF_UPLOAD_LENGTH = 2000;
 
@@ -62,9 +63,12 @@ class WsClientListener {
   // Websocket I/O
   // -----------------------------------------
   socketDidConnect() {
-    // Starting clocksy also immediately sends a clock sync request.
-    // Do it as fast as possible, before any records are up/downloaded.
-    this.clocksy.start();
+    if (this.config.clockSync) {
+      // Starting clocksy also immediately sends a clock sync request.
+      this.clocksy.start();
+    } else {
+      this.socketDidSynchronize();
+    }
   }
 
   socketDidSynchronize() {
@@ -82,11 +86,15 @@ class WsClientListener {
     const { type: msgType } = msg;
 
     // Process clock sync messages
-    if (msgType === 'CLOCKSY') {
+    if (this.config.clockSync && msgType === 'CLOCKSY') {
       this.tDelta = this.clocksy.processResponse(msg.data);
       if (!this.fSocketConnected) this.socketDidSynchronize();
       const tDelta = Math.round(this.tDelta * 10) / 10;
-      this.mainStory.debug('storyboard', `Clock sync delta: ${chalk.blue(ms(tDelta))}`);
+      const rtt = this.clocksy.getRtt();
+      const logLevel = this.fFirstDeltaShown ? 'trace' : 'debug';
+      this.fFirstDeltaShown = true;
+      this.mainStory[logLevel]('storyboard',
+        `Clock sync delta: ${chalk.blue(ms(tDelta))}, rtt: ${chalk.blue(ms(rtt))}`);
       return;
     }
 
@@ -95,7 +103,7 @@ class WsClientListener {
 
     // Correct timestamps in downloaded records
     let finalMsg = msg;
-    if (this.tDelta != null) {
+    if (this.config.clockSync && this.tDelta) {
       const tCorrection = -this.tDelta;
       if (msgType === 'RECORDS') {
         const records = msg.data;
@@ -124,7 +132,9 @@ class WsClientListener {
   }
 
   addToUploadBuffer(records0) {
-    const records = this.applyTimeDelta(records0, this.tDelta);
+    const records = this.config.clockSync && this.tDelta ?
+      this.applyTimeDelta(records0, this.tDelta) :
+      records0;
     this.bufUpload = this.bufUpload.concat(records);
     if (this.bufUpload.length > BUF_UPLOAD_LENGTH) {
       this.bufUpload = this.bufUpload.slice(-BUF_UPLOAD_LENGTH);
