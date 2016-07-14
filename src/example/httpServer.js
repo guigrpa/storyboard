@@ -31,7 +31,7 @@ const createHttpServer = () => {
   });
   const httpServer = http.createServer(app);
   httpServer.listen(PORT);
-  mainStory.info('httpServer', `Listening on port ${chalk.cyan(PORT)}...`);
+  mainStory.info('httpServer', `Listening on port ${chalk.cyan.bold(PORT)}...`);
 
   return httpServer;
 };

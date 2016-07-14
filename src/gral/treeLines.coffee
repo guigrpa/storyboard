@@ -31,7 +31,7 @@ _tree = (node, options, prefix, stack) ->
       str = val.slice(0, BUFFER_EXPLICIT_LIMIT).toString('hex').toUpperCase().match(/(..)/g).join(' ')
       if val.length > BUFFER_EXPLICIT_LIMIT then str += '...'
       str = "Buffer [#{val.length}]: #{str}"
-      out.push "#{finalPrefix}#{chalk.magenta str}"
+      out.push "#{finalPrefix}#{chalk.magenta.bold str}"
     else if _.isObject(val) and Object.keys(val).length is 0
       out.push "#{finalPrefix}#{chalk.bold '{}'}"
     else if _.isArray val

@@ -43,7 +43,7 @@ const refresh = storyTitle => {
 
 refresh('Initial fetch');
 
-setInterval(() => mainStory.debug('Repeated message'), 5000);
+// setInterval(() => mainStory.debug('Repeated message'), 5000);
 
 // Uncomment the following block to mount the developer tools
 // in the main page (for faster development)

@@ -16,9 +16,7 @@ const hubId = uuid.v4();
 const init = (deps, options) => {
   mainStory = deps.mainStory;
   /* istanbul ignore if */
-  if (!(mainStory != null)) {
-    throw new Error('MISSING_DEPENDENCIES');
-  }
+  if (!mainStory) throw new Error('MISSING_DEPENDENCIES');
   /* istanbul ignore if */
   if (options != null) configure(options);
 };

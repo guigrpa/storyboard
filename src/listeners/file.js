@@ -26,7 +26,8 @@ class FileListener {
   init() {
     const { filePath } = this.config;
     this.fd = fs.openSync(filePath, 'a');
-    this.mainStory.info('storyboard', `Logs available at ${chalk.cyan(path.resolve(filePath))}`);
+    this.mainStory.info('storyboard',
+      `Logs available at ${chalk.cyan.bold(path.resolve(filePath))}`);
   }
 
   tearDown() {
