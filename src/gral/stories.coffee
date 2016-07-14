@@ -105,7 +105,7 @@ _.each k.LEVEL_STR_TO_NUM, (levelNum, levelStr) ->
     _processAttachments record, options
     _completeRecord record
 
-    # Filtering rule #2
+    # Filtering rule #2, specific to hidden stories
     if @fHiddenByFilter
       if levelNum < k.LEVEL_STR_TO_NUM.WARN
         @hiddenRecords.push record

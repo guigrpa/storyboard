@@ -25,5 +25,5 @@
     + [ ] Release 2.0.0
     + [ ] React App: embeddable SB components (without requiring extension)
     + Working with out-of-order logs:
-        * [ ] When revealing a hidden story (error/warning): include a separator line in the log to indicate that those records are FROM THE PAST
+        * [ ] When revealing a hidden story (error/warning): include a separator line in the log to indicate that those records are FROM THE PAST. This separator should ONLY be included in chronological listeners: console and file, and generated at mainStory level.
         * [x] Console listener: make it configurable not to write anything to `stderr`, using `stdout` instead (to avoid out-of-order logs)

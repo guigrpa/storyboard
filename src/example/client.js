@@ -2,6 +2,7 @@ require('babel-polyfill');    // for IE
 require('isomorphic-fetch');  // for IE
 
 // Here you'd write 'storyboard' or 'storyboard/lib/listeners/xxx':
+import Promise from 'bluebird';
 import { mainStory, chalk, addListener } from '../storyboard';
 import consoleListener from '../listeners/console';
 import browserExtensionListener from '../listeners/browserExtension';
@@ -20,17 +21,22 @@ nodeButton.addEventListener('click', () => refresh('Click on Refresh'));
 
 const refresh = storyTitle => {
   const seq = Math.floor(Math.random() * 100);
-  const story = mainStory.child({ src: 'client', title: `${storyTitle} (seq=${seq})` });
+  const story = mainStory.child({
+    src: 'client',
+    title: `${storyTitle} (seq=${seq})`,
+    // level: 'trace',
+  });
   story.info('serverInterface', 'Fetching animals from server...');
   nodeItems.innerHTML = 'Fetching...';
-  return fetch(`/animals?seq=${seq}`, {
+  return Promise.resolve()
+  .then(() => fetch(`/animals?seq=${seq}`, {
     method: 'post',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ storyId: story.storyId }),
-  })
+  }))
   .then(response => response.json())
   .then(items => {
     if (Array.isArray(items)) {
@@ -39,8 +45,10 @@ const refresh = storyTitle => {
         { attach: items });
       nodeItems.innerHTML = items.map(o => `<li>${o}</li>`).join('');
     }
-    story.close();
-  });
+  })
+  // .delay(4000)
+  // .then(() => story.warn('A revelation!'))
+  .finally(() => story.close());
 };
 
 refresh('Initial fetch');
