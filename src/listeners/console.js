@@ -6,6 +6,7 @@ import recordToLines from './helpers/recordToLines';
 const DEFAULT_CONFIG = {
   moduleNameLength: 20,
   relativeTime: k.IS_BROWSER,
+  useStderr: true,
 };
 
 // -----------------------------------------
@@ -43,23 +44,28 @@ class ConsoleListener {
     const options = timmSet(this.config, 'prevTime', this.prevTime);
     const lines = recordToLines(record, options);
     this.prevTime = new Date(record.t);
-    lines.forEach(({ text, level, fLongDelay }) => outputLog(text, level, fLongDelay));
+    lines.forEach(({ text, level, fLongDelay }) =>
+      this.outputLog(text, level, fLongDelay)
+    );
   }
-}
 
-// -----------------------------------------
-// Helpers
-// -----------------------------------------
-/* eslint-disable no-console */
-const outputLog = (text, level, fLongDelay) => {
-  const args = k.IS_BROWSER ?
-    ansiColors.getBrowserConsoleArgs(text) :
-    [text];
-  if (fLongDelay) console.log('          ...');
-  const output = (level >= 50 && level <= 60) ? 'error' : 'log';
-  console[output].apply(console, args);
-};
-/* eslint-enable no-console */
+  // -----------------------------------------
+  // Helpers
+  // -----------------------------------------
+  /* eslint-disable no-console */
+  outputLog(text, level, fLongDelay) {
+    const args = k.IS_BROWSER ?
+      ansiColors.getBrowserConsoleArgs(text) :
+      [text];
+    if (fLongDelay) console.log('          ...');
+    if (this.config.useStderr && level >= 50 && level <= 60) {
+      console.error.apply(console, args);
+    } else {
+      console.log.apply(console, args);
+    }
+  }
+  /* eslint-enable no-console */
+}
 
 // -----------------------------------------
 // API
