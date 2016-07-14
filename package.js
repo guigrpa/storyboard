@@ -149,7 +149,7 @@ const specs = {
   // ===============================================
   dependencies: {
     'timm': '1.0.0',
-    'clocksy': '1.0.0',
+    'clocksy': '1.1.0',
     'chalk': '1.x',
     'bluebird': '3.4.1',
     'express': '4.14.0',

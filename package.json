@@ -50,7 +50,7 @@
   "dependencies": {
     "bluebird": "3.4.1",
     "chalk": "1.x",
-    "clocksy": "1.0.0",
+    "clocksy": "1.1.0",
     "express": "4.14.0",
     "lodash": "4.13.1",
     "ms": "0.7.1",
