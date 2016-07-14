@@ -25,9 +25,9 @@ describe "consoleListener", ->
 
     sinon.stub console, 'log'
     storyboard.addListener consoleListener
+    storyboard.config filter: '*:*'
     console.log.restore()
 
-    storyboard.config filter: '*:*'
     _listener = storyboard.getListeners()[0]
 
   beforeEach -> 

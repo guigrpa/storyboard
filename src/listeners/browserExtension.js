@@ -1,5 +1,5 @@
 import { addDefaults, set as timmSet } from 'timm';
-import filters from '../gral/filters';
+import * as filters from '../gral/filters';
 
 const DEFAULT_CONFIG = {};
 

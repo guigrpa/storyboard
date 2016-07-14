@@ -12,7 +12,7 @@
 // when needed)
 import chalk from 'chalk';
 import mainStory from './gral/stories';
-import filters from './gral/filters';
+import * as filters from './gral/filters';
 import {
   init as hubInit,
   configure as hubConfigure,
@@ -22,6 +22,7 @@ import {
 chalk.enabled = true;
 
 hubInit({ mainStory });
+filters.init({ mainStory });
 
 const config = (options = {}) => {
   Object.keys(options).forEach(key => {

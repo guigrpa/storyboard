@@ -7,7 +7,7 @@ import chalk from 'chalk';
 import { addDefaults } from 'timm';
 import { ClocksyServer } from 'clocksy';
 import { throttle } from '../vendor/lodash';
-import filters from '../gral/filters';
+import * as filters from '../gral/filters';
 import { WS_NAMESPACE } from '../gral/constants';
 
 const DEFAULT_CONFIG = {
@@ -50,7 +50,7 @@ class WsServerListener {
     // Launch stand-alone log server
     if (port != null) {
       const httpInitError = logError(mainStory,
-        `Error initialising standalone server logs on port ${chalk.cyan(port)}`);
+        `Error initialising standalone server logs on port ${chalk.cyan.bold(port)}`);
       try {
         const expressApp = express();
         expressApp.use(express.static(path.join(__dirname, '../../serverLogsApp')));
@@ -58,7 +58,7 @@ class WsServerListener {
         httpServer.on('error', httpInitError);
         httpServer.on('listening', () => {
           const tmpPort = httpServer.address().port;
-          mainStory.info(LOG_SRC, `Logs available on port ${chalk.cyan(tmpPort)}`);
+          mainStory.info(LOG_SRC, `Logs available on port ${chalk.cyan.bold(tmpPort)}`);
         });
         this.ioStandaloneServer = socketio(httpServer);
         this.ioStandaloneNamespace = this.ioStandaloneServer.of(WS_NAMESPACE);
@@ -83,7 +83,7 @@ class WsServerListener {
         httpServer.on('listening', () => {
           const tmpPort = httpServer.address().port;
           mainStory.info(LOG_SRC,
-            `Logs available through main HTTP server on port ${chalk.cyan(tmpPort)}`);
+            `Logs available through main HTTP server on port ${chalk.cyan.bold(tmpPort)}`);
         });
       } catch (err) { httpInitError(err); }
     }
@@ -137,9 +137,6 @@ class WsServerListener {
       case 'SET_SERVER_FILTER':
         if (type === 'SET_SERVER_FILTER') filters.config(data);
         this.socketTx(socket, 'SERVER_FILTER', 'SUCCESS', { filter: filters.getConfig() });
-        if (type === 'SET_SERVER_FILTER') {
-          this.log('info', `Server filter changed to: ${chalk.cyan.bold(data)}`);
-        }
         break;
 
       // Uploaded records:

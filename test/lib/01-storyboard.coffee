@@ -19,21 +19,20 @@ describe 'storyboard v2', ->
     
 describe 'storyboard', ->
   
-  before -> 
-    storyboard.removeAllListeners()
+  before ->
     storyboard.addListener _listenerFactory
-    storyboard.config {bufSize: 5}
+    storyboard.config {filter: '*:*', bufSize: 5}
     expect(storyboard.getListeners()).to.have.length 1
+
+  after ->
+    storyboard.removeAllListeners()
 
   beforeEach -> _spyListenerProcess.reset()
 
   it 'sanity', ->
     expect(mainStory).to.exist
-    storyboard.config()
 
   describe 'using the main story', ->
-
-    beforeEach -> storyboard.config {filter: '*:*'}
 
     it 'should emit a record when logging', ->
       mainStory.info 'src1', 'msg1'
@@ -80,7 +79,6 @@ describe 'storyboard', ->
 
     childStory = null
     beforeEach ->
-      storyboard.config {filter: '*:*'}
       childStory = mainStory.child()
 
     it 'should be correctly initialised', ->
@@ -126,7 +124,6 @@ describe 'storyboard', ->
 
   describe 'getting the buffered records', ->
 
-    beforeEach -> storyboard.config {filter: '*:*'}
     before ->
       mainStory.info 'message1'
       mainStory.info 'message2'
@@ -146,7 +143,12 @@ describe 'storyboard', ->
     foo = null
     beforeEach -> 
       storyboard.config {filter: 'foo:INFO,*:*'}
+      _spyListenerProcess.reset() # Forget the 'filter changed' log
       foo = mainStory.child {src: 'foo', title: 'Foo', level: 'DEBUG'}
+
+    afterEach ->
+      storyboard.config {filter: '*:*'}
+      _spyListenerProcess.reset() # Forget the 'filter changed' log
 
     it 'should NOT emit action records', ->
       foo.close()

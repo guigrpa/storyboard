@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import { padStart } from '../../vendor/lodash';
 import ansiColors from '../../gral/ansiColors';
 import k from '../../gral/constants';
-import filters from '../../gral/filters';
+import * as filters from '../../gral/filters';
 import { deserialize } from '../../gral/serialize';
 import treeLines from '../../gral/treeLines';
 

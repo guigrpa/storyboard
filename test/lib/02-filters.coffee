@@ -20,6 +20,13 @@ describe 'filters', ->
     expect(passesFilter 'hello', 30).to.be.true
     expect(passesFilter 'hello', 40).to.be.true
 
+  it "should tolerate: 'hello:info'", ->
+    config 'hello:info'
+    expect(passesFilter 'hi',    20).to.be.false
+    expect(passesFilter 'hello', 20).to.be.false
+    expect(passesFilter 'hello', 30).to.be.true
+    expect(passesFilter 'hello', 40).to.be.true
+
   it "should prioritise exclusion: 'hello:INFO, -hello'", ->
     config 'hello:INFO, -hello'
     expect(passesFilter 'hi',    20).to.be.false

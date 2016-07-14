@@ -9,9 +9,9 @@ import createHttpServer from './httpServer';
 import db from './db';
 import writeSomeLogs from './writeSomeLogs';
 
+storyboard.config({ filter: '*:*' });
 storyboard.addListener(consoleListener);
 storyboard.addListener(fileListener);
-storyboard.config({ filter: '*:*' });
 
 // Initialise our server
 mainStory.info('server', 'Initialising server...');
