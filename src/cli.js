@@ -21,10 +21,12 @@ program
 })
 .parse(process.argv);
 
+/* eslint-disable no-console */
 if (cmdWithArgs == null) {
   console.log(chalk.red.bold('Missing command'));
   program.help(chalk.yellow.bold);
 }
+/* eslint-enable no-console */
 
 // Setting `useStderr` to `false` aims to reduce out-of-order
 // logs (Storyboard will output everything through `stdout`).
