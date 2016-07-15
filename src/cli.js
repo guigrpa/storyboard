@@ -52,21 +52,24 @@ if (program.file) {
 
 const child = exec(cmdWithArgs);
 
-process.stdin.on('error', () => { process.exit(); });
-process.stdout.on('error', () => { process.exit(); });
-process.stderr.on('error', () => { process.exit(); });
+const exit = () => { process.exit(); };
+process.stdin.on('error', exit);
+process.stdout.on('error', exit);
+process.stderr.on('error', exit);
 
 // Connect all pipes
 process.stdin.pipe(child.stdin);
 
 child.stdout.pipe(split())
-.on('data', line => mainStory.info(line));
+.on('data', line => mainStory.info(line))
+.on('end', () => { if (!program.server) process.exit(); });
 
 child.stderr.pipe(split())
 .on('data', line => {
   if (!line.length) return;
   mainStory.error(line);
-});
+})
+.on('end', () => { if (!program.server) process.exit(); });
 
 process.on('SIGINT', () => {
   mainStory.info('storyboard', 'SIGINT received');
