@@ -58,7 +58,7 @@ class WsServerListener {
         httpServer.on('error', httpInitError);
         httpServer.on('listening', () => {
           const tmpPort = httpServer.address().port;
-          mainStory.info(LOG_SRC, `Logs available on port ${chalk.cyan.bold(tmpPort)}`);
+          mainStory.info(LOG_SRC, `Logs available via web on port ${chalk.cyan.bold(tmpPort)}`);
         });
         this.ioStandaloneServer = socketio(httpServer);
         this.ioStandaloneNamespace = this.ioStandaloneServer.of(WS_NAMESPACE);
