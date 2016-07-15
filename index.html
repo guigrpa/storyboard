@@ -55,7 +55,7 @@
 
 <p>To add the <strong>Storyboard library</strong> to your project:</p>
 
-<div class="highlight highlight-source-shell"><pre><span class="pl-k">&gt;</span> npm install --save storyboard</pre></div>
+<div class="highlight highlight-source-shell"><pre>$ npm install --save storyboard</pre></div>
 
 <p>If you only need the CLI tool, see <a href="#cli-tool">this section</a>.</p>
 
@@ -69,16 +69,17 @@
 <p>Hopefully the next sections will convince you of the benefits of adding Storyboard to your project. If you don't want to modify your existing application but still want to use the Storyboard DevTools or other Storyboard features, you can use the <code>sb</code> CLI tool:</p>
 
 <div class="highlight highlight-source-shell"><pre>$ npm install -g storyboard
-$ sb --server -- ls -al
+$ sb --server ls
 
-2016-07-15T14:13:30.236Z           storyboard INFO  ┌── ROOT STORY: Node.js 6.3.0 on Darwin 64-bit [CREATED]
-2016-07-15T14:13:30.237Z           storyboard INFO  Log filter: <span class="pl-k">*</span>:DEBUG
-2016-07-15T14:13:30.428Z           storyboard INFO  Logs available via web on port 8090
-2016-07-15T14:13:30.430Z                 main INFO  total 1048
-2016-07-15T14:13:30.430Z                 main INFO  drwxr-xr-x   30 guigrpa  staff    1020 15 jul 16:10 <span class="pl-c1">.</span>
-2016-07-15T14:13:30.430Z                 main INFO  drwxr-xr-x   35 guigrpa  staff    1190 13 jul 15:19 ..
-2016-07-15T14:13:30.430Z                 main INFO  -rw-r--r--    1 guigrpa  staff      49  9 mar 15:19 .babelrc
-2016-07-15T14:13:30.430Z                 main INFO  -rwxr-xr-x    1 guigrpa  staff     509 11 jul 15:14 .eslintrc.yaml
+2016-07-15T17:26:33.974Z           storyboard INFO  ┌── ROOT STORY [CREATED]
+2016-07-15T17:26:33.975Z           storyboard INFO  Log filter: <span class="pl-k">*</span>:DEBUG
+2016-07-15T17:26:34.151Z           storyboard INFO  Logs available via web on port 8090
+2016-07-15T17:26:34.154Z                 main INFO  CHANGELOG.md
+2016-07-15T17:26:34.155Z                 main INFO  LICENSE
+2016-07-15T17:26:34.155Z                 main INFO  README.md
+2016-07-15T17:26:34.155Z                 main INFO  ROADMAP.md
+2016-07-15T17:26:34.155Z                 main INFO  chromeExtension
+2016-07-15T17:26:34.155Z                 main INFO  coverage
 ...</pre></div>
 
 <p>You can pipe <code>stdin</code> and <code>stdout</code> in the standard way:</p>
@@ -99,6 +100,8 @@ $ ls <span class="pl-k">|</span> sb -- head -n 3
 2016-07-15T14:41:52.202Z                 main INFO  
 2016-07-15T14:41:52.203Z           storyboard INFO  └── ROOT STORY [CLOSED]</pre></div>
 
+<p><em>Note the use of the <code>--</code> separator: before the separator, options belong to the <code>sb</code> tool; after the separator, they belong to the called application.</em></p>
+
 <p>Here are the CLI tool configuration options:</p>
 
 <pre><code>$ sb --help
@@ -116,8 +119,6 @@ $ ls <span class="pl-k">|</span> sb -- head -n 3
     -s, --server       Launch web server for logs
     -p, --port &lt;port&gt;  Port for web server
 </code></pre>
-
-<p><em>Note the use of the <code>--</code> separator: before the separator, options belong to the <code>sb</code> tool; after the separator, they belong to the called application.</em></p>
 
 <h2>
 <a id="storyboard-library-usage" class="anchor" href="#storyboard-library-usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Storyboard library usage</h2>
