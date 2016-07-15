@@ -13,6 +13,7 @@ Demo: http://storyboard-demo.herokuapp.com/
 * **Hierarchical stories**: put logs in context (*stories*), and group stories/logs within stories. Stories are extremely useful with concurrent user actions and async events.
 * Get the whole picture with *end-to-end stories*: see all **client and server tasks** triggered by a user action (a click on the *Login* button, maybe) **in a single place**.
 * Use the **Storyboard DevTools Chrome extension** to view client and server logs with a clean and detail-rich interface. Now with **remote client log monitoring for mobile devices** and non-Chrome browsers.
+* Not ready to change your application to use this library? No worries, use the **CLI tool** to call it, giving you remote access to your logs and compatibility with the Storyboard DevTools.
 * Watch server logs being pushed in **real time** to the Storyboard DevTools extension via WebSockets, with **opt-in client-server clock synchronization**. Even more: **control the level of detail you get from various parts of your server remotely, without relaunching**.
 * Ask for **authentication** to see server logs; hook up your own auth function.
 * **Attach anything** to your logs for further investigation.
@@ -24,18 +25,81 @@ Demo: http://storyboard-demo.herokuapp.com/
 
 ## Installation
 
-To install the **Storyboard library** in your project:
+To add the **Storyboard library** to your project:
 
+```bash
+> npm install --save storyboard
 ```
-$ npm install --save storyboard
-```
+
+If you only need the CLI tool, see [this section](#cli-tool).
 
 To install the **Storyboard DevTools** Chrome extension, [get it from the Chrome Web Store](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc). Optional, but highly recommended! After installing it, open the Storyboard pane in the Chrome DevTools and point your browser to a Storyboard-equipped page (see below for how to use the library).
 
 Feel free to check out the [example](https://github.com/guigrpa/storyboard/blob/master/src/example): just clone the repo and run `npm install && npm run buildExample && npm run example`. You can also test-drive the PostgreSQL Database listener with `npm run exampleWithDb`, but make sure you run [these SQL scripts](https://github.com/guigrpa/storyboard/blob/master/src/example/db.sql) before on your DB and [customize the connection parameters](https://github.com/guigrpa/storyboard/blob/master/src/example/serverWithDb.js).
 
 
-## Usage
+## CLI tool
+
+Hopefully the next sections will convince you of the benefits of adding Storyboard to your project. If you don't want to modify your existing application but still want to use the Storyboard DevTools or other Storyboard features, you can use the `sb` CLI tool:
+
+```bash
+$ npm install -g storyboard
+$ sb --server -- ls -al
+
+2016-07-15T14:13:30.236Z           storyboard INFO  ┌── ROOT STORY: Node.js 6.3.0 on Darwin 64-bit [CREATED]
+2016-07-15T14:13:30.237Z           storyboard INFO  Log filter: *:DEBUG
+2016-07-15T14:13:30.428Z           storyboard INFO  Logs available via web on port 8090
+2016-07-15T14:13:30.430Z                 main INFO  total 1048
+2016-07-15T14:13:30.430Z                 main INFO  drwxr-xr-x   30 guigrpa  staff    1020 15 jul 16:10 .
+2016-07-15T14:13:30.430Z                 main INFO  drwxr-xr-x   35 guigrpa  staff    1190 13 jul 15:19 ..
+2016-07-15T14:13:30.430Z                 main INFO  -rw-r--r--    1 guigrpa  staff      49  9 mar 15:19 .babelrc
+2016-07-15T14:13:30.430Z                 main INFO  -rwxr-xr-x    1 guigrpa  staff     509 11 jul 15:14 .eslintrc.yaml
+...
+```
+
+You can pipe `stdin` and `stdout` in the standard way:
+
+```bash
+$ sb ls | head -n 3
+
+2016-07-15T14:41:47.573Z           storyboard INFO  ┌── ROOT STORY [CREATED]
+2016-07-15T14:41:47.574Z           storyboard INFO  Log filter: *:DEBUG
+2016-07-15T14:41:47.601Z                 main INFO  CHANGELOG.md
+
+$ ls | sb -- head -n 3
+
+2016-07-15T14:41:52.174Z           storyboard INFO  ┌── ROOT STORY [CREATED]
+2016-07-15T14:41:52.176Z           storyboard INFO  Log filter: *:DEBUG
+2016-07-15T14:41:52.201Z                 main INFO  CHANGELOG.md
+2016-07-15T14:41:52.201Z                 main INFO  LICENSE
+2016-07-15T14:41:52.201Z                 main INFO  README.md
+2016-07-15T14:41:52.202Z                 main INFO  
+2016-07-15T14:41:52.203Z           storyboard INFO  └── ROOT STORY [CLOSED]
+```
+
+Here are the CLI tool configuration options:
+
+```
+$ sb --help
+
+  Usage: sb [options] <command> [args...]
+
+  Options:
+
+    -h, --help         output usage information
+    -V, --version      output the version number
+    --no-console       Disable console output
+    --stderr           Enable stderr for errors
+    --no-colors        Disable color output
+    -f, --file <path>  Save logs to file
+    -s, --server       Launch web server for logs
+    -p, --port <port>  Port for web server
+```
+
+*Note the use of the `--` separator: before the separator, options belong to the `sb` tool; after the separator, they belong to the called application.*
+
+
+## Storyboard library usage
 
 ### Basic usage
 

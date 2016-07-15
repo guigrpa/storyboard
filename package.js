@@ -39,6 +39,7 @@ const specs = {
   version: VERSION,
   description: DESCRIPTION,
   main: 'lib/storyboard.js',
+  bin: { sb: 'lib/cli.js' },
   author: 'Guillermo Grau Panea',
   license: 'MIT',
   keywords: KEYWORDS,
@@ -160,6 +161,7 @@ const specs = {
     'split': '1.0.0',
     'pg': '6.0.2',
     'ms': '0.7.1',
+    'commander': '2.9.0',
   },
 
   // ===============================================

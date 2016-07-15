@@ -3,6 +3,9 @@
   "version": "2.0.0-alpha.4",
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
   "main": "lib/storyboard.js",
+  "bin": {
+    "sb": "lib/cli.js"
+  },
   "author": "Guillermo Grau Panea",
   "license": "MIT",
   "keywords": [
@@ -51,6 +54,7 @@
     "bluebird": "3.4.1",
     "chalk": "1.x",
     "clocksy": "1.1.0",
+    "commander": "2.9.0",
     "express": "4.14.0",
     "lodash": "4.13.1",
     "ms": "0.7.1",
