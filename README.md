@@ -44,17 +44,16 @@ Hopefully the next sections will convince you of the benefits of adding Storyboa
 
 ```bash
 $ npm install -g storyboard
-$ sb --server -- ls -al
+$ sb --server ls
 
-2016-07-15T14:13:30.236Z           storyboard INFO  ┌── ROOT STORY: Node.js 6.3.0 on Darwin 64-bit [CREATED]
-2016-07-15T14:13:30.237Z           storyboard INFO  Log filter: *:DEBUG
-2016-07-15T14:13:30.428Z           storyboard INFO  Logs available via web on port 8090
-2016-07-15T14:13:30.430Z                 main INFO  total 1048
-2016-07-15T14:13:30.430Z                 main INFO  drwxr-xr-x   30 guigrpa  staff    1020 15 jul 16:10 .
-2016-07-15T14:13:30.430Z                 main INFO  drwxr-xr-x   35 guigrpa  staff    1190 13 jul 15:19 ..
-2016-07-15T14:13:30.430Z                 main INFO  -rw-r--r--    1 guigrpa  staff      49  9 mar 15:19 .babelrc
-2016-07-15T14:13:30.430Z                 main INFO  -rwxr-xr-x    1 guigrpa  staff     509 11 jul 15:14 .eslintrc.yaml
+2016-07-15T17:24:18.384Z           storyboard INFO  ┌── ROOT STORY [CREATED]
+2016-07-15T17:24:18.385Z           storyboard INFO  Log filter: *:DEBUG
+2016-07-15T17:24:18.411Z                 main INFO  CHANGELOG.md
+2016-07-15T17:24:18.412Z                 main INFO  LICENSE
+2016-07-15T17:24:18.412Z                 main INFO  README.md
+2016-07-15T17:24:18.412Z                 main INFO  ROADMAP.md
 ...
+2016-07-15T17:24:20.839Z           storyboard INFO  └── ROOT STORY [CLOSED]
 ```
 
 You can pipe `stdin` and `stdout` in the standard way:
@@ -77,6 +76,8 @@ $ ls | sb -- head -n 3
 2016-07-15T14:41:52.203Z           storyboard INFO  └── ROOT STORY [CLOSED]
 ```
 
+*Note the use of the `--` separator: before the separator, options belong to the `sb` tool; after the separator, they belong to the called application.*
+
 Here are the CLI tool configuration options:
 
 ```
@@ -96,7 +97,6 @@ $ sb --help
     -p, --port <port>  Port for web server
 ```
 
-*Note the use of the `--` separator: before the separator, options belong to the `sb` tool; after the separator, they belong to the called application.*
 
 
 ## Storyboard library usage
