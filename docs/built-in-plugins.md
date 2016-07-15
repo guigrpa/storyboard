@@ -19,6 +19,7 @@ The following sections describe the parameters you can pass as `options`.
 **Options:**
 
 * **moduleNameLength** *number* (default: `20`): number of characters dedicated to the `src` field (e.g. `main`, `storyboard`, `httpServer`, ...)
+* **colors** *boolean* (default: `true`): enable/disable colors in output.
 * **relativeTime** *boolean* (default: `true` browser-side, `false` otherwise): whether full timestamps are logged, or only relative. If `relativeTime` is enabled, time differences lower than 10 ms are not displayed, and those higher than 1 s introduce an extra line to make the log more readable.
 
 

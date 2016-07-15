@@ -6,6 +6,7 @@ import recordToLines from './helpers/recordToLines';
 const DEFAULT_CONFIG = {
   moduleNameLength: 20,
   relativeTime: k.IS_BROWSER,
+  colors: true,
   useStderr: false,
 };
 
