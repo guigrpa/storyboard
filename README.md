@@ -28,7 +28,7 @@ Demo: http://storyboard-demo.herokuapp.com/
 To add the **Storyboard library** to your project:
 
 ```bash
-> npm install --save storyboard
+$ npm install --save storyboard
 ```
 
 If you only need the CLI tool, see [this section](#cli-tool).
