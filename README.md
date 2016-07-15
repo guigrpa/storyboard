@@ -46,17 +46,16 @@ Hopefully the next sections will convince you of the benefits of adding Storyboa
 $ npm install -g storyboard
 $ sb --server ls
 
-2016-07-15T17:24:18.384Z           storyboard INFO  ┌── ROOT STORY [CREATED]
-2016-07-15T17:24:18.385Z           storyboard INFO  Log filter: *:DEBUG
-2016-07-15T17:24:18.411Z                 main INFO  CHANGELOG.md
-2016-07-15T17:24:18.412Z                 main INFO  LICENSE
-2016-07-15T17:24:18.412Z                 main INFO  README.md
-2016-07-15T17:24:18.412Z                 main INFO  ROADMAP.md
-2016-07-15T17:24:18.412Z                 main INFO  chromeExtension
-2016-07-15T17:24:18.412Z                 main INFO  coverage
-2016-07-15T17:24:18.412Z                 main INFO  docs
+2016-07-15T17:26:33.974Z           storyboard INFO  ┌── ROOT STORY [CREATED]
+2016-07-15T17:26:33.975Z           storyboard INFO  Log filter: *:DEBUG
+2016-07-15T17:26:34.151Z           storyboard INFO  Logs available via web on port 8090
+2016-07-15T17:26:34.154Z                 main INFO  CHANGELOG.md
+2016-07-15T17:26:34.155Z                 main INFO  LICENSE
+2016-07-15T17:26:34.155Z                 main INFO  README.md
+2016-07-15T17:26:34.155Z                 main INFO  ROADMAP.md
+2016-07-15T17:26:34.155Z                 main INFO  chromeExtension
+2016-07-15T17:26:34.155Z                 main INFO  coverage
 ...
-2016-07-15T17:24:20.839Z           storyboard INFO  └── ROOT STORY [CLOSED]
 ```
 
 You can pipe `stdin` and `stdout` in the standard way:
