@@ -163,14 +163,16 @@ describe 'storyboard', ->
 
     it 'should emit logs >= WARN (and make the story visible)', ->
       foo.warn 'whatever', 'Warning, warning!'
-      expect(_spyListenerProcess).to.have.been.calledTwice
-      msg = _spyListenerProcess.args[0][0]
-      record = msg.data[0]
+      expect(_spyListenerProcess).to.have.callCount 4
+      record = _spyListenerProcess.args[0][0].data[0]
+      expect(record.signalType).to.equal 'REVEAL_SEPARATOR'
+      record = _spyListenerProcess.args[1][0].data[0]
       expect(record.src).to.equal 'foo'
       expect(record.action).to.equal 'CREATED'
       expect(record.level).to.equal k.LEVEL_STR_TO_NUM.DEBUG
-      msg = _spyListenerProcess.args[1][0]
-      record = msg.data[0]
+      record = _spyListenerProcess.args[2][0].data[0]
+      expect(record.signalType).to.equal 'REVEAL_SEPARATOR'
+      record = _spyListenerProcess.args[3][0].data[0]
       expect(record.src).to.equal 'whatever'
       expect(record.level).to.equal k.LEVEL_STR_TO_NUM.WARN
 
@@ -193,22 +195,22 @@ describe 'storyboard', ->
       it 'should emit logs >= WARN (and make both ancestors visible)', ->
         fooChild.info 'whatever', 'Some operation'
         fooChild.warn 'whatever', 'Warning, warning!'
-        expect(_spyListenerProcess).to.have.callCount 4
-        msg = _spyListenerProcess.args[0][0]
-        record = msg.data[0]
+        expect(_spyListenerProcess).to.have.callCount 6
+        record = _spyListenerProcess.args[0][0].data[0]
+        expect(record.signalType).to.equal 'REVEAL_SEPARATOR'
+        record = _spyListenerProcess.args[1][0].data[0]
         expect(record.src).to.equal 'foo'
         expect(record.action).to.equal 'CREATED'
         expect(record.level).to.equal k.LEVEL_STR_TO_NUM.DEBUG
-        msg = _spyListenerProcess.args[1][0]
-        record = msg.data[0]
+        record = _spyListenerProcess.args[2][0].data[0]
         expect(record.src).to.equal 'child'
         expect(record.action).to.equal 'CREATED'
         expect(record.level).to.equal k.LEVEL_STR_TO_NUM.INFO
-        msg = _spyListenerProcess.args[2][0]
-        record = msg.data[0]
+        record = _spyListenerProcess.args[3][0].data[0]
         expect(record.src).to.equal 'whatever'
         expect(record.level).to.equal k.LEVEL_STR_TO_NUM.INFO
-        msg = _spyListenerProcess.args[3][0]
-        record = msg.data[0]
+        record = _spyListenerProcess.args[4][0].data[0]
+        expect(record.signalType).to.equal 'REVEAL_SEPARATOR'
+        record = _spyListenerProcess.args[5][0].data[0]
         expect(record.src).to.equal 'whatever'
         expect(record.level).to.equal k.LEVEL_STR_TO_NUM.WARN

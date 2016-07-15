@@ -46,7 +46,7 @@ const refresh = storyTitle => {
       nodeItems.innerHTML = items.map(o => `<li>${o}</li>`).join('');
     }
   })
-  // .delay(4000)
+  // .delay(7000)
   // .then(() => story.warn('A revelation!'))
   .finally(() => story.close());
 };

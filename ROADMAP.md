@@ -19,12 +19,11 @@
         * [x] When we're sure, only print initial clock delta, not subsequent ones (set them to `TRACE`)
     + [x] Document listener API
     + [x] Console listener: make it configurable not to write anything to `stderr`, using `stdout` instead (to avoid out-of-order logs)
-    + [ ] Improve cli:
-        * [ ] Why does `sb ls` not exit?
-    + [ ] Publish 2.0.0-alpha.5 with cli and test it
+    + [X] Improve cli:
+    + [X] Publish 2.0.0-alpha.5 with cli and test it
+    + [X] When revealing a hidden story (error/warning): include a separator line in the log to indicate that those records are FROM THE PAST. This separator should ONLY be included in chronological listeners: console and file, and generated at mainStory level.
     + [ ] Document cli
     + [ ] Architecture diagram, graphical vocabulary, different use cases
-    + [ ] When revealing a hidden story (error/warning): include a separator line in the log to indicate that those records are FROM THE PAST. This separator should ONLY be included in chronological listeners: console and file, and generated at mainStory level.
     + [ ] Remove lodash dependency
     + [ ] Publish 2.0.0-rc1
     + [ ] Check compilation of storyboard with browserify (e.g. bump mady): does it keep clocksy and storyboard credits?

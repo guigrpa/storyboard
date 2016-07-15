@@ -10,11 +10,15 @@ hub           = require './hub'
 DEFAULT_SRC = 'main'
 DEFAULT_CHILD_TITLE = ''
 
+REVEAL_SEPARATOR_BEGIN = '\u250c\u2500\u2500 REVEALED PAST LOGS BEGIN HERE (due to warning/error)'
+REVEAL_SEPARATOR_END = '\u2514\u2500\u2500 REVEALED PAST LOGS END HERE'
+
 # Record formats:
 # * 1 (or undefined): initial version
 # * 2: embeds objects directly, not their visual representation
 #   (does not call treeLines before attaching). Circular refs are removed
-RECORD_FORMAT_VERSION = 2
+# * 3: include type signalType
+RECORD_FORMAT_VERSION = 3
 
 _hiddenStories = {}
 _hubId = hub.getHubId()
@@ -110,7 +114,9 @@ _.each k.LEVEL_STR_TO_NUM, (levelNum, levelStr) ->
       if levelNum < k.LEVEL_STR_TO_NUM.WARN
         @hiddenRecords.push record
         return
+      _emitRevealSeparator REVEAL_SEPARATOR_BEGIN
       @reveal()
+      _emitRevealSeparator REVEAL_SEPARATOR_END
 
     _emit record
     return
@@ -160,6 +166,7 @@ Story::reveal = ->
 #   - `t: number` [ms] (for stories, creation time)
 #   - `src: string?`
 #   - `level: number`
+#   - `signalType: string` (undefined for ordinary, non-signalling records)
 # * Only for stories:
 #   - `fRoot: boolean`
 #   - `title: string?`
@@ -195,6 +202,17 @@ _processAttachments = (record, options) ->
     record.objOptions = _.pick options, ['ignoreKeys']
     record.objIsError = _.isError record.obj
     record.obj = serialize record.obj
+  return
+
+_emitRevealSeparator = (msg) ->
+  record =
+    storyId: mainStory.storyId
+    level: k.LEVEL_STR_TO_NUM.WARN
+    src: 'storyboard'
+    msg: msg
+    signalType: 'REVEAL_SEPARATOR'
+  _completeRecord record
+  _emit record
   return
 
 _emit = (record) -> hub.emitMsgWithFields 'STORIES', 'RECORDS', [record]

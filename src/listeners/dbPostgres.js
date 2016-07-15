@@ -85,7 +85,8 @@ class DbPostgresListener {
   }
 
   addToRecordBuffer(records) {
-    this.bufRecords = this.bufRecords.concat(records);
+    const finalRecords = records.filter(r => !r.signalType);
+    this.bufRecords = this.bufRecords.concat(finalRecords);
     if (this.bufRecords.length > BUF_LENGTH) {
       this.bufRecords = this.bufRecords.slice(-BUF_LENGTH);
     }

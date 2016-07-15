@@ -102,6 +102,7 @@ _rxRecords = (state, action, settings) ->
   options = timm.merge settings, {fPastRecords, fShorthandForDuplicates}
   newStories = []
   for record in records
+    if record.signalType then continue
     if record.fStory 
       [state, pathStr] = _rxStory state, record, options
       if pathStr then newStories.push pathStr
