@@ -52,6 +52,9 @@ $ sb --server ls
 2016-07-15T17:24:18.412Z                 main INFO  LICENSE
 2016-07-15T17:24:18.412Z                 main INFO  README.md
 2016-07-15T17:24:18.412Z                 main INFO  ROADMAP.md
+2016-07-15T17:24:18.412Z                 main INFO  chromeExtension
+2016-07-15T17:24:18.412Z                 main INFO  coverage
+2016-07-15T17:24:18.412Z                 main INFO  docs
 ...
 2016-07-15T17:24:20.839Z           storyboard INFO  └── ROOT STORY [CLOSED]
 ```
