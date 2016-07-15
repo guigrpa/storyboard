@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-import { exec } from 'child_process';
+
 import split from 'split';
+import { exec } from 'child_process';
 import program from 'commander';
 import { mainStory, addListener, chalk } from './storyboard';
 const pkg = require('../package.json');

@@ -19,9 +19,7 @@
         * [x] When we're sure, only print initial clock delta, not subsequent ones (set them to `TRACE`)
     + [x] Document listener API
     + [x] Console listener: make it configurable not to write anything to `stderr`, using `stdout` instead (to avoid out-of-order logs)
-    + [ ] Improve cli:
-        * [ ] Use stdin
-        * [ ] What if stdout/stderr are piped/redirected and they are closed before my process ends?
+    + [x] Improve cli:
     + [ ] Publish 2.0.0-alpha.5 with cli and test it
     + [ ] Document cli
     + [ ] Architecture diagram, graphical vocabulary, different use cases
