@@ -1,4 +1,4 @@
-# Storyboard [![Build Status](https://travis-ci.org/guigrpa/storyboard.svg?branch=master)](https://travis-ci.org/guigrpa/storyboard) [![Coverage Status](https://coveralls.io/repos/github/guigrpa/storyboard/badge.svg?branch=master)](https://coveralls.io/github/guigrpa/storyboard?branch=master) [![npm version](https://img.shields.io/npm/v/storyboard.svg)](https://www.npmjs.com/package/storyboard) 
+# Storyboard [![Build Status](https://travis-ci.org/guigrpa/storyboard.svg?branch=master)](https://travis-ci.org/guigrpa/storyboard) [![Coverage Status](https://coveralls.io/repos/github/guigrpa/storyboard/badge.svg?branch=master)](https://coveralls.io/github/guigrpa/storyboard?branch=master) [![npm version](https://img.shields.io/npm/v/storyboard.svg)](https://www.npmjs.com/package/storyboard)
 
 _**These are the docs for the upcoming Storyboard v2. The latest docs for v1.x can be recovered [here](https://github.com/guigrpa/storyboard/blob/v1.4.0/README.md). See also the [CHANGELOG](https://github.com/guigrpa/storyboard/blob/master/CHANGELOG.md) for details on new features and breaking changes.**_
 
@@ -175,7 +175,7 @@ You can also use the `attachLevel` option to control the (severity) level of the
 mainStory.info('test', 'A simple object', { attachInline: obj1 });
 // 2016-03-09T16:51:16.436Z           test INFO  A simple object -- {"foo":2,"bar":3}
 mainStory.info('test', 'An object with a circular reference', {
-  attach: obj2, 
+  attach: obj2,
   attachLevel: 'debug',
 });
 // 2016-03-09T16:52:48.882Z           test INFO  An object with a circular reference
@@ -252,7 +252,7 @@ story.close();
 
 Logs emitted by stories are relayed by the Storyboard *Hub* to all attached *listeners*. A Hub exists at the core of every Storyboard instance. Here is an example of a typical configuration, with a server-side Hub and a client-side Hub (other use cases have proved possible in production):
 
-**<< Figure TBC >>**
+![Typical configuration](https://raw.githubusercontent.com/guigrpa/storyboard/master/docs/typical-arch.gif)
 
 Several listeners come built-in (check out their [configuration options](https://github.com/guigrpa/storyboard/blob/master/docs/built-in-plugins.md), as well as the following sections):
 
@@ -381,7 +381,7 @@ const app = express();
 app.get('/items', (req, res) => {
   const { storyId } = req.query;
   const story = mainStory.child({
-    src: 'http', 
+    src: 'http',
     title: `HTTP request ${req.url}`,
     extraParents: storyId != null ? [storyId] : undefined,
   });
