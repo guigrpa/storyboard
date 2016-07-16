@@ -187,7 +187,7 @@ $ ls <span class="pl-k">|</span> sb -- head -n 3
 <div class="highlight highlight-source-js"><pre><span class="pl-smi">mainStory</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>A simple object<span class="pl-pds">'</span></span>, { attachInline<span class="pl-k">:</span> obj1 });
 <span class="pl-c">// 2016-03-09T16:51:16.436Z           test INFO  A simple object -- {"foo":2,"bar":3}</span>
 <span class="pl-smi">mainStory</span>.<span class="pl-en">info</span>(<span class="pl-s"><span class="pl-pds">'</span>test<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>An object with a circular reference<span class="pl-pds">'</span></span>, {
-  attach<span class="pl-k">:</span> obj2, 
+  attach<span class="pl-k">:</span> obj2,
   attachLevel<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>debug<span class="pl-pds">'</span></span>,
 });
 <span class="pl-c">// 2016-03-09T16:52:48.882Z           test INFO  An object with a circular reference</span>
@@ -263,7 +263,7 @@ $ <span class="pl-c1">set</span> <span class="pl-s"><span class="pl-pds">"</span
 
 <p>Logs emitted by stories are relayed by the Storyboard <em>Hub</em> to all attached <em>listeners</em>. A Hub exists at the core of every Storyboard instance. Here is an example of a typical configuration, with a server-side Hub and a client-side Hub (other use cases have proved possible in production):</p>
 
-<p><strong>&lt;&lt; Figure TBC &gt;&gt;</strong></p>
+<p><img src="https://raw.githubusercontent.com/guigrpa/storyboard/master/docs/typical-arch.png" alt="Typical configuration"></p>
 
 <p>Several listeners come built-in (check out their <a href="https://github.com/guigrpa/storyboard/blob/master/docs/built-in-plugins.md">configuration options</a>, as well as the following sections):</p>
 
@@ -377,7 +377,7 @@ $ <span class="pl-c1">set</span> <span class="pl-s"><span class="pl-pds">"</span
 <span class="pl-smi">app</span>.<span class="pl-en">get</span>(<span class="pl-s"><span class="pl-pds">'</span>/items<span class="pl-pds">'</span></span>, (<span class="pl-smi">req</span>, <span class="pl-smi">res</span>) <span class="pl-k">=&gt;</span> {
   <span class="pl-k">const</span> { <span class="pl-c1">storyId</span> } <span class="pl-k">=</span> <span class="pl-smi">req</span>.<span class="pl-smi">query</span>;
   <span class="pl-k">const</span> <span class="pl-c1">story</span> <span class="pl-k">=</span> <span class="pl-smi">mainStory</span>.<span class="pl-en">child</span>({
-    src<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>http<span class="pl-pds">'</span></span>, 
+    src<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>http<span class="pl-pds">'</span></span>,
     title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">`</span>HTTP request <span class="pl-s1"><span class="pl-pse">${</span><span class="pl-smi">req</span>.<span class="pl-smi">url</span><span class="pl-pse">}</span></span><span class="pl-pds">`</span></span>,
     extraParents<span class="pl-k">:</span> storyId <span class="pl-k">!=</span> <span class="pl-c1">null</span> <span class="pl-k">?</span> [storyId] <span class="pl-k">:</span> <span class="pl-c1">undefined</span>,
   });
