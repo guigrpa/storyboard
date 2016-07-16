@@ -16,12 +16,12 @@ _tree = (node, options, prefix, stack) ->
   for key, val of node
     continue if options.ignoreKeys.indexOf(key) >= 0
     finalPrefix = if key is WRAPPER_KEY then prefix else "#{prefix}#{key}: "
-    if (_.isObject(val) and _.includes(stack, val)) or  # Avoid circular dependencies
+    if (_.isObject(val) and stack.indexOf(val) >= 0) or  # Avoid circular dependencies
        (val is CIRCULAR_REF)
       out.push "#{finalPrefix}#{chalk.green.bold '[CIRCULAR]'}"
-    else if _.isArray(val) and val.length is 0
+    else if Array.isArray(val) and val.length is 0
       out.push "#{finalPrefix}#{chalk.bold '[]'}"
-    else if _.isArray(val) and val.length and _.isString(val[0])
+    else if Array.isArray(val) and val.length and _.isString(val[0])
       strVal = _.map(val, (o) -> "'#{o}'").join ', '
       strVal = chalk.yellow.bold "[#{strVal}]"
       out.push "#{finalPrefix}#{strVal}"
@@ -34,7 +34,7 @@ _tree = (node, options, prefix, stack) ->
       out.push "#{finalPrefix}#{chalk.magenta.bold str}"
     else if _.isObject(val) and Object.keys(val).length is 0
       out.push "#{finalPrefix}#{chalk.bold '{}'}"
-    else if _.isArray val
+    else if Array.isArray val
       postponedArrayAttrs.push key
     else if _.isObject val
       postponedObjectAttrs.push key
@@ -45,11 +45,11 @@ _tree = (node, options, prefix, stack) ->
       else
         for line in lines
           out.push "#{finalPrefix}" + chalk.yellow.bold(line)
-    else if _.isNull val
+    else if val is null
       out.push "#{finalPrefix}#{chalk.red.bold 'null'}"
-    else if _.isUndefined val
+    else if val is undefined
       out.push "#{finalPrefix}#{chalk.bgRed.bold 'undefined'}"
-    else if _.isBoolean val
+    else if (val is true) or (val is false)
       out.push "#{finalPrefix}#{chalk.cyan.bold val}"
     else if _.isNumber val
       out.push "#{finalPrefix}#{chalk.blue.bold val}"

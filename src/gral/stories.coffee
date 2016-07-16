@@ -51,7 +51,7 @@ Story = ({parents, src, title, levelNum, fHiddenByFilter}) ->
 #-----------------------------------------------
 # ### Story lifecycle
 #-----------------------------------------------
-Story::close = -> 
+Story::close = ->
   @fOpen = false
   @emitAction 'CLOSED'
   if @fHiddenByFilter
@@ -67,7 +67,7 @@ Story::changeStatus = (status) ->
   @emitAction 'STATUS_CHANGED'
   return
 
-Story::child = (options = {}) -> 
+Story::child = (options = {}) ->
   {src, title, extraParents, level: levelStr} = options
   src ?= DEFAULT_SRC
   title ?= DEFAULT_CHILD_TITLE
@@ -75,14 +75,15 @@ Story::child = (options = {}) ->
   parents = [@storyId]
   if extraParents? then parents = parents.concat extraParents
   return new Story {
-    parents, src, title, levelNum, 
+    parents, src, title, levelNum,
     fHiddenByFilter: @fHiddenByFilter
   }
 
 #-----------------------------------------------
 # ### Logs
 #-----------------------------------------------
-_.each k.LEVEL_STR_TO_NUM, (levelNum, levelStr) ->
+Object.keys(k.LEVEL_STR_TO_NUM).forEach (levelStr) ->
+  levelNum = k.LEVEL_STR_TO_NUM[levelStr]
   Story::[levelStr.toLowerCase()] = (src, msg, options) ->
 
     # Prepare arguments
@@ -221,7 +222,7 @@ _emit = (record) -> hub.emitMsgWithFields 'STORIES', 'RECORDS', [record]
 # ### Create the main story
 #-----------------------------------------------
 title = "ROOT STORY: #{chalk.italic.blue.bold platform.description}"
-mainStory = new Story 
+mainStory = new Story
   parents: []
   src: 'storyboard'
   title: title

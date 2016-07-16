@@ -1,5 +1,5 @@
 - Bugs:
-    + 
+    +
 - **Chrome extension**:
     + Add config screenshot
     + Someday...
@@ -22,9 +22,9 @@
     + [X] Improve cli:
     + [X] Publish 2.0.0-alpha.5 with cli and test it
     + [X] When revealing a hidden story (error/warning): include a separator line in the log to indicate that those records are FROM THE PAST. This separator should ONLY be included in chronological listeners: console and file, and generated at mainStory level.
-    + [ ] Document cli
+    + [x] Document cli
+    + [x] Reduce lodash dependency
     + [ ] Architecture diagram, graphical vocabulary, different use cases
-    + [ ] Remove lodash dependency
     + [ ] Publish 2.0.0-rc1
     + [ ] Check compilation of storyboard with browserify (e.g. bump mady): does it keep clocksy and storyboard credits?
     + [ ] Review docs

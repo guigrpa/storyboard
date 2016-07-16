@@ -23,7 +23,7 @@ _quickFind = (msg, quickFind) ->
 #-====================================================
 # ## Story
 #-====================================================
-mapStateToProps = (state) -> 
+mapStateToProps = (state) ->
   timeType:           state.settings.timeType
   fShowClosedActions: state.settings.fShowClosedActions
   quickFind:          state.stories.quickFind
@@ -31,7 +31,7 @@ mapDispatchToProps = (dispatch) ->
   setTimeType: (timeType) -> dispatch actions.setTimeType timeType
   onToggleExpanded: (pathStr) -> dispatch actions.toggleExpanded pathStr
   onToggleHierarchical: (pathStr) -> dispatch actions.toggleHierarchical pathStr
-  onToggleAttachment: (pathStr, recordId) -> 
+  onToggleAttachment: (pathStr, recordId) ->
     dispatch actions.toggleAttachment pathStr, recordId
 
 _Story = React.createClass
@@ -52,8 +52,8 @@ _Story = React.createClass
     onToggleAttachment:     React.PropTypes.func.isRequired
 
   #-----------------------------------------------------
-  render: -> 
-    if @props.story.fWrapper 
+  render: ->
+    if @props.story.fWrapper
       return <div>{@renderRecords()}</div>
     if @props.level is 1 then return @renderRootStory()
     return @renderNormalStory()
@@ -129,7 +129,7 @@ _Story = React.createClass
       />
     out
 
-  renderAttachment: (record) -> 
+  renderAttachment: (record) ->
     {storyId, id, obj, objOptions, version} = record
     props = _.pick @props, ['level', 'timeType', 'setTimeType', 'quickFind', 'seqFullRefresh']
     lines = if version >= 2 then treeLines(deserialize(obj), objOptions) else obj
@@ -151,7 +151,7 @@ _Story = React.createClass
   #-----------------------------------------------------
   toggleExpanded: -> @props.onToggleExpanded @props.story.pathStr
   toggleHierarchical: -> @props.onToggleHierarchical @props.story.pathStr
-  toggleAttachment: (recordId) -> 
+  toggleAttachment: (recordId) ->
     @props.onToggleAttachment @props.story.pathStr, recordId
 
   #-----------------------------------------------------
@@ -174,7 +174,7 @@ _Story = React.createClass
     out
 
 #-----------------------------------------------------
-_style = 
+_style =
   outer: (level, story) ->
     bgColor = 'aliceblue'
     if story.fServer then bgColor = tinycolor(bgColor).darken(5).toHexString()
@@ -207,14 +207,14 @@ MainStoryTitle = React.createClass
 
   #-----------------------------------------------------
   render: ->
-    <div 
-      className="rootStoryTitle" 
+    <div
+      className="rootStoryTitle"
       style={_styleMainTitle.outer}
       onMouseEnter={@onMouseEnter}
       onMouseLeave={@onMouseLeave}
     >
       {@renderCaret()}
-      <span 
+      <span
         style={_styleMainTitle.title}
         onClick={@props.onToggleExpanded}
       >
@@ -227,7 +227,7 @@ MainStoryTitle = React.createClass
   renderCaret: ->
     return if not @state.fHovered
     icon = if @props.fExpanded then 'caret-down' else 'caret-right'
-    <span 
+    <span
       onClick={@props.onToggleExpanded}
       style={_styleMainTitle.caret.outer}
     >
@@ -289,7 +289,7 @@ AttachmentLine = React.createClass
     {record, msg} = @props
     style = _styleLine.log record
     msg = _quickFind msg, @props.quickFind
-    <div 
+    <div
       className="attachmentLine allowUserSelect"
       style={style}
     >
@@ -329,7 +329,7 @@ RepetitionLine = React.createClass
     style = _styleLine.log record
     msg = " x#{record.repetitions+1}, latest: "
     msg = _quickFind msg, @props.quickFind
-    <div 
+    <div
       className="attachmentLine allowUserSelect"
       style={style}
     >
@@ -382,7 +382,7 @@ Line = React.createClass
     {record, fDirectChild, level} = @props
     {id, msg, fStory, fStoryObject, fOpen, title, action} = record
     if fStoryObject then msg = title
-    if fStory 
+    if fStory
       msg = if not fDirectChild then "#{title} " else ''
       if action then msg += chalk.gray "[#{action}]"
     if fStoryObject
@@ -394,7 +394,7 @@ Line = React.createClass
       className = 'log'
       style = _styleLine.log record
       indentLevel = level
-    <div 
+    <div
       className={"#{className} allowUserSelect fadeIn"}
       onMouseEnter={@onMouseEnter}
       onMouseLeave={@onMouseLeave}
@@ -417,8 +417,8 @@ Line = React.createClass
     if level >= k.LEVEL_STR_TO_NUM.ERROR then msg = chalk.red.bold msg
     else if level >= k.LEVEL_STR_TO_NUM.WARN then msg = chalk.red.yellow msg
     if fStoryObject
-      <ColoredText 
-        text={msg} 
+      <ColoredText
+        text={msg}
         onClick={@props.onToggleExpanded}
         style={_styleLine.title}
       />
@@ -451,11 +451,11 @@ Line = React.createClass
     />
 
   renderWarningIcon: (record) ->
-    return if record.fExpanded 
+    return if record.fExpanded
     { fHasWarning, fHasError } = record
     return if not(fHasWarning or fHasError)
     title = "Story contains #{if fHasError then 'an error' else 'a warning'}"
-    <Icon 
+    <Icon
       icon="warning"
       title={title}
       onClick={@props.onToggleExpanded}
@@ -470,8 +470,8 @@ Line = React.createClass
     else
       icon = if record.objExpanded then 'folder-open-o' else 'folder-o'
       style = _styleLine.attachmentIcon
-    <Icon 
-      icon={icon} 
+    <Icon
+      icon={icon}
       onClick={@onClickAttachment}
       style={style}
     />
@@ -545,8 +545,8 @@ Time = React.createClass
         shownTime = '           ' + m.format('HH:mm:ss.SSS')
       if timeType is 'UTC' then shownTime += 'Z'
     shownTime = _.padEnd shownTime, TIME_LENGTH
-    if fTrim then shownTime = _.trim shownTime
-    <span 
+    if fTrim then shownTime = shownTime.trim()
+    <span
       onClick={@onClick}
       style={_styleTime fRelativeTime}
       title={if timeType isnt 'LOCAL' then localTime}
@@ -582,7 +582,7 @@ Severity = React.createClass
     else
       <span style={_styleStorySeverity}>      </span>
 
-_styleStorySeverity = 
+_styleStorySeverity =
   color: 'gray'
 
 #-====================================================
@@ -601,8 +601,8 @@ Src = React.createClass
 #-====================================================
 # ## Indent
 #-====================================================
-Indent = ({level}) -> 
-  style = 
+Indent = ({level}) ->
+  style =
     display: 'inline-block'
     width: 20 * (level - 1)
   <div style={style}/>
@@ -641,9 +641,9 @@ HierarchicalToggle = React.createClass
     fFloat:                 React.PropTypes.bool
   render: ->
     if @props.fHierarchical
-      text = 'Show flat' 
+      text = 'Show flat'
       icon = 'bars'
-    else 
+    else
       text = 'Show tree'
       icon = 'sitemap'
     <span

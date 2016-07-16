@@ -1,3 +1,4 @@
+{ merge } = require 'timm'
 _ = require '../vendor/lodash'
 chalk = require 'chalk'
 chalk.enabled = true
@@ -7,8 +8,9 @@ k = require './constants'
 # ## Map severity level to a colored string
 #-------------------------------------------------
 LEVEL_NUM_TO_COLORED_STR = {}
-_.each k.LEVEL_NUM_TO_STR, (str, num) ->
-  num = Number num
+Object.keys(k.LEVEL_NUM_TO_STR).forEach (key) ->
+  num = Number key
+  str = k.LEVEL_NUM_TO_STR[key]
   col = chalk.grey
   if num is 30
     col = if k.IS_BROWSER then chalk.bold else chalk.white
@@ -21,8 +23,8 @@ _.each k.LEVEL_NUM_TO_STR, (str, num) ->
 #-------------------------------------------------
 COLORS = []
 BASE_COLORS = ['cyan', 'yellow', 'red', 'green', 'blue', 'magenta']
-_.each BASE_COLORS, (col) -> COLORS.push chalk[col].bold
-_.each BASE_COLORS, (col) -> COLORS.push chalk[col]
+BASE_COLORS.forEach (col) -> COLORS.push chalk[col].bold
+BASE_COLORS.forEach (col) -> COLORS.push chalk[col]
 NUM_COLORS = COLORS.length
 
 _srcColorCache = {}
@@ -136,7 +138,7 @@ _updateStyles = (curStyles, code) ->
     curStyles.bgColor = undefined
   else if (removeStyles = ANSI_REMOVE[code])
     curStyles[style] = undefined for style in removeStyles
-  else 
+  else
     ### istanbul ignore else ###
     if code is 0 then curStyles = {}
   curStyles
@@ -146,9 +148,9 @@ _toConsoleArgs = (styles) ->
   for key, val of styles
     continue if not val?
     switch key
-      when 'color' 
+      when 'color'
         out.push "color: #{CSS_COLORS[val]}"
-      when 'bgColor' 
+      when 'bgColor'
         out.push "color: white; background-color: #{CSS_COLORS[val]}"
       else
         out.push CSS_STYLES[key]
@@ -165,7 +167,7 @@ _toSegmentStyle = (styles) ->
         out.color = 'white'
         out.backgroundColor = CSS_COLORS[val]
       else
-        _.extend out, REACT_STYLES[key]
+        out = merge(out, REACT_STYLES[key])
   out
 
 #-------------------------------------------------
