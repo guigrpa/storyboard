@@ -252,7 +252,7 @@ story.close();
 
 Logs emitted by stories are relayed by the Storyboard *Hub* to all attached *listeners*. A Hub exists at the core of every Storyboard instance. Here is an example of a typical configuration, with a server-side Hub and a client-side Hub (other use cases have proved possible in production):
 
-![Typical configuration](https://raw.githubusercontent.com/guigrpa/storyboard/master/docs/typical-arch.gif)
+![Typical configuration](https://raw.githubusercontent.com/guigrpa/storyboard/master/docs/typical-arch.png)
 
 Several listeners come built-in (check out their [configuration options](https://github.com/guigrpa/storyboard/blob/master/docs/built-in-plugins.md), as well as the following sections):
 
