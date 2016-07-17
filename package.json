@@ -27,6 +27,7 @@
     "compile": "node package && rm -rf ./lib && coffee --no-header -o lib -c src && babel -d lib src",
     "build": "npm run lint && npm run compile && npm run buildServerLogsApp && npm run buildExtension && npm run test && npm run zipExtension && npm run buildExampleHeroku && npm run xxl && echo \"Remember to update Heroku package.json with the latest SB version!\"",
     "travis": "npm run compile && npm run test",
+    "start": "npm run buildExample && npm run example",
     "buildServerLogsApp": "cross-env NODE_ENV=production webpack --config src/serverLogsApp/webpackConfig --colors --progress --display-modules --display-chunks -p",
     "buildServerLogsAppWatch": "webpack --config src/serverLogsApp/webpackConfig --colors --progress --display-modules --display-chunks --watch",
     "buildExtension": "cross-env NODE_ENV=production webpack --config src/chromeExtension/webpackConfig --colors --progress --display-modules --display-chunks -p",

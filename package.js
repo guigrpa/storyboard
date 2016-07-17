@@ -74,6 +74,10 @@ const specs = {
                                   'npm run compile',
                                   'npm run test',
                                 ]),
+    start:                      runMultiple([
+                                  'npm run buildExample',
+                                  'npm run example',
+                                ]),
 
     // Server logs app
     buildServerLogsApp:         `cross-env NODE_ENV=production ${WEBPACK_SERVER_LOGS_APP} -p`,
