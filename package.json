@@ -96,6 +96,7 @@
     "font-awesome": "4.5.0",
     "giu": "0.6.0",
     "isomorphic-fetch": "2.2.1",
+    "json-loader": "0.5.4",
     "mocha": "2.4.5",
     "moment": "2.14.1",
     "node-sass": "3.7.0",

@@ -228,6 +228,7 @@ const specs = {
     'coffee-loader': '0.7.2',
     'cjsx-loader': '2.1.0',
     'file-loader': '0.8.5',
+    'json-loader': '0.5.4',
     'css-loader': '0.23.1',
     'style-loader': '0.13.0',
     'sass-loader': '3.1.2',

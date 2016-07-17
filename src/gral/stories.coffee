@@ -6,6 +6,7 @@ k             = require './constants'
 filters       = require './filters'
 hub           = require './hub'
 { serialize } = require './serialize'
+version = require('../../package.json').version
 
 DEFAULT_SRC = 'main'
 DEFAULT_CHILD_TITLE = ''
@@ -221,7 +222,8 @@ _emit = (record) -> hub.emitMsgWithFields 'STORIES', 'RECORDS', [record]
 #-----------------------------------------------
 # ### Create the main story
 #-----------------------------------------------
-title = "ROOT STORY: #{chalk.italic.blue.bold platform.description}"
+platformStr = "#{platform.description}, SB #{version}"
+title = "ROOT STORY: #{chalk.italic.blue.bold platformStr}"
 mainStory = new Story
   parents: []
   src: 'storyboard'
