@@ -2,6 +2,10 @@
 
 *[M]: major change; [m]: minor change*
 
+## 2.0.1 (July 18, 2016)
+
+* Minor documentation changes.
+
 ## 2.0.0 (July 18, 2016)
 
 **Breaking changes**
