@@ -111,7 +111,9 @@ const specs = {
 
     // Static analysis
     lint:                       'eslint src',
+    /* eslint-disable quotes */
     xxl:                        "xxl --src \"[\\\"src\\\"]\"",
+    /* eslint-enable quotes */
 
     // Testing - general
     test:                       'npm run testCovFull',
