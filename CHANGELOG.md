@@ -2,6 +2,15 @@
 
 *[M]: major change; [m]: minor change*
 
+* Library:
+    - [m] Add `withConsoleListener.js` convenience initialiser, for the most common case in which we just want to attach a console listener:
+
+    ```js
+    import { mainStory } from 'storyboard/lib/withConsoleListener';
+
+    mainStory.info('That was fast!');
+    ```
+
 ## 2.0.1 (July 18, 2016)
 
 * Minor documentation changes.
