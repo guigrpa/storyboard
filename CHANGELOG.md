@@ -2,6 +2,8 @@
 
 *[M]: major change; [m]: minor change*
 
+## 2.0.2 (July 26, 2016)
+
 * Library:
     - [m] Add `withConsoleListener.js` convenience initialiser, for the most common case in which we just want to attach a console listener:
 

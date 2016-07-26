@@ -4,7 +4,7 @@
 // Basic config
 // ===============================================
 const NAME = 'storyboard';
-const VERSION = '2.0.1';
+const VERSION = '2.0.2';
 const DESCRIPTION = 'End-to-end, hierarchical, real-time, colorful logs and stories';
 const KEYWORDS = ['log', 'logging', 'websockets', 'console', 'isomorphic'];
 

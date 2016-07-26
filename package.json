@@ -1,6 +1,6 @@
 {
   "name": "storyboard",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
   "main": "lib/storyboard.js",
   "bin": {
@@ -32,7 +32,7 @@
     "buildServerLogsAppWatch": "webpack --config src/serverLogsApp/webpackConfig --colors --progress --display-modules --display-chunks --watch",
     "buildExtension": "cross-env NODE_ENV=production webpack --config src/chromeExtension/webpackConfig --colors --progress --display-modules --display-chunks -p",
     "buildExtensionWatch": "webpack --config src/chromeExtension/webpackConfig --colors --progress --display-modules --display-chunks --watch",
-    "zipExtension": "rm -f chromeExtension/chromeExtension_*.zip && bestzip chromeExtension_v2.0.1.zip chromeExtension/* && mv chromeExtension_v2.0.1.zip chromeExtension/",
+    "zipExtension": "rm -f chromeExtension/chromeExtension_*.zip && bestzip chromeExtension_v2.0.2.zip chromeExtension/* && mv chromeExtension_v2.0.2.zip chromeExtension/",
     "buildExample": "webpack --config src/example/webpackConfig --colors --progress --display-modules --display-chunks",
     "buildExampleHeroku": "rm -f example/heroku/client/*.eot example/heroku/client/*.ttf example/heroku/client/*.woff* example/heroku/client/*.svg example/heroku/client/*.js && cross-env NODE_ENV=production webpack --config src/example/webpackConfig --colors --progress --display-modules --display-chunks -p && cp example/*.eot example/*.ttf example/*.woff* example/*.svg example/*.js example/heroku/client/",
     "buildExampleWatch": "webpack --config src/example/webpackConfig --colors --progress --display-modules --display-chunks --watch",
