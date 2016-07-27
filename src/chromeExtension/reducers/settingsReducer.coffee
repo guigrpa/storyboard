@@ -9,6 +9,7 @@ INITIAL_STATE =
   fDiscardRemoteClientLogs: false
   maxRecords: 800
   forgetHysteresis: 0.25
+  mainColor: 'f0f8ff' # 'lemonchiffon' is also nice
 
 reducer = (state = INITIAL_STATE, action) ->
   switch action.type
@@ -23,3 +24,4 @@ reducer = (state = INITIAL_STATE, action) ->
     else return state
 
 module.exports = reducer
+reducer.DEFAULT_SETTINGS = INITIAL_STATE
