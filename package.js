@@ -179,7 +179,7 @@ const specs = {
     // Packaged in the Chrome extension
     // -----------------------------------------------
     'babel-polyfill': '6.9.1',
-    'giu': '0.6.0',
+    'giu': '0.7.0',
 
     // React
     'react':                          '15.2.0',
@@ -204,7 +204,7 @@ const specs = {
     'font-awesome': '4.5.0',
     'moment': '2.14.1',
     'socket.io-client': '1.4.5',
-    'tinycolor2': '1.3.0',
+    'tinycolor2': '1.4.1',
 
     // -----------------------------------------------
     // Extra deps used in the example
