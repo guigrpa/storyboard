@@ -36,21 +36,26 @@
 
 +keyframes('fadein {from {opacity: 0;} to {opacity: 1;}}')
 
-*, 
-*:before, 
+*,
+*:before,
 *:after
   +boxSizing(border-box)
 
 .contentBox
   +boxSizing(content-box)
 
+html
+  height: 100%
+
 body
+  height: 100%
   padding: 0
   margin: 0
   +noUserSelect
 
 #devToolsApp
   +systemFont
+  height: 100%
   font-size: 12px
 
 .fadeIn
