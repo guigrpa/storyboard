@@ -5,9 +5,7 @@ ReactRedux        = require 'react-redux'
   Floats, Notifications,
   LargeMessage,
   Spinner,
-  isDark,
 }                 = require 'giu'
-tinycolor         = require 'tinycolor2'
 Toolbar           = require './015-toolbar'
 Story             = require './020-story'
 if process.env.NODE_ENV isnt 'production'
@@ -15,14 +13,10 @@ if process.env.NODE_ENV isnt 'production'
 
 require './app.sass'
 
-mapStateToProps = (state) ->
+mapStateToProps = (state) -> 
   fRelativeTime:  state.settings.timeType is 'RELATIVE'
   cxState:        state.cx.cxState
   mainStory:      state.stories.mainStory
-  colors: _.pick(state.settings, [
-    'colorClientBg', 'colorServerBg', 'colorUiBg',
-    'colorClientFg', 'colorServerFg', 'colorUiFg',
-  ])
 
 App = React.createClass
   displayName: 'App'
@@ -33,12 +27,11 @@ App = React.createClass
     fRelativeTime:          React.PropTypes.bool.isRequired
     cxState:                React.PropTypes.string.isRequired
     mainStory:              React.PropTypes.object.isRequired
-    colors:                 React.PropTypes.object.isRequired
   getInitialState: ->
     seqFullRefresh:         0
 
   #-----------------------------------------------------
-  componentDidMount: ->
+  componentDidMount: -> 
     @timerFullRefresh = setInterval @fullRefresh, 30e3
     window.addEventListener 'scroll', @onScroll
 
@@ -48,11 +41,10 @@ App = React.createClass
     window.removeEventListener 'scroll', @onScroll
 
   componentDidUpdate: ->
-    return
     if @fAnchoredToBottom
       window.scrollTo 0, document.body.scrollHeight
 
-  fullRefresh: ->
+  fullRefresh: -> 
     return if not @props.fRelativeTime
     @setState {seqFullRefresh: @state.seqFullRefresh + 1}
 
@@ -61,47 +53,40 @@ App = React.createClass
     @fAnchoredToBottom = (bcr.bottom - window.innerHeight) < 30
 
   #-----------------------------------------------------
-  render: ->
+  render: -> 
     reduxDevTools = undefined
-    { cxState, colors } = @props
     ## if process.env.NODE_ENV isnt 'production'
     ##   reduxDevTools = <ReduxDevTools/>
-    fConnected = cxState is 'CONNECTED'
-    <div ref="outer" id="appRoot" style={_style.outer(colors)}>
+    fConnected = @props.cxState is 'CONNECTED'
+    <div ref="outer" id="appRoot" style={_style.outer}>
       <Floats />
       <Notifications />
       {if not fConnected then @renderConnecting()}
-      {if fConnected then <Toolbar colors={colors}/>}
+      {if fConnected then <Toolbar/>}
       {if fConnected then @renderStories()}
       {reduxDevTools}
     </div>
 
   renderStories: ->
     <div style={_style.stories}>
-      <Story
-        story={@props.mainStory}
-        level={0}
+      <Story 
+        story={@props.mainStory} 
+        level={0} 
         seqFullRefresh={@state.seqFullRefresh}
-        colors={@props.colors}
       />
     </div>
 
   renderConnecting: ->
-    <LargeMessage style={_style.largeMessage @props.colors}>
+    <LargeMessage>
       <div><Spinner /> Connecting to Storyboard... </div>
       <div>Navigate to your Storyboard-equipped app (and log in if required)</div>
     </LargeMessage>
 
 #-----------------------------------------------------
-_style =
-  outer: (colors) ->
-    height: '100%'
-    backgroundColor: colors.colorUiBg
-    color: colors.colorUiFg
-  largeMessage: (colors) ->
-    color = tinycolor(colors.colorUiFg)
-    color = if isDark(colors.colorUiFg) then color.lighten(20) else color.darken(20)
-    color: color.toRgbString()
+_style = 
+  outer: 
+    backgroundColor: 'white'
+    backgroundOpacity: 0.5
   stories:
     padding: 4
 

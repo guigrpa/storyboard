@@ -3,7 +3,7 @@
 *[M]: major change; [m]: minor change*
 
 * Browser extension:
-    - [M] Allow customising the application's **colours**!
+    - [m] Allow customising the application's **main colour**
     - [m] Settings: add **revert to defaults** option
 
 ## 2.0.2 (July 26, 2016)

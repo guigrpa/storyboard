@@ -6,7 +6,7 @@ timm              = require 'timm'
 tinycolor         = require 'tinycolor2'
 moment            = require 'moment'
 chalk             = require 'chalk'
-{ Icon, Spinner, isDark } = require 'giu'
+{ Icon, Spinner } = require 'giu'
 ColoredText       = require './030-coloredText'
 actions           = require '../actions/actions'
 ansiColors        = require '../../gral/ansiColors'
@@ -20,12 +20,19 @@ _quickFind = (msg, quickFind) ->
   msg = msg.replace re, chalk.bgYellow("$1")
   msg
 
+_bgColor = (mainColor, fServer) ->
+  bgColor = tinycolor(mainColor ? 'white')
+  if fServer then bgColor = bgColor.darken(5)
+  return bgColor.toHexString()
+
+
 #-====================================================
 # ## Story
 #-====================================================
 mapStateToProps = (state) ->
   timeType:           state.settings.timeType
   fShowClosedActions: state.settings.fShowClosedActions
+  mainColor:          state.settings.mainColor
   quickFind:          state.stories.quickFind
 mapDispatchToProps = (dispatch) ->
   setTimeType: (timeType) -> dispatch actions.setTimeType timeType
@@ -42,10 +49,10 @@ _Story = React.createClass
     story:                  React.PropTypes.object.isRequired
     level:                  React.PropTypes.number.isRequired
     seqFullRefresh:         React.PropTypes.number.isRequired
-    colors:                 React.PropTypes.object.isRequired
     # From Redux.connect
     timeType:               React.PropTypes.string.isRequired
     fShowClosedActions:     React.PropTypes.bool.isRequired
+    mainColor:              React.PropTypes.string.isRequired
     quickFind:              React.PropTypes.string.isRequired
     setTimeType:            React.PropTypes.func.isRequired
     onToggleExpanded:       React.PropTypes.func.isRequired
@@ -60,8 +67,8 @@ _Story = React.createClass
     return @renderNormalStory()
 
   renderRootStory: ->
-    {level, story, colors} = @props
-    <div className="rootStory" style={_style.outer level, story, colors}>
+    {level, story, mainColor} = @props
+    <div className="rootStory" style={_style.outer level, story, mainColor}>
       <MainStoryTitle
         title={story.title}
         numRecords={story.numRecords}
@@ -74,9 +81,9 @@ _Story = React.createClass
     </div>
 
   renderNormalStory: ->
-    {level, story, colors} = @props
+    {level, story, mainColor} = @props
     {title, fOpen} = story
-    <div className="story" style={_style.outer(level, story, colors)}>
+    <div className="story" style={_style.outer(level, story, mainColor)}>
       <Line
         record={story}
         level={@props.level}
@@ -87,7 +94,7 @@ _Story = React.createClass
         onToggleExpanded={@toggleExpanded}
         onToggleHierarchical={@toggleHierarchical}
         seqFullRefresh={@props.seqFullRefresh}
-        colors={colors}
+        mainColor={mainColor}
       />
       {@renderRecords()}
     </div>
@@ -114,7 +121,6 @@ _Story = React.createClass
         story={record}
         level={@props.level + 1}
         seqFullRefresh={@props.seqFullRefresh}
-        colors={@props.colors}
       />
     else
       if fDirectChild
@@ -129,13 +135,13 @@ _Story = React.createClass
         quickFind={@props.quickFind}
         onToggleAttachment={@toggleAttachment}
         seqFullRefresh={@props.seqFullRefresh}
-        colors={@props.colors}
+        mainColor={@props.mainColor}
       />
     out
 
   renderAttachment: (record) ->
     {storyId, id, obj, objOptions, version} = record
-    props = _.pick @props, ['level', 'timeType', 'setTimeType', 'quickFind', 'seqFullRefresh', 'colors']
+    props = _.pick @props, ['level', 'timeType', 'setTimeType', 'quickFind', 'seqFullRefresh', 'mainColor']
     lines = if version >= 2 then treeLines(deserialize(obj), objOptions) else obj
     return lines.map (line, idx) ->
       <AttachmentLine key={"#{storyId}_#{id}_#{idx}"}
@@ -146,7 +152,7 @@ _Story = React.createClass
 
   renderRepetitions: (record) ->
     {storyId, id} = record
-    props = _.pick @props, ['level', 'timeType', 'setTimeType', 'quickFind', 'seqFullRefresh', 'colors']
+    props = _.pick @props, ['level', 'timeType', 'setTimeType', 'quickFind', 'seqFullRefresh', 'mainColor']
     <RepetitionLine key={"#{storyId}_#{id}_repetitions"}
       record={record}
       {...props}
@@ -179,9 +185,8 @@ _Story = React.createClass
 
 #-----------------------------------------------------
 _style =
-  outer: (level, story, colors) ->
-    backgroundColor: if story.fServer then colors.colorServerBg else colors.colorClientBg
-    color: if story.fServer then colors.colorServerFg else colors.colorClientFg
+  outer: (level, story, mainColor) ->
+    backgroundColor: _bgColor(mainColor, story.fServer) # if story.fServer then '#f5f5f5' else '#e8e8e8'
     marginBottom: if level <= 1 then 10
     padding: if level <= 1 then 2
 
@@ -286,12 +291,12 @@ AttachmentLine = React.createClass
     seqFullRefresh:         React.PropTypes.number.isRequired
     msg:                    React.PropTypes.string.isRequired
     quickFind:              React.PropTypes.string.isRequired
-    colors:                 React.PropTypes.object.isRequired
+    mainColor:              React.PropTypes.string.isRequired
 
   #-----------------------------------------------------
   render: ->
-    {record, msg, colors} = @props
-    style = _styleLine.log record, colors
+    {record, msg, mainColor} = @props
+    style = _styleLine.log record, mainColor
     msg = _quickFind msg, @props.quickFind
     <div
       className="attachmentLine allowUserSelect"
@@ -326,12 +331,12 @@ RepetitionLine = React.createClass
     setTimeType:            React.PropTypes.func.isRequired
     seqFullRefresh:         React.PropTypes.number.isRequired
     quickFind:              React.PropTypes.string.isRequired
-    colors:                 React.PropTypes.object.isRequired
+    mainColor:              React.PropTypes.string.isRequired
 
   #-----------------------------------------------------
   render: ->
-    {record, level, timeType, setTimeType, seqFullRefresh, colors} = @props
-    style = _styleLine.log record, colors
+    {record, level, timeType, setTimeType, seqFullRefresh, mainColor} = @props
+    style = _styleLine.log record, mainColor
     msg = " x#{record.repetitions+1}, latest: "
     msg = _quickFind msg, @props.quickFind
     <div
@@ -379,13 +384,13 @@ Line = React.createClass
     onToggleHierarchical:   React.PropTypes.func
     onToggleAttachment:     React.PropTypes.func
     seqFullRefresh:         React.PropTypes.number.isRequired
-    colors:                 React.PropTypes.object.isRequired
+    mainColor:              React.PropTypes.string.isRequired
   getInitialState: ->
     fHovered:               false
 
   #-----------------------------------------------------
   render: ->
-    {record, fDirectChild, level, colors} = @props
+    {record, fDirectChild, level, mainColor} = @props
     {id, msg, fStory, fStoryObject, fOpen, title, action} = record
     if fStoryObject then msg = title
     if fStory
@@ -398,7 +403,7 @@ Line = React.createClass
       if fOpen then spinner = <Spinner style={_styleLine.spinner}/>
     else
       className = 'log'
-      style = _styleLine.log record, colors
+      style = _styleLine.log record, mainColor
       indentLevel = level
     <div
       className={"#{className} allowUserSelect fadeIn"}
@@ -497,10 +502,8 @@ _styleLine =
     textOverflow: 'ellipsis'
   title:
     cursor: 'pointer'
-  log: (record, colors) ->
-    {fServer} = record
-    backgroundColor: if fServer then colors.colorServerBg else colors.colorClientBg
-    color: if fServer then colors.colorServerFg else colors.colorClientFg
+  log: (record, mainColor) ->
+    backgroundColor: _bgColor(mainColor, record.fServer) # if story.fServer then '#f5f5f5' else '#e8e8e8'
     fontFamily: 'Menlo, Consolas, monospace'
     whiteSpace: 'pre'
     fontWeight: if record.fStory and (record.action is 'CREATED') then 900
