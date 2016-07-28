@@ -10,7 +10,7 @@ actions           = require '../actions/actions'
 
 RETURN_KEY = 13
 
-mapStateToProps = ({cx: {fLoginRequired, loginState, login}}) -> 
+mapStateToProps = ({cx: {fLoginRequired, loginState, login}}) ->
   return {fLoginRequired, loginState, login}
 
 Login = React.createClass
@@ -18,6 +18,7 @@ Login = React.createClass
 
   #-----------------------------------------------------
   propTypes:
+    colors:                 React.PropTypes.object.isRequired
     # From Redux.connect
     fLoginRequired:         React.PropTypes.bool
     loginState:             React.PropTypes.string.isRequired
@@ -26,55 +27,55 @@ Login = React.createClass
     logOut:                 React.PropTypes.func.isRequired
 
   #-----------------------------------------------------
-  render: -> 
-    {fLoginRequired, loginState} = @props
+  render: ->
+    { fLoginRequired, loginState, colors } = @props
     if not fLoginRequired?
       return (
-        <div style={_style.outer()}>
+        <div style={_style.outer(colors)}>
           <Spinner size="lg" fixedWidth />
         </div>
       )
     if not fLoginRequired
-      return <div style={_style.outer()}><i>No login required to see server logs</i></div>
+      return <div style={_style.outer(colors)}><i>No login required to see server logs</i></div>
     if loginState is 'LOGGED_IN'
       return @renderLogOut()
     else
       return @renderLogIn()
 
   renderLogOut: ->
-    {login} = @props
+    { login, colors } = @props
     msg = if login then "Logged in as #{login}" else "Logged in"
-    <div style={_style.outer()}>
+    <div style={_style.outer(colors)}>
       {msg}
       {' '}
-      <Icon 
-        icon="sign-out" 
+      <Icon
+        icon="sign-out"
         title="Log out"
-        size="lg" 
+        size="lg"
         fixedWidth
         onClick={@logOut}
       />
     </div>
 
   renderLogIn: ->
-    {loginState} = @props
+    { loginState, colors } = @props
     btn = switch loginState
       when 'LOGGED_OUT'
-        <Icon 
-          icon="sign-in" 
+        <Icon
+          icon="sign-in"
           title="Log in"
-          size="lg" 
+          size="lg"
           fixedWidth
           onClick={@logIn}
         />
-      when 'LOGGING_IN' 
-        <Spinner 
+      when 'LOGGING_IN'
+        <Spinner
           title="Logging in"
-          size="lg" 
+          size="lg"
           fixedWidth
         />
       else ''
-    <div style={_style.outer true}>
+    <div style={_style.outer colors, true}>
       <b>Server logs:</b>
       {' '}
       <TextInput ref="login"
@@ -108,13 +109,15 @@ Login = React.createClass
   onKeyUpCredentials: (ev) -> @logIn() if ev.which is RETURN_KEY
 
 #-----------------------------------------------------
-_style = 
-  outer: (fHighlight) ->
+_style =
+  outer: (colors, fHighlight) ->
     padding: "4px 10px"
-    backgroundColor: if fHighlight then '#d6ecff'
+    backgroundColor: if fHighlight then colors.colorServerBg else colors.colorUiBg
+    color: if fHighlight then colors.colorServerFg else colors.colorUiFg
   field:
     marginRight: 4
     width: 70
+    backgroundColor: 'transparent'
 
 #-----------------------------------------------------
 connect = ReactRedux.connect mapStateToProps, actions

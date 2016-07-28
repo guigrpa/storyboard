@@ -6,6 +6,7 @@ ReactRedux        = require 'react-redux'
   Icon,
   Modal,
   Checkbox, TextInput, NumberInput, ColorInput,
+  isDark,
 }                 = require 'giu'
 Promise           = require 'bluebird'
 Login             = require './010-login'
@@ -20,7 +21,7 @@ FORM_KEYS = [
   'fDiscardRemoteClientLogs',
   'serverFilter', 'localClientFilter',
   'maxRecords', 'forgetHysteresis',
-  'mainColor',
+  'colorClientBg', 'colorServerBg', 'colorUiBg',
 ]
 
 mapStateToProps = (state) ->
@@ -34,6 +35,7 @@ Settings = React.createClass
   #-----------------------------------------------------
   propTypes:
     onClose:                    React.PropTypes.func.isRequired
+    colors:                     React.PropTypes.object.isRequired
     # From Redux.connect
     settings:                   React.PropTypes.object.isRequired
     serverFilter:               React.PropTypes.string
@@ -63,6 +65,7 @@ Settings = React.createClass
     <Modal
       buttons={buttons}
       onEsc={@props.onClose}
+      style={_style.modal @props.colors}
     >
       {@renderLocalStorageWarning()}
       <Checkbox ref="fShowClosedActions"
@@ -97,7 +100,7 @@ Settings = React.createClass
       <br />
       {@renderLogFilters()}
       {@renderForgetSettings()}
-      {@renderColor()}
+      {@renderColors()}
       {@renderVersion()}
     </Modal>
 
@@ -120,7 +123,7 @@ Settings = React.createClass
             id="serverFilter"
             value={@props.serverFilter}
             required errorZ={52}
-            style={{width: 300}}
+            style={_style.textNumberInput 300}
             cmds={cmdsToInputs}
           />
         </li>
@@ -132,7 +135,7 @@ Settings = React.createClass
             id="localClientFilter"
             value={@props.localClientFilter}
             required errorZ={52}
-            style={{width: 300}}
+            style={_style.textNumberInput 300}
             cmds={cmdsToInputs}
           />
         </li>
@@ -152,7 +155,7 @@ Settings = React.createClass
         step={1} min={0}
         value={@state.maxRecords}
         onChange={(ev, maxRecords) => @setState({ maxRecords })}
-        style={{width: 50}}
+        style={_style.textNumberInput 50}
         required errorZ={52}
         cmds={cmdsToInputs}
       />{' '}
@@ -164,7 +167,7 @@ Settings = React.createClass
         step={.05} min={0} max={1}
         value={@state.forgetHysteresis}
         onChange={(ev, forgetHysteresis) => @setState({ forgetHysteresis })}
-        style={{width: 50}}
+        style={_style.textNumberInput 50}
         required errorZ={52}
         cmds={cmdsToInputs}
       />{' '}
@@ -175,18 +178,39 @@ Settings = React.createClass
       />
     </div>
 
-  renderColor: ->
+  renderColors: ->
     {cmdsToInputs} = @state
     <div>
-      UI color:{' '}
-      <ColorInput ref="mainColor"
-        id="mainColor"
-        value={@state.mainColor}
+      UI colors:
+      client stories:
+      {' '}
+      <ColorInput ref="colorClientBg"
+        id="colorClientBg"
+        value={@state.colorClientBg}
         floatZ={52}
-        styleOuter={{position: 'relative', top: 5}}
+        styleOuter={_style.colorInput}
         cmds={cmdsToInputs}
-      />{' '}
-      (choose light colors for best results)
+      />
+      {' '}
+      server stories:
+      {' '}
+      <ColorInput ref="colorServerBg"
+        id="colorServerBg"
+        value={@state.colorServerBg}
+        floatZ={52}
+        styleOuter={_style.colorInput}
+        cmds={cmdsToInputs}
+      />
+      {' '}
+      background:
+      {' '}
+      <ColorInput ref="colorUiBg"
+        id="colorUiBg"
+        value={@state.colorUiBg}
+        floatZ={52}
+        styleOuter={_style.colorInput}
+        cmds={cmdsToInputs}
+      />
     </div>
 
   renderVersion: ->
@@ -234,8 +258,7 @@ Settings = React.createClass
   # Reset to factory settings, and send a `REVERT` command to all inputs
   onReset: ->
     @setState DEFAULT_SETTINGS
-    # setTimeout due to a potential bug in Giu
-    setTimeout => @setState cmdsToInputs: [{ type: 'REVERT' }]
+    @setState cmdsToInputs: [{ type: 'REVERT' }]
     return
 
   #-----------------------------------------------------
@@ -248,6 +271,9 @@ Settings = React.createClass
 
 #-----------------------------------------------------
 _style =
+  modal: (colors) ->
+    backgroundColor: if isDark(colors.colorUiBg) then 'black' else 'white'
+    color: if isDark(colors.colorUiBg) then 'white' else 'black'
   version:
     textAlign: 'right'
     color: '#888'
@@ -271,6 +297,12 @@ _style =
     itemLabel:
       display: 'inline-block'
       width: 80
+  colorInput:
+    position: 'relative'
+    top: 1
+  textNumberInput: (width) ->
+    backgroundColor: 'transparent'
+    width: width
 
 #-----------------------------------------------------
 connect = ReactRedux.connect mapStateToProps, actions

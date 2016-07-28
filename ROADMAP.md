@@ -1,6 +1,11 @@
 - Heroku: remove login -- many people don't try it and miss out on server-side logs!
-- Fix Giu color picker on modal before cutting new version
-- Apply `mainColor` to login box
+
+- UI colors:
+  - Smart color substitution (replace unreadable colors)
+  - Fix background color when scrolling down
+- Fix anchor to bottom
+- Hints: login, settings
+
 - Bugs:
     +
 - **Chrome extension**:
