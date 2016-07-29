@@ -179,7 +179,7 @@ const specs = {
     // Packaged in the Chrome extension
     // -----------------------------------------------
     'babel-polyfill': '6.9.1',
-    'giu': '0.7.0',
+    'giu': '0.7.1',
 
     // React
     'react':                          '15.2.0',
