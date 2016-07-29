@@ -37,6 +37,7 @@ export { default as pick }         from 'lodash/pick';
 // export { default as pickBy }       from 'lodash/pickBy';
 // export { default as reduce }       from 'lodash/reduce';
 // export { default as remove }       from 'lodash/remove';
+export { default as repeat }       from 'lodash/repeat';
 // export { default as result }       from 'lodash/result';
 // export { default as sample }       from 'lodash/sample';
 // export { default as sampleSize }   from 'lodash/sampleSize';

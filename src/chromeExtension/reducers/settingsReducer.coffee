@@ -1,4 +1,27 @@
 timm = require 'timm'
+tinycolor = require 'tinycolor2'
+{ isDark } = require 'giu'
+
+calcFgColorForBgColor = (bg) ->
+  fg = if isDark(bg) then 'white' else 'black'
+  fg
+
+calcFgColorForUiBgColor = (bg) ->
+  if isDark(bg)
+    fg = tinycolor('white').darken(25).toRgbString()
+  else
+    fg = tinycolor('black').lighten(25).toRgbString()
+  fg
+
+# in-place
+addDerivedColorState = (state) ->
+  state.colorClientFg = calcFgColorForBgColor state.colorClientBg
+  state.colorServerFg = calcFgColorForBgColor state.colorServerBg
+  state.colorUiFg = calcFgColorForUiBgColor state.colorUiBg
+  state.colorClientBgIsDark = isDark state.colorClientBg
+  state.colorServerBgIsDark = isDark state.colorServerBg
+  state.colorUiBgIsDark = isDark state.colorUiBg
+  state
 
 INITIAL_STATE =
   timeType: 'LOCAL'
@@ -9,17 +32,22 @@ INITIAL_STATE =
   fDiscardRemoteClientLogs: false
   maxRecords: 800
   forgetHysteresis: 0.25
-  mainColor: 'f0f8ff' # 'lemonchiffon' is also nice
+  colorClientBg: 'aliceblue' # lemonchiffon is also nice
+  colorServerBg: tinycolor('aliceblue').darken(5).toRgbString()
+  colorUiBg: 'white'
+addDerivedColorState INITIAL_STATE
 
 reducer = (state = INITIAL_STATE, action) ->
   switch action.type
 
     when 'UPDATE_SETTINGS'
       {settings} = action
-      state = timm.merge state, settings
-      if not(state.maxRecords > 0)
-        state = timm.set state, 'maxRecords', INITIAL_STATE.maxRecords
-      return state
+      nextState = timm.merge state, settings
+      if nextState isnt state
+        addDerivedColorState nextState
+      if not(nextState.maxRecords > 0)
+        nextState = timm.set nextState, 'maxRecords', INITIAL_STATE.maxRecords
+      return nextState
 
     else return state
 
