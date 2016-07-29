@@ -6,6 +6,7 @@ ReactRedux        = require 'react-redux'
   Icon,
   Modal,
   Checkbox, TextInput, NumberInput, ColorInput,
+  Button,
   isDark,
 }                 = require 'giu'
 Promise           = require 'bluebird'
@@ -22,6 +23,14 @@ FORM_KEYS = [
   'serverFilter', 'localClientFilter',
   'maxRecords', 'forgetHysteresis',
   'colorClientBg', 'colorServerBg', 'colorUiBg',
+]
+
+idxPresetColors = 2  # next one will be dark!
+PRESET_COLORS = [
+  { colorClientBg: 'aliceblue', colorServerBg: 'rgb(214, 236, 255)', colorUiBg: 'white'},
+  { colorClientBg: 'rgb(255, 240, 240)', colorServerBg: 'rgb(255, 214, 215)', colorUiBg: 'white'},
+  { colorClientBg: 'rgb(250, 240, 255)', colorServerBg: 'rgb(238, 214, 255)', colorUiBg: 'white'},
+  { colorClientBg: 'rgb(17, 22, 54)', colorServerBg: 'rgb(14, 11, 33)', colorUiBg: 'black'},
 ]
 
 mapStateToProps = (state) ->
@@ -56,16 +65,17 @@ Settings = React.createClass
 
   #-----------------------------------------------------
   render: ->
+    {colors} = @props
     buttons = [
       {label: 'Cancel', onClick: @props.onClose, left: true}
       {label: 'Reset defaults', onClick: @onReset, left: true}
-      {label: 'Save', onClick: @onSubmit, defaultButton: true}
+      {label: 'Save', onClick: @onSubmit, defaultButton: true, style: _style.modalDefaultButton(colors)}
     ]
     {cmdsToInputs} = @state
     <Modal
       buttons={buttons}
       onEsc={@props.onClose}
-      style={_style.modal @props.colors}
+      style={_style.modal colors}
     >
       {@renderLocalStorageWarning()}
       <Checkbox ref="fShowClosedActions"
@@ -181,7 +191,7 @@ Settings = React.createClass
   renderColors: ->
     {cmdsToInputs} = @state
     <div>
-      UI colors:
+      Colors:
       client stories:
       {' '}
       <ColorInput ref="colorClientBg"
@@ -211,6 +221,11 @@ Settings = React.createClass
         styleOuter={_style.colorInput}
         cmds={cmdsToInputs}
       />
+      <div style={{marginTop: 3}}>
+        (Use very light or very dark colors for best results, or choose a
+        {' '}
+        <Button onClick={@onClickPresetColors}>preset</Button>)
+      </div>
     </div>
 
   renderVersion: ->
@@ -261,6 +276,12 @@ Settings = React.createClass
     @setState cmdsToInputs: [{ type: 'REVERT' }]
     return
 
+  onClickPresetColors: ->
+    idxPresetColors = (idxPresetColors + 1) % PRESET_COLORS.length
+    presetColors = PRESET_COLORS[idxPresetColors]
+    @setState presetColors
+    return
+
   #-----------------------------------------------------
   checkLocalStorage: ->
     try
@@ -272,8 +293,10 @@ Settings = React.createClass
 #-----------------------------------------------------
 _style =
   modal: (colors) ->
-    backgroundColor: if isDark(colors.colorUiBg) then 'black' else 'white'
-    color: if isDark(colors.colorUiBg) then 'white' else 'black'
+    backgroundColor: if colors.colorUiBgIsDark then 'black' else 'white'
+    color: if colors.colorUiBgIsDark then 'white' else 'black'
+  modalDefaultButton: (colors) ->
+    border: if colors.colorUiBgIsDark then '1px solid white' else undefined
   version:
     textAlign: 'right'
     color: '#888'

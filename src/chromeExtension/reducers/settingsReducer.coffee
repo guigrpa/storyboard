@@ -14,10 +14,13 @@ calcFgColorForUiBgColor = (bg) ->
   fg
 
 # in-place
-addFgColors = (state) ->
+addDerivedColorState = (state) ->
   state.colorClientFg = calcFgColorForBgColor state.colorClientBg
   state.colorServerFg = calcFgColorForBgColor state.colorServerBg
   state.colorUiFg = calcFgColorForUiBgColor state.colorUiBg
+  state.colorClientBgIsDark = isDark state.colorClientBg
+  state.colorServerBgIsDark = isDark state.colorServerBg
+  state.colorUiBgIsDark = isDark state.colorUiBg
   state
 
 INITIAL_STATE =
@@ -32,7 +35,7 @@ INITIAL_STATE =
   colorClientBg: 'aliceblue' # lemonchiffon is also nice
   colorServerBg: tinycolor('aliceblue').darken(5).toRgbString()
   colorUiBg: 'white'
-addFgColors INITIAL_STATE
+addDerivedColorState INITIAL_STATE
 
 reducer = (state = INITIAL_STATE, action) ->
   switch action.type
@@ -41,7 +44,7 @@ reducer = (state = INITIAL_STATE, action) ->
       {settings} = action
       nextState = timm.merge state, settings
       if nextState isnt state
-        addFgColors nextState
+        addDerivedColorState nextState
       if not(nextState.maxRecords > 0)
         nextState = timm.set nextState, 'maxRecords', INITIAL_STATE.maxRecords
       return nextState

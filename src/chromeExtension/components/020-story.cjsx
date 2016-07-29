@@ -344,7 +344,7 @@ RepetitionLine = React.createClass
         setTimeType={setTimeType}
         seqFullRefresh={seqFullRefresh}
       />
-      <Src src=''/>
+      <Src/>
       <Severity/>
       <Indent level={level}/>
       <CaretOrSpace/>
@@ -386,7 +386,7 @@ Line = React.createClass
   #-----------------------------------------------------
   render: ->
     {record, fDirectChild, level, colors} = @props
-    {id, msg, fStory, fStoryObject, fOpen, title, action} = record
+    {id, msg, fStory, fStoryObject, fServer, fOpen, title, action} = record
     if fStoryObject then msg = title
     if fStory
       msg = if not fDirectChild then "#{title} " else ''
@@ -400,15 +400,19 @@ Line = React.createClass
       className = 'log'
       style = _styleLine.log record, colors
       indentLevel = level
+    className += ' allowUserSelect'
+    # No animation on dark backgrounds to prevent antialiasing defects
+    fDarkBg = if fServer then colors.colorServerBgIsDark else colors.colorClientBgIsDark
+    if (not fDarkBg) then className += ' fadeIn'
     <div
-      className={"#{className} allowUserSelect fadeIn"}
+      className={className}
       onMouseEnter={@onMouseEnter}
       onMouseLeave={@onMouseLeave}
       style={style}
     >
       {@renderTime record}
-      <Src src={record.src}/>
-      <Severity level={record.level}/>
+      <Src src={record.src} colors={colors}/>
+      <Severity level={record.level} colors={colors}/>
       <Indent level={indentLevel}/>
       {@renderCaretOrSpace record}
       {@renderMsg fStoryObject, msg, record.level}
@@ -584,12 +588,9 @@ Severity = React.createClass
     {level} = @props
     if level?
       levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[level]
-      <ColoredText text={levelStr}/>
+      return <ColoredText text={levelStr}/>
     else
-      <span style={_styleStorySeverity}>      </span>
-
-_styleStorySeverity =
-  color: 'gray'
+      return <span>      </span>
 
 #-====================================================
 # ## Src
@@ -601,8 +602,11 @@ Src = React.createClass
     src:                    React.PropTypes.string
   render: ->
     {src} = @props
-    srcStr = ansiColors.getSrcChalkColor(src) _.padStart(src + ' ', 20)
-    <ColoredText text={srcStr}/>
+    if src?
+      srcStr = ansiColors.getSrcChalkColor(src) _.padStart(src + ' ', 20)
+      return <ColoredText text={srcStr}/>
+    else
+      return <span>{_.repeat(' ', 20)}</span>
 
 #-====================================================
 # ## Indent

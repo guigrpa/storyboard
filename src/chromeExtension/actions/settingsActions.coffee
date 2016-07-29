@@ -32,7 +32,7 @@ loadSettings = -> (dispatch) ->
   settings = _getSettings()
   if settings? then dispatch updateSettings settings
   return
-  
+
 module.exports =
   actions: {
     loadSettings,
