@@ -428,6 +428,7 @@ Some highlighted features:
 * Use quick find (case-insensitive) to highlight what you're looking for.
 * Squash identical, consecutive messages into a convenient summary line.
 * Configure when and how Storyboard *forgets* old logs and stories.
+* Customise colours to your heart's content!
 
 You can check out your new extension navigating to: http://storyboard-demo.herokuapp.com/
 
