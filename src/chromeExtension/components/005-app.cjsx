@@ -22,6 +22,7 @@ mapStateToProps = (state) ->
   colors: _.pick(state.settings, [
     'colorClientBg', 'colorServerBg', 'colorUiBg',
     'colorClientFg', 'colorServerFg', 'colorUiFg',
+    'colorClientBgIsDark', 'colorServerBgIsDark', 'colorUiBgIsDark',
   ])
 
 App = React.createClass
@@ -48,7 +49,6 @@ App = React.createClass
     window.removeEventListener 'scroll', @onScroll
 
   componentDidUpdate: ->
-    return
     if @fAnchoredToBottom
       window.scrollTo 0, document.body.scrollHeight
 
