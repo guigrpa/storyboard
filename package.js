@@ -249,6 +249,7 @@ const specs = {
     'sinon': '1.17.3',
     'sinon-chai': '2.8.0',
     'mocha': '2.4.5',
+    'ignore-styles': '4.0.0',
     'nyc': '6.1.1',
     'coffee-coverage': '1.0.1',
     'coveralls': '2.11.6',

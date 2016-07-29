@@ -95,6 +95,7 @@
     "file-loader": "0.8.5",
     "font-awesome": "4.5.0",
     "giu": "0.7.0",
+    "ignore-styles": "4.0.0",
     "isomorphic-fetch": "2.2.1",
     "json-loader": "0.5.4",
     "mocha": "2.4.5",

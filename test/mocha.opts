@@ -1,5 +1,6 @@
 --compilers coffee:coffee-script/register
+--require ignore-styles
 --recursive
--R spec 
---colors 
+-R spec
+--colors
 --timeout 6000
