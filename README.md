@@ -19,7 +19,7 @@ _**These are the docs for Storyboard v2.x. The latest docs for [v1.x can be foun
 * **Attach anything** to your logs for further investigation.
 * Integrate your app with Storyboard's **flexible plugin architecture**. Built-in plugins include Console, WebSocket Server & Client, File, (PostgreSQL) Database, and Browser Extension, but you can write your own too!
 * Give logs **source and severity** attributes and apply **coarse- or fine-grained filtering**, with white and black lists.
-* Use **color** to highlight what's important. Storyboard extends the popular [chalk](https://github.com/chalk/chalk) library so that it can also be used on the browser.
+* Use **colour** to highlight what's important. Storyboard extends the popular [chalk](https://github.com/chalk/chalk) library so that it can also be used on the browser.
 * Enjoy the **simple-yet-powerful API** (I hope!).
 
 
@@ -122,11 +122,11 @@ mainStory.info('Hello world!');
 mainStory.trace('Teeny-weeny detail: x = 3, y = 4');
 mainStory.debug('Called login()');
 mainStory.info('User "admin" authenticated successfully');
-mainStory.warn('Sad we can\'t show colors in GFM');
+mainStory.warn('Sad we can\'t show colours in GFM');
 mainStory.error('User "admin" could not be authenticated', { attach: err });
 mainStory.fatal('Ooops! Crashed! Mayday!', { attach: fatalError });
 // ...
-// 2016-03-09T16:18:19.659Z           main WARN  Sad we can't show colors in GFM
+// 2016-03-09T16:18:19.659Z           main WARN  Sad we can't show colours in GFM
 // 2016-03-09T16:18:19.672Z           main ERROR User "admin" could not be authenticated
 // 2016-03-09T16:18:19.672Z           main ERROR   name: 'Error'
 // 2016-03-09T16:18:19.672Z           main ERROR   message: 'AUTHENTICATION_ERROR'
@@ -152,7 +152,7 @@ mainStory.info('db', 'Fetching item 25...');
 
 ### Colors
 
-Use colors to highlight important parts of your logs:
+Use colours to highlight important parts of your logs:
 
 ```js
 import { mainStory, chalk } from 'storyboard';
@@ -162,7 +162,7 @@ mainStory.info('db', `Fetching item ${chalk.green.bold('26')}...`);
 // 2016-03-09T16:31:52.231Z             db INFO  Fetching item 26...
 ```
 
-As seen above, we recommend using the popular [chalk](https://github.com/chalk/chalk) library by Sindre Sorhus. Chalk is automatically extended by Storyboard for use in the browser. If you prefer another ANSI-color library, make sure it's universal and doesn't disable itself in the browser.
+As seen above, we recommend using the popular [chalk](https://github.com/chalk/chalk) library by Sindre Sorhus. Chalk is automatically extended by Storyboard for use in the browser. If you prefer another ANSI-colour library, make sure it's universal and doesn't disable itself in the browser.
 
 
 ### Attachments
