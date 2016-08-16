@@ -4,7 +4,7 @@
 // Basic config
 // ===============================================
 const NAME = 'storyboard';
-const VERSION = '2.0.2';
+const VERSION = '2.1.0';
 const DESCRIPTION = 'End-to-end, hierarchical, real-time, colorful logs and stories';
 const KEYWORDS = ['log', 'logging', 'websockets', 'console', 'isomorphic'];
 
@@ -68,7 +68,7 @@ const specs = {
                                   'npm run zipExtension',
                                   'npm run buildExampleHeroku',
                                   'npm run xxl',
-                                  'echo "Remember to update Heroku package.json with the latest SB version!"',
+                                  // 'echo "Remember to update Heroku package.json with the latest SB version!"',
                                 ]),
     'now-build':                'echo NOTHING_TO_BE_DONE_NOW',
     travis:                     runMultiple([

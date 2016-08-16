@@ -2,6 +2,8 @@
 
 *[M]: major change; [m]: minor change*
 
+## 2.1.0 (August 16, 2016)
+
 * Browser extension:
     - [M] Allow customising the application's **colours**, including presets.
     - [m] Settings: add **revert to defaults** option.
