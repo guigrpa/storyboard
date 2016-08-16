@@ -1,5 +1,3 @@
-- Heroku: remove login -- many people don't try it and miss out on server-side logs!
-
 - Hints: login, settings
 
 - Bugs:

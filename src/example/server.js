@@ -2,7 +2,7 @@
 import storyboard from '../storyboard';
 const { mainStory } = storyboard;
 import consoleListener from '../listeners/console';
-import fileListener from '../listeners/file';
+// import fileListener from '../listeners/file';
 import wsServerListener from '../listeners/wsServer';
 
 import createHttpServer from './httpServer';
@@ -11,7 +11,7 @@ import writeSomeLogs from './writeSomeLogs';
 
 storyboard.config({ filter: '*:*' });
 storyboard.addListener(consoleListener);
-storyboard.addListener(fileListener);
+// storyboard.addListener(fileListener);
 
 // Initialise our server
 mainStory.info('server', 'Initialising server...');
@@ -21,7 +21,7 @@ const httpServer = createHttpServer();
 // (asking for credentials)
 storyboard.addListener(wsServerListener, {
   httpServer,
-  authenticate: ({ login }) => login !== 'unicorn',
+  // authenticate: ({ login }) => login !== 'unicorn',
 });
 
 // Initialise our fake database

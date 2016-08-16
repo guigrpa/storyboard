@@ -4,7 +4,7 @@
 
 A library, plus a [Chrome DevTools extension](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc).
 
-Demo: http://storyboard-demo.herokuapp.com/
+Demo: https://storyboard-bhibtchlhy.now.sh/ (might be a bit slow; free hosting!)
 
 _**These are the docs for Storyboard v2.x. The latest docs for [v1.x can be found here](https://github.com/guigrpa/storyboard/blob/v1.4.0/README.md). See also the [changelog](https://github.com/guigrpa/storyboard/blob/master/CHANGELOG.md) for details on new features and breaking changes.**_
 

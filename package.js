@@ -21,7 +21,7 @@ const runTestCov = env => {
   ]);
 };
 
-const WEBPACK_OPTS = '--colors --progress --display-modules --display-chunks';
+const WEBPACK_OPTS = '--color --progress --display-modules --display-chunks';
 // const WEBPACK_OPTS            = '--colors --progress'
 const WEBPACK_EXTENSION = `webpack --config src/chromeExtension/webpackConfig ${WEBPACK_OPTS}`;
 const WEBPACK_SERVER_LOGS_APP = `webpack --config src/serverLogsApp/webpackConfig ${WEBPACK_OPTS}`;
@@ -70,6 +70,7 @@ const specs = {
                                   'npm run xxl',
                                   'echo "Remember to update Heroku package.json with the latest SB version!"',
                                 ]),
+    'now-build':                'echo NOTHING_TO_BE_DONE_NOW',
     travis:                     runMultiple([
                                   'npm run compile',
                                   'npm run test',
@@ -78,6 +79,7 @@ const specs = {
                                   'npm run buildExample',
                                   'npm run example',
                                 ]),
+    'now-start':                'node lib/example/server',
 
     // Server logs app
     buildServerLogsApp:         `cross-env NODE_ENV=production ${WEBPACK_SERVER_LOGS_APP} -p`,
@@ -93,13 +95,13 @@ const specs = {
                                 ]),
 
     // Example
-    buildExample:               WEBPACK_EXAMPLE,
+    buildExample:               `cross-env NODE_ENV=production ${WEBPACK_EXAMPLE} -p`,
+    buildExampleWatch:          `${WEBPACK_EXAMPLE} --watch`,
     buildExampleHeroku:         runMultiple([
                                   `rm -f ${HEROKU_CLIENT}/*.eot ${HEROKU_CLIENT}/*.ttf ${HEROKU_CLIENT}/*.woff* ${HEROKU_CLIENT}/*.svg ${HEROKU_CLIENT}/*.js`,
                                   `cross-env NODE_ENV=production ${WEBPACK_EXAMPLE} -p`,
                                   `cp example/*.eot example/*.ttf example/*.woff* example/*.svg example/*.js ${HEROKU_CLIENT}/`,
                                 ]),
-    buildExampleWatch:          `${WEBPACK_EXAMPLE} --watch`,
     example:                    runMultiple([
                                   'npm run compile',
                                   'node lib/example/server',
