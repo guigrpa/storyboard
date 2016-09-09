@@ -220,11 +220,11 @@ const specs = {
     'coffee-script': '1.10.0',
 
     // Babel + plugins
-    'babel-cli': '6.9.0',
-    'babel-core': '6.9.1',
-    'babel-preset-es2015': '6.9.0',
-    'babel-preset-react': '6.5.0',
-    'babel-preset-stage-2': '6.5.0',
+    'babel-cli': '6.11.4',
+    'babel-core': '6.13.1',
+    'babel-preset-es2015': '6.13.1',
+    'babel-preset-react': '6.11.1',
+    'babel-preset-stage-2': '6.13.0',
 
     // Webpack + loaders (+ related stuff)
     'webpack': '1.13.1',
