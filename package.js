@@ -4,7 +4,7 @@
 // Basic config
 // ===============================================
 const NAME = 'storyboard';
-const VERSION = '2.1.0';
+const VERSION = '2.1.1';
 const DESCRIPTION = 'End-to-end, hierarchical, real-time, colorful logs and stories';
 const KEYWORDS = ['log', 'logging', 'websockets', 'console', 'isomorphic'];
 
@@ -199,7 +199,7 @@ const specs = {
     'redux-devtools': '3.3.1',
     'redux-devtools-dock-monitor': '1.1.1',
     'redux-devtools-log-monitor': '1.0.11',
-    'redux-devtools-inspector': '0.3.1',
+    'redux-devtools-inspector': '0.7.1',
     'redux-logger': '2.6.1',
 
     // Miscellaneous

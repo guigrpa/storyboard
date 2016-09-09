@@ -2,6 +2,11 @@
 
 *[M]: major change; [m]: minor change*
 
+## 2.1.1 (September 9, 2016)
+
+* Browser extension:
+    - Fix a bug derived from the change in CSS property `webkit-user-select` in the latest Chrome release.
+
 ## 2.1.0 (August 16, 2016)
 
 * Browser extension:
