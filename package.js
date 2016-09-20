@@ -163,6 +163,7 @@ const specs = {
     'bluebird': '3.4.1',
     'express': '4.14.0',
     'socket.io': '1.4.8',
+    'socket.io-client': '1.4.8',
     'node-uuid': '1.4.7',
     'lodash': '4.13.1',
     'platform': '1.3.1',
@@ -205,7 +206,6 @@ const specs = {
     // Miscellaneous
     'font-awesome': '4.5.0',
     'moment': '2.14.1',
-    'socket.io-client': '1.4.5',
     'tinycolor2': '1.4.1',
 
     // -----------------------------------------------
