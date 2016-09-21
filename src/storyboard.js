@@ -31,6 +31,9 @@ const config = (options = {}) => {
       case 'filter':
         filters.config(val);
         break;
+      case 'onChangeFilter':
+        filters.setOnChangeFilter(val);
+        break;
       case 'bufSize':
         hubConfigure({ bufSize: val });
         break;

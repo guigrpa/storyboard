@@ -9,6 +9,7 @@ let included = null;
 let excluded = null;
 let cachedThreshold = null;
 let mainStory = null;
+let onChangeFilter = null;
 
 const init = deps => {
   mainStory = deps.mainStory;
@@ -62,7 +63,13 @@ const config = filter => {
   store[FILTER_KEY] = filter || '';
   cachedThreshold = null;
   setUpFilters();
-  mainStory.info('storyboard', `Log filter is now: ${chalk.cyan.bold(getConfig())}`);
+  const newFilter = getConfig();
+  if (onChangeFilter) onChangeFilter(newFilter);
+  mainStory.info('storyboard', `Log filter is now: ${chalk.cyan.bold(newFilter)}`);
+};
+
+const setOnChangeFilter = (fn) => {
+  onChangeFilter = fn;
 };
 
 const calcThreshold = src => {
@@ -94,5 +101,6 @@ export {
   init,
   config,
   getConfig,
+  setOnChangeFilter,
   passesFilter,
 };
