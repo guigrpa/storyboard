@@ -2,6 +2,9 @@
 
 *[M]: major change; [m]: minor change*
 
+* Library:
+    - [m] Add `onChangeFilter` hook to allow saving the backend filter config after being modified through the browser extension.
+
 ## 2.1.2 (September 20, 2016)
 
 * Library:
