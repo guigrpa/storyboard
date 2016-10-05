@@ -118,6 +118,7 @@ const specs = {
     /* eslint-enable quotes */
 
     // Testing - general
+    jest:                       'jest',
     test:                       'npm run testCovFull',
     testFast:                   'mocha',
     testCovFull:                runMultiple([
@@ -247,6 +248,9 @@ const specs = {
     'babel-eslint': '6.1.2',
 
     // Testing
+    'jest': '16.0.0',
+    'react-test-renderer': '15.3.2',
+    'babel-jest': '16.0.0',
     'chai': '3.5.0',
     'sinon': '1.17.3',
     'sinon-chai': '2.8.0',
@@ -270,6 +274,25 @@ const specs = {
   // -----------------------------------------------
   nyc: {
     exclude: ['lib/vendor/**'],
+  },
+  jest: {
+    // Default test path:
+    // testRegex: '(/__tests__/.*|\\.(test|spec))\\.(js|jsx)$',
+    testRegex: 'src/.*__tests__/.*\\.(test|spec)\\.(coffee|js|jsx)$',
+    moduleNameMapper: {
+      '^.+\\.(css|less|sass)$': '<rootDir>/test/emptyObject.js',
+      '^.+\\.(gif|ttf|eot|svg)$': '<rootDir>/test/emptyString.js',
+      'node-uuid': '<rootDir>/test/mockUuid.js',
+    },
+    coverageDirectory: '.nyc_output',
+    coverageReporters: ['json', 'text', 'html'],
+    collectCoverageFrom: [
+      'src/**/*.js',
+      '!**/node_modules/**',
+      '!**/__tests__/**',
+      '!**/__mocks__/**',
+    ],
+    // setupTestFrameworkScriptFile: './test/setup.js',
   },
 };
 
