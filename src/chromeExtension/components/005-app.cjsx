@@ -10,8 +10,8 @@ ReactRedux        = require 'react-redux'
 tinycolor         = require 'tinycolor2'
 Toolbar           = require './015-toolbar'
 Story             = require './020-story'
-if process.env.NODE_ENV isnt 'production'
-  ReduxDevTools   = require '../components/990-reduxDevTools'
+# if process.env.NODE_ENV isnt 'production'
+#   ReduxDevTools   = require '../components/990-reduxDevTools'
 
 require './app.sass'
 

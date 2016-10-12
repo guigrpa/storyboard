@@ -198,10 +198,10 @@ const specs = {
     'redux-thunk': '2.1.0',
 
     // Redux devtools
-    'redux-devtools': '3.3.1',
-    'redux-devtools-dock-monitor': '1.1.1',
-    'redux-devtools-log-monitor': '1.0.11',
-    'redux-devtools-inspector': '0.7.1',
+    // 'redux-devtools': '3.3.1',
+    // 'redux-devtools-dock-monitor': '1.1.1',
+    // 'redux-devtools-log-monitor': '1.0.11',
+    // 'redux-devtools-inspector': '0.8.0',
     'redux-logger': '2.6.1',
 
     // Miscellaneous
@@ -267,6 +267,9 @@ const specs = {
     'uglifyjs': '2.4.10',
     'bestzip': '1.1.3',
     'xxl': '0.1.1',
+
+    // yarn bug #629
+    chokidar: '1.6.0',
   },
 
   // -----------------------------------------------
