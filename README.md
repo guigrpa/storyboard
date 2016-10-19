@@ -21,6 +21,7 @@ _**These are the docs for Storyboard v2.x. The latest docs for [v1.x can be foun
 * Give logs **source and severity** attributes and apply **coarse- or fine-grained filtering**, with white and black lists.
 * Use **colour** to highlight what's important. Storyboard extends the popular [chalk](https://github.com/chalk/chalk) library so that it can also be used on the browser.
 * Enjoy the **simple-yet-powerful API** (I hope!).
+* **[Flow](https://flowtype.org/)-compatible** (with zero config).
 
 
 ## Installation

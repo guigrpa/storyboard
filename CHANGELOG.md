@@ -2,7 +2,10 @@
 
 *[M]: major change; [m]: minor change*
 
+## 2.2.0 (October 19, 2016)
+
 * Library:
+    - **Flow API**: if you use [Flow](https://flowtype.org/) in your project, you will be able to typecheck against Storyboard's API. **No configuration is required.**
     - [m] Add `onChangeFilter` hook to allow saving the backend filter config after being modified through the browser extension.
 
 ## 2.1.2 (September 20, 2016)
