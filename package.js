@@ -58,8 +58,8 @@ const specs = {
                                   'rm -rf ./lib',
                                   'coffee --no-header -o lib -c src',
                                   'babel -d lib src',
-                                  'copy src/storyboard.js.flow lib/storyboard.js.flow',
-                                  'copy src/storyboard.js.flow lib/withConsoleListener.js.flow',
+                                  'cp src/storyboard.js.flow lib/storyboard.js.flow',
+                                  'cp src/storyboard.js.flow lib/withConsoleListener.js.flow',
                                 ]),
     build:                      runMultiple([
                                   'npm run lint',
