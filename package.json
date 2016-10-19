@@ -24,7 +24,7 @@
     "url": "git+https://github.com/guigrpa/storyboard.git"
   },
   "scripts": {
-    "compile": "node package && rm -rf ./lib && coffee --no-header -o lib -c src && babel -d lib src",
+    "compile": "node package && rm -rf ./lib && coffee --no-header -o lib -c src && babel -d lib src && copy src/storyboard.js.flow lib/storyboard.js.flow && copy src/storyboard.js.flow lib/withConsoleListener.js.flow",
     "build": "npm run lint && npm run compile && npm run buildServerLogsApp && npm run buildExtension && npm run test && npm run zipExtension && npm run buildExampleHeroku && npm run xxl",
     "now-build": "echo NOTHING_TO_BE_DONE_NOW",
     "travis": "npm run compile && npm run test",
@@ -68,7 +68,7 @@
     "socket.io": "1.4.8",
     "socket.io-client": "1.4.8",
     "split": "1.0.0",
-    "timm": "1.0.0"
+    "timm": "1.1.2"
   },
   "devDependencies": {
     "babel-cli": "6.11.4",

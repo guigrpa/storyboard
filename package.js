@@ -58,6 +58,8 @@ const specs = {
                                   'rm -rf ./lib',
                                   'coffee --no-header -o lib -c src',
                                   'babel -d lib src',
+                                  'copy src/storyboard.js.flow lib/storyboard.js.flow',
+                                  'copy src/storyboard.js.flow lib/withConsoleListener.js.flow',
                                 ]),
     build:                      runMultiple([
                                   'npm run lint',
@@ -158,7 +160,7 @@ const specs = {
   // Storyboard library dependencies
   // ===============================================
   dependencies: {
-    'timm': '1.0.0',
+    'timm': '1.1.2',
     'clocksy': '1.1.0',
     'chalk': '1.x',
     'bluebird': '3.4.1',
