@@ -1,6 +1,6 @@
 _         = require 'lodash'
 timm      = require 'timm'
-treeLines = require '../../lib/gral/treeLines'
+treeLines = require('../../lib/gral/treeLines').default
 {expect}  = require './imports'
 reducer   = require '../../lib/chromeExtension/reducers/storyReducer'
 

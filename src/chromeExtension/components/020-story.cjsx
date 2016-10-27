@@ -10,7 +10,7 @@ chalk             = require 'chalk'
 ColoredText       = require './030-coloredText'
 actions           = require '../actions/actions'
 ansiColors        = require '../../gral/ansiColors'
-treeLines         = require '../../gral/treeLines'
+treeLines         = require('../../gral/treeLines').default
 { deserialize }   = require '../../gral/serialize'
 k                 = require '../../gral/constants'
 
