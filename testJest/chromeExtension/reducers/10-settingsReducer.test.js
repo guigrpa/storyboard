@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import reducer from '../../lib/chromeExtension/reducers/settingsReducer';
+import reducer from '../../../lib/chromeExtension/reducers/settingsReducer';
 
 describe('settingsReducer', () => {
   it('should update settings with new values', () => {
