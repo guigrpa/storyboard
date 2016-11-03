@@ -1,0 +1,138 @@
+exports[`ColoredText renders correctly with styled text 1`] = `
+<span
+  onClick={undefined}
+  style={undefined}>
+  <span
+    style={Object {}}>
+    That\'s 
+  </span>
+  <span
+    style={
+      Object {
+        "color": "#cc0000",
+      }
+    }>
+    red
+  </span>
+  <span
+    style={Object {}}>
+     and that\'s 
+  </span>
+  <span
+    style={
+      Object {
+        "color": "darkturquoise",
+        "fontWeight": "bold",
+      }
+    }>
+    very important
+  </span>
+</span>
+------------HTML PREVIEW---------------
+  <span
+    style=>
+    <span
+      style="">
+      That\'s 
+    </span>
+    <span
+      style="color:#cc0000;">
+      red
+    </span>
+    <span
+      style="">
+       and that\'s 
+    </span>
+    <span
+      style="color:darkturquoise;font-weight:bold;">
+      very important
+    </span>
+  </span>
+`;
+
+exports[`ColoredText renders correctly with unstyled text 1`] = `
+<span
+  onClick={undefined}
+  style={Object {}}>
+  Hello
+</span>
+------------HTML PREVIEW---------------
+  <span
+    style="">
+    Hello
+  </span>
+`;
+
+exports[`ColoredText renders nested styles correctly 1`] = `
+<span
+  onClick={undefined}
+  style={undefined}>
+  <span
+    style={Object {}}>
+    That\'s 
+  </span>
+  <span
+    style={
+      Object {
+        "color": "#cc0000",
+        "fontWeight": "bold",
+      }
+    }>
+    very
+  </span>
+  <span
+    style={
+      Object {
+        "color": "#cc0000",
+      }
+    }>
+     important
+  </span>
+</span>
+------------HTML PREVIEW---------------
+  <span
+    style=>
+    <span
+      style="">
+      That\'s 
+    </span>
+    <span
+      style="color:#cc0000;font-weight:bold;">
+      very
+    </span>
+    <span
+      style="color:#cc0000;">
+       important
+    </span>
+  </span>
+`;
+
+exports[`ColoredText respects the onClick prop 1`] = `
+<span
+  onClick={[Function]}
+  style={Object {}}>
+  Hello
+</span>
+------------HTML PREVIEW---------------
+  <span
+    style="">
+    Hello
+  </span>
+`;
+
+exports[`ColoredText respects the style prop 1`] = `
+<span
+  onClick={undefined}
+  style={
+    Object {
+      "border": "1px solid black",
+    }
+  }>
+  Hello
+</span>
+------------HTML PREVIEW---------------
+  <span
+    style="border:1px solid black;">
+    Hello
+  </span>
+`;

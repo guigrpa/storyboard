@@ -24,7 +24,7 @@
     "url": "git+https://github.com/guigrpa/storyboard.git"
   },
   "scripts": {
-    "compile": "node package && rm -rf ./lib && coffee --no-header -o lib -c src && babel -d lib src && cp src/storyboard.js.flow lib/storyboard.js.flow && cp src/storyboard.js.flow lib/withConsoleListener.js.flow",
+    "compile": "node package && rm -rf ./lib && coffee --no-header -o lib -c src && cjsx --no-header -o lib/chromeExtension/components -c src/chromeExtension/components && babel -d lib src && cp src/storyboard.js.flow lib/storyboard.js.flow && cp src/storyboard.js.flow lib/withConsoleListener.js.flow",
     "build": "npm run lint && npm run compile && npm run buildServerLogsApp && npm run buildExtension && npm run test && npm run zipExtension && npm run buildExampleHeroku && npm run xxl",
     "now-build": "echo NOTHING_TO_BE_DONE_NOW",
     "travis": "npm run compile && npm run test",
@@ -103,7 +103,7 @@
     "ignore-styles": "4.0.0",
     "isomorphic-fetch": "2.2.1",
     "jest": "16.1.0-alpha.691b0e22",
-    "jest-html": "^0.3.3",
+    "jest-html": "^1.0.0",
     "json-loader": "0.5.4",
     "mocha": "2.4.5",
     "moment": "2.14.1",

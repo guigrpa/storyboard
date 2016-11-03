@@ -59,6 +59,7 @@ const specs = {
                                   'node package',
                                   'rm -rf ./lib',
                                   'coffee --no-header -o lib -c src',
+                                  'cjsx --no-header -o lib/chromeExtension/components -c src/chromeExtension/components',
                                   'babel -d lib src',
                                   'cp src/storyboard.js.flow lib/storyboard.js.flow',
                                   'cp src/storyboard.js.flow lib/withConsoleListener.js.flow',
@@ -253,7 +254,7 @@ const specs = {
 
     // Testing with Jest
     'jest': '16.1.0-alpha.691b0e22',
-    'jest-html': '^0.3.3',
+    'jest-html': '^1.0.0',
     'react-test-renderer': '15.3.2',
     'babel-jest': '16.0.0',
 
@@ -275,6 +276,11 @@ const specs = {
     'uglifyjs': '2.4.10',
     'bestzip': '1.1.3',
     'xxl': '0.1.1',
+
+    // CJSX conversion
+    // 'shelljs': '0.7.5',
+    // 'globby': '6.0.0',
+    // 'babel-plugin-transform-react-createelement-to-jsx': '1.0.1',
 
     // yarn bug #629
     chokidar: '1.6.0',
