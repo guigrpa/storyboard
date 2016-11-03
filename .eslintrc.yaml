@@ -13,9 +13,10 @@ rules:
   no-cond-assign:
     - error
     - except-parens
+  no-underscore-dangle: off
   key-spacing:
     - warn
-    - 
+    -
       beforeColon: false
       afterColon: true
       mode: 'minimum'

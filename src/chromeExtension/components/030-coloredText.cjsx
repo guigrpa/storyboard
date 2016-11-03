@@ -15,15 +15,15 @@ ColoredText = React.createClass
     style:                  React.PropTypes.object
 
   #-----------------------------------------------------
-  render: -> 
+  render: ->
     segments = ansiColors.getStyledSegments @props.text
     if segments.length is 1
       segment = segments[0]
-      extraProps = 
+      extraProps =
         onClick: @props.onClick
         style: timm.merge segment.style, @props.style
       return @renderMsgSegment segment, 0, extraProps
-    <span 
+    <span
       onClick={@props.onClick}
       style={@props.style}
     >

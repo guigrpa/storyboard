@@ -16,9 +16,9 @@ describe 'storyboard v2', ->
 
   it 'should include no listeners by default', ->
     expect(storyboard.getListeners()).to.have.length 0
-    
+
 describe 'storyboard', ->
-  
+
   before ->
     storyboard.addListener _listenerFactory
     storyboard.config {filter: '*:*', bufSize: 5}
@@ -141,7 +141,7 @@ describe 'storyboard', ->
   describe 'for a filtered out story', ->
 
     foo = null
-    beforeEach -> 
+    beforeEach ->
       storyboard.config {filter: 'foo:INFO,*:*'}
       _spyListenerProcess.reset() # Forget the 'filter changed' log
       foo = mainStory.child {src: 'foo', title: 'Foo', level: 'DEBUG'}

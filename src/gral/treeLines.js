@@ -102,8 +102,8 @@ const treeLines = (obj0, options0 = {}) => {
 };
 
 /* eslint-disable no-console */
-treeLines.log = () => {
-  const lines = treeLines.apply(null, arguments);
+treeLines.log = (...args) => {
+  const lines = treeLines(...args);
   for (let i = 0, len = lines.length; i < len; i++) {
     const line = lines[i];
     console.log(line);

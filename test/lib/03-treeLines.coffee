@@ -10,7 +10,7 @@ describe 'treeLines', ->
     a.c = a
     lines = treeLines a
     expect(lines[1]).to.contain 'CIRCULAR'
-  
+
   it 'should show empty arrays as []', ->
     lines = treeLines {b: []}
     expect(lines[0]).to.contain '[]'

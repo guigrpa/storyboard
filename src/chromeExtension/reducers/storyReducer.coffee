@@ -6,7 +6,7 @@ _mainStoryPathStr = (fServer) -> "records/#{if fServer then 1 else 0}"
 _mainStory = (fServer) ->
   idx = if fServer then 1 else 0
   id = "main_#{idx}"
-  story = 
+  story =
     id: id
     storyId: id
     pathStr: _mainStoryPathStr fServer
@@ -83,7 +83,7 @@ reducer = (state = _buildInitialState(), action, settings = {}) ->
     when 'EXPAND_ALL_STORIES'   then return _expandCollapseAll state, true
     when 'COLLAPSE_ALL_STORIES' then return _expandCollapseAll state, false
 
-    when 'QUICK_FIND' 
+    when 'QUICK_FIND'
       {txt} = action
       if txt.length
         quickFind = txt.replace /([\\\.\+\*\?\[\^\]\$\(\)\{\}\=\!\<\>\|\:])/g, "\\$1"
@@ -103,10 +103,10 @@ _rxRecords = (state, action, settings) ->
   newStories = []
   for record in records
     if record.signalType then continue
-    if record.fStory 
+    if record.fStory
       [state, pathStr] = _rxStory state, record, options
       if pathStr then newStories.push pathStr
-    else 
+    else
       state = _rxLog state, record, options
 
   # Don't expand stories that are already closed upon reception
@@ -187,7 +187,7 @@ _addStory = (state, parentStoryPathStr, record, options) ->
   parentRecordsPath = "mainStory/#{parentStoryPathStr}/records".split '/'
   parentRecords = timm.getIn state, parentRecordsPath
   pathStr = "#{parentStoryPathStr}/records/#{parentRecords.length}"
-  story = timm.merge record, 
+  story = timm.merge record,
     pathStr: pathStr
     records: []
     fStoryObject: true
@@ -219,7 +219,7 @@ _addLog = (state, pathStr, record, options) ->
   path = "mainStory/#{pathStr}/records".split '/'
   record = timm.set record, 'objExpanded', (fExpandAllNewAttachments ? false)
   fDuplicate = false
-  state = timm.updateIn state, path, (prevRecords) -> 
+  state = timm.updateIn state, path, (prevRecords) ->
     # Handle duplicates when including past records
     if fPastRecords
       {storyId, id} = record
@@ -230,8 +230,8 @@ _addLog = (state, pathStr, record, options) ->
     if (fShorthandForDuplicates ? true) and (not record.fStory)
       idx = prevRecords.length - 1
       prevLastRecord = prevRecords[idx]
-      if prevLastRecord? and 
-          (prevLastRecord.msg is record.msg) and 
+      if prevLastRecord? and
+          (prevLastRecord.msg is record.msg) and
           (prevLastRecord.src is record.src) and
           _.isEqual(prevLastRecord.obj, record.obj)
         fDuplicate = true

@@ -1,8 +1,8 @@
 import { merge } from 'timm';
 import chalk from 'chalk';
 import { padStart } from '../../vendor/lodash';
-import ansiColors from '../../gral/ansiColors';
-import k from '../../gral/constants';
+import * as ansiColors from '../../gral/ansiColors';
+import { LEVEL_STR_TO_NUM } from '../../gral/constants';
 import * as filters from '../../gral/filters';
 import { deserialize } from '../../gral/serialize';
 import treeLines from '../../gral/treeLines';
@@ -58,9 +58,9 @@ const recordToLines = (record, options) => {
       objStr = chalk.yellow(` -- ${JSON.stringify(deserializedObj)}`);
     } catch (err) { /* ignore */ }
   }
-  if (level >= k.LEVEL_STR_TO_NUM.ERROR) {
+  if (level >= LEVEL_STR_TO_NUM.ERROR) {
     msgStr = chalk.red.bold(msgStr);
-  } else if (level >= k.LEVEL_STR_TO_NUM.WARN) {
+  } else if (level >= LEVEL_STR_TO_NUM.WARN) {
     msgStr = chalk.yellow.bold(msgStr);
   }
   let finalMsg = `${timeStr} ${srcStr} ${levelStr}${msgStr}${actionStr}${objStr}`;

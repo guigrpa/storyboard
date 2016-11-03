@@ -1,11 +1,11 @@
 import { merge, addDefaults, set as timmSet } from 'timm';
-import ansiColors from '../gral/ansiColors';
-import k from '../gral/constants';
+import { getBrowserConsoleArgs } from '../gral/ansiColors';
+import { IS_BROWSER } from '../gral/constants';
 import recordToLines from './helpers/recordToLines';
 
 const DEFAULT_CONFIG = {
   moduleNameLength: 20,
-  relativeTime: k.IS_BROWSER,
+  relativeTime: IS_BROWSER,
   colors: true,
   useStderr: false,
 };
@@ -55,11 +55,9 @@ class ConsoleListener {
   // -----------------------------------------
   /* eslint-disable no-console */
   outputLog(text, level, fLongDelay) {
-    const args = k.IS_BROWSER ?
-      ansiColors.getBrowserConsoleArgs(text) :
-      [text];
+    const args = IS_BROWSER ? getBrowserConsoleArgs(text) : [text];
     if (fLongDelay) console.log('          ...');
-    if (k.IS_BROWSER) {
+    if (IS_BROWSER) {
       switch (level) {
         case 40:
           console.warn.apply(console, args);
