@@ -59,11 +59,6 @@ class Settings extends React.Component {
     this.checkLocalStorage();
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { maxRecords, forgetHysteresis } = nextProps.settings;
-    return this.setState({ maxRecords, forgetHysteresis });
-  }
-
   // -----------------------------------------------------
   render() {
     const { colors } = this.props;
