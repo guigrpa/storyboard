@@ -824,6 +824,7 @@ exports[`Settings renders correctly 1`] = `
         <div
           style="background-color:white;border-radius:2px;box-shadow:0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);color:black;max-height:90vh;overflow-y:auto;padding:20px;">
           <input
+            autoFocus
             style="cursor:default;height:0;left:8px;opacity:0;padding:0;pointer-events:none;position:fixed;top:8px;width:0;z-index:-80;">
           </input>
           <div
@@ -843,8 +844,7 @@ exports[`Settings renders correctly 1`] = `
               type="checkbox">
             </input>
             <label
-              for="giu-checkbox_0"
-              style=>
+              for="giu-checkbox_0">
               <span>
                 Show 
                 <i>
@@ -860,17 +860,17 @@ exports[`Settings renders correctly 1`] = `
             class="giu-checkbox"
             style="white-space:nowrap;">
             <input
+              checked
               id="giu-checkbox_1"
               type="checkbox">
             </input>
             <label
-              for="giu-checkbox_1"
-              style=>
+              for="giu-checkbox_1">
               <span>
                 Use shorthand notation for identical consecutive logs ( 
                 <i
                   class="giu-icon fa fa-copy"
-                  style="color:currentColor;cursor:;letter-spacing:normal;">
+                  style="color:currentColor;letter-spacing:normal;">
                 </i>
                  )
               </span>
@@ -886,8 +886,7 @@ exports[`Settings renders correctly 1`] = `
               type="checkbox">
             </input>
             <label
-              for="giu-checkbox_2"
-              style=>
+              for="giu-checkbox_2">
               Collapse all new stories (even if they are still open)
             </label>
           </span>
@@ -901,8 +900,7 @@ exports[`Settings renders correctly 1`] = `
               type="checkbox">
             </input>
             <label
-              for="giu-checkbox_3"
-              style=>
+              for="giu-checkbox_3">
               Expand all attachments upon receipt
             </label>
           </span>
@@ -916,8 +914,7 @@ exports[`Settings renders correctly 1`] = `
               type="checkbox">
             </input>
             <label
-              for="giu-checkbox_4"
-              style=>
+              for="giu-checkbox_4">
               Discard stories from remote clients upon receipt
             </label>
           </span>
@@ -1002,7 +999,7 @@ exports[`Settings renders correctly 1`] = `
              
             <i
               class="giu-icon fa fa-info-circle"
-              style="color:;cursor:pointer;letter-spacing:normal;"
+              style="cursor:pointer;letter-spacing:normal;"
               title="When the backlog reaches 800, Storyboard will start forgetting old stuff until it goes below 600">
             </i>
           </div>

@@ -184,7 +184,7 @@ exports[`App renders correctly when disconnected 1`] = `
       <div>
         <i
           class="giu-icon fa fa-circle-o-notch fa-spin"
-          style="color:;cursor:pointer;letter-spacing:normal;">
+          style="cursor:pointer;letter-spacing:normal;">
         </i>
          Connecting to Storyboard...
       </div>

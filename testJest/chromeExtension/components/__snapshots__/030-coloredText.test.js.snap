@@ -29,8 +29,7 @@ exports[`ColoredText renders correctly with styled text 1`] = `
   </span>
 </span>
 ------------HTML PREVIEW---------------
-  <span
-    style=>
+  <span>
     <span
       style="">
       That\'s 
@@ -90,8 +89,7 @@ exports[`ColoredText renders nested styles correctly 1`] = `
   </span>
 </span>
 ------------HTML PREVIEW---------------
-  <span
-    style=>
+  <span>
     <span
       style="">
       That\'s 

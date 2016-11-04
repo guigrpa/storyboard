@@ -28,7 +28,7 @@ exports[`Login renders correctly when LOGGED_IN 1`] = `
      
     <i
       class="giu-icon fa fa-sign-out fa-lg fa-fw"
-      style="color:;cursor:pointer;letter-spacing:normal;"
+      style="cursor:pointer;letter-spacing:normal;"
       title="Log out">
     </i>
   </div>
@@ -156,7 +156,7 @@ exports[`Login renders correctly when LOGGED_OUT 1`] = `
       </input>
       <i
         class="giu-icon fa fa-sign-in fa-lg fa-fw"
-        style="color:;cursor:pointer;letter-spacing:normal;"
+        style="cursor:pointer;letter-spacing:normal;"
         title="Log in">
       </i>
     </div>
@@ -284,7 +284,7 @@ exports[`Login renders correctly when LOGGING_IN 1`] = `
       </input>
       <i
         class="giu-icon fa fa-circle-o-notch fa-lg fa-fw fa-spin"
-        style="color:;cursor:pointer;letter-spacing:normal;"
+        style="cursor:pointer;letter-spacing:normal;"
         title="Logging in">
       </i>
     </div>
@@ -315,7 +315,7 @@ exports[`Login renders correctly when login needs are still unknown 1`] = `
     style="background-color:white;color:rgb(64, 64, 64);padding:4px 10px;">
     <i
       class="giu-icon fa fa-circle-o-notch fa-lg fa-fw fa-spin"
-      style="color:;cursor:pointer;letter-spacing:normal;">
+      style="cursor:pointer;letter-spacing:normal;">
     </i>
   </div>
 `;
