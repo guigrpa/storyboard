@@ -4,6 +4,8 @@
 
 * Library:
     - [M] Completed migration from CS to JS
+* Browser extension:
+    - **Bugfix** fix a case in which `forgetHysteresis` and `maxRecords` settings could not be modified due to incoming messages resetting these parameters.
 
 ## 2.2.0 (October 19, 2016)
 
