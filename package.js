@@ -23,7 +23,12 @@ const runTestCov = (env, name) => {
   ]);
 };
 
-const WEBPACK_OPTS = '--color --progress --display-modules --display-chunks';
+const WEBPACK_OPTS = [
+  '--color',
+  '--progress',
+  // '--display-modules',
+  '--display-chunks',
+].join(' ');
 // const WEBPACK_OPTS            = '--colors --progress'
 const WEBPACK_EXTENSION = `webpack --config src/chromeExtension/webpackConfig ${WEBPACK_OPTS}`;
 const WEBPACK_SERVER_LOGS_APP = `webpack --config src/serverLogsApp/webpackConfig ${WEBPACK_OPTS}`;
