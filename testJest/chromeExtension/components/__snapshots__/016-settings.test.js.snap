@@ -109,7 +109,7 @@ exports[`Settings renders correctly 1`] = `
           <b>
             chrome://settings/content
           </b>
-           and uncheck the option \"Block third-party cookies and sitedata\". Then close the Chrome DevTools and open them again.
+           and uncheck the option \"Block third-party cookies and site data\". Then close the Chrome DevTools and open them again.
         </div>
         <span
           className="giu-checkbox"
@@ -833,7 +833,7 @@ exports[`Settings renders correctly 1`] = `
             <b>
               chrome://settings/content
             </b>
-             and uncheck the option \"Block third-party cookies and sitedata\". Then close the Chrome DevTools and open them again.
+             and uncheck the option \"Block third-party cookies and site data\". Then close the Chrome DevTools and open them again.
           </div>
           <span
             class="giu-checkbox"
