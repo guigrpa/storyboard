@@ -10,7 +10,6 @@ ReactRedux        = require 'react-redux'
   isDark,
 }                 = require 'giu'
 Promise           = require 'bluebird'
-Login             = require './010-login'
 actions           = require '../actions/actions'
 DEFAULT_SETTINGS  = require('../reducers/settingsReducer').DEFAULT_SETTINGS
 

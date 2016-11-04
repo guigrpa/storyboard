@@ -7,7 +7,6 @@ Settings          = require './016-settings'
 actions           = require '../actions/actions'
 
 mapStateToProps = (state) ->
-  settings:       state.settings
   wsState:        state.cx.wsState
 mapDispatchToProps = (dispatch) ->
   expandAllStories:   -> dispatch actions.expandAllStories()
@@ -22,7 +21,6 @@ Toolbar = React.createClass
   propTypes:
     colors:               React.PropTypes.object.isRequired
     # From Redux.connect
-    settings:             React.PropTypes.object.isRequired
     wsState:              React.PropTypes.string.isRequired
     expandAllStories:     React.PropTypes.func.isRequired
     collapseAllStories:   React.PropTypes.func.isRequired
@@ -148,3 +146,4 @@ _style =
 #-----------------------------------------------------
 connect = ReactRedux.connect mapStateToProps, mapDispatchToProps
 module.exports = connect Toolbar
+module.exports._Toolbar = Toolbar

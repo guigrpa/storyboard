@@ -28,7 +28,7 @@ connect = ->
       yield Saga.call _txMsg, 'CONNECT_REQUEST'
     yield Promise.delay 2000
 
-_isConnected = -> 
+_isConnected = ->
   cxState = yield Saga.select (state) -> state.cx.cxState
   return cxState is 'CONNECTED'
 
@@ -46,7 +46,7 @@ rxMsg = ->
         yield Saga.put {type: 'CX_DISCONNECTED'}
         yield Saga.put {type: 'WS_DISCONNECTED'}
       when 'CONNECT_REQUEST', 'CONNECT_RESPONSE'
-        if type is 'CONNECT_REQUEST' 
+        if type is 'CONNECT_REQUEST'
           yield Saga.call _txMsg, 'CONNECT_RESPONSE'
         yield Saga.put {type: 'CX_CONNECTED', hubId}
 
@@ -73,12 +73,12 @@ rxMsg = ->
       when 'SERVER_FILTER', 'LOCAL_CLIENT_FILTER'
         {filter} = data
         yield Saga.put {type, filter}
-      when 'LOGIN_RESPONSE' 
+      when 'LOGIN_RESPONSE'
         if result is 'SUCCESS'
           {login, bufferedRecords} = data
           yield Saga.put {type: 'LOGIN_SUCCEEDED', login}
-          if bufferedRecords?.length 
-            yield Saga.put 
+          if bufferedRecords?.length
+            yield Saga.put
               type: 'RECORDS_RECEIVED'
               records: bufferedRecords
               fPastRecords: true
@@ -92,11 +92,11 @@ rxMsg = ->
           _lastCredentials = null
 
       # Records
-      when 'RECORDS' 
+      when 'RECORDS'
         yield Saga.put {type: 'RECORDS_RECEIVED', records: data}
   return
 
-_isWsConnected = -> 
+_isWsConnected = ->
   wsState = yield Saga.select (state) -> state.cx.wsState
   return wsState is 'CONNECTED'
 

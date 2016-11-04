@@ -33,7 +33,7 @@ init = (deps) ->
   _store.dispatch actions.loadSettings()
 
   # Render the app
-  RootComponent = require './components/000-root'
+  RootComponent = require('./components/000-root').default
   RootElement = React.createElement RootComponent,
     store: _store
   ReactDOM.render RootElement, document.getElementById 'devToolsApp'

@@ -2,6 +2,9 @@
 
 *[M]: major change; [m]: minor change*
 
+* Library:
+    - [M] Completed migration from CS to JS
+
 ## 2.2.0 (October 19, 2016)
 
 * Library:

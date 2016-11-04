@@ -1,0 +1,343 @@
+exports[`Login renders correctly when LOGGED_IN 1`] = `
+<div
+  style={
+    Object {
+      "backgroundColor": "white",
+      "color": "rgb(64, 64, 64)",
+      "padding": "4px 10px",
+    }
+  }>
+  Logged in as Guille
+   
+  <i
+    className="giu-icon fa fa-sign-out fa-lg fa-fw"
+    onClick={[Function]}
+    style={
+      Object {
+        "color": undefined,
+        "cursor": "pointer",
+        "letterSpacing": "normal",
+      }
+    }
+    title="Log out" />
+</div>
+------------HTML PREVIEW---------------
+  <div
+    style="background-color:white;color:rgb(64, 64, 64);padding:4px 10px;">
+    Logged in as Guille
+     
+    <i
+      class="giu-icon fa fa-sign-out fa-lg fa-fw"
+      style="color:;cursor:pointer;letter-spacing:normal;"
+      title="Log out">
+    </i>
+  </div>
+`;
+
+exports[`Login renders correctly when LOGGED_OUT 1`] = `
+<div>
+  <div
+    className="giu-floats"
+    style={
+      Object {
+        "height": 0,
+        "left": 0,
+        "position": "absolute",
+        "top": 0,
+        "width": 0,
+      }
+    } />
+  <div
+    style={
+      Object {
+        "backgroundColor": "rgb(214, 236, 255)",
+        "color": "black",
+        "padding": "4px 10px",
+      }
+    }>
+    <b>
+      Server logs:
+    </b>
+     
+    <input
+      className="giu-text-input"
+      id="login"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onCopy={undefined}
+      onCut={undefined}
+      onFocus={[Function]}
+      onKeyUp={[Function]}
+      onPaste={undefined}
+      orient={undefined}
+      placeholder="Login"
+      style={
+        Object {
+          "backgroundColor": "transparent",
+          "border": "1px solid #999999",
+          "color": "inherit",
+          "fontFamily": "inherit",
+          "fontSize": "inherit",
+          "fontWeight": "inherit",
+          "marginRight": 4,
+          "width": 70,
+        }
+      }
+      tabIndex={undefined}
+      type="text"
+      value="" />
+    <input
+      className="giu-password-input"
+      id="password"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onCopy={undefined}
+      onCut={undefined}
+      onFocus={[Function]}
+      onKeyUp={[Function]}
+      onPaste={undefined}
+      orient={undefined}
+      placeholder="Password"
+      style={
+        Object {
+          "backgroundColor": "transparent",
+          "border": "1px solid #999999",
+          "color": "inherit",
+          "fontFamily": "inherit",
+          "fontSize": "inherit",
+          "fontWeight": "inherit",
+          "marginRight": 4,
+          "width": 70,
+        }
+      }
+      tabIndex={undefined}
+      type="password"
+      value="" />
+    <i
+      className="giu-icon fa fa-sign-in fa-lg fa-fw"
+      onClick={[Function]}
+      style={
+        Object {
+          "color": undefined,
+          "cursor": "pointer",
+          "letterSpacing": "normal",
+        }
+      }
+      title="Log in" />
+  </div>
+</div>
+------------HTML PREVIEW---------------
+  <div>
+    <div
+      class="giu-floats"
+      style="height:0;left:0;position:absolute;top:0;width:0;">
+    </div>
+    <div
+      style="background-color:rgb(214, 236, 255);color:black;padding:4px 10px;">
+      <b>
+        Server logs:
+      </b>
+       
+      <input
+        class="giu-text-input"
+        id="login"
+        placeholder="Login"
+        style="background-color:transparent;border:1px solid #999999;color:inherit;font-family:inherit;font-size:inherit;font-weight:inherit;margin-right:4px;width:70px;"
+        type="text"
+        value="">
+      </input>
+      <input
+        class="giu-password-input"
+        id="password"
+        placeholder="Password"
+        style="background-color:transparent;border:1px solid #999999;color:inherit;font-family:inherit;font-size:inherit;font-weight:inherit;margin-right:4px;width:70px;"
+        type="password"
+        value="">
+      </input>
+      <i
+        class="giu-icon fa fa-sign-in fa-lg fa-fw"
+        style="color:;cursor:pointer;letter-spacing:normal;"
+        title="Log in">
+      </i>
+    </div>
+  </div>
+`;
+
+exports[`Login renders correctly when LOGGING_IN 1`] = `
+<div>
+  <div
+    className="giu-floats"
+    style={
+      Object {
+        "height": 0,
+        "left": 0,
+        "position": "absolute",
+        "top": 0,
+        "width": 0,
+      }
+    } />
+  <div
+    style={
+      Object {
+        "backgroundColor": "rgb(214, 236, 255)",
+        "color": "black",
+        "padding": "4px 10px",
+      }
+    }>
+    <b>
+      Server logs:
+    </b>
+     
+    <input
+      className="giu-text-input"
+      id="login"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onCopy={undefined}
+      onCut={undefined}
+      onFocus={[Function]}
+      onKeyUp={[Function]}
+      onPaste={undefined}
+      orient={undefined}
+      placeholder="Login"
+      style={
+        Object {
+          "backgroundColor": "transparent",
+          "border": "1px solid #999999",
+          "color": "inherit",
+          "fontFamily": "inherit",
+          "fontSize": "inherit",
+          "fontWeight": "inherit",
+          "marginRight": 4,
+          "width": 70,
+        }
+      }
+      tabIndex={undefined}
+      type="text"
+      value="" />
+    <input
+      className="giu-password-input"
+      id="password"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onCopy={undefined}
+      onCut={undefined}
+      onFocus={[Function]}
+      onKeyUp={[Function]}
+      onPaste={undefined}
+      orient={undefined}
+      placeholder="Password"
+      style={
+        Object {
+          "backgroundColor": "transparent",
+          "border": "1px solid #999999",
+          "color": "inherit",
+          "fontFamily": "inherit",
+          "fontSize": "inherit",
+          "fontWeight": "inherit",
+          "marginRight": 4,
+          "width": 70,
+        }
+      }
+      tabIndex={undefined}
+      type="password"
+      value="" />
+    <i
+      className="giu-icon fa fa-circle-o-notch fa-lg fa-fw fa-spin"
+      style={
+        Object {
+          "color": undefined,
+          "cursor": "pointer",
+          "letterSpacing": "normal",
+        }
+      }
+      title="Logging in" />
+  </div>
+</div>
+------------HTML PREVIEW---------------
+  <div>
+    <div
+      class="giu-floats"
+      style="height:0;left:0;position:absolute;top:0;width:0;">
+    </div>
+    <div
+      style="background-color:rgb(214, 236, 255);color:black;padding:4px 10px;">
+      <b>
+        Server logs:
+      </b>
+       
+      <input
+        class="giu-text-input"
+        id="login"
+        placeholder="Login"
+        style="background-color:transparent;border:1px solid #999999;color:inherit;font-family:inherit;font-size:inherit;font-weight:inherit;margin-right:4px;width:70px;"
+        type="text"
+        value="">
+      </input>
+      <input
+        class="giu-password-input"
+        id="password"
+        placeholder="Password"
+        style="background-color:transparent;border:1px solid #999999;color:inherit;font-family:inherit;font-size:inherit;font-weight:inherit;margin-right:4px;width:70px;"
+        type="password"
+        value="">
+      </input>
+      <i
+        class="giu-icon fa fa-circle-o-notch fa-lg fa-fw fa-spin"
+        style="color:;cursor:pointer;letter-spacing:normal;"
+        title="Logging in">
+      </i>
+    </div>
+  </div>
+`;
+
+exports[`Login renders correctly when login needs are still unknown 1`] = `
+<div
+  style={
+    Object {
+      "backgroundColor": "white",
+      "color": "rgb(64, 64, 64)",
+      "padding": "4px 10px",
+    }
+  }>
+  <i
+    className="giu-icon fa fa-circle-o-notch fa-lg fa-fw fa-spin"
+    style={
+      Object {
+        "color": undefined,
+        "cursor": "pointer",
+        "letterSpacing": "normal",
+      }
+    } />
+</div>
+------------HTML PREVIEW---------------
+  <div
+    style="background-color:white;color:rgb(64, 64, 64);padding:4px 10px;">
+    <i
+      class="giu-icon fa fa-circle-o-notch fa-lg fa-fw fa-spin"
+      style="color:;cursor:pointer;letter-spacing:normal;">
+    </i>
+  </div>
+`;
+
+exports[`Login renders correctly when no login is required 1`] = `
+<div
+  style={
+    Object {
+      "backgroundColor": "white",
+      "color": "rgb(64, 64, 64)",
+      "padding": "4px 10px",
+    }
+  }>
+  <i>
+    No login required to see server logs
+  </i>
+</div>
+------------HTML PREVIEW---------------
+  <div
+    style="background-color:white;color:rgb(64, 64, 64);padding:4px 10px;">
+    <i>
+      No login required to see server logs
+    </i>
+  </div>
+`;

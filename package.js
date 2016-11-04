@@ -59,7 +59,7 @@ const specs = {
                                   'node package',
                                   'rm -rf ./lib',
                                   'coffee --no-header -o lib -c src',
-                                  'cjsx --no-header -o lib/chromeExtension/components -c src/chromeExtension/components',
+                                  // 'cjsx --no-header -o lib/chromeExtension/components -c src/chromeExtension/components',
                                   'babel -d lib src',
                                   'cp src/storyboard.js.flow lib/storyboard.js.flow',
                                   'cp src/storyboard.js.flow lib/withConsoleListener.js.flow',
@@ -188,13 +188,13 @@ const specs = {
     // Packaged in the Chrome extension
     // -----------------------------------------------
     'babel-polyfill': '6.16.0',
-    'giu': '0.7.1',
+    'giu': '0.8.1',
 
     // React
-    'react':                          '15.2.0',
-    'react-dom':                      '15.2.0',
-    'react-addons-pure-render-mixin': '15.2.0',
-    'react-addons-perf':              '15.2.0',
+    'react':                          '15.3.2',
+    'react-dom':                      '15.3.2',
+    'react-addons-pure-render-mixin': '15.3.2',
+    'react-addons-perf':              '15.3.2',
 
     // Redux
     'redux': '3.5.2',
@@ -236,7 +236,7 @@ const specs = {
     'webpack': '1.13.1',
     'babel-loader': '6.2.5',
     'coffee-loader': '0.7.2',
-    'cjsx-loader': '2.1.0',
+    // 'cjsx-loader': '2.1.0',
     'file-loader': '0.8.5',
     'json-loader': '0.5.4',
     'css-loader': '0.23.1',
@@ -266,20 +266,21 @@ const specs = {
     'ignore-styles': '4.0.0',
 
     // Coverage testing
-    'nyc': '8.3.0',
+    'nyc': '8.4.0',
     'coveralls': '2.11.14',
     // 'diveSync': '0.3.0',
 
     // Building tools
-    'envify': '3.4.0',
+    // 'envify': '3.4.0',
+    // 'uglifyjs': '2.4.10',
     'cross-env': '1.0.7',
-    'uglifyjs': '2.4.10',
     'bestzip': '1.1.3',
     'xxl': '0.1.1',
 
     // CJSX conversion
-    // 'shelljs': '0.7.5',
     // 'globby': '6.0.0',
+    // 'coffee-react': '5.0.1',  // the cjsx binary
+    // 'lebab': '2.6.1',
     // 'babel-plugin-transform-react-createelement-to-jsx': '1.0.1',
 
     // yarn bug #629

@@ -122,3 +122,4 @@ _style =
 #-----------------------------------------------------
 connect = ReactRedux.connect mapStateToProps, actions
 module.exports = connect Login
+module.exports._Login = Login

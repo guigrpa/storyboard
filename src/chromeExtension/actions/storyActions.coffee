@@ -9,9 +9,9 @@ QUICK_FIND_DEBOUNCE = 250
 #-------------------------------------------------
 # ## Miscellaneous actions
 #-------------------------------------------------
-toggleExpanded = (pathStr) -> 
+toggleExpanded = (pathStr) ->
   {type: 'TOGGLE_EXPANDED', pathStr}
-toggleHierarchical = (pathStr) -> 
+toggleHierarchical = (pathStr) ->
   {type: 'TOGGLE_HIERARCHICAL', pathStr}
 toggleAttachment = (pathStr, recordId) ->
   {type: 'TOGGLE_ATTACHMENT', pathStr, recordId}
@@ -29,7 +29,7 @@ _quickFind = _.debounce (dispatch, txt) ->
 forgetRecords = ->
   while true
     for idx in [0, 1]
-      {story, maxRecords} = yield Saga.select (state) -> 
+      {story, maxRecords} = yield Saga.select (state) ->
         story:      state.stories.mainStory.records[idx]
         maxRecords: state.settings.maxRecords
       if story.numRecords > maxRecords
