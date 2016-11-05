@@ -826,7 +826,6 @@ exports[`Settings renders correctly 1`] = `
           <input
             autoFocus
             style="cursor:default;height:0;left:8px;opacity:0;padding:0;pointer-events:none;position:fixed;top:8px;width:0;z-index:-80;">
-          </input>
           <div
             class="allowUserSelect"
             style="border:1px solid red;border-radius:2px;color:red;margin-bottom:10px;padding:15px;">
@@ -842,7 +841,6 @@ exports[`Settings renders correctly 1`] = `
             <input
               id="giu-checkbox_0"
               type="checkbox">
-            </input>
             <label
               for="giu-checkbox_0">
               <span>
@@ -855,7 +853,6 @@ exports[`Settings renders correctly 1`] = `
             </label>
           </span>
           <br>
-          </br>
           <span
             class="giu-checkbox"
             style="white-space:nowrap;">
@@ -863,7 +860,6 @@ exports[`Settings renders correctly 1`] = `
               checked
               id="giu-checkbox_1"
               type="checkbox">
-            </input>
             <label
               for="giu-checkbox_1">
               <span>
@@ -877,51 +873,43 @@ exports[`Settings renders correctly 1`] = `
             </label>
           </span>
           <br>
-          </br>
           <span
             class="giu-checkbox"
             style="white-space:nowrap;">
             <input
               id="giu-checkbox_2"
               type="checkbox">
-            </input>
             <label
               for="giu-checkbox_2">
               Collapse all new stories (even if they are still open)
             </label>
           </span>
           <br>
-          </br>
           <span
             class="giu-checkbox"
             style="white-space:nowrap;">
             <input
               id="giu-checkbox_3"
               type="checkbox">
-            </input>
             <label
               for="giu-checkbox_3">
               Expand all attachments upon receipt
             </label>
           </span>
           <br>
-          </br>
           <span
             class="giu-checkbox"
             style="white-space:nowrap;">
             <input
               id="giu-checkbox_4"
               type="checkbox">
-            </input>
             <label
               for="giu-checkbox_4">
               Discard stories from remote clients upon receipt
             </label>
           </span>
           <br>
-          </br>
           <br>
-          </br>
           <div
             style="margin-bottom:5px;">
             Log filters, e.g. 
@@ -952,7 +940,6 @@ exports[`Settings renders correctly 1`] = `
                 style="background-color:transparent;border:1px solid #999999;color:inherit;font-family:inherit;font-size:inherit;font-weight:inherit;width:300px;"
                 type="text"
                 value="*:INFO">
-              </input>
             </li>
             <li>
               <label
@@ -967,7 +954,6 @@ exports[`Settings renders correctly 1`] = `
                 style="background-color:transparent;border:1px solid #999999;color:inherit;font-family:inherit;font-size:inherit;font-weight:inherit;width:300px;"
                 type="text"
                 value="*:DEBUG">
-              </input>
             </li>
           </ul>
           <div>
@@ -982,7 +968,6 @@ exports[`Settings renders correctly 1`] = `
               style="background-color:transparent;border:1px solid #999999;color:inherit;font-family:inherit;font-size:inherit;font-weight:inherit;width:50px;"
               type="number"
               value="800">
-            </input>
              
             <label
               for="forgetHysteresis">
@@ -995,7 +980,6 @@ exports[`Settings renders correctly 1`] = `
               style="background-color:transparent;border:1px solid #999999;color:inherit;font-family:inherit;font-size:inherit;font-weight:inherit;width:50px;"
               type="number"
               value="0.25">
-            </input>
              
             <i
               class="giu-icon fa fa-info-circle"
@@ -1011,7 +995,6 @@ exports[`Settings renders correctly 1`] = `
               style="display:inline-block;position:relative;top:1px;">
               <input
                 style="cursor:default;height:0;left:8px;opacity:0;padding:0;pointer-events:none;position:fixed;top:8px;width:0;z-index:-80;">
-              </input>
               <div
                 style="background-color:white;border:1px solid #999999;color:transparent;cursor:pointer;display:inline-block;font-family:inherit;font-size:inherit;font-weight:inherit;height:20px;line-height:1em;padding:2px 4px 6px 4px;position:relative;width:35px;">
                 x
@@ -1032,7 +1015,6 @@ exports[`Settings renders correctly 1`] = `
               style="display:inline-block;position:relative;top:1px;">
               <input
                 style="cursor:default;height:0;left:8px;opacity:0;padding:0;pointer-events:none;position:fixed;top:8px;width:0;z-index:-80;">
-              </input>
               <div
                 style="background-color:white;border:1px solid #999999;color:transparent;cursor:pointer;display:inline-block;font-family:inherit;font-size:inherit;font-weight:inherit;height:20px;line-height:1em;padding:2px 4px 6px 4px;position:relative;width:35px;">
                 x
@@ -1053,7 +1035,6 @@ exports[`Settings renders correctly 1`] = `
               style="display:inline-block;position:relative;top:1px;">
               <input
                 style="cursor:default;height:0;left:8px;opacity:0;padding:0;pointer-events:none;position:fixed;top:8px;width:0;z-index:-80;">
-              </input>
               <div
                 style="background-color:white;border:1px solid #999999;color:transparent;cursor:pointer;display:inline-block;font-family:inherit;font-size:inherit;font-weight:inherit;height:20px;line-height:1em;padding:2px 4px 6px 4px;position:relative;width:35px;">
                 x

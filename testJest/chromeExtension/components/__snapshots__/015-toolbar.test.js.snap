@@ -162,7 +162,6 @@ exports[`Toolbar renders correctly when connected 1`] = `
           placeholder="Quick find..."
           style="background-color:transparent;border-width:1px;color:rgb(64, 64, 64);"
           type="search">
-        </input>
         <i
           class="giu-icon fa fa-chain fa-lg"
           style="color:green;cursor:default;letter-spacing:normal;margin-left:10px;margin-right:5px;"
@@ -347,7 +346,6 @@ exports[`Toolbar renders correctly when disconnected 1`] = `
           placeholder="Quick find..."
           style="background-color:transparent;border-width:1px;color:rgb(64, 64, 64);"
           type="search">
-        </input>
         <i
           class="giu-icon fa fa-chain-broken fa-lg"
           style="color:red;cursor:default;letter-spacing:normal;margin-left:10px;margin-right:5px;"
@@ -554,7 +552,6 @@ exports[`Toolbar shows settings when the corresponding icon is clicked 1`] = `
           placeholder="Quick find..."
           style="background-color:transparent;border-width:1px;color:rgb(64, 64, 64);"
           type="search">
-        </input>
         <i
           class="giu-icon fa fa-chain fa-lg"
           style="color:green;cursor:default;letter-spacing:normal;margin-left:10px;margin-right:5px;"

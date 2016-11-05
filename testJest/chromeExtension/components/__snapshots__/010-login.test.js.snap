@@ -145,7 +145,6 @@ exports[`Login renders correctly when LOGGED_OUT 1`] = `
         style="background-color:transparent;border:1px solid #999999;color:inherit;font-family:inherit;font-size:inherit;font-weight:inherit;margin-right:4px;width:70px;"
         type="text"
         value="">
-      </input>
       <input
         class="giu-password-input"
         id="password"
@@ -153,7 +152,6 @@ exports[`Login renders correctly when LOGGED_OUT 1`] = `
         style="background-color:transparent;border:1px solid #999999;color:inherit;font-family:inherit;font-size:inherit;font-weight:inherit;margin-right:4px;width:70px;"
         type="password"
         value="">
-      </input>
       <i
         class="giu-icon fa fa-sign-in fa-lg fa-fw"
         style="cursor:pointer;letter-spacing:normal;"
@@ -273,7 +271,6 @@ exports[`Login renders correctly when LOGGING_IN 1`] = `
         style="background-color:transparent;border:1px solid #999999;color:inherit;font-family:inherit;font-size:inherit;font-weight:inherit;margin-right:4px;width:70px;"
         type="text"
         value="">
-      </input>
       <input
         class="giu-password-input"
         id="password"
@@ -281,7 +278,6 @@ exports[`Login renders correctly when LOGGING_IN 1`] = `
         style="background-color:transparent;border:1px solid #999999;color:inherit;font-family:inherit;font-size:inherit;font-weight:inherit;margin-right:4px;width:70px;"
         type="password"
         value="">
-      </input>
       <i
         class="giu-icon fa fa-circle-o-notch fa-lg fa-fw fa-spin"
         style="cursor:pointer;letter-spacing:normal;"

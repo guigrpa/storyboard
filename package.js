@@ -259,7 +259,7 @@ const specs = {
 
     // Testing with Jest
     'jest': '16.1.0-alpha.691b0e22',
-    'jest-html': '^1.0.1',
+    'jest-html': '^1.1.0',
     'react-test-renderer': '15.3.2',
     'babel-jest': '16.0.0',
 
