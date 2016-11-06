@@ -1,18 +1,15 @@
+/* eslint-disable react/prop-types */
+
 var AttachmentLine;
-var CaretOrSpace;
 var ColoredText;
-var HierarchicalToggle;
 var Icon;
-var Indent;
 var Line;
 var MainStoryTitle;
 var PureRenderMixin;
 var React;
 var ReactRedux;
 var RepetitionLine;
-var Severity;
 var Spinner;
-var Src;
 var ConnectedStory;
 var TIME_LENGTH;
 var Time;
@@ -20,8 +17,6 @@ var _;
 var Story;
 var _quickFind;
 var _style;
-var _styleCaretOrSpace;
-var _styleHierarchical;
 var _styleLine;
 var _styleMainTitle;
 var _styleTime;
@@ -703,118 +698,112 @@ _styleTime = fRelativeTime => ({
   fontStyle: fRelativeTime ? 'italic' : void 0
 });
 
-Severity = React.createClass({
-  displayName: 'Severity',
-  mixins: [PureRenderMixin],
-  propTypes: {
-    level: React.PropTypes.number
-  },
-  render: function () {
-    var level;
-    var levelStr;
-    level = this.props.level;
-    if (level != null) {
-      levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[level];
-      return <ColoredText text={levelStr} />;
-    } else {
-      return <span>      </span>;
-    }
+// ======================================================
+// Severity
+// ======================================================
+class Severity extends React.PureComponent {
+  static propTypes = {
+    level: React.PropTypes.number,
+  };
+  render() {
+    const { level } = this.props;
+    return level != null
+      ? <ColoredText text={ansiColors.LEVEL_NUM_TO_COLORED_STR[level]} />
+      : <span>      </span>;
   }
-});
+}
 
-Src = React.createClass({
-  displayName: 'Src',
-  mixins: [PureRenderMixin],
-  propTypes: {
-    src: React.PropTypes.string
-  },
-  render: function () {
-    var src;
-    var srcStr;
-    src = this.props.src;
+// ======================================================
+// Src
+// ======================================================
+class Src extends React.PureComponent {
+  static propTypes = {
+    src: React.PropTypes.string,
+  };
+  render() {
+    const { src } = this.props;
     if (src != null) {
-      srcStr = ansiColors.getSrcChalkColor(src)(_.padStart(src + ' ', 20));
+      const srcStr = ansiColors.getSrcChalkColor(src)(_.padStart(`${src} `, 20));
       return <ColoredText text={srcStr} />;
-    } else {
-      return <span>{_.repeat(' ', 20)}</span>;
     }
+    return <span>{_.repeat(' ', 20)}</span>;
   }
-});
+}
 
-Indent = arg => {
-  var level;
-  var style;
-  level = arg.level;
-  style = {
+// ======================================================
+// Indent
+// ======================================================
+const Indent = ({ level }) => {
+  const style = {
     display: 'inline-block',
-    width: 20 * (level - 1)
+    width: 20 * (level - 1),
   };
   return <div style={style} />;
 };
 
-CaretOrSpace = React.createClass({
-  displayName: 'CaretOrSpace',
-  mixins: [PureRenderMixin],
-  propTypes: {
+// ======================================================
+// CaretOrSpace
+// ======================================================
+class CaretOrSpace extends React.PureComponent {
+  static propTypes = {
     fExpanded: React.PropTypes.bool,
-    onToggleExpanded: React.PropTypes.func
-  },
-  render: function () {
-    var icon;
-    var iconType;
+    onToggleExpanded: React.PropTypes.func,
+  };
+  render() {
+    let icon;
     if (this.props.fExpanded != null) {
-      iconType = this.props.fExpanded ? 'caret-down' : 'caret-right';
+      const iconType = this.props.fExpanded ? 'caret-down' : 'caret-right';
       icon = <Icon icon={iconType} onClick={this.props.onToggleExpanded} />;
     }
-    return <span style={_styleCaretOrSpace}>{icon}</span>;
+    return <span style={styleCaretOrSpace}>{icon}</span>;
   }
-});
+}
 
-_styleCaretOrSpace = {
+const styleCaretOrSpace = {
   display: 'inline-block',
   width: 30,
   paddingLeft: 10,
-  cursor: 'pointer'
+  cursor: 'pointer',
 };
 
-HierarchicalToggle = React.createClass({
-  displayName: 'HierarchicalToggle',
-  mixins: [PureRenderMixin],
-  propTypes: {
+// ======================================================
+// HierarchicalToggle
+// ======================================================
+class HierarchicalToggle extends React.PureComponent {
+  static propTypes = {
     fHierarchical: React.PropTypes.bool.isRequired,
     onToggleHierarchical: React.PropTypes.func.isRequired,
-    fFloat: React.PropTypes.bool
-  },
-  render: function () {
-    var icon;
-    var text;
-    if (this.props.fHierarchical) {
-      text = 'Show flat';
-      icon = 'bars';
-    } else {
-      text = 'Show tree';
-      icon = 'sitemap';
-    }
-    return <span onClick={this.props.onToggleHierarchical} style={_styleHierarchical.outer(this.props.fFloat)}><Icon icon={icon} style={_styleHierarchical.icon} />{text}</span>;
-  }
-});
+    fFloat: React.PropTypes.bool,
+  };
 
-_styleHierarchical = {
-  outer: function (fFloat) {
-    return {
-      position: fFloat ? 'absolute' : void 0,
-      marginLeft: 10,
-      color: 'darkgrey',
-      textDecoration: 'underline',
-      cursor: 'pointer',
-      fontWeight: 'normal',
-      fontFamily: 'Menlo, Consolas, monospace'
-    };
-  },
-  icon: {
-    marginRight: 4
+  render() {
+    const icon = this.props.fHierarchical ? 'bars' : 'sitemap';
+    const text = this.props.fHierarchical ? 'Show flat' : 'Show tree';
+    return (
+      <span
+        onClick={this.props.onToggleHierarchical}
+        style={styleHierarchical.outer(this.props.fFloat)}
+      >
+        <Icon icon={icon} style={styleHierarchical.icon} />
+        {text}
+      </span>
+    );
   }
+}
+
+const styleHierarchical = {
+  outer: (fFloat) => ({
+    position: fFloat ? 'absolute' : undefined,
+    marginLeft: 10,
+    color: 'darkgrey',
+    textDecoration: 'underline',
+    cursor: 'pointer',
+    fontWeight: 'normal',
+    fontFamily: 'Menlo, Consolas, monospace',
+  }),
+  icon: { marginRight: 4 },
 };
 
+// ======================================================
 export default ConnectedStory;
 export { Story as _Story };
