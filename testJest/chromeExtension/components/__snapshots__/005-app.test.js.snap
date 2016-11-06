@@ -45,7 +45,15 @@ exports[`App renders correctly when connected 1`] = `
       }
     }
     dataMockType="Toolbar">
-    Toolbar
+    <div
+      style={
+        Object {
+          "color": "blue",
+          "fontWeight": "bold",
+        }
+      }>
+      Toolbar
+    </div>
   </div>
   <div
     style={
@@ -75,7 +83,15 @@ exports[`App renders correctly when connected 1`] = `
           "placeholderFor": "mainStory",
         }
       }>
-      Story
+      <div
+        style={
+          Object {
+            "color": "blue",
+            "fontWeight": "bold",
+          }
+        }>
+        Story
+      </div>
     </div>
   </div>
 </div>
@@ -93,13 +109,19 @@ exports[`App renders correctly when connected 1`] = `
     </div>
     <div
       dataMockType="Toolbar">
-      Toolbar
+      <div
+        style="color:blue;font-weight:bold;">
+        Toolbar
+      </div>
     </div>
     <div
       style="padding:4px;">
       <div
         dataMockType="Story">
-        Story
+        <div
+          style="color:blue;font-weight:bold;">
+          Story
+        </div>
       </div>
     </div>
   </div>

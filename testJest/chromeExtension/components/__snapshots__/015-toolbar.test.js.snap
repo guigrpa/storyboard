@@ -119,7 +119,15 @@ exports[`Toolbar renders correctly when connected 1`] = `
         }
       }
       dataMockType="Login">
-      Login
+      <div
+        style={
+          Object {
+            "color": "blue",
+            "fontWeight": "bold",
+          }
+        }>
+        Login
+      </div>
     </div>
   </div>
   <div
@@ -173,7 +181,10 @@ exports[`Toolbar renders correctly when connected 1`] = `
       </div>
       <div
         dataMockType="Login">
-        Login
+        <div
+          style="color:blue;font-weight:bold;">
+          Login
+        </div>
       </div>
     </div>
     <div
@@ -303,7 +314,15 @@ exports[`Toolbar renders correctly when disconnected 1`] = `
         }
       }
       dataMockType="Login">
-      Login
+      <div
+        style={
+          Object {
+            "color": "blue",
+            "fontWeight": "bold",
+          }
+        }>
+        Login
+      </div>
     </div>
   </div>
   <div
@@ -357,7 +376,10 @@ exports[`Toolbar renders correctly when disconnected 1`] = `
       </div>
       <div
         dataMockType="Login">
-        Login
+        <div
+          style="color:blue;font-weight:bold;">
+          Login
+        </div>
       </div>
     </div>
     <div
@@ -384,7 +406,15 @@ exports[`Toolbar shows settings when the corresponding icon is clicked 1`] = `
     }
     dataMockType="Settings"
     onClose={[Function]}>
-    Settings
+    <div
+      style={
+        Object {
+          "color": "blue",
+          "fontWeight": "bold",
+        }
+      }>
+      Settings
+    </div>
   </div>
   <div
     style={
@@ -505,7 +535,15 @@ exports[`Toolbar shows settings when the corresponding icon is clicked 1`] = `
         }
       }
       dataMockType="Login">
-      Login
+      <div
+        style={
+          Object {
+            "color": "blue",
+            "fontWeight": "bold",
+          }
+        }>
+        Login
+      </div>
     </div>
   </div>
   <div
@@ -519,7 +557,10 @@ exports[`Toolbar shows settings when the corresponding icon is clicked 1`] = `
   <div>
     <div
       dataMockType="Settings">
-      Settings
+      <div
+        style="color:blue;font-weight:bold;">
+        Settings
+      </div>
     </div>
     <div
       style="background-color:white;border-bottom:1px solid #555;display:flex;flex-direction:row;height:30px;left:0;position:fixed;top:0;white-space:nowrap;width:100%;z-index:10;">
@@ -563,7 +604,10 @@ exports[`Toolbar shows settings when the corresponding icon is clicked 1`] = `
       </div>
       <div
         dataMockType="Login">
-        Login
+        <div
+          style="color:blue;font-weight:bold;">
+          Login
+        </div>
       </div>
     </div>
     <div
