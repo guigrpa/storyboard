@@ -1,4 +1,4 @@
-exports[`settingsReducer should update settings with new values 1`] = `
+exports[`settingsReducer 01 should update settings with new values 1`] = `
 Object {
   "colorClientBg": "aliceblue",
   "colorClientBgIsDark": false,
@@ -20,7 +20,7 @@ Object {
 }
 `;
 
-exports[`settingsReducer should update settings with new values 2`] = `
+exports[`settingsReducer 01 should update settings with new values 2`] = `
 Object {
   "colorClientBg": "aliceblue",
   "colorClientBgIsDark": false,

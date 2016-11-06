@@ -1,4 +1,4 @@
-exports[`appReducer should have correct initial state 1`] = `
+exports[`appReducer 01 should have correct initial state 1`] = `
 Object {
   "cx": Object {
     "cxState": "DISCONNECTED",

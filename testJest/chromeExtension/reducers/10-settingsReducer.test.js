@@ -2,7 +2,7 @@
 import reducer from '../../../lib/chromeExtension/reducers/settingsReducer';
 
 describe('settingsReducer', () => {
-  it('should update settings with new values', () => {
+  it('01 should update settings with new values', () => {
     let state = reducer(undefined, { type: '' });
     expect(state).toMatchSnapshot();
     state = reducer(state, {
@@ -15,7 +15,7 @@ describe('settingsReducer', () => {
     expect(state).toMatchSnapshot();
   });
 
-  it('should not allow invalid maxRecords', () => {
+  it('02 should not allow invalid maxRecords', () => {
     let state = reducer(undefined, { type: '' });
     state = reducer(state, {
       type: 'UPDATE_SETTINGS',

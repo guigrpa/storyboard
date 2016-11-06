@@ -1,0 +1,133 @@
+exports[`Story 01 renders correctly an empty main story 1`] = `
+<div>
+  <div
+    className="rootStory"
+    style={
+      Object {
+        "backgroundColor": "aliceblue",
+        "color": "black",
+        "marginBottom": 10,
+        "padding": 2,
+      }
+    }>
+    <div
+      className="rootStoryTitle"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      style={
+        Object {
+          "cursor": "pointer",
+          "marginBottom": 5,
+          "textAlign": "center",
+        }
+      }>
+      <span
+        onClick={[Function]}
+        style={
+          Object {
+            "fontWeight": 900,
+            "letterSpacing": 3,
+          }
+        }>
+        CLIENT
+         
+        <span
+          style={
+            Object {
+              "color": "darkgrey",
+            }
+          }>
+          [
+          0
+          ]
+        </span>
+      </span>
+    </div>
+  </div>
+  <div
+    className="rootStory"
+    style={
+      Object {
+        "backgroundColor": "rgb(214, 236, 255)",
+        "color": "black",
+        "marginBottom": 10,
+        "padding": 2,
+      }
+    }>
+    <div
+      className="rootStoryTitle"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      style={
+        Object {
+          "cursor": "pointer",
+          "marginBottom": 5,
+          "textAlign": "center",
+        }
+      }>
+      <span
+        onClick={[Function]}
+        style={
+          Object {
+            "fontWeight": 900,
+            "letterSpacing": 3,
+          }
+        }>
+        SERVER
+         
+        <span
+          style={
+            Object {
+              "color": "darkgrey",
+            }
+          }>
+          [
+          0
+          ]
+        </span>
+      </span>
+    </div>
+  </div>
+</div>
+------------HTML PREVIEW---------------
+  <div>
+    <div
+      class="rootStory"
+      style="background-color:aliceblue;color:black;margin-bottom:10px;padding:2px;">
+      <div
+        class="rootStoryTitle"
+        style="cursor:pointer;margin-bottom:5px;text-align:center;">
+        <span
+          style="font-weight:900;letter-spacing:3px;">
+          CLIENT
+           
+          <span
+            style="color:darkgrey;">
+            [
+            0
+            ]
+          </span>
+        </span>
+      </div>
+    </div>
+    <div
+      class="rootStory"
+      style="background-color:rgb(214, 236, 255);color:black;margin-bottom:10px;padding:2px;">
+      <div
+        class="rootStoryTitle"
+        style="cursor:pointer;margin-bottom:5px;text-align:center;">
+        <span
+          style="font-weight:900;letter-spacing:3px;">
+          SERVER
+           
+          <span
+            style="color:darkgrey;">
+            [
+            0
+            ]
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+`;

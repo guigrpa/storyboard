@@ -13,11 +13,11 @@ var RepetitionLine;
 var Severity;
 var Spinner;
 var Src;
-var Story;
+var ConnectedStory;
 var TIME_LENGTH;
 var Time;
 var _;
-var _Story;
+var Story;
 var _quickFind;
 var _style;
 var _styleCaretOrSpace;
@@ -104,7 +104,7 @@ mapDispatchToProps = dispatch => ({
   }
 });
 
-_Story = React.createClass({
+Story = React.createClass({
   displayName: 'Story',
   propTypes: {
     story: React.PropTypes.object.isRequired,
@@ -186,7 +186,19 @@ _Story = React.createClass({
     id = record.id, fStoryObject = record.fStoryObject, storyId = record.storyId, obj = record.obj, objExpanded = record.objExpanded, action = record.action;
     fDirectChild = storyId === this.props.story.storyId;
     if (fStoryObject) {
-      return <Story key={storyId} story={record} level={this.props.level + 1} seqFullRefresh={this.props.seqFullRefresh} colors={this.props.colors} />;
+      return <Story
+        key={storyId}
+        story={record}
+        level={this.props.level + 1}
+        seqFullRefresh={this.props.seqFullRefresh} colors={this.props.colors}
+        timeType={this.props.timeType}
+        fShowClosedActions={this.props.fShowClosedActions}
+        quickFind={this.props.quickFind}
+        setTimeType={this.props.setTimeType}
+        onToggleExpanded={this.props.onToggleExpanded}
+        onToggleHierarchical={this.props.onToggleHierarchical}
+        onToggleAttachment={this.props.onToggleAttachment}
+      />;
     } else {
       if (fDirectChild) {
         if (action === 'CREATED') {
@@ -284,7 +296,7 @@ _style = {
 
 connect = ReactRedux.connect(mapStateToProps, mapDispatchToProps);
 
-Story = connect(_Story);
+ConnectedStory = connect(Story);
 
 MainStoryTitle = React.createClass({
   displayName: 'MainStoryTitle',
@@ -804,4 +816,5 @@ _styleHierarchical = {
   }
 };
 
-export default Story;
+export default ConnectedStory;
+export { Story as _Story };
