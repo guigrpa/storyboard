@@ -266,104 +266,80 @@ describe('storyReducer', () => {
     });
   });
 
-  // describe('adding a new story to a closed story', () => {
-  //   var _storyId;
-  //   _storyId = null;
-  //   beforeEach(() => {
-  //     var openStoryRecord;
-  //     openStoryRecord = openStory({
-  //       title: 'story0'
-  //     });
-  //     _storyId = openStoryRecord.storyId;
-  //     state = reducer(state, recordsReceived([openStoryRecord, closeStory(_storyId)]));
-  //   });
-  //   it('with fPastRecords = false (should NOT include it in the closed story)', () => {
-  //     state = reducer(state, recordsReceived([openStory({
-  //       title: "child",
-  //       parents: [_storyId]
-  //     })], false));
-  //     expect(state.mainStory.records[0].records[0].records.length).toEqual(2);
-  //     expect(state.mainStory.records[0].records[1].title).toEqual('child');
-  //   });
-  //   it('with fPastRecords = true (should include it in the closed story)', () => {
-  //     state = reducer(state, recordsReceived([openStory({
-  //       title: "child",
-  //       parents: [_storyId]
-  //     })], true));
-  //     expect(state.mainStory.records[0].records[0].records.length).toEqual(3);
-  //     expect(state.mainStory.records[0].records[0].records[2].title).toEqual('child');
-  //   });
-  // });
-  // it('adding a root story should be ignored', () => {
-  //   var state2;
-  //   state2 = reducer(state, recordsReceived([openStory({
-  //     title: 'rootStory23',
-  //     storyId: '*'
-  //   })]));
-  //   expect(state2).toEqual(state);
-  // });
-  // describe('showing identical consecutive logs', () => {
-  //   it('by default, should use shorthand notation', () => {
-  //     var record;
-  //     state = reducer(state, recordsReceived([log({
-  //       msg: "msg23"
-  //     }), log({
-  //       msg: "msg23"
-  //     }), log({
-  //       msg: "msg23"
-  //     })]));
-  //     expect(state.mainStory.records[0].records).to.have.length(1);
-  //     record = state.mainStory.records[0].records[0];
-  //     expect(record.repetitions).toEqual(2);
-  //     expect(record.tLastRepetition).not.to.be["null"];
-  //   });
-  //   it('with fShorthandForDuplicates=false, should include all logs', () => {
-  //     state = reducer(state, recordsReceived([log({
-  //       msg: "msg23"
-  //     }), log({
-  //       msg: "msg23"
-  //     }), log({
-  //       msg: "msg23"
-  //     })]), {
-  //       fShorthandForDuplicates: false
-  //     });
-  //     expect(state.mainStory.records[0].records).to.have.length(3);
-  //   });
-  //   it('should detect when attachments are equal', () => {
-  //     state = reducer(state, recordsReceived([log({
-  //       msg: "msg45",
-  //       obj: ['line1', 'line2']
-  //     }), log({
-  //       msg: "msg45",
-  //       obj: ['line1', 'line2']
-  //     })]));
-  //     expect(state.mainStory.records[0].records).to.have.length(1);
-  //   });
-  //   it('should detect when attachments are different', () => {
-  //     state = reducer(state, recordsReceived([log({
-  //       msg: "msg45",
-  //       obj: ['line1', 'line2']
-  //     }), log({
-  //       msg: "msg45",
-  //       obj: ['line1', 'DIFFERENT']
-  //     })]));
-  //     expect(state.mainStory.records[0].records).to.have.length(2);
-  //   });
-  // });
-  // it('should remove duplicates when using fPastRecords', () => {
-  //   state = reducer(state, recordsReceived([log({
-  //     msg: 'msg0',
-  //     id: 'id0'
-  //   }), log({
-  //     msg: 'msg1',
-  //     id: 'id1'
-  //   })]));
-  //   state = reducer(state, recordsReceived([log({
-  //     msg: 'msg0',
-  //     id: 'id0'
-  //   })], true));
-  //   expect(state.mainStory.records[0].records).to.have.length(2);
-  //   expect(state.mainStory.records[0].records[0].id).toEqual('id0');
-  //   expect(state.mainStory.records[0].records[1].id).toEqual('id1');
-  // });
+  describe('adding a new story to a closed story', () => {
+    let _storyId;
+    beforeEach(() => {
+      const openStoryRecord = openStory({ title: 'story0' });
+      _storyId = openStoryRecord.storyId;
+      state = reducer(state, recordsReceived([openStoryRecord, closeStory(_storyId)]));
+    });
+
+    it('with fPastRecords = false (should NOT include it in the closed story)', () => {
+      state = reducer(state, recordsReceived([openStory({ title: 'child', parents: [_storyId] })], false));
+      expect(state.mainStory.records[0].records[0].records.length).toEqual(2);
+      expect(state.mainStory.records[0].records[1].title).toEqual('child');
+    });
+    it('with fPastRecords = true (should include it in the closed story)', () => {
+      state = reducer(state, recordsReceived([openStory({ title: 'child', parents: [_storyId] })], true));
+      expect(state.mainStory.records[0].records[0].records.length).toEqual(3);
+      expect(state.mainStory.records[0].records[0].records[2].title).toEqual('child');
+    });
+  });
+
+  it('adding a root story should be ignored', () => {
+    const state2 = reducer(state, recordsReceived([openStory({ title: 'rootStory23', storyId: '*' })]));
+    expect(state2).toEqual(state);
+  });
+
+  describe('showing identical consecutive logs', () => {
+    it('by default, should use shorthand notation', () => {
+      state = reducer(state, recordsReceived([
+        log({ msg: 'msg23' }),
+        log({ msg: 'msg23' }),
+        log({ msg: 'msg23' }),
+      ]));
+      expect(state.mainStory.records[0].records.length).toEqual(1);
+      const record = state.mainStory.records[0].records[0];
+      expect(record.repetitions).toEqual(2);
+      expect(record.tLastRepetition).not.toBeNull();
+    });
+
+    it('with fShorthandForDuplicates=false, should include all logs', () => {
+      state = reducer(state, recordsReceived([
+        log({ msg: 'msg23' }),
+        log({ msg: 'msg23' }),
+        log({ msg: 'msg23' }),
+      ]), { fShorthandForDuplicates: false });
+      expect(state.mainStory.records[0].records.length).toEqual(3);
+    });
+
+    it('should detect when attachments are equal', () => {
+      state = reducer(state, recordsReceived([
+        log({ msg: 'msg45', obj: ['line1', 'line2'] }),
+        log({ msg: 'msg45', obj: ['line1', 'line2'] }),
+      ]));
+      expect(state.mainStory.records[0].records.length).toEqual(1);
+    });
+
+    it('should detect when attachments are different', () => {
+      state = reducer(state, recordsReceived([
+        log({ msg: 'msg45', obj: ['line1', 'line2'] }),
+        log({ msg: 'msg45', obj: ['line1', 'DIFFERENT'] }),
+      ]));
+      expect(state.mainStory.records[0].records.length).toEqual(2);
+    });
+  });
+
+  it('should remove duplicates when using fPastRecords', () => {
+    state = reducer(state, recordsReceived([
+      log({ msg: 'msg0', id: 'id0' }),
+      log({ msg: 'msg1', id: 'id1' }),
+    ]));
+    state = reducer(state, recordsReceived([
+      log({ msg: 'msg0', id: 'id0' }),
+    ], true));
+    expect(state.mainStory.records[0].records.length).toEqual(2);
+    expect(state.mainStory.records[0].records[0].id).toEqual('id0');
+    expect(state.mainStory.records[0].records[1].id).toEqual('id1');
+  });
 });
