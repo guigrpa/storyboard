@@ -3,7 +3,6 @@
 var AttachmentLine;
 var ColoredText;
 var Icon;
-var Line;
 var MainStoryTitle;
 var PureRenderMixin;
 var React;
@@ -12,14 +11,11 @@ var RepetitionLine;
 var Spinner;
 var ConnectedStory;
 var TIME_LENGTH;
-var Time;
 var _;
 var Story;
 var _quickFind;
 var _style;
-var _styleLine;
 var _styleMainTitle;
-var _styleTime;
 var actions;
 var ansiColors;
 var chalk;
@@ -385,7 +381,7 @@ AttachmentLine = React.createClass({
     var ref1;
     var style;
     ref1 = this.props, record = ref1.record, msg = ref1.msg, colors = ref1.colors;
-    style = _styleLine.log(record, colors);
+    style = styleLine.log(record, colors);
     msg = _quickFind(msg, this.props.quickFind);
     return <div className="attachmentLine allowUserSelect" style={style}><Time fShowFull={false} timeType={this.props.timeType} setTimeType={this.props.setTimeType} seqFullRefresh={this.props.seqFullRefresh} /><Src src={record.src} /><Severity level={record.objLevel} /><Indent level={this.props.level} /><CaretOrSpace /><ColoredText text={'  ' + msg} /></div>;
   }
@@ -414,7 +410,7 @@ RepetitionLine = React.createClass({
     var style;
     var timeType;
     ref1 = this.props, record = ref1.record, level = ref1.level, timeType = ref1.timeType, setTimeType = ref1.setTimeType, seqFullRefresh = ref1.seqFullRefresh, colors = ref1.colors;
-    style = _styleLine.log(record, colors);
+    style = styleLine.log(record, colors);
     msg = " x" + (record.repetitions + 1) + ", latest: ";
     msg = _quickFind(msg, this.props.quickFind);
     return <div className="attachmentLine allowUserSelect" style={style}><Time fShowFull={false} timeType={timeType} setTimeType={setTimeType} seqFullRefresh={seqFullRefresh} /><Src /><Severity /><Indent level={level} /><CaretOrSpace /><Icon icon="copy" disabled={true} style={{
@@ -423,10 +419,11 @@ RepetitionLine = React.createClass({
   }
 });
 
-Line = React.createClass({
-  displayName: 'Line',
-  mixins: [PureRenderMixin],
-  propTypes: {
+// ======================================================
+// LINE
+// ======================================================
+class Line extends React.PureComponent {
+  static propTypes = {
     record: React.PropTypes.object.isRequired,
     level: React.PropTypes.number.isRequired,
     fDirectChild: React.PropTypes.bool.isRequired,
@@ -437,63 +434,57 @@ Line = React.createClass({
     onToggleHierarchical: React.PropTypes.func,
     onToggleAttachment: React.PropTypes.func,
     seqFullRefresh: React.PropTypes.number.isRequired,
-    colors: React.PropTypes.object.isRequired
-  },
-  getInitialState: function () {
-    return {
-      fHovered: false
+    colors: React.PropTypes.object.isRequired,
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      fHovered: false,
     };
-  },
-  render: function () {
-    var action;
-    var className;
-    var colors;
-    var fDarkBg;
-    var fDirectChild;
-    var fOpen;
-    var fServer;
-    var fStory;
-    var fStoryObject;
-    var id;
-    var indentLevel;
-    var level;
-    var msg;
-    var record;
-    var ref1;
-    var spinner;
-    var style;
-    var title;
-    ref1 = this.props, record = ref1.record, fDirectChild = ref1.fDirectChild, level = ref1.level, colors = ref1.colors;
-    id = record.id, msg = record.msg, fStory = record.fStory, fStoryObject = record.fStoryObject, fServer = record.fServer, fOpen = record.fOpen, title = record.title, action = record.action;
-    if (fStoryObject) {
-      msg = title;
-    }
+  }
+
+  // -----------------------------------------------------
+  render() {
+    const { record, fDirectChild, level, colors } = this.props;
+    const { fStory, fStoryObject, fServer, fOpen, title, action } = record;
+    let { msg } = record;
+    if (fStoryObject) msg = title;
     if (fStory) {
-      msg = !fDirectChild ? title + " " : '';
-      if (action) {
-        msg += chalk.gray("[" + action + "]");
-      }
+      msg = !fDirectChild ? `${title} ` : '';
+      if (action) msg += chalk.gray(`[${action}]`);
     }
-    if (fStoryObject) {
-      className = 'storyTitle';
-      style = _styleLine.titleRow(level);
-      indentLevel = level - 1;
-      if (fOpen) {
-        spinner = <Spinner style={_styleLine.spinner} />;
-      }
-    } else {
-      className = 'log';
-      style = _styleLine.log(record, colors);
-      indentLevel = level;
-    }
+    const style = fStoryObject
+      ? styleLine.titleRow
+      : styleLine.log(record, colors);
+    const indentLevel = fStoryObject ? level - 1 : level;
+    // No animation on dark backgrounds to prevent antialiasing defects
+    let className = fStoryObject ? 'storyTitle' : 'log';
     className += ' allowUserSelect';
-    fDarkBg = fServer ? colors.colorServerBgIsDark : colors.colorClientBgIsDark;
-    if (!fDarkBg) {
-      className += ' fadeIn';
-    }
-    return <div className={className} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} style={style}>{this.renderTime(record)}<Src src={record.src} colors={colors} /><Severity level={record.level} colors={colors} /><Indent level={indentLevel} />{this.renderCaretOrSpace(record)}{this.renderMsg(fStoryObject, msg, record.level)}{this.renderWarningIcon(record)}{fStoryObject ? this.renderToggleHierarchical(record) : void 0}{spinner}{this.renderAttachmentIcon(record)}</div>;
-  },
-  renderMsg: function (fStoryObject, msg, level) {
+    const fDarkBg = fServer ? colors.colorServerBgIsDark : colors.colorClientBgIsDark;
+    if (!fDarkBg) className += ' fadeIn';
+    return (
+      <div
+        className={className}
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseLeave}
+        style={style}
+      >
+        {this.renderTime(record)}
+        <Src src={record.src} colors={colors} />
+        <Severity level={record.level} colors={colors} />
+        <Indent level={indentLevel} />
+        {this.renderCaretOrSpace(record)}
+        {this.renderMsg(fStoryObject, msg, record.level)}
+        {this.renderWarningIcon(record)}
+        {fStoryObject && this.renderToggleHierarchical(record)}
+        {fStoryObject && fOpen && <Spinner style={styleLine.spinner} />}
+        {this.renderAttachmentIcon(record)}
+      </div>
+    );
+  }
+
+  renderMsg(fStoryObject, msg, level) {
     msg = _quickFind(msg, this.props.quickFind);
     if (level >= k.LEVEL_STR_TO_NUM.ERROR) {
       msg = chalk.red.bold(msg);
@@ -501,12 +492,13 @@ Line = React.createClass({
       msg = chalk.red.yellow(msg);
     }
     if (fStoryObject) {
-      return <ColoredText text={msg} onClick={this.props.onToggleExpanded} style={_styleLine.title} />;
+      return <ColoredText text={msg} onClick={this.props.onToggleExpanded} style={styleLine.title} />;
     } else {
       return <ColoredText text={msg} />;
     }
-  },
-  renderTime: function (record) {
+  }
+
+  renderTime(record) {
     var fShowFull;
     var fStoryObject;
     var level;
@@ -519,15 +511,17 @@ Line = React.createClass({
     ref1 = this.props, level = ref1.level, timeType = ref1.timeType, setTimeType = ref1.setTimeType, seqFullRefresh = ref1.seqFullRefresh;
     fShowFull = fStoryObject && level <= 2 || level <= 1;
     return <Time t={t} fShowFull={fShowFull} timeType={timeType} setTimeType={setTimeType} seqFullRefresh={seqFullRefresh} />;
-  },
-  renderCaretOrSpace: function (record) {
+  }
+
+  renderCaretOrSpace(record) {
     var fExpanded;
     if (this.props.onToggleExpanded && record.fStoryObject) {
       fExpanded = record.fExpanded;
     }
     return <CaretOrSpace fExpanded={fExpanded} onToggleExpanded={this.props.onToggleExpanded} />;
-  },
-  renderToggleHierarchical: function (story) {
+  }
+
+  renderToggleHierarchical(story) {
     if (!this.props.onToggleHierarchical) {
       return;
     }
@@ -535,8 +529,9 @@ Line = React.createClass({
       return;
     }
     return <HierarchicalToggle fHierarchical={story.fHierarchical} onToggleHierarchical={this.props.onToggleHierarchical} />;
-  },
-  renderWarningIcon: function (record) {
+  }
+
+  renderWarningIcon(record) {
     var fHasError;
     var fHasWarning;
     var title;
@@ -548,9 +543,10 @@ Line = React.createClass({
       return;
     }
     title = "Story contains " + (fHasError ? 'an error' : 'a warning');
-    return <Icon icon="warning" title={title} onClick={this.props.onToggleExpanded} style={_styleLine.warningIcon(fHasError ? 'error' : 'warning')} />;
-  },
-  renderAttachmentIcon: function (record) {
+    return <Icon icon="warning" title={title} onClick={this.props.onToggleExpanded} style={styleLine.warningIcon(fHasError ? 'error' : 'warning')} />;
+  }
+
+  renderAttachmentIcon(record) {
     var icon;
     var style;
     if (record.obj == null) {
@@ -558,37 +554,39 @@ Line = React.createClass({
     }
     if (record.objIsError) {
       icon = record.objExpanded ? 'folder-open' : 'folder';
-      style = timm.set(_styleLine.attachmentIcon, 'color', '#cc0000');
+      style = timm.set(styleLine.attachmentIcon, 'color', '#cc0000');
     } else {
       icon = record.objExpanded ? 'folder-open-o' : 'folder-o';
-      style = _styleLine.attachmentIcon;
+      style = styleLine.attachmentIcon;
     }
     return <Icon icon={icon} onClick={this.onClickAttachment} style={style} />;
-  },
-  onMouseEnter: function () {
+  }
+
+  onMouseEnter() {
     return this.setState({
       fHovered: true
     });
-  },
-  onMouseLeave: function () {
+  }
+
+  onMouseLeave() {
     return this.setState({
       fHovered: false
     });
-  },
-  onClickAttachment: function () {
+  }
+
+  onClickAttachment() {
     return this.props.onToggleAttachment(this.props.record.id);
   }
-});
+}
 
-_styleLine = {
-  titleRow: function (level) {
-    return {
-      fontWeight: 900,
-      fontFamily: 'Menlo, Consolas, monospace',
-      whiteSpace: 'pre',
-      overflowX: 'hidden',
-      textOverflow: 'ellipsis'
-    };
+// -----------------------------------------------------
+const styleLine = {
+  titleRow: {
+    fontWeight: 900,
+    fontFamily: 'Menlo, Consolas, monospace',
+    whiteSpace: 'pre',
+    overflowX: 'hidden',
+    textOverflow: 'ellipsis',
   },
   title: {
     cursor: 'pointer'
@@ -624,78 +622,68 @@ _styleLine = {
   }
 };
 
+// ======================================================
+// Time
+// ======================================================
 TIME_LENGTH = 25;
 
-Time = React.createClass({
-  displayName: 'Time',
-  mixins: [PureRenderMixin],
-  propTypes: {
+class Time extends React.PureComponent {
+  static propTypes = {
     t: React.PropTypes.number,
     fShowFull: React.PropTypes.bool,
     timeType: React.PropTypes.string.isRequired,
     setTimeType: React.PropTypes.func.isRequired,
     seqFullRefresh: React.PropTypes.number.isRequired,
-    fTrim: React.PropTypes.bool
-  },
-  render: function () {
-    var fRelativeTime;
-    var fShowFull;
-    var fTrim;
-    var localTime;
-    var m;
-    var ref1;
-    var shownTime;
-    var t;
-    var timeType;
-    ref1 = this.props, t = ref1.t, fShowFull = ref1.fShowFull, timeType = ref1.timeType, fTrim = ref1.fTrim;
-    if (t == null) {
-      return <span>{_.padEnd('', TIME_LENGTH)}</span>;
-    }
-    fRelativeTime = false;
-    m = moment(t);
-    localTime = m.format('YYYY-MM-DD HH:mm:ss.SSS');
+    fTrim: React.PropTypes.bool,
+  };
+
+  render() {
+    const { t, fShowFull, timeType, fTrim } = this.props;
+    if (t == null) return <span>{_.padEnd('', TIME_LENGTH)}</span>;
+    let fRelativeTime = false;
+    const m = moment(t);
+    const localTime = m.format('YYYY-MM-DD HH:mm:ss.SSS');
+    let shownTime;
     if (timeType === 'RELATIVE') {
       shownTime = m.fromNow();
       fRelativeTime = true;
     } else {
-      if (timeType === 'UTC') {
-        m.utc();
-      }
-      if (fShowFull) {
-        shownTime = m.format('YYYY-MM-DD HH:mm:ss.SSS');
-      } else {
-        shownTime = '           ' + m.format('HH:mm:ss.SSS');
-      }
-      if (timeType === 'UTC') {
-        shownTime += 'Z';
-      }
+      if (timeType === 'UTC') m.utc();
+      shownTime = fShowFull
+        ? m.format('YYYY-MM-DD HH:mm:ss.SSS')
+        : `           ${m.format('HH:mm:ss.SSS')}`;
+      if (timeType === 'UTC') shownTime += 'Z';
     }
     shownTime = _.padEnd(shownTime, TIME_LENGTH);
-    if (fTrim) {
-      shownTime = shownTime.trim();
-    }
-    return <span onClick={this.onClick} style={_styleTime(fRelativeTime)} title={timeType !== 'LOCAL' ? localTime : void 0}>{shownTime}</span>;
-  },
-  onClick: function () {
-    var newTimeType;
-    newTimeType = function () {
-      switch (this.props.timeType) {
-        case 'LOCAL':
-          return 'RELATIVE';
-        case 'RELATIVE':
-          return 'UTC';
-        default:
-          return 'LOCAL';
-      }
-    }.call(this);
-    return this.props.setTimeType(newTimeType);
+    if (fTrim) shownTime = shownTime.trim();
+    return (
+      <span
+        onClick={this.onClick}
+        style={styleTime(fRelativeTime)}
+        title={timeType !== 'LOCAL' ? localTime : undefined}
+      >
+        {shownTime}
+      </span>
+    );
   }
-});
 
-_styleTime = fRelativeTime => ({
+  onClick = () => {
+    let newTimeType;
+    if (this.props.timeType === 'LOCAL') {
+      newTimeType = 'RELATIVE';
+    } else if (this.props.timeType === 'RELATIVE') {
+      newTimeType = 'UTC';
+    } else {
+      newTimeType = 'LOCAL';
+    }
+    this.props.setTimeType(newTimeType);
+  }
+}
+
+const styleTime = (fRelativeTime) => ({
   display: 'inline',
   cursor: 'pointer',
-  fontStyle: fRelativeTime ? 'italic' : void 0
+  fontStyle: fRelativeTime ? 'italic' : undefined,
 });
 
 // ======================================================
