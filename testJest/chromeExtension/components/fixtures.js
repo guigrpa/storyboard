@@ -1,3 +1,5 @@
+import { addDefaults } from 'timm';
+
 export const BASE_COLORS = {
   colorClientBg: 'aliceblue',
   colorClientBgIsDark: false,
@@ -54,3 +56,15 @@ export const EMPTY_MAIN_STORY = {
     },
   ],
 };
+
+export const buildLogRecord = (options = {}) => addDefaults(options, {
+  id: 'id1',
+  hubId: 'hubId1',
+  version: 3,
+  fStory: false,
+  fServer: false,
+  storyId: 'story1',
+  t: 0,
+  level: 30,
+  msg: 'Example message',
+});
