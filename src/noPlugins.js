@@ -1,12 +1,12 @@
 // Re-export default export
-import storyboard from './storyboard';
+import storyboard, { mainStory } from './storyboard';
+
 export default storyboard;
 
 // Re-export named exports
 export * from './storyboard';
 
 // Show deprecation notice
-const { mainStory } = storyboard;
 /* eslint-disable no-console */
 mainStory.warn('storyboard', "Use of 'storyboard/lib/noPlugins' is deprecated in Storyboard 2.0.0");
 mainStory.warn('storyboard',

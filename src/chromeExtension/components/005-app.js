@@ -1,6 +1,9 @@
+/* eslint-env browser */
+
+/* eslint-disable react/no-string-refs */
+
 import React from 'react';
 import * as ReactRedux from 'react-redux';
-import { pick } from '../../vendor/lodash';
 import {
   Floats, Notifications,
   LargeMessage,
@@ -8,6 +11,7 @@ import {
   isDark,
 } from 'giu';
 import tinycolor from 'tinycolor2';
+import { pick } from '../../vendor/lodash';
 import Toolbar from './015-toolbar';
 import Story from './020-story';
 // let ReduxDevTools;

@@ -1,5 +1,7 @@
+/* eslint-disable no-undef */
 export const IS_BROWSER = (typeof window !== 'undefined' && window !== null) ||
   (process.env.TEST_BROWSER != null);
+  /* eslint-enable no-undef */
 export const LEVEL_NUM_TO_STR = {
   10: 'TRACE',
   20: 'DEBUG',

@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-escape */
+
 const path = require('path');
 const webpack = require('webpack');
 const pkg = require('../package.json');

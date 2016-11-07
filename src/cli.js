@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 
+/* eslint-disable import/newline-after-import */
+
 import split from 'split';
 import { exec } from 'child_process';
 import program from 'commander';
 import { mainStory, addListener, chalk } from './storyboard';
+
 const pkg = require('../package.json');
 
 let cmdWithArgs;
@@ -63,11 +66,11 @@ process.stderr.on('error', exit);
 process.stdin.pipe(child.stdin);
 
 child.stdout.pipe(split())
-.on('data', line => mainStory.info(line))
+.on('data', (line) => mainStory.info(line))
 .on('end', () => { if (!program.server) process.exit(); });
 
 child.stderr.pipe(split())
-.on('data', line => {
+.on('data', (line) => {
   if (!line.length) return;
   mainStory.error(line);
 })

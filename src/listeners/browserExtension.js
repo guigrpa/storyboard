@@ -9,11 +9,11 @@ const DEFAULT_CONFIG = {};
 let windowCopy;
 if (!process.env.TEST_BROWSER) {
   try {
-    windowCopy = window;
+    windowCopy = window;  // eslint-disable-line no-undef
   } catch (err) { /* ignore */ }
 }
 
-const setWindow = w => { windowCopy = w; };
+const setWindow = (w) => { windowCopy = w; };
 
 // -----------------------------------------
 // Listener
@@ -93,7 +93,7 @@ class BrowserExtensionListener {
 
   extensionTxPending() {
     if (!this.fExtensionReady) return;
-    this.bufMessages.forEach(msg => this.doExtensionTx(msg));
+    this.bufMessages.forEach((msg) => this.doExtensionTx(msg));
     this.bufMessages.length = 0;
   }
 

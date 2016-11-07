@@ -1,3 +1,4 @@
+/* eslint-disable react/no-string-refs */
 import React from 'react';
 import * as ReactRedux from 'react-redux';
 import {
@@ -5,7 +6,7 @@ import {
   Icon, Spinner,
 } from 'giu';
 import Promise from 'bluebird';
-import actions from '../actions/actions';
+import actions from '../actions/actions';  // eslint-disable-line import/no-unresolved, import/extensions
 
 const RETURN_KEY = 13;
 

@@ -1,5 +1,5 @@
-import { isObject, isError } from '../vendor/lodash';
 import { omit } from 'timm';
+import { isObject, isError } from '../vendor/lodash';
 
 const CIRCULAR_REF = '__SB_CIRCULAR__';
 const STORYBOARD_TYPE_ATTR = '__SB_TYPE__';
@@ -7,8 +7,8 @@ const STORYBOARD_TYPE_ATTR = '__SB_TYPE__';
 // -------------------------------------
 // Main
 // -------------------------------------
-const serialize = obj => doSerialize(obj, []);
-const deserialize = obj => doDeserialize(obj);
+const serialize = (obj) => doSerialize(obj, []);
+const deserialize = (obj) => doDeserialize(obj);
 
 // -------------------------------------
 // Helpers
@@ -39,12 +39,12 @@ const doSerialize = (obj, stack) => {
 
   // Handle arrays
   } else if (Array.isArray(obj)) {
-    out = obj.map(el => doSerialize(el, stack));
+    out = obj.map((el) => doSerialize(el, stack));
 
   // Handle objects
   } else {
     out = {};
-    Object.keys(obj).forEach(key => {
+    Object.keys(obj).forEach((key) => {
       out[key] = doSerialize(obj[key], stack);
     });
   }
@@ -52,11 +52,11 @@ const doSerialize = (obj, stack) => {
   return out;
 };
 
-const doDeserialize = obj => {
+const doDeserialize = (obj) => {
   if (!isObject(obj)) return obj;
   let out;
   if (Array.isArray(obj)) {
-    out = obj.map(el => doDeserialize(el));
+    out = obj.map((el) => doDeserialize(el));
   } else if (obj instanceof Date) {
     out = new Date(obj);
   } else {
@@ -72,7 +72,7 @@ const doDeserialize = obj => {
         break;
       default:
         out = {};
-        Object.keys(obj).forEach(key => {
+        Object.keys(obj).forEach((key) => {
           out[key] = doDeserialize(obj[key]);
         });
         break;

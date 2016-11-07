@@ -6,6 +6,7 @@ import { IS_BROWSER, LEVEL_STR_TO_NUM } from './constants';
 import { passesFilter } from './filters';
 import { getHubId, emitMsgWithFields } from './hub';
 import { serialize } from './serialize';
+
 const version = require('../../package.json').version;
 
 const DEFAULT_SRC = 'main';
@@ -221,6 +222,7 @@ const completeRecord = (record) => {
   if (record.fRoot == null) record.fRoot = false;
 };
 
+/* eslint-disable no-prototype-builtins */
 const processAttachments = (record, options) => {
   if (options.hasOwnProperty('attach')) {
     record.obj = options.attach;
@@ -241,6 +243,7 @@ const processAttachments = (record, options) => {
     record.obj = serialize(record.obj);
   }
 };
+/* eslint-enable no-prototype-builtins */
 /* eslint-enable no-param-reassign */
 
 const emitRevealSeparator = (msg) => {

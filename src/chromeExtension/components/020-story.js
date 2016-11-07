@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+/* eslint-disable react/no-multi-comp, react/prefer-stateless-function */
 import React from 'react';
 import * as ReactRedux from 'react-redux';
 import { set as timmSet } from 'timm';
@@ -10,7 +10,7 @@ import { LEVEL_NUM_TO_COLORED_STR, getSrcChalkColor } from '../../gral/ansiColor
 import treeLines from '../../gral/treeLines';
 import { deserialize } from '../../gral/serialize';
 import { LEVEL_STR_TO_NUM } from '../../gral/constants';
-import actions from '../actions/actions';
+import actions from '../actions/actions';  // eslint-disable-line import/no-unresolved, import/extensions
 import ColoredText from './030-coloredText';
 
 const doQuickFind = (msg0, quickFind) => {
@@ -625,7 +625,7 @@ class Time extends React.PureComponent {
     fShowFull: React.PropTypes.bool,
     timeType: React.PropTypes.string.isRequired,
     setTimeType: React.PropTypes.func.isRequired,
-    seqFullRefresh: React.PropTypes.number.isRequired,
+    seqFullRefresh: React.PropTypes.number.isRequired, // eslint-disable-line react/no-unused-prop-types, max-len
     fTrim: React.PropTypes.bool,
   };
 
@@ -691,7 +691,7 @@ class Severity extends React.PureComponent {
     const { level } = this.props;
     return level != null
       ? <ColoredText text={LEVEL_NUM_TO_COLORED_STR[level]} />
-      : <span>      </span>;
+      : <span>      </span>;  // eslint-disable-line react/self-closing-comp
   }
 }
 

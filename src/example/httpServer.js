@@ -22,7 +22,7 @@ const createHttpServer = () => {
       extraParents,
     });
     db.getItems({ story })
-    .then(result => {
+    .then((result) => {
       story.debug('httpServer', `HTTP response: ${result.length} animals`,
         { attachInline: result });
       res.json(result);

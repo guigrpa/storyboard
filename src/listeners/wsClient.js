@@ -26,7 +26,7 @@ class WsClientListener {
     this.socket = null;
     this.fSocketConnected = false;
     this.clocksy = new ClocksyClient({
-      sendRequest: req => this.socketTx('CLOCKSY', req),
+      sendRequest: (req) => this.socketTx('CLOCKSY', req),
     });
     this.tDelta = null;
     // Short buffer for records to be uploaded
@@ -56,7 +56,7 @@ class WsClientListener {
     this.socket.on('connect', () => this.socketDidConnect());
     this.socket.on('disconnect', () => this.socketDidDisconnect());
     this.socket.on('error', () => this.socketDidDisconnect());
-    this.socket.on('MSG', msg => this.socketRx(msg));
+    this.socket.on('MSG', (msg) => this.socketRx(msg));
   }
 
   // -----------------------------------------
@@ -200,7 +200,7 @@ class WsClientListener {
   applyTimeDelta(records, tDelta) {
     /* istanbul ignore next */
     if (!records) return records;
-    return records.map(record => timmSet(record, 't', record.t + tDelta));
+    return records.map((record) => timmSet(record, 't', record.t + tDelta));
   }
 }
 

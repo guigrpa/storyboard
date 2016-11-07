@@ -61,7 +61,7 @@ const tree = (node, options, prefix, stack) =>  {
       }
     } else if (val === null) {
       out.push(finalPrefix + chalk.red.bold('null'));
-    } else if (val === void 0) {
+    } else if (val === undefined) {
       out.push(finalPrefix + chalk.bgRed.bold('undefined'));
     } else if ((val === true) || (val === false)) {
       out.push(finalPrefix + chalk.cyan.bold(val));

@@ -279,6 +279,7 @@ exports[`Settings renders correctly 1`] = `
            
           <a
             href="https://github.com/guigrpa/storyboard#log-filtering"
+            rel="noreferrer noopener"
             style={
               Object {
                 "color": "currentColor",
@@ -919,6 +920,7 @@ exports[`Settings renders correctly 1`] = `
              
             <a
               href="https://github.com/guigrpa/storyboard#log-filtering"
+              rel="noreferrer noopener"
               style="color:currentColor;"
               target="_blank">
               (more examples here)

@@ -22,7 +22,7 @@ const init = (deps, options) => {
 };
 
 const getHubId = () => hubId;
-const configure = options => { config = merge(config, options); };
+const configure = (options) => { config = merge(config, options); };
 
 // -------------------------------------
 // Managing listeners
@@ -35,13 +35,13 @@ const addListener = (listenerCreate, userConfig = {}) => {
   const listener = listenerCreate(userConfig, { mainStory, hub: hubApiForListeners });
   listeners.push(listener);
   if (listener.init) listener.init();
-  getBufferedMessages().forEach(msg => listener.process(msg));
+  getBufferedMessages().forEach((msg) => listener.process(msg));
   return listener;
 };
 
-const removeListener = listener => {
+const removeListener = (listener) => {
   if (listener.tearDown) listener.tearDown();
-  listeners = listeners.filter(o => o !== listener);
+  listeners = listeners.filter((o) => o !== listener);
 };
 
 const removeAllListeners = () => {
@@ -55,7 +55,7 @@ const removeAllListeners = () => {
 let bufMessages = [];
 let bufRecords = [];
 
-const addToMsgBuffers = msg => {
+const addToMsgBuffers = (msg) => {
   bufMessages.push(msg);
   const { bufMsgSize } = config;
   if (bufMessages.length > bufMsgSize) bufMessages = bufMessages.slice(-bufMsgSize);
@@ -80,7 +80,7 @@ const emitMsgWithFields = (src, type, data, srcListener) => {
 // Add message to buffer and broadcast it (to all but the sender)
 const emitMsg = (msg, srcListener) => {
   addToMsgBuffers(msg);
-  listeners.forEach(listener => {
+  listeners.forEach((listener) => {
     if (listener === srcListener) return;
     listener.process(msg);
   });

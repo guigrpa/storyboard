@@ -70,7 +70,7 @@ const recordToLines = (record, options) => {
     const lines = treeLines(deserializedObj, merge({ prefix: '  ' }, objOptions));
     const levelStr2 = ansiColors.LEVEL_NUM_TO_COLORED_STR[objLevel];
     const emptyTimeStr = relativeTime ? TIME_COL_RELATIVE_EMPTY : TIME_COL_ABSOLUTE_EMPTY;
-    lines.forEach(line => {
+    lines.forEach((line) => {
       let text = `${emptyTimeStr} ${srcStr} ${levelStr2}${line}`;
       if (!colors) text = chalk.stripColor(text);
       out.push({ text, level: objLevel });

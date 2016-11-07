@@ -38,7 +38,7 @@ class ConsoleListener {
   process(msg) {
     if (msg.type !== 'RECORDS') return;
     if (msg.hubId !== this.hubId) return; // only log local records
-    msg.data.forEach(record => this.processRecord(record));
+    msg.data.forEach((record) => this.processRecord(record));
   }
 
   processRecord(record) {
@@ -53,7 +53,7 @@ class ConsoleListener {
   // -----------------------------------------
   // Helpers
   // -----------------------------------------
-  /* eslint-disable no-console */
+  /* eslint-disable no-console, prefer-spread */
   outputLog(text, level, fLongDelay) {
     const args = IS_BROWSER ? getBrowserConsoleArgs(text) : [text];
     if (fLongDelay) console.log('          ...');
@@ -71,11 +71,13 @@ class ConsoleListener {
           break;
       }
     } else {
+      /* eslint-disable no-lonely-if */
       if (this.config.useStderr && level >= 50) {
         console.error.apply(console, args);
       } else {
         console.log.apply(console, args);
       }
+      /* eslint-enable no-lonely-if */
     }
   }
   /* eslint-enable no-console */

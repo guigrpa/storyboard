@@ -55,7 +55,7 @@ class DbPostgresListener {
   init() {
     const { config, mainStory } = this;
     mainStory.info(LOG_SRC, 'Connecting to PG database...', { attach: config });
-    this.client.on('error', err => {
+    this.client.on('error', (err) => {
       this.fConnected = false;
       mainStory.error(LOG_SRC, 'Connection to PG database is down (will stop saving logs)',
         { attach: err });
@@ -65,7 +65,7 @@ class DbPostgresListener {
       mainStory.info(LOG_SRC, 'Connected to PG database');
       this.saveRecords();
     });
-    this.client.connect(err => {
+    this.client.connect((err) => {
       if (err) {
         mainStory.error(LOG_SRC, 'Could not connect to PG database (will not save logs)',
           { attach: err });
@@ -85,7 +85,7 @@ class DbPostgresListener {
   }
 
   addToRecordBuffer(records) {
-    const finalRecords = records.filter(r => !r.signalType);
+    const finalRecords = records.filter((r) => !r.signalType);
     this.bufRecords = this.bufRecords.concat(finalRecords);
     if (this.bufRecords.length > BUF_LENGTH) {
       this.bufRecords = this.bufRecords.slice(-BUF_LENGTH);
@@ -95,7 +95,7 @@ class DbPostgresListener {
   saveRecords() {
     if (!this.fConnected) return;
     const { insertQuery, config } = this;
-    this.bufRecords.forEach(r => {
+    this.bufRecords.forEach((r) => {
       const jsonObj = r.obj != null ? JSON.stringify(r.obj) : undefined;
       const msg = config.colors ? r.msg : chalk.stripColor(r.msg);
       let title = r.title;
@@ -110,7 +110,7 @@ class DbPostgresListener {
         msg, jsonObj, r.objExpanded, r.objLevel, r.objOptions, r.objIsError,
       ])
       /* eslint-disable no-console */
-      .on('error', err => console.log(err));
+      .on('error', (err) => console.log(err));
       /* eslint-enable no-console */
     });
     this.bufRecords.length = 0;

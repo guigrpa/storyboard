@@ -36,12 +36,14 @@ const NUM_COLORS = COLORS.length;
 const srcColorCache = {};
 let _srcCnt = 0;
 
+/* eslint-disable no-plusplus */
 const getSrcChalkColor = (src) => {
   if (srcColorCache[src] == null) {
     srcColorCache[src] = COLORS[_srcCnt++ % NUM_COLORS];
   }
   return srcColorCache[src];
 };
+/* eslint-enable no-plusplus */
 
 // -------------------------------------------------
 // Convert ANSI codes to console args and styled segments
@@ -170,9 +172,8 @@ const updateStyles = (curStyles, code) => {
       style = removeStyles[i];
       curStyles[style] = undefined;
     }
-  } else {
-    /* istanbul ignore else */
-    if (code === 0) curStyles = {};
+  } else if (code === 0) {
+    curStyles = {};
   }
   return curStyles;
 };

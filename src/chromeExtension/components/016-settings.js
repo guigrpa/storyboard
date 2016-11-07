@@ -1,3 +1,5 @@
+/* eslint-env browser */
+/* eslint-disable react/no-string-refs */
 import React from 'react';
 import * as ReactRedux from 'react-redux';
 import { merge, omit } from 'timm';
@@ -6,8 +8,8 @@ import {
   Checkbox, TextInput, NumberInput, ColorInput,
 } from 'giu';
 import Promise from 'bluebird';
-import actions from '../actions/actions';
-import { DEFAULT_SETTINGS } from '../reducers/settingsReducer';
+import actions from '../actions/actions';  // eslint-disable-line import/no-unresolved, import/extensions
+import { DEFAULT_SETTINGS } from '../reducers/settingsReducer';  // eslint-disable-line import/no-unresolved, import/extensions
 
 const FORM_KEYS = [
   'fShowClosedActions',
@@ -132,6 +134,7 @@ class Settings extends React.Component {
         <a
           href="https://github.com/guigrpa/storyboard#log-filtering"
           target="_blank"
+          rel="noreferrer noopener"
           style={style.link}
         >
           (more examples here)
@@ -264,6 +267,7 @@ class Settings extends React.Component {
         (c) <a
           href="https://github.com/guigrpa"
           target="_blank"
+          rel="noreferrer noopener"
           style={style.link}
         >
           Guillermo Grau
@@ -289,7 +293,7 @@ class Settings extends React.Component {
   maxLogsDesc() {
     const hyst = this.state.forgetHysteresis;
     const hi = this.state.maxRecords;
-    const lo = hi - hi * hyst;
+    const lo = hi - (hi * hyst);
     return `When the backlog reaches ${hi}, Storyboard will ` +
       `start forgetting old stuff until it goes below ${lo}`;
   }

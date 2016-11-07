@@ -20,6 +20,7 @@ const runTestCov = (env, name) => {
     'rm -rf .nyc_output',
     `cross-env ${envStr}jest --coverage`,
     `mv .nyc_output/coverage-final.json .nyc_tmp/coverage-${name}.json`,
+    'rm -rf .nyc_output',
   ]);
 };
 
@@ -122,9 +123,7 @@ const specs = {
 
     // Static analysis
     lint:                       'eslint src',
-    /* eslint-disable quotes */
-    xxl:                        "xxl --src \"[\\\"src\\\"]\"",
-    /* eslint-enable quotes */
+    xxl:                        "xxl --src \"[\\\"src\\\"]\"",  // eslint-disable-line quotes
 
     // Testing - general
     jest:                       'jest --watch --coverage',
@@ -158,7 +157,7 @@ const specs = {
     testProd:                   runTestCov('NODE_ENV=production', 'prod'),
     testBrowser:                runTestCov('NODE_ENV=development TEST_BROWSER=true', 'browser'),
     testCovReport:              runMultiple([
-                                  'cp .nyc_tmp/* .nyc_output/',
+                                  'cp -r .nyc_tmp .nyc_output',
                                   'nyc report --reporter=html --reporter=lcov --reporter=text',
                                 ]),
   },
@@ -197,7 +196,6 @@ const specs = {
     // React
     'react':                          '15.3.2',
     'react-dom':                      '15.3.2',
-    'react-addons-pure-render-mixin': '15.3.2',
     'react-addons-perf':              '15.3.2',
 
     // Redux
@@ -248,12 +246,13 @@ const specs = {
     'node-sass': '3.7.0',
 
     // Linting
-    'eslint': '2.13.1',
-    'eslint-config-airbnb': '9.0.1',
-    'eslint-plugin-react': '5.2.2',
-    'eslint-plugin-jsx-a11y': '1.5.3',
-    'eslint-plugin-import': '1.9.2',
-    'babel-eslint': '6.1.2',
+    eslint: '3.8.1',
+    'eslint-config-airbnb': '12.0.0',
+    'eslint-plugin-flowtype': '2.20.0',
+    'eslint-plugin-import': '1.16.0',
+    'eslint-plugin-jsx-a11y': '2.2.3',
+    'eslint-plugin-react': '6.4.1',
+    'babel-eslint': '7.0.0',
 
     // Testing with Jest
     'jest': '16.1.0-alpha.691b0e22',

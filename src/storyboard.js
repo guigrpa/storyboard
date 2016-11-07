@@ -25,7 +25,7 @@ hubInit({ mainStory });
 filters.init({ mainStory });
 
 const config = (options = {}) => {
-  Object.keys(options).forEach(key => {
+  Object.keys(options).forEach((key) => {
     const val = options[key];
     switch (key) {
       case 'filter':
@@ -50,7 +50,9 @@ const gracefulExit = () => {
 };
 /* istanbul ignore next */
 try {
+  /* eslint-disable no-undef */
   window.addEventListener('beforeunload', gracefulExit);
+  /* eslint-enable no-undef */
 } catch (err) { /* ignore */ }
 try {
   process.on('exit', gracefulExit);
