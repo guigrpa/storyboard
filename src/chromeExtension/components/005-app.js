@@ -61,7 +61,8 @@ class App extends React.PureComponent {
     }
   }
 
-  fullRefresh() {
+  // -----------------------------------------------------
+  fullRefresh = () => {
     if (!this.props.fRelativeTime) return;
     this.setState({
       seqFullRefresh: this.state.seqFullRefresh + 1,

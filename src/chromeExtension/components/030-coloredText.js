@@ -21,10 +21,7 @@ class ColoredText extends React.PureComponent {
       return this.renderMsgSegment(segment, 0, extraProps);
     }
     return (
-      <span
-        onClick={this.props.onClick}
-        style={this.props.style}
-      >
+      <span onClick={this.props.onClick} style={this.props.style}>
         {segments.map((segment, idx) => this.renderMsgSegment(segment, idx))}
       </span>
     );

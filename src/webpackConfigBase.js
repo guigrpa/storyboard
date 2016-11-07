@@ -7,7 +7,7 @@ const LANGS = ['en_gb'];
 module.exports = {
   resolve: {
     // Add automatically the following extensions to required modules
-    extensions: ['', '.coffee', '.cjsx', '.js'],
+    extensions: ['', '.coffee', '.js'],
   },
 
   plugins: [
@@ -26,10 +26,6 @@ module.exports = {
 
   module: {
     loaders: [
-      {
-        test: /\.cjsx$/,
-        loader: 'babel!coffee!cjsx',
-      },
       {
         test: /\.coffee$/,
         loader: 'babel!coffee',

@@ -169,6 +169,8 @@ class Settings extends React.Component {
     ];
   }
 
+  // For maxRecords and forgetHysteresis, we keep track of their current values
+  // to update the tooltip accordingly
   renderForgetSettings() {
     const { cmdsToInputs } = this.state;
     return (

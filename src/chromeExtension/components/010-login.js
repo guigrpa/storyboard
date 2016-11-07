@@ -48,7 +48,8 @@ class Login extends React.PureComponent {
     const msg = login ? `Logged in as ${login}` : 'Logged in';
     return (
       <div style={style.outer(colors)}>
-        {msg}{' '}
+        {msg}
+        {' '}
         <Icon
           icon="sign-out"
           title="Log out"

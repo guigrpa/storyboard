@@ -1,370 +1,340 @@
 /* eslint-disable react/prop-types */
+import React from 'react';
+import * as ReactRedux from 'react-redux';
+import { set as timmSet } from 'timm';
+import moment from 'moment';
+import chalk from 'chalk';
+import { Icon, Spinner } from 'giu';
+import * as _ from '../../vendor/lodash';
+import { LEVEL_NUM_TO_COLORED_STR, getSrcChalkColor } from '../../gral/ansiColors';
+import treeLines from '../../gral/treeLines';
+import { deserialize } from '../../gral/serialize';
+import { LEVEL_STR_TO_NUM } from '../../gral/constants';
+import actions from '../actions/actions';
+import ColoredText from './030-coloredText';
 
-var AttachmentLine;
-var ColoredText;
-var Icon;
-var MainStoryTitle;
-var PureRenderMixin;
-var React;
-var ReactRedux;
-var RepetitionLine;
-var Spinner;
-var ConnectedStory;
-var TIME_LENGTH;
-var _;
-var Story;
-var _quickFind;
-var _style;
-var _styleMainTitle;
-var actions;
-var ansiColors;
-var chalk;
-var connect;
-var deserialize;
-var isDark;
-var k;
-var mapDispatchToProps;
-var mapStateToProps;
-var moment;
-var ref;
-var timm;
-var tinycolor;
-var treeLines;
-
-_ = require('../../vendor/lodash');
-
-React = require('react');
-
-ReactRedux = require('react-redux');
-
-PureRenderMixin = require('react-addons-pure-render-mixin');
-
-timm = require('timm');
-
-tinycolor = require('tinycolor2');
-
-moment = require('moment');
-
-chalk = require('chalk');
-
-ref = require('giu'), Icon = ref.Icon, Spinner = ref.Spinner, isDark = ref.isDark;
-
-ColoredText = require('./030-coloredText').default;
-
-actions = require('../actions/actions');
-
-ansiColors = require('../../gral/ansiColors');
-
-treeLines = require('../../gral/treeLines')["default"];
-
-deserialize = require('../../gral/serialize').deserialize;
-
-k = require('../../gral/constants');
-
-_quickFind = (msg, quickFind) => {
-  var re;
-  if (!quickFind.length) {
-    return msg;
-  }
-  re = new RegExp(quickFind, 'gi');
-  msg = msg.replace(re, chalk.bgYellow("$1"));
-  return msg;
+const doQuickFind = (msg0, quickFind) => {
+  if (!quickFind.length) return msg0;
+  const re = new RegExp(quickFind, 'gi');
+  return msg0.replace(re, chalk.bgYellow('$1'));
 };
 
-mapStateToProps = state => ({
+// ======================================================
+// Story
+// ======================================================
+const mapStateToProps = (state) => ({
   timeType: state.settings.timeType,
   fShowClosedActions: state.settings.fShowClosedActions,
-  quickFind: state.stories.quickFind
+  quickFind: state.stories.quickFind,
 });
 
-mapDispatchToProps = dispatch => ({
-  setTimeType: function (timeType) {
-    return dispatch(actions.setTimeType(timeType));
-  },
+const mapDispatchToProps = {
+  setTimeType: actions.setTimeType,
+  onToggleExpanded: actions.toggleExpanded,
+  onToggleHierarchical: actions.toggleHierarchical,
+  onToggleAttachment: actions.toggleAttachment,
+};
 
-  onToggleExpanded: function (pathStr) {
-    return dispatch(actions.toggleExpanded(pathStr));
-  },
-
-  onToggleHierarchical: function (pathStr) {
-    return dispatch(actions.toggleHierarchical(pathStr));
-  },
-
-  onToggleAttachment: function (pathStr, recordId) {
-    return dispatch(actions.toggleAttachment(pathStr, recordId));
-  }
-});
-
-Story = React.createClass({
-  displayName: 'Story',
-  propTypes: {
+class Story extends React.Component {
+  static propTypes = {
     story: React.PropTypes.object.isRequired,
     level: React.PropTypes.number.isRequired,
     seqFullRefresh: React.PropTypes.number.isRequired,
     colors: React.PropTypes.object.isRequired,
+    // From Redux.connect (for the top-most story; other
+    // child stories inherit them)
     timeType: React.PropTypes.string.isRequired,
     fShowClosedActions: React.PropTypes.bool.isRequired,
     quickFind: React.PropTypes.string.isRequired,
     setTimeType: React.PropTypes.func.isRequired,
     onToggleExpanded: React.PropTypes.func.isRequired,
     onToggleHierarchical: React.PropTypes.func.isRequired,
-    onToggleAttachment: React.PropTypes.func.isRequired
-  },
-  render: function () {
-    if (this.props.story.fWrapper) {
-      return <div>{this.renderRecords()}</div>;
-    }
-    if (this.props.level === 1) {
-      return this.renderRootStory();
-    }
+    onToggleAttachment: React.PropTypes.func.isRequired,
+  };
+
+  // -----------------------------------------------------
+  render() {
+    if (this.props.story.fWrapper) return <div>{this.renderRecords()}</div>;
+    if (this.props.level === 1) return this.renderRootStory();
     return this.renderNormalStory();
-  },
-  renderRootStory: function () {
-    var colors;
-    var level;
-    var ref1;
-    var story;
-    ref1 = this.props, level = ref1.level, story = ref1.story, colors = ref1.colors;
-    return <div className="rootStory" style={_style.outer(level, story, colors)}><MainStoryTitle title={story.title} numRecords={story.numRecords} fHierarchical={story.fHierarchical} fExpanded={story.fExpanded} onToggleExpanded={this.toggleExpanded} onToggleHierarchical={this.toggleHierarchical} />{this.renderRecords()}</div>;
-  },
-  renderNormalStory: function () {
-    var colors;
-    var fOpen;
-    var level;
-    var ref1;
-    var story;
-    var title;
-    ref1 = this.props, level = ref1.level, story = ref1.story, colors = ref1.colors;
-    title = story.title, fOpen = story.fOpen;
-    return <div className="story" style={_style.outer(level, story, colors)}><Line record={story} level={this.props.level} fDirectChild={false} timeType={this.props.timeType} setTimeType={this.props.setTimeType} quickFind={this.props.quickFind} onToggleExpanded={this.toggleExpanded} onToggleHierarchical={this.toggleHierarchical} seqFullRefresh={this.props.seqFullRefresh} colors={colors} />{this.renderRecords()}</div>;
-  },
-  renderRecords: function () {
-    var el;
-    var i;
-    var len;
-    var out;
-    var record;
-    var records;
-    if (!this.props.story.fExpanded) {
-      return;
-    }
-    records = this.prepareRecords(this.props.story.records);
-    out = [];
-    for (i = 0, len = records.length; i < len; i++) {
-      record = records[i];
-      el = this.renderRecord(record);
-      if (el == null) {
-        continue;
-      }
+  }
+
+  renderRootStory() {
+    const { level, story, colors } = this.props;
+    return (
+      <div className="rootStory" style={styleStory.outer(level, story, colors)}>
+        <MainStoryTitle
+          title={story.title}
+          numRecords={story.numRecords}
+          fHierarchical={story.fHierarchical}
+          fExpanded={story.fExpanded}
+          onToggleExpanded={this.toggleExpanded}
+          onToggleHierarchical={this.toggleHierarchical}
+        />
+        {this.renderRecords()}
+      </div>
+    );
+  }
+
+  renderNormalStory() {
+    const { level, story, colors } = this.props;
+    return (
+      <div className="story" style={styleStory.outer(level, story, colors)}>
+        <Line
+          record={story}
+          level={this.props.level}
+          fDirectChild={false}
+          timeType={this.props.timeType}
+          setTimeType={this.props.setTimeType}
+          quickFind={this.props.quickFind}
+          onToggleExpanded={this.toggleExpanded}
+          onToggleHierarchical={this.toggleHierarchical}
+          seqFullRefresh={this.props.seqFullRefresh}
+          colors={colors}
+        />
+        {this.renderRecords()}
+      </div>
+    );
+  }
+
+  renderRecords() {
+    if (!this.props.story.fExpanded) return null;
+    const records = this.prepareRecords(this.props.story.records);
+    let out = [];
+    for (let i = 0; i < records.length; i++) {
+      const record = records[i];
+      const el = this.renderRecord(record);
+      if (el == null) continue;
       out.push(el);
       if (record.objExpanded && record.obj != null) {
         out = out.concat(this.renderAttachment(record));
       }
-      if (record.repetitions) {
-        out.push(this.renderRepetitions(record));
-      }
+      if (record.repetitions) out.push(this.renderRepetitions(record));
     }
     return out;
-  },
-  renderRecord: function (record) {
-    var action;
-    var fDirectChild;
-    var fStoryObject;
-    var id;
-    var obj;
-    var objExpanded;
-    var storyId;
-    id = record.id, fStoryObject = record.fStoryObject, storyId = record.storyId, obj = record.obj, objExpanded = record.objExpanded, action = record.action;
-    fDirectChild = storyId === this.props.story.storyId;
+  }
+
+  renderRecord(record) {
+    const { id, fStoryObject, storyId, action } = record;
+    const fDirectChild = storyId === this.props.story.storyId;
     if (fStoryObject) {
-      return <Story
-        key={storyId}
-        story={record}
-        level={this.props.level + 1}
-        seqFullRefresh={this.props.seqFullRefresh} colors={this.props.colors}
+      return (
+        <Story
+          key={storyId}
+          story={record}
+          level={this.props.level + 1}
+          seqFullRefresh={this.props.seqFullRefresh}
+          colors={this.props.colors}
+          timeType={this.props.timeType}
+          fShowClosedActions={this.props.fShowClosedActions}
+          quickFind={this.props.quickFind}
+          setTimeType={this.props.setTimeType}
+          onToggleExpanded={this.props.onToggleExpanded}
+          onToggleHierarchical={this.props.onToggleHierarchical}
+          onToggleAttachment={this.props.onToggleAttachment}
+        />
+      );
+    }
+    if (fDirectChild) {
+      if (action === 'CREATED') return null;
+      if (!this.props.fShowClosedActions && action === 'CLOSED') return null;
+    }
+    return (
+      <Line
+        key={`${storyId}_${id}`}
+        record={record}
+        level={this.props.level}
+        fDirectChild={fDirectChild}
         timeType={this.props.timeType}
-        fShowClosedActions={this.props.fShowClosedActions}
-        quickFind={this.props.quickFind}
         setTimeType={this.props.setTimeType}
-        onToggleExpanded={this.props.onToggleExpanded}
-        onToggleHierarchical={this.props.onToggleHierarchical}
-        onToggleAttachment={this.props.onToggleAttachment}
-      />;
-    } else {
-      if (fDirectChild) {
-        if (action === 'CREATED') {
-          return;
-        }
-        if (!this.props.fShowClosedActions && action === 'CLOSED') {
-          return;
-        }
-      }
-      return <Line key={storyId + "_" + id} record={record} level={this.props.level} fDirectChild={fDirectChild} timeType={this.props.timeType} setTimeType={this.props.setTimeType} quickFind={this.props.quickFind} onToggleAttachment={this.toggleAttachment} seqFullRefresh={this.props.seqFullRefresh} colors={this.props.colors} />;
-    }
-    return out;
-  },
-  renderAttachment: function (record) {
-    var id;
-    var lines;
-    var obj;
-    var objOptions;
-    var props;
-    var storyId;
-    var version;
-    storyId = record.storyId, id = record.id, obj = record.obj, objOptions = record.objOptions, version = record.version;
-    props = _.pick(this.props, ['level', 'timeType', 'setTimeType', 'quickFind', 'seqFullRefresh', 'colors']);
-    lines = version >= 2 ? treeLines(deserialize(obj), objOptions) : obj;
-    return lines.map((line, idx) => <AttachmentLine {...Object.assign({
-      "key": storyId + "_" + id + "_" + idx,
-      "record": record
-    }, props, {
-      "msg": line
-    })} />);
-  },
-  renderRepetitions: function (record) {
-    var id;
-    var props;
-    var storyId;
-    storyId = record.storyId, id = record.id;
-    props = _.pick(this.props, ['level', 'timeType', 'setTimeType', 'quickFind', 'seqFullRefresh', 'colors']);
-    return <RepetitionLine {...Object.assign({
-      "key": storyId + "_" + id + "_repetitions",
-      "record": record
-    }, props)} />;
-  },
-  toggleExpanded: function () {
-    return this.props.onToggleExpanded(this.props.story.pathStr);
-  },
-  toggleHierarchical: function () {
-    return this.props.onToggleHierarchical(this.props.story.pathStr);
-  },
-  toggleAttachment: function (recordId) {
-    return this.props.onToggleAttachment(this.props.story.pathStr, recordId);
-  },
-  prepareRecords: function (records) {
-    var out;
-    if (this.props.story.fHierarchical) {
-      out = _.sortBy(records, 't');
-    } else {
-      out = this.flatten(records);
-    }
-    return out;
-  },
-  flatten: function (records, level) {
-    var i;
-    var len;
-    var out;
-    var record;
-    if (level == null) {
-      level = 0;
-    }
-    out = [];
-    for (i = 0, len = records.length; i < len; i++) {
-      record = records[i];
+        quickFind={this.props.quickFind}
+        onToggleAttachment={this.toggleAttachment}
+        seqFullRefresh={this.props.seqFullRefresh}
+        colors={this.props.colors}
+      />
+    );
+  }
+
+  renderAttachment(record) {
+    const { storyId, id, obj, objOptions, version } = record;
+    const props = _.pick(this.props, [
+      'level', 'timeType', 'setTimeType',
+      'quickFind', 'seqFullRefresh', 'colors',
+    ]);
+    const lines = version >= 2 ? treeLines(deserialize(obj), objOptions) : obj;
+    return lines.map((line, idx) =>
+      <AttachmentLine
+        key={`${storyId}_${id}_${idx}`}
+        record={record}
+        {...props}
+        msg={line}
+      />
+    );
+  }
+
+  renderRepetitions(record) {
+    const { storyId, id } = record;
+    const props = _.pick(this.props, [
+      'level', 'timeType', 'setTimeType',
+      'quickFind', 'seqFullRefresh', 'colors',
+    ]);
+    return (
+      <RepetitionLine
+        key={`${storyId}_${id}_repetitions`}
+        record={record}
+        {...props}
+      />
+    );
+  }
+
+  // -----------------------------------------------------
+  toggleExpanded = () => {
+    this.props.onToggleExpanded(this.props.story.pathStr);
+  }
+
+  toggleHierarchical = () => {
+    this.props.onToggleHierarchical(this.props.story.pathStr);
+  }
+
+  toggleAttachment = (recordId) => {
+    this.props.onToggleAttachment(this.props.story.pathStr, recordId);
+  }
+
+  // -----------------------------------------------------
+  prepareRecords(records) {
+    return this.props.story.fHierarchical
+      ? _.sortBy(records, 't')
+      : this.flatten(records);
+  }
+
+  flatten(records, level = 0) {
+    let out = [];
+    for (let i = 0; i < records.length; i++) {
+      const record = records[i];
       if (record.fStoryObject) {
         out = out.concat(this.flatten(record.records, level + 1));
       } else {
         out.push(record);
       }
     }
-    if (level === 0) {
-      out = _.sortBy(out, 't');
-    }
+    if (level === 0) out = _.sortBy(out, 't');
     return out;
   }
-});
+}
 
-_style = {
-  outer: function (level, story, colors) {
-    return {
-      backgroundColor: story.fServer ? colors.colorServerBg : colors.colorClientBg,
-      color: story.fServer ? colors.colorServerFg : colors.colorClientFg,
-      marginBottom: level <= 1 ? 10 : void 0,
-      padding: level <= 1 ? 2 : void 0
-    };
-  }
+// -----------------------------------------------------
+const styleStory = {
+  outer: (level, story, colors) => ({
+    backgroundColor: story.fServer ? colors.colorServerBg : colors.colorClientBg,
+    color: story.fServer ? colors.colorServerFg : colors.colorClientFg,
+    marginBottom: level <= 1 ? 10 : undefined,
+    padding: level <= 1 ? 2 : undefined,
+  }),
 };
 
-connect = ReactRedux.connect(mapStateToProps, mapDispatchToProps);
+// -----------------------------------------------------
+const connect = ReactRedux.connect(mapStateToProps, mapDispatchToProps);
+const ConnectedStory = connect(Story);
 
-ConnectedStory = connect(Story);
-
-MainStoryTitle = React.createClass({
-  displayName: 'MainStoryTitle',
-  mixins: [PureRenderMixin],
-  propTypes: {
+// ======================================================
+// MainStoryTitle
+// ======================================================
+class MainStoryTitle extends React.PureComponent {
+  static propTypes = {
     title: React.PropTypes.string.isRequired,
     numRecords: React.PropTypes.number.isRequired,
     fHierarchical: React.PropTypes.bool.isRequired,
     fExpanded: React.PropTypes.bool.isRequired,
     onToggleExpanded: React.PropTypes.func.isRequired,
-    onToggleHierarchical: React.PropTypes.func.isRequired
-  },
-  getInitialState: function () {
-    return {
-      fHovered: false
-    };
-  },
-  render: function () {
-    return <div className="rootStoryTitle" style={_styleMainTitle.outer} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>{this.renderCaret()}<span style={_styleMainTitle.title} onClick={this.props.onToggleExpanded}>{this.props.title.toUpperCase()} <span style={_styleMainTitle.numRecords}>[{this.props.numRecords}]</span></span>{this.renderToggleHierarchical()}</div>;
-  },
-  renderCaret: function () {
-    var icon;
-    if (!this.state.fHovered) {
-      return;
-    }
-    icon = this.props.fExpanded ? 'caret-down' : 'caret-right';
-    return <span onClick={this.props.onToggleExpanded} style={_styleMainTitle.caret.outer}><Icon icon={icon} style={_styleMainTitle.caret.icon} /></span>;
-  },
-  renderToggleHierarchical: function () {
-    if (!this.state.fHovered) {
-      return;
-    }
-    return <HierarchicalToggle fHierarchical={this.props.fHierarchical} onToggleHierarchical={this.props.onToggleHierarchical} fFloat={true} />;
-  },
-  onMouseEnter: function () {
-    return this.setState({
-      fHovered: true
-    });
-  },
-  onMouseLeave: function () {
-    return this.setState({
-      fHovered: false
-    });
-  }
-});
+    onToggleHierarchical: React.PropTypes.func.isRequired,
+  };
 
-_styleMainTitle = {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fHovered: false,
+    };
+  }
+
+  // -----------------------------------------------------
+  render() {
+    return (
+      <div
+        className="rootStoryTitle"
+        style={styleMainTitle.outer}
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseLeave}
+      >
+        {this.renderCaret()}
+        <span
+          style={styleMainTitle.title}
+          onClick={this.props.onToggleExpanded}
+        >
+          {this.props.title.toUpperCase()}{' '}
+          <span style={styleMainTitle.numRecords}>[{this.props.numRecords}]</span>
+        </span>
+        {this.renderToggleHierarchical()}
+      </div>
+    );
+  }
+
+  renderCaret() {
+    if (!this.state.fHovered) return null;
+    const icon = this.props.fExpanded ? 'caret-down' : 'caret-right';
+    return (
+      <span onClick={this.props.onToggleExpanded} style={styleMainTitle.caret.outer}>
+        <Icon icon={icon} style={styleMainTitle.caret.icon} />
+      </span>
+    );
+  }
+
+  renderToggleHierarchical() {
+    if (!this.state.fHovered) return null;
+    return (
+      <HierarchicalToggle
+        fHierarchical={this.props.fHierarchical}
+        onToggleHierarchical={this.props.onToggleHierarchical}
+        fFloat
+      />
+    );
+  }
+
+  // -----------------------------------------------------
+  onMouseEnter = () => { this.setState({ fHovered: true }); }
+  onMouseLeave = () => { this.setState({ fHovered: false }); }
+}
+
+// -----------------------------------------------------
+const styleMainTitle = {
   outer: {
     textAlign: 'center',
     marginBottom: 5,
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   title: {
     fontWeight: 900,
-    letterSpacing: 3
+    letterSpacing: 3,
   },
-  numRecords: {
-    color: 'darkgrey'
-  },
+  numRecords: { color: 'darkgrey' },
   caret: {
     outer: {
       display: 'inline-block',
-      position: 'absolute'
+      position: 'absolute',
     },
     icon: {
       display: 'inline-block',
       position: 'absolute',
       right: 6,
-      top: 2
-    }
-  }
+      top: 2,
+    },
+  },
 };
 
-AttachmentLine = React.createClass({
-  displayName: 'AttachmentLine',
-  mixins: [PureRenderMixin],
-  propTypes: {
+// ======================================================
+// AttachmentLine
+// ======================================================
+class AttachmentLine extends React.PureComponent {
+  static propTypes = {
     record: React.PropTypes.object.isRequired,
     level: React.PropTypes.number.isRequired,
     timeType: React.PropTypes.string.isRequired,
@@ -372,55 +342,80 @@ AttachmentLine = React.createClass({
     seqFullRefresh: React.PropTypes.number.isRequired,
     msg: React.PropTypes.string.isRequired,
     quickFind: React.PropTypes.string.isRequired,
-    colors: React.PropTypes.object.isRequired
-  },
-  render: function () {
-    var colors;
-    var msg;
-    var record;
-    var ref1;
-    var style;
-    ref1 = this.props, record = ref1.record, msg = ref1.msg, colors = ref1.colors;
-    style = styleLine.log(record, colors);
-    msg = _quickFind(msg, this.props.quickFind);
-    return <div className="attachmentLine allowUserSelect" style={style}><Time fShowFull={false} timeType={this.props.timeType} setTimeType={this.props.setTimeType} seqFullRefresh={this.props.seqFullRefresh} /><Src src={record.src} /><Severity level={record.objLevel} /><Indent level={this.props.level} /><CaretOrSpace /><ColoredText text={'  ' + msg} /></div>;
-  }
-});
+    colors: React.PropTypes.object.isRequired,
+  };
 
-RepetitionLine = React.createClass({
-  displayName: 'RepetitionLine',
-  mixins: [PureRenderMixin],
-  propTypes: {
+  // -----------------------------------------------------
+  render() {
+    const { record, colors } = this.props;
+    const style = styleLine.log(record, colors);
+    const msg = doQuickFind(this.props.msg, this.props.quickFind);
+    return (
+      <div className="attachmentLine allowUserSelect" style={style}>
+        <Time
+          fShowFull={false}
+          timeType={this.props.timeType}
+          setTimeType={this.props.setTimeType}
+          seqFullRefresh={this.props.seqFullRefresh}
+        />
+        <Src src={record.src} />
+        <Severity level={record.objLevel} />
+        <Indent level={this.props.level} />
+        <CaretOrSpace />
+        <ColoredText text={`  ${msg}`} />
+      </div>
+    );
+  }
+}
+
+// ======================================================
+// RepetitionLine
+// ======================================================
+class RepetitionLine extends React.PureComponent {
+  static propTypes = {
     record: React.PropTypes.object.isRequired,
     level: React.PropTypes.number.isRequired,
     timeType: React.PropTypes.string.isRequired,
     setTimeType: React.PropTypes.func.isRequired,
     seqFullRefresh: React.PropTypes.number.isRequired,
     quickFind: React.PropTypes.string.isRequired,
-    colors: React.PropTypes.object.isRequired
-  },
-  render: function () {
-    var colors;
-    var level;
-    var msg;
-    var record;
-    var ref1;
-    var seqFullRefresh;
-    var setTimeType;
-    var style;
-    var timeType;
-    ref1 = this.props, record = ref1.record, level = ref1.level, timeType = ref1.timeType, setTimeType = ref1.setTimeType, seqFullRefresh = ref1.seqFullRefresh, colors = ref1.colors;
-    style = styleLine.log(record, colors);
-    msg = " x" + (record.repetitions + 1) + ", latest: ";
-    msg = _quickFind(msg, this.props.quickFind);
-    return <div className="attachmentLine allowUserSelect" style={style}><Time fShowFull={false} timeType={timeType} setTimeType={setTimeType} seqFullRefresh={seqFullRefresh} /><Src /><Severity /><Indent level={level} /><CaretOrSpace /><Icon icon="copy" disabled={true} style={{
-        color: 'currentColor'
-      }} /><ColoredText text={msg} /><Time t={record.tLastRepetition} fTrim={true} timeType={timeType} setTimeType={setTimeType} seqFullRefresh={seqFullRefresh} /></div>;
+    colors: React.PropTypes.object.isRequired,
+  };
+
+  // -----------------------------------------------------
+  render() {
+    const { record, level, timeType, setTimeType, seqFullRefresh, colors } = this.props;
+    const style = styleLine.log(record, colors);
+    let msg = ` x${record.repetitions + 1}, latest: `;
+    msg = doQuickFind(msg, this.props.quickFind);
+    return (
+      <div className="attachmentLine allowUserSelect" style={style}>
+        <Time
+          fShowFull={false}
+          timeType={timeType}
+          setTimeType={setTimeType}
+          seqFullRefresh={seqFullRefresh}
+        />
+        <Src />
+        <Severity />
+        <Indent level={level} />
+        <CaretOrSpace />
+        <Icon icon="copy" disabled style={{ color: 'currentColor' }} />
+        <ColoredText text={msg} />
+        <Time
+          t={record.tLastRepetition}
+          fTrim
+          timeType={timeType}
+          setTimeType={setTimeType}
+          seqFullRefresh={seqFullRefresh}
+        />
+      </div>
+    );
   }
-});
+}
 
 // ======================================================
-// LINE
+// Line
 // ======================================================
 class Line extends React.PureComponent {
   static propTypes = {
@@ -484,99 +479,101 @@ class Line extends React.PureComponent {
     );
   }
 
-  renderMsg(fStoryObject, msg, level) {
-    msg = _quickFind(msg, this.props.quickFind);
-    if (level >= k.LEVEL_STR_TO_NUM.ERROR) {
+  renderMsg(fStoryObject, msg0, level) {
+    let msg = doQuickFind(msg0, this.props.quickFind);
+    if (level >= LEVEL_STR_TO_NUM.ERROR) {
       msg = chalk.red.bold(msg);
-    } else if (level >= k.LEVEL_STR_TO_NUM.WARN) {
+    } else if (level >= LEVEL_STR_TO_NUM.WARN) {
       msg = chalk.red.yellow(msg);
     }
-    if (fStoryObject) {
-      return <ColoredText text={msg} onClick={this.props.onToggleExpanded} style={styleLine.title} />;
-    } else {
-      return <ColoredText text={msg} />;
-    }
+    if (!fStoryObject) return <ColoredText text={msg} />;
+    return (
+      <ColoredText
+        text={msg}
+        onClick={this.props.onToggleExpanded}
+        style={styleLine.title}
+      />
+    );
   }
 
   renderTime(record) {
-    var fShowFull;
-    var fStoryObject;
-    var level;
-    var ref1;
-    var seqFullRefresh;
-    var setTimeType;
-    var t;
-    var timeType;
-    fStoryObject = record.fStoryObject, t = record.t;
-    ref1 = this.props, level = ref1.level, timeType = ref1.timeType, setTimeType = ref1.setTimeType, seqFullRefresh = ref1.seqFullRefresh;
-    fShowFull = fStoryObject && level <= 2 || level <= 1;
-    return <Time t={t} fShowFull={fShowFull} timeType={timeType} setTimeType={setTimeType} seqFullRefresh={seqFullRefresh} />;
+    const { fStoryObject, t } = record;
+    const { level, timeType, setTimeType, seqFullRefresh } = this.props;
+    const fShowFull = (fStoryObject && level <= 2) || (level <= 1);
+    return (
+      <Time
+        t={t}
+        fShowFull={fShowFull}
+        timeType={timeType}
+        setTimeType={setTimeType}
+        seqFullRefresh={seqFullRefresh}
+      />
+    );
   }
 
   renderCaretOrSpace(record) {
-    var fExpanded;
+    let fExpanded;
     if (this.props.onToggleExpanded && record.fStoryObject) {
       fExpanded = record.fExpanded;
     }
-    return <CaretOrSpace fExpanded={fExpanded} onToggleExpanded={this.props.onToggleExpanded} />;
+    return (
+      <CaretOrSpace
+        fExpanded={fExpanded}
+        onToggleExpanded={this.props.onToggleExpanded}
+      />
+    );
   }
 
   renderToggleHierarchical(story) {
-    if (!this.props.onToggleHierarchical) {
-      return;
-    }
-    if (!this.state.fHovered) {
-      return;
-    }
-    return <HierarchicalToggle fHierarchical={story.fHierarchical} onToggleHierarchical={this.props.onToggleHierarchical} />;
+    if (!this.props.onToggleHierarchical) return null;
+    if (!this.state.fHovered) return null;
+    return (
+      <HierarchicalToggle
+        fHierarchical={story.fHierarchical}
+        onToggleHierarchical={this.props.onToggleHierarchical}
+      />
+    );
   }
 
   renderWarningIcon(record) {
-    var fHasError;
-    var fHasWarning;
-    var title;
-    if (record.fExpanded) {
-      return;
-    }
-    fHasWarning = record.fHasWarning, fHasError = record.fHasError;
-    if (!(fHasWarning || fHasError)) {
-      return;
-    }
-    title = "Story contains " + (fHasError ? 'an error' : 'a warning');
-    return <Icon icon="warning" title={title} onClick={this.props.onToggleExpanded} style={styleLine.warningIcon(fHasError ? 'error' : 'warning')} />;
+    if (record.fExpanded) return null;
+    const { fHasWarning, fHasError } = record;
+    if (!(fHasWarning || fHasError)) return null;
+    const title = `Story contains ${fHasError ? 'an error' : 'a warning'}`;
+    return (
+      <Icon
+        icon="warning"
+        title={title}
+        onClick={this.props.onToggleExpanded}
+        style={styleLine.warningIcon(fHasError ? 'error' : 'warning')}
+      />
+    );
   }
 
   renderAttachmentIcon(record) {
-    var icon;
-    var style;
-    if (record.obj == null) {
-      return;
-    }
+    if (record.obj == null) return null;
+    let icon;
+    let style;
     if (record.objIsError) {
       icon = record.objExpanded ? 'folder-open' : 'folder';
-      style = timm.set(styleLine.attachmentIcon, 'color', '#cc0000');
+      style = timmSet(styleLine.attachmentIcon, 'color', '#cc0000');
     } else {
       icon = record.objExpanded ? 'folder-open-o' : 'folder-o';
       style = styleLine.attachmentIcon;
     }
-    return <Icon icon={icon} onClick={this.onClickAttachment} style={style} />;
+    return (
+      <Icon
+        icon={icon}
+        onClick={this.onClickAttachment}
+        style={style}
+      />
+    );
   }
 
-  onMouseEnter() {
-    return this.setState({
-      fHovered: true
-    });
-  }
-
-  onMouseLeave() {
-    return this.setState({
-      fHovered: false
-    });
-  }
-
-  onClickAttachment() {
-    return this.props.onToggleAttachment(this.props.record.id);
-  }
+  // -----------------------------------------------------
+  onMouseEnter = () => { this.setState({ fHovered: true }); }
+  onMouseLeave = () => { this.setState({ fHovered: false }); }
+  onClickAttachment = () => { this.props.onToggleAttachment(this.props.record.id); }
 }
 
 // -----------------------------------------------------
@@ -588,44 +585,39 @@ const styleLine = {
     overflowX: 'hidden',
     textOverflow: 'ellipsis',
   },
-  title: {
-    cursor: 'pointer'
-  },
-  log: function (record, colors) {
-    var fServer;
-    fServer = record.fServer;
+  title: { cursor: 'pointer' },
+  log: (record, colors) => {
+    const fServer = record.fServer;
     return {
       backgroundColor: fServer ? colors.colorServerBg : colors.colorClientBg,
       color: fServer ? colors.colorServerFg : colors.colorClientFg,
       fontFamily: 'Menlo, Consolas, monospace',
       whiteSpace: 'pre',
-      fontWeight: record.fStory && record.action === 'CREATED' ? 900 : void 0,
+      fontWeight: record.fStory && record.action === 'CREATED' ? 900 : undefined,
       overflowX: 'hidden',
-      textOverflow: 'ellipsis'
+      textOverflow: 'ellipsis',
     };
   },
   spinner: {
     marginLeft: 8,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   attachmentIcon: {
     marginLeft: 8,
     cursor: 'pointer',
-    display: 'inline'
+    display: 'inline',
   },
-  warningIcon: function (type) {
-    return {
-      marginLeft: 8,
-      color: type === 'warning' ? '#ff6600' : '#cc0000',
-      display: 'inline'
-    };
-  }
+  warningIcon: (type) => ({
+    marginLeft: 8,
+    color: type === 'warning' ? '#ff6600' : '#cc0000',
+    display: 'inline',
+  }),
 };
 
 // ======================================================
 // Time
 // ======================================================
-TIME_LENGTH = 25;
+const TIME_LENGTH = 25;
 
 class Time extends React.PureComponent {
   static propTypes = {
@@ -667,6 +659,7 @@ class Time extends React.PureComponent {
     );
   }
 
+  // -----------------------------------------------------
   onClick = () => {
     let newTimeType;
     if (this.props.timeType === 'LOCAL') {
@@ -693,10 +686,11 @@ class Severity extends React.PureComponent {
   static propTypes = {
     level: React.PropTypes.number,
   };
+
   render() {
     const { level } = this.props;
     return level != null
-      ? <ColoredText text={ansiColors.LEVEL_NUM_TO_COLORED_STR[level]} />
+      ? <ColoredText text={LEVEL_NUM_TO_COLORED_STR[level]} />
       : <span>      </span>;
   }
 }
@@ -708,10 +702,11 @@ class Src extends React.PureComponent {
   static propTypes = {
     src: React.PropTypes.string,
   };
+
   render() {
     const { src } = this.props;
     if (src != null) {
-      const srcStr = ansiColors.getSrcChalkColor(src)(_.padStart(`${src} `, 20));
+      const srcStr = getSrcChalkColor(src)(_.padStart(`${src} `, 20));
       return <ColoredText text={srcStr} />;
     }
     return <span>{_.repeat(' ', 20)}</span>;
@@ -737,6 +732,7 @@ class CaretOrSpace extends React.PureComponent {
     fExpanded: React.PropTypes.bool,
     onToggleExpanded: React.PropTypes.func,
   };
+
   render() {
     let icon;
     if (this.props.fExpanded != null) {
