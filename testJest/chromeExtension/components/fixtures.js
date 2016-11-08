@@ -66,5 +66,6 @@ export const buildLogRecord = (options = {}) => addDefaults(options, {
   storyId: 'story1',
   t: 0,
   level: 30,
+  src: 'main',
   msg: 'Example message',
 });
