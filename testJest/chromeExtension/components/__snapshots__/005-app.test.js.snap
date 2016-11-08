@@ -96,35 +96,33 @@ exports[`App renders correctly when connected 1`] = `
   </div>
 </div>
 ------------HTML PREVIEW---------------
+<div
+  id="appRoot"
+  style="background-color:white;color:rgb(64, 64, 64);height:100%;"
+>
   <div
-    id="appRoot"
-    style="background-color:white;color:rgb(64, 64, 64);height:100%;">
-    <div
-      class="giu-floats"
-      style="height:0;left:0;position:absolute;top:0;width:0;">
+    class="giu-floats"
+    style="height:0;left:0;position:absolute;top:0;width:0;"
+  >
+  </div>
+  <div
+    class="giu-notifications"
+    style="bottom:20px;max-width:350px;position:fixed;right:20px;z-index:9000;"
+  >
+  </div>
+  <div dataMockType="Toolbar">
+    <div style="color:blue;font-weight:bold;">
+      Toolbar
     </div>
-    <div
-      class="giu-notifications"
-      style="bottom:20px;max-width:350px;position:fixed;right:20px;z-index:9000;">
-    </div>
-    <div
-      dataMockType="Toolbar">
-      <div
-        style="color:blue;font-weight:bold;">
-        Toolbar
-      </div>
-    </div>
-    <div
-      style="padding:4px;">
-      <div
-        dataMockType="Story">
-        <div
-          style="color:blue;font-weight:bold;">
-          Story
-        </div>
+  </div>
+  <div style="padding:4px;">
+    <div dataMockType="Story">
+      <div style="color:blue;font-weight:bold;">
+        Story
       </div>
     </div>
   </div>
+</div>
 `;
 
 exports[`App renders correctly when disconnected 1`] = `
@@ -189,31 +187,36 @@ exports[`App renders correctly when disconnected 1`] = `
   </div>
 </div>
 ------------HTML PREVIEW---------------
+<div
+  id="appRoot"
+  style="background-color:white;color:rgb(64, 64, 64);height:100%;"
+>
   <div
-    id="appRoot"
-    style="background-color:white;color:rgb(64, 64, 64);height:100%;">
-    <div
-      class="giu-floats"
-      style="height:0;left:0;position:absolute;top:0;width:0;">
+    class="giu-floats"
+    style="height:0;left:0;position:absolute;top:0;width:0;"
+  >
+  </div>
+  <div
+    class="giu-notifications"
+    style="bottom:20px;max-width:350px;position:fixed;right:20px;z-index:9000;"
+  >
+  </div>
+  <div
+    class="giu-large-message"
+    style="color:rgb(115, 115, 115);font-size:1.4em;font-weight:700;padding:0.8em;text-align:center;"
+  >
+    <div>
+      <i
+        class="giu-icon fa fa-circle-o-notch fa-spin"
+        style="cursor:pointer;letter-spacing:normal;"
+      >
+      </i>
+       Connecting to Storyboard...
     </div>
-    <div
-      class="giu-notifications"
-      style="bottom:20px;max-width:350px;position:fixed;right:20px;z-index:9000;">
-    </div>
-    <div
-      class="giu-large-message"
-      style="color:rgb(115, 115, 115);font-size:1.4em;font-weight:700;padding:0.8em;text-align:center;">
-      <div>
-        <i
-          class="giu-icon fa fa-circle-o-notch fa-spin"
-          style="cursor:pointer;letter-spacing:normal;">
-        </i>
-         Connecting to Storyboard...
-      </div>
-       
-      <div>
-        Navigate to your Storyboard-equipped app (and log in if required)
-      </div>
+     
+    <div>
+      Navigate to your Storyboard-equipped app (and log in if required)
     </div>
   </div>
+</div>
 `;

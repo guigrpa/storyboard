@@ -3352,9 +3352,9 @@ jest-haste-map@^16.1.0-alpha.691b0e22:
     multimatch "^2.1.0"
     worker-farm "^1.3.1"
 
-jest-html@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/jest-html/-/jest-html-1.1.0.tgz#c750681226f23679b8519104cf075b8e3aac159b"
+jest-html@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/jest-html/-/jest-html-1.2.0.tgz#b41a060bcd8c0f0b115d55d6fc1ae0545cf36e36"
   dependencies:
     babel-polyfill "6.16.0"
     body-parser "^1.15.2"
