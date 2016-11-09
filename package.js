@@ -255,10 +255,10 @@ const specs = {
     'babel-eslint': '7.0.0',
 
     // Testing with Jest
-    'jest': '16.1.0-alpha.691b0e22',
+    'jest': '17.0.0',
     'jest-html': '^1.2.0',
     'react-test-renderer': '15.3.2',
-    'babel-jest': '16.0.0',
+    'babel-jest': '17.0.0',
 
     // Testing with Mocha
     'mocha': '2.4.5',
@@ -296,6 +296,7 @@ const specs = {
     exclude: [
       'lib/vendor/**',
       'node_modules/**/*',
+      'test/**',
     ],
   },
   jest: {
@@ -310,12 +311,24 @@ const specs = {
     coverageDirectory: '.nyc_output',
     coverageReporters: ['json', 'text', 'html'],
     snapshotSerializers: ['<rootDir>/node_modules/jest-html'],
-    // collectCoverageFrom: [
-    //   'lib/**/*.js',
-    //   '!**/node_modules/**',
-    //   '!**/__tests__/**',
-    //   '!**/__mocks__/**',
-    // ],
+    collectCoverageFrom: [
+      'lib/**/*.js',
+      '!lib/cli.js',
+      '!lib/noPlugins.js',
+      '!lib/stdinLogger.js',
+      '!lib/withConsoleListener.js',
+      '!lib/chromeExtension/*.js',  // at the base of the extension folder
+      '!lib/chromeExtension/store/**',
+      '!lib/example/**',
+      '!lib/serverLogsApp/**',
+      '!lib/vendor/**',
+      '!test/**',
+      '!testJest/**',
+      '!**/webpack*',
+      '!**/node_modules/**',
+      '!**/__tests__/**',
+      '!**/__mocks__/**',
+    ],
     // setupTestFrameworkScriptFile: './testJest/setup.js',
   },
 };
@@ -323,9 +336,9 @@ const specs = {
 // ===============================================
 // Build package.json
 // ===============================================
-const sortDeps = deps => {
+const sortDeps = (deps) => {
   const newDeps = {};
-  Object.keys(deps).sort().forEach(key => {
+  Object.keys(deps).sort().forEach((key) => {
     newDeps[key] = deps[key];
   });
   return newDeps;

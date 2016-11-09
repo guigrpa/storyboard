@@ -75,7 +75,7 @@
     "babel-cli": "6.16.0",
     "babel-core": "6.17.0",
     "babel-eslint": "7.0.0",
-    "babel-jest": "16.0.0",
+    "babel-jest": "17.0.0",
     "babel-loader": "6.2.5",
     "babel-polyfill": "6.16.0",
     "babel-preset-es2015": "6.16.0",
@@ -101,7 +101,7 @@
     "giu": "0.8.1",
     "ignore-styles": "4.0.0",
     "isomorphic-fetch": "2.2.1",
-    "jest": "16.1.0-alpha.691b0e22",
+    "jest": "17.0.0",
     "jest-html": "^1.2.0",
     "json-loader": "0.5.4",
     "mocha": "2.4.5",
@@ -128,7 +128,8 @@
   "nyc": {
     "exclude": [
       "lib/vendor/**",
-      "node_modules/**/*"
+      "node_modules/**/*",
+      "test/**"
     ]
   },
   "jest": {
@@ -146,6 +147,24 @@
     ],
     "snapshotSerializers": [
       "<rootDir>/node_modules/jest-html"
+    ],
+    "collectCoverageFrom": [
+      "lib/**/*.js",
+      "!lib/cli.js",
+      "!lib/noPlugins.js",
+      "!lib/stdinLogger.js",
+      "!lib/withConsoleListener.js",
+      "!lib/chromeExtension/*.js",
+      "!lib/chromeExtension/store/**",
+      "!lib/example/**",
+      "!lib/serverLogsApp/**",
+      "!lib/vendor/**",
+      "!test/**",
+      "!testJest/**",
+      "!**/webpack*",
+      "!**/node_modules/**",
+      "!**/__tests__/**",
+      "!**/__mocks__/**"
     ]
   }
 }
