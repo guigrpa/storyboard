@@ -52,7 +52,7 @@ class FileListener {
     const { fd } = this;
     if (fd == null) return;
     const lines = recordToLines(record, this.config);
-    lines.forEach(({ text }) => fs.write(fd, `${text}\n`, null, 'utf8'));
+    lines.forEach(({ text }) => fs.write(fd, `${text}\n`, () => {}, 'utf8'));
   }
 }
 
