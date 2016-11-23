@@ -10,7 +10,7 @@ import { LEVEL_NUM_TO_COLORED_STR, getSrcChalkColor } from '../../gral/ansiColor
 import treeLines from '../../gral/treeLines';
 import { deserialize } from '../../gral/serialize';
 import { LEVEL_STR_TO_NUM } from '../../gral/constants';
-import actions from '../actions/actions';  // eslint-disable-line import/no-unresolved, import/extensions
+import * as actions from '../actions/actions';
 import ColoredText from './030-coloredText';
 
 const doQuickFind = (msg0, quickFind) => {

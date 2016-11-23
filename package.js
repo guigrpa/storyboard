@@ -166,19 +166,19 @@ const specs = {
   // Storyboard library dependencies
   // ===============================================
   dependencies: {
-    'timm': '1.1.3',
+    'timm': '1.2.1',
     'clocksy': '1.1.0',
     'chalk': '1.x',
-    'bluebird': '3.4.1',
+    'bluebird': '3.4.6',
     'express': '4.14.0',
-    'socket.io': '1.4.8',
-    'socket.io-client': '1.4.8',
+    'socket.io': '1.6.0',
+    'socket.io-client': '1.6.0',
     'node-uuid': '1.4.7',
-    'lodash': '4.16.0',
+    'lodash': '4.17.2',
     'platform': '1.3.1',
     'split': '1.0.0',
     'pg': '6.0.2',
-    'ms': '0.7.1',
+    'ms': '0.7.2',
     'commander': '2.9.0',
   },
 
@@ -194,13 +194,13 @@ const specs = {
     'giu': '0.8.1',
 
     // React
-    'react':                          '15.3.2',
-    'react-dom':                      '15.3.2',
-    'react-addons-perf':              '15.3.2',
+    'react':                          '15.4.1',
+    'react-dom':                      '15.4.1',
+    'react-addons-perf':              '15.4.1',
 
     // Redux
-    'redux': '3.5.2',
-    'react-redux': '4.4.5',
+    'redux': '3.6.0',
+    'react-redux': '4.4.6',
     'redux-saga': '0.9.4',
     'redux-thunk': '2.1.0',
 
@@ -219,7 +219,7 @@ const specs = {
     // -----------------------------------------------
     // Extra deps used in the example
     // -----------------------------------------------
-    'body-parser': '1.15.0',
+    'body-parser': '1.15.2',
     'isomorphic-fetch': '2.2.1',
 
     // -----------------------------------------------
@@ -228,20 +228,20 @@ const specs = {
     'coffee-script': '1.10.0',
 
     // Babel + plugins
-    'babel-cli': '6.16.0',
-    'babel-core': '6.17.0',
-    'babel-preset-es2015': '6.16.0',
+    'babel-cli': '6.18.0',
+    'babel-core': '6.18.2',
+    'babel-preset-es2015': '6.18.0',
     'babel-preset-react': '6.16.0',
-    'babel-preset-stage-2': '6.16.0',
+    'babel-preset-stage-2': '6.18.0',
 
     // Webpack + loaders (+ related stuff)
-    'webpack': '1.13.1',
+    'webpack': '1.13.3',
     'babel-loader': '6.2.5',
     'coffee-loader': '0.7.2',
     'file-loader': '0.8.5',
     'json-loader': '0.5.4',
-    'css-loader': '0.23.1',
-    'style-loader': '0.13.0',
+    'css-loader': '0.26.0',
+    'style-loader': '0.13.1',
     'sass-loader': '3.1.2',
     'node-sass': '3.7.0',
 
@@ -255,21 +255,21 @@ const specs = {
     'babel-eslint': '7.0.0',
 
     // Testing with Jest
-    'jest': '17.0.0',
+    'jest': '17.0.3',
     'jest-html': '^1.2.0',
-    'react-test-renderer': '15.3.2',
-    'babel-jest': '17.0.0',
+    'react-test-renderer': '15.4.1',
+    'babel-jest': '17.0.2',
 
     // Testing with Mocha
     'mocha': '2.4.5',
     'chai': '3.5.0',
-    'sinon': '1.17.3',
+    'sinon': '1.17.6',
     'sinon-chai': '2.8.0',
     'ignore-styles': '4.0.0',
 
     // Coverage testing
     'nyc': '8.4.0',
-    'coveralls': '2.11.14',
+    'coveralls': '2.11.15',
     // 'diveSync': '0.3.0',
 
     // Building tools
@@ -286,7 +286,7 @@ const specs = {
     // 'babel-plugin-transform-react-createelement-to-jsx': '1.0.1',
 
     // yarn bug #629
-    chokidar: '1.6.0',
+    // chokidar: '1.6.0',
   },
 
   // -----------------------------------------------

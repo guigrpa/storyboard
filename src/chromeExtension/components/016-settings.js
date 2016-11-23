@@ -8,7 +8,7 @@ import {
   Checkbox, TextInput, NumberInput, ColorInput,
 } from 'giu';
 import Promise from 'bluebird';
-import actions from '../actions/actions';  // eslint-disable-line import/no-unresolved, import/extensions
+import * as actions from '../actions/actions';
 import { DEFAULT_SETTINGS } from '../reducers/settingsReducer';  // eslint-disable-line import/no-unresolved, import/extensions
 
 const FORM_KEYS = [

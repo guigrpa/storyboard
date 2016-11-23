@@ -1,7 +1,7 @@
 /* eslint-env jest */
-/* eslint-disable max-len, no-extend-native */
-import reducer from '../../../lib/chromeExtension/reducers/storyReducer';
+/* eslint-disable max-len, no-extend-native, no-plusplus */
 import timm from 'timm';
+import reducer from '../../../lib/chromeExtension/reducers/storiesReducer';
 import treeLines from '../../../lib/gral/treeLines';
 
 Date.prototype.getTime = jest.genMockFunction().mockReturnValue(0);
@@ -36,7 +36,7 @@ const log = (record) => timm.addDefaults(record, {
   id: `llll${_seqId++}`,
 });
 
-const actionRecord = record => timm.addDefaults(record, {
+const actionRecord = (record) => timm.addDefaults(record, {
   fStory: true,
   fServer: false,
   fOpen: true,

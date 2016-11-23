@@ -3,7 +3,7 @@ import * as ReactRedux from 'react-redux';
 import { Icon, isDark } from 'giu';
 import Login from './010-login';
 import Settings from './016-settings';
-import actions from '../actions/actions';  // eslint-disable-line import/no-unresolved, import/extensions
+import * as actions from '../actions/actions';
 
 const mapStateToProps = (state) => ({
   wsState: state.cx.wsState,

@@ -6,7 +6,7 @@ import {
   Icon, Spinner,
 } from 'giu';
 import Promise from 'bluebird';
-import actions from '../actions/actions';  // eslint-disable-line import/no-unresolved, import/extensions
+import * as actions from '../actions/actions';
 
 const RETURN_KEY = 13;
 
