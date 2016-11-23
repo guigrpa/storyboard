@@ -1,8 +1,8 @@
 import { merge } from 'timm';
 import chalk from 'chalk';
 import { padStart } from '../../vendor/lodash';
-import ansiColors from '../../gral/ansiColors';
-import k from '../../gral/constants';
+import * as ansiColors from '../../gral/ansiColors';
+import { LEVEL_STR_TO_NUM } from '../../gral/constants';
 import * as filters from '../../gral/filters';
 import { deserialize } from '../../gral/serialize';
 import treeLines from '../../gral/treeLines';
@@ -58,9 +58,9 @@ const recordToLines = (record, options) => {
       objStr = chalk.yellow(` -- ${JSON.stringify(deserializedObj)}`);
     } catch (err) { /* ignore */ }
   }
-  if (level >= k.LEVEL_STR_TO_NUM.ERROR) {
+  if (level >= LEVEL_STR_TO_NUM.ERROR) {
     msgStr = chalk.red.bold(msgStr);
-  } else if (level >= k.LEVEL_STR_TO_NUM.WARN) {
+  } else if (level >= LEVEL_STR_TO_NUM.WARN) {
     msgStr = chalk.yellow.bold(msgStr);
   }
   let finalMsg = `${timeStr} ${srcStr} ${levelStr}${msgStr}${actionStr}${objStr}`;
@@ -70,7 +70,7 @@ const recordToLines = (record, options) => {
     const lines = treeLines(deserializedObj, merge({ prefix: '  ' }, objOptions));
     const levelStr2 = ansiColors.LEVEL_NUM_TO_COLORED_STR[objLevel];
     const emptyTimeStr = relativeTime ? TIME_COL_RELATIVE_EMPTY : TIME_COL_ABSOLUTE_EMPTY;
-    lines.forEach(line => {
+    lines.forEach((line) => {
       let text = `${emptyTimeStr} ${srcStr} ${levelStr2}${line}`;
       if (!colors) text = chalk.stripColor(text);
       out.push({ text, level: objLevel });

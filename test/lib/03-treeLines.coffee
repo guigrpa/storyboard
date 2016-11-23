@@ -1,6 +1,6 @@
 chalk = require 'chalk'
 {expect, sinon} = require './imports'
-treeLines = require '../../lib/gral/treeLines'
+treeLines = require('../../lib/gral/treeLines').default
 {serialize} = require '../../lib/gral/serialize'
 
 describe 'treeLines', ->
@@ -10,7 +10,7 @@ describe 'treeLines', ->
     a.c = a
     lines = treeLines a
     expect(lines[1]).to.contain 'CIRCULAR'
-  
+
   it 'should show empty arrays as []', ->
     lines = treeLines {b: []}
     expect(lines[0]).to.contain '[]'

@@ -62,7 +62,7 @@ class WsServerListener {
         });
         this.ioStandaloneServer = socketio(httpServer);
         this.ioStandaloneNamespace = this.ioStandaloneServer.of(WS_NAMESPACE);
-        this.ioStandaloneNamespace.on('connection', socket => this.socketConnect(socket));
+        this.ioStandaloneNamespace.on('connection', (socket) => this.socketConnect(socket));
         httpServer.listen(port);
       } catch (err) { httpInitError(err); }
     }
@@ -75,7 +75,7 @@ class WsServerListener {
       this.ioServerAdaptor = socketio(config.httpServer).of(WS_NAMESPACE);
     }
     if (this.ioServerAdaptor) {
-      this.ioServerAdaptor.on('connection', socket => this.socketConnect(socket));
+      this.ioServerAdaptor.on('connection', (socket) => this.socketConnect(socket));
       const httpInitError = logError(mainStory, 'Error initialising log server adaptor');
       try {
         const httpServer = this.ioServerAdaptor.server.httpServer;
@@ -110,7 +110,7 @@ class WsServerListener {
     socket.sbAuthenticated = (this.config.authenticate == null);
     /* eslint-enable no-param-reassign */
     if (socket.sbAuthenticated) socket.join(SOCKET_ROOM);
-    socket.on('MSG', msg => this.socketRx(socket, msg));
+    socket.on('MSG', (msg) => this.socketRx(socket, msg));
   }
 
   socketRx(socket, msg) {
@@ -159,7 +159,7 @@ class WsServerListener {
     const { login } = credentials;
     const fPreAuthenticated = socket.sbAuthenticated || authenticate == null;
     Promise.resolve(fPreAuthenticated || authenticate(credentials))
-    .then(fAuthValid => {
+    .then((fAuthValid) => {
       let result;
       let rspData;
       let bufferedRecords;
@@ -240,7 +240,7 @@ class WsServerListener {
 // -----------------------------------------
 // Helpers
 // -----------------------------------------
-const logError = (mainStory, msg) => err => {
+const logError = (mainStory, msg) => (err) => {
   mainStory.error(LOG_SRC, msg, { attach: err });
 };
 

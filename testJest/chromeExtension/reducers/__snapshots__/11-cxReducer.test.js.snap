@@ -1,0 +1,143 @@
+exports[`cxReducer 01 should have correct initial state 1`] = `
+Object {
+  "cxState": "DISCONNECTED",
+  "fLoginRequired": null,
+  "localClientFilter": null,
+  "login": null,
+  "loginState": "LOGGED_OUT",
+  "serverFilter": null,
+  "wsState": "DISCONNECTED",
+}
+`;
+
+exports[`cxReducer 02 DevTools <-> WsClient cx state 01 should process CX_CONNECTED 1`] = `
+Object {
+  "cxState": "CONNECTED",
+  "fLoginRequired": null,
+  "localClientFilter": null,
+  "login": null,
+  "loginState": "LOGGED_OUT",
+  "serverFilter": null,
+  "wsState": "DISCONNECTED",
+}
+`;
+
+exports[`cxReducer 02 DevTools <-> WsClient cx state 02 should process CX_DISCONNECTED 1`] = `
+Object {
+  "cxState": "DISCONNECTED",
+  "fLoginRequired": null,
+  "localClientFilter": null,
+  "login": null,
+  "loginState": "LOGGED_OUT",
+  "serverFilter": null,
+  "wsState": "DISCONNECTED",
+}
+`;
+
+exports[`cxReducer 03 WsClient <-> WsServer cx state 01 should process WS_CONNECTED 1`] = `
+Object {
+  "cxState": "DISCONNECTED",
+  "fLoginRequired": null,
+  "localClientFilter": null,
+  "login": null,
+  "loginState": "LOGGED_OUT",
+  "serverFilter": null,
+  "wsState": "CONNECTED",
+}
+`;
+
+exports[`cxReducer 03 WsClient <-> WsServer cx state 02 should process CX_DISCONNECTED 1`] = `
+Object {
+  "cxState": "DISCONNECTED",
+  "fLoginRequired": null,
+  "localClientFilter": null,
+  "login": null,
+  "loginState": "LOGGED_OUT",
+  "serverFilter": null,
+  "wsState": "DISCONNECTED",
+}
+`;
+
+exports[`cxReducer 04 login state 01 should process LOGIN_REQUIRED (false) 1`] = `
+Object {
+  "cxState": "DISCONNECTED",
+  "fLoginRequired": false,
+  "localClientFilter": null,
+  "login": null,
+  "loginState": "LOGGED_OUT",
+  "serverFilter": null,
+  "wsState": "DISCONNECTED",
+}
+`;
+
+exports[`cxReducer 04 login state 02 should process LOGIN_REQUIRED (true) 1`] = `
+Object {
+  "cxState": "DISCONNECTED",
+  "fLoginRequired": true,
+  "localClientFilter": null,
+  "login": null,
+  "loginState": "LOGGED_OUT",
+  "serverFilter": null,
+  "wsState": "DISCONNECTED",
+}
+`;
+
+exports[`cxReducer 04 login state 03 should process LOGIN_STARTED 1`] = `
+Object {
+  "cxState": "DISCONNECTED",
+  "fLoginRequired": null,
+  "localClientFilter": null,
+  "login": null,
+  "loginState": "LOGGING_IN",
+  "serverFilter": null,
+  "wsState": "DISCONNECTED",
+}
+`;
+
+exports[`cxReducer 04 login state 04 should process LOGIN_SUCCEEDED 1`] = `
+Object {
+  "cxState": "DISCONNECTED",
+  "fLoginRequired": null,
+  "localClientFilter": null,
+  "login": "John",
+  "loginState": "LOGGED_IN",
+  "serverFilter": null,
+  "wsState": "DISCONNECTED",
+}
+`;
+
+exports[`cxReducer 04 login state 05 should process LOGGED_OUT 1`] = `
+Object {
+  "cxState": "DISCONNECTED",
+  "fLoginRequired": null,
+  "localClientFilter": null,
+  "login": null,
+  "loginState": "LOGGED_OUT",
+  "serverFilter": null,
+  "wsState": "DISCONNECTED",
+}
+`;
+
+exports[`cxReducer 05 filters 01 should process SERVER_FILTER 1`] = `
+Object {
+  "cxState": "DISCONNECTED",
+  "fLoginRequired": null,
+  "localClientFilter": null,
+  "login": null,
+  "loginState": "LOGGED_OUT",
+  "serverFilter": "abcd:*",
+  "wsState": "DISCONNECTED",
+}
+`;
+
+exports[`cxReducer 05 filters 02 should process LOCAL_CLIENT_FILTER 1`] = `
+Object {
+  "cxState": "DISCONNECTED",
+  "fLoginRequired": null,
+  "localClientFilter": "dcba:*",
+  "login": null,
+  "loginState": "LOGGED_OUT",
+  "serverFilter": null,
+  "wsState": "DISCONNECTED",
+}
+`;

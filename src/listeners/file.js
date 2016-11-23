@@ -45,7 +45,7 @@ class FileListener {
   process(msg) {
     if (msg.type !== 'RECORDS') return;
     if (msg.hubId !== this.hubId) return; // only save local records
-    msg.data.forEach(record => this.processRecord(record));
+    msg.data.forEach((record) => this.processRecord(record));
   }
 
   processRecord(record) {

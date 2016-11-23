@@ -60,7 +60,30 @@ type MessageT = {
 type MessageSourceT = string;
 type MessageTypeT = string;
 type MessagePayloadT = any;
-type RecordT = Object;
+type RecordT = {
+  id: string,
+  hubId: string,
+  version: number,
+  fStory: boolean,
+  fServer: boolean,
+  storyId: string,
+  t: number,   // [ms]
+  src: ?string,
+  level: number,
+  signalType: ?string,  // e.g. REVEAL_SEPARATOR
+  // Only for stories
+  fRoot: boolean,
+  title: ?string,
+  action: ?string,
+  parents: Array<string>,
+  // Only for logs
+  msg: string,
+  obj: any,
+  objExpanded?: boolean,
+  objLevel?: number,
+  objOptions?: Object,
+  objIsError?: boolean,
+};
 
 type HubApiT = {
   getHubId(...args: Array<void>): string,

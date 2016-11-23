@@ -1,0 +1,609 @@
+exports[`Toolbar renders correctly when connected 1`] = `
+<div>
+  <div
+    style={
+      Object {
+        "backgroundColor": "white",
+        "borderBottom": "1px solid #555",
+        "display": "flex",
+        "flexDirection": "row",
+        "height": 30,
+        "left": 0,
+        "position": "fixed",
+        "top": 0,
+        "whiteSpace": "nowrap",
+        "width": "100%",
+        "zIndex": 10,
+      }
+    }>
+    <div
+      style={
+        Object {
+          "padding": "4px 4px 4px 8px",
+        }
+      }>
+      <i
+        className="giu-icon fa fa-cog fa-lg"
+        id="sbBtnShowSettings"
+        onClick={[Function]}
+        style={
+          Object {
+            "color": "rgb(64, 64, 64)",
+            "cursor": "pointer",
+            "letterSpacing": "normal",
+            "marginRight": 10,
+          }
+        }
+        title="Show settings..." />
+      <i
+        className="giu-icon fa fa-chevron-circle-down fa-lg"
+        onClick={[Function]}
+        style={
+          Object {
+            "color": "rgb(64, 64, 64)",
+            "cursor": "pointer",
+            "letterSpacing": "normal",
+            "marginRight": 10,
+          }
+        }
+        title="Expand all stories" />
+      <i
+        className="giu-icon fa fa-chevron-circle-right fa-lg"
+        onClick={[Function]}
+        style={
+          Object {
+            "color": "rgb(64, 64, 64)",
+            "cursor": "pointer",
+            "letterSpacing": "normal",
+            "marginRight": 10,
+          }
+        }
+        title="Collapse all stories" />
+      <i
+        className="giu-icon fa fa-remove fa-lg"
+        onClick={undefined}
+        style={
+          Object {
+            "color": "rgb(64, 64, 64)",
+            "cursor": "pointer",
+            "letterSpacing": "normal",
+            "marginRight": 10,
+          }
+        }
+        title="Clear logs" />
+       
+      <input
+        id="quickFind"
+        onChange={[Function]}
+        placeholder="Quick find..."
+        results={0}
+        style={
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 1,
+            "color": "rgb(64, 64, 64)",
+          }
+        }
+        type="search" />
+      <i
+        className="giu-icon fa fa-chain fa-lg"
+        style={
+          Object {
+            "color": "green",
+            "cursor": "default",
+            "letterSpacing": "normal",
+            "marginLeft": 10,
+            "marginRight": 5,
+          }
+        }
+        title="Connection with the server is UP" />
+    </div>
+    <div
+      style={
+        Object {
+          "flex": "1 1 0px",
+        }
+      } />
+    <div
+      colors={
+        Object {
+          "colorClientBg": "aliceblue",
+          "colorClientBgIsDark": false,
+          "colorClientFg": "black",
+          "colorServerBg": "rgb(214, 236, 255)",
+          "colorServerBgIsDark": false,
+          "colorServerFg": "black",
+          "colorUiBg": "white",
+          "colorUiBgIsDark": false,
+          "colorUiFg": "rgb(64, 64, 64)",
+        }
+      }
+      dataMockType="Login">
+      <div
+        style={
+          Object {
+            "color": "blue",
+            "fontWeight": "bold",
+          }
+        }>
+        Login
+      </div>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "height": 30,
+      }
+    } />
+</div>
+------------HTML PREVIEW---------------
+<div>
+  <div style="background-color:white;border-bottom:1px solid #555;display:flex;flex-direction:row;height:30px;left:0;position:fixed;top:0;white-space:nowrap;width:100%;z-index:10;">
+    <div style="padding:4px 4px 4px 8px;">
+      <i
+        class="giu-icon fa fa-cog fa-lg"
+        id="sbBtnShowSettings"
+        style="color:rgb(64, 64, 64);cursor:pointer;letter-spacing:normal;margin-right:10px;"
+        title="Show settings..."
+      >
+      </i>
+      <i
+        class="giu-icon fa fa-chevron-circle-down fa-lg"
+        style="color:rgb(64, 64, 64);cursor:pointer;letter-spacing:normal;margin-right:10px;"
+        title="Expand all stories"
+      >
+      </i>
+      <i
+        class="giu-icon fa fa-chevron-circle-right fa-lg"
+        style="color:rgb(64, 64, 64);cursor:pointer;letter-spacing:normal;margin-right:10px;"
+        title="Collapse all stories"
+      >
+      </i>
+      <i
+        class="giu-icon fa fa-remove fa-lg"
+        style="color:rgb(64, 64, 64);cursor:pointer;letter-spacing:normal;margin-right:10px;"
+        title="Clear logs"
+      >
+      </i>
+       
+      <input
+        id="quickFind"
+        placeholder="Quick find..."
+        style="background-color:transparent;border-width:1px;color:rgb(64, 64, 64);"
+        type="search"
+      >
+      <i
+        class="giu-icon fa fa-chain fa-lg"
+        style="color:green;cursor:default;letter-spacing:normal;margin-left:10px;margin-right:5px;"
+        title="Connection with the server is UP"
+      >
+      </i>
+    </div>
+    <div style="flex:1 1 0px;"></div>
+    <div dataMockType="Login">
+      <div style="color:blue;font-weight:bold;">
+        Login
+      </div>
+    </div>
+  </div>
+  <div style="height:30px;"></div>
+</div>
+`;
+
+exports[`Toolbar renders correctly when disconnected 1`] = `
+<div>
+  <div
+    style={
+      Object {
+        "backgroundColor": "white",
+        "borderBottom": "1px solid #555",
+        "display": "flex",
+        "flexDirection": "row",
+        "height": 30,
+        "left": 0,
+        "position": "fixed",
+        "top": 0,
+        "whiteSpace": "nowrap",
+        "width": "100%",
+        "zIndex": 10,
+      }
+    }>
+    <div
+      style={
+        Object {
+          "padding": "4px 4px 4px 8px",
+        }
+      }>
+      <i
+        className="giu-icon fa fa-cog fa-lg"
+        id="sbBtnShowSettings"
+        onClick={[Function]}
+        style={
+          Object {
+            "color": "rgb(64, 64, 64)",
+            "cursor": "pointer",
+            "letterSpacing": "normal",
+            "marginRight": 10,
+          }
+        }
+        title="Show settings..." />
+      <i
+        className="giu-icon fa fa-chevron-circle-down fa-lg"
+        onClick={[Function]}
+        style={
+          Object {
+            "color": "rgb(64, 64, 64)",
+            "cursor": "pointer",
+            "letterSpacing": "normal",
+            "marginRight": 10,
+          }
+        }
+        title="Expand all stories" />
+      <i
+        className="giu-icon fa fa-chevron-circle-right fa-lg"
+        onClick={[Function]}
+        style={
+          Object {
+            "color": "rgb(64, 64, 64)",
+            "cursor": "pointer",
+            "letterSpacing": "normal",
+            "marginRight": 10,
+          }
+        }
+        title="Collapse all stories" />
+      <i
+        className="giu-icon fa fa-remove fa-lg"
+        onClick={undefined}
+        style={
+          Object {
+            "color": "rgb(64, 64, 64)",
+            "cursor": "pointer",
+            "letterSpacing": "normal",
+            "marginRight": 10,
+          }
+        }
+        title="Clear logs" />
+       
+      <input
+        id="quickFind"
+        onChange={[Function]}
+        placeholder="Quick find..."
+        results={0}
+        style={
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 1,
+            "color": "rgb(64, 64, 64)",
+          }
+        }
+        type="search" />
+      <i
+        className="giu-icon fa fa-chain-broken fa-lg"
+        style={
+          Object {
+            "color": "red",
+            "cursor": "default",
+            "letterSpacing": "normal",
+            "marginLeft": 10,
+            "marginRight": 5,
+          }
+        }
+        title="Connection with the server is DOWN" />
+    </div>
+    <div
+      style={
+        Object {
+          "flex": "1 1 0px",
+        }
+      } />
+    <div
+      colors={
+        Object {
+          "colorClientBg": "aliceblue",
+          "colorClientBgIsDark": false,
+          "colorClientFg": "black",
+          "colorServerBg": "rgb(214, 236, 255)",
+          "colorServerBgIsDark": false,
+          "colorServerFg": "black",
+          "colorUiBg": "white",
+          "colorUiBgIsDark": false,
+          "colorUiFg": "rgb(64, 64, 64)",
+        }
+      }
+      dataMockType="Login">
+      <div
+        style={
+          Object {
+            "color": "blue",
+            "fontWeight": "bold",
+          }
+        }>
+        Login
+      </div>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "height": 30,
+      }
+    } />
+</div>
+------------HTML PREVIEW---------------
+<div>
+  <div style="background-color:white;border-bottom:1px solid #555;display:flex;flex-direction:row;height:30px;left:0;position:fixed;top:0;white-space:nowrap;width:100%;z-index:10;">
+    <div style="padding:4px 4px 4px 8px;">
+      <i
+        class="giu-icon fa fa-cog fa-lg"
+        id="sbBtnShowSettings"
+        style="color:rgb(64, 64, 64);cursor:pointer;letter-spacing:normal;margin-right:10px;"
+        title="Show settings..."
+      >
+      </i>
+      <i
+        class="giu-icon fa fa-chevron-circle-down fa-lg"
+        style="color:rgb(64, 64, 64);cursor:pointer;letter-spacing:normal;margin-right:10px;"
+        title="Expand all stories"
+      >
+      </i>
+      <i
+        class="giu-icon fa fa-chevron-circle-right fa-lg"
+        style="color:rgb(64, 64, 64);cursor:pointer;letter-spacing:normal;margin-right:10px;"
+        title="Collapse all stories"
+      >
+      </i>
+      <i
+        class="giu-icon fa fa-remove fa-lg"
+        style="color:rgb(64, 64, 64);cursor:pointer;letter-spacing:normal;margin-right:10px;"
+        title="Clear logs"
+      >
+      </i>
+       
+      <input
+        id="quickFind"
+        placeholder="Quick find..."
+        style="background-color:transparent;border-width:1px;color:rgb(64, 64, 64);"
+        type="search"
+      >
+      <i
+        class="giu-icon fa fa-chain-broken fa-lg"
+        style="color:red;cursor:default;letter-spacing:normal;margin-left:10px;margin-right:5px;"
+        title="Connection with the server is DOWN"
+      >
+      </i>
+    </div>
+    <div style="flex:1 1 0px;"></div>
+    <div dataMockType="Login">
+      <div style="color:blue;font-weight:bold;">
+        Login
+      </div>
+    </div>
+  </div>
+  <div style="height:30px;"></div>
+</div>
+`;
+
+exports[`Toolbar shows settings when the corresponding icon is clicked 1`] = `
+<div>
+  <div
+    colors={
+      Object {
+        "colorClientBg": "aliceblue",
+        "colorClientBgIsDark": false,
+        "colorClientFg": "black",
+        "colorServerBg": "rgb(214, 236, 255)",
+        "colorServerBgIsDark": false,
+        "colorServerFg": "black",
+        "colorUiBg": "white",
+        "colorUiBgIsDark": false,
+        "colorUiFg": "rgb(64, 64, 64)",
+      }
+    }
+    dataMockType="Settings"
+    onClose={[Function]}>
+    <div
+      style={
+        Object {
+          "color": "blue",
+          "fontWeight": "bold",
+        }
+      }>
+      Settings
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "backgroundColor": "white",
+        "borderBottom": "1px solid #555",
+        "display": "flex",
+        "flexDirection": "row",
+        "height": 30,
+        "left": 0,
+        "position": "fixed",
+        "top": 0,
+        "whiteSpace": "nowrap",
+        "width": "100%",
+        "zIndex": 10,
+      }
+    }>
+    <div
+      style={
+        Object {
+          "padding": "4px 4px 4px 8px",
+        }
+      }>
+      <i
+        className="giu-icon fa fa-cog fa-lg"
+        id="sbBtnShowSettings"
+        onClick={[Function]}
+        style={
+          Object {
+            "color": "rgb(64, 64, 64)",
+            "cursor": "pointer",
+            "letterSpacing": "normal",
+            "marginRight": 10,
+          }
+        }
+        title="Show settings..." />
+      <i
+        className="giu-icon fa fa-chevron-circle-down fa-lg"
+        onClick={[Function]}
+        style={
+          Object {
+            "color": "rgb(64, 64, 64)",
+            "cursor": "pointer",
+            "letterSpacing": "normal",
+            "marginRight": 10,
+          }
+        }
+        title="Expand all stories" />
+      <i
+        className="giu-icon fa fa-chevron-circle-right fa-lg"
+        onClick={[Function]}
+        style={
+          Object {
+            "color": "rgb(64, 64, 64)",
+            "cursor": "pointer",
+            "letterSpacing": "normal",
+            "marginRight": 10,
+          }
+        }
+        title="Collapse all stories" />
+      <i
+        className="giu-icon fa fa-remove fa-lg"
+        onClick={undefined}
+        style={
+          Object {
+            "color": "rgb(64, 64, 64)",
+            "cursor": "pointer",
+            "letterSpacing": "normal",
+            "marginRight": 10,
+          }
+        }
+        title="Clear logs" />
+       
+      <input
+        id="quickFind"
+        onChange={[Function]}
+        placeholder="Quick find..."
+        results={0}
+        style={
+          Object {
+            "backgroundColor": "transparent",
+            "borderWidth": 1,
+            "color": "rgb(64, 64, 64)",
+          }
+        }
+        type="search" />
+      <i
+        className="giu-icon fa fa-chain fa-lg"
+        style={
+          Object {
+            "color": "green",
+            "cursor": "default",
+            "letterSpacing": "normal",
+            "marginLeft": 10,
+            "marginRight": 5,
+          }
+        }
+        title="Connection with the server is UP" />
+    </div>
+    <div
+      style={
+        Object {
+          "flex": "1 1 0px",
+        }
+      } />
+    <div
+      colors={
+        Object {
+          "colorClientBg": "aliceblue",
+          "colorClientBgIsDark": false,
+          "colorClientFg": "black",
+          "colorServerBg": "rgb(214, 236, 255)",
+          "colorServerBgIsDark": false,
+          "colorServerFg": "black",
+          "colorUiBg": "white",
+          "colorUiBgIsDark": false,
+          "colorUiFg": "rgb(64, 64, 64)",
+        }
+      }
+      dataMockType="Login">
+      <div
+        style={
+          Object {
+            "color": "blue",
+            "fontWeight": "bold",
+          }
+        }>
+        Login
+      </div>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "height": 30,
+      }
+    } />
+</div>
+------------HTML PREVIEW---------------
+<div>
+  <div dataMockType="Settings">
+    <div style="color:blue;font-weight:bold;">
+      Settings
+    </div>
+  </div>
+  <div style="background-color:white;border-bottom:1px solid #555;display:flex;flex-direction:row;height:30px;left:0;position:fixed;top:0;white-space:nowrap;width:100%;z-index:10;">
+    <div style="padding:4px 4px 4px 8px;">
+      <i
+        class="giu-icon fa fa-cog fa-lg"
+        id="sbBtnShowSettings"
+        style="color:rgb(64, 64, 64);cursor:pointer;letter-spacing:normal;margin-right:10px;"
+        title="Show settings..."
+      >
+      </i>
+      <i
+        class="giu-icon fa fa-chevron-circle-down fa-lg"
+        style="color:rgb(64, 64, 64);cursor:pointer;letter-spacing:normal;margin-right:10px;"
+        title="Expand all stories"
+      >
+      </i>
+      <i
+        class="giu-icon fa fa-chevron-circle-right fa-lg"
+        style="color:rgb(64, 64, 64);cursor:pointer;letter-spacing:normal;margin-right:10px;"
+        title="Collapse all stories"
+      >
+      </i>
+      <i
+        class="giu-icon fa fa-remove fa-lg"
+        style="color:rgb(64, 64, 64);cursor:pointer;letter-spacing:normal;margin-right:10px;"
+        title="Clear logs"
+      >
+      </i>
+       
+      <input
+        id="quickFind"
+        placeholder="Quick find..."
+        style="background-color:transparent;border-width:1px;color:rgb(64, 64, 64);"
+        type="search"
+      >
+      <i
+        class="giu-icon fa fa-chain fa-lg"
+        style="color:green;cursor:default;letter-spacing:normal;margin-left:10px;margin-right:5px;"
+        title="Connection with the server is UP"
+      >
+      </i>
+    </div>
+    <div style="flex:1 1 0px;"></div>
+    <div dataMockType="Login">
+      <div style="color:blue;font-weight:bold;">
+        Login
+      </div>
+    </div>
+  </div>
+  <div style="height:30px;"></div>
+</div>
+`;

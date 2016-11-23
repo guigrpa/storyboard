@@ -17,7 +17,7 @@ if process.env.TEST_BROWSER
 describe "wsServerListener", ->
 
   _spySocketRx = null
-  before -> 
+  before ->
     storyboard.removeAllListeners()
     storyboard.config {filter: '*:*'}
     # _spySocketRx = sinon.spy((msg) -> console.log msg.type)
@@ -32,7 +32,7 @@ describe "wsServerListener", ->
 
     _listener = null
     _socket = null
-    before -> 
+    before ->
       _listener = storyboard.addListener wsServerListener, {throttle: 0}
       return new Promise (resolve, reject) ->
         _socket = socketio "http://localhost:8090#{k.WS_NAMESPACE}"
@@ -64,7 +64,7 @@ describe "wsServerListener", ->
         expect(msg.data[0].msg).to.contain 'Msg through web sockets'
 
     it "should re-broadcast uploaded log records", ->
-      _socket.emit 'MSG', 
+      _socket.emit 'MSG',
         type: 'RECORDS'
         data: [
           {src: 'fontana di trevi', msg: 'water1'}
@@ -78,7 +78,7 @@ describe "wsServerListener", ->
         expect(msg.data[0].msg).to.equal 'water1'
 
     it "should allow setting a new server-side filter and reply", ->
-      _socket.emit 'MSG', 
+      _socket.emit 'MSG',
         type: 'SET_SERVER_FILTER'
         data: '-*'
       h.waitUntil(1000, -> _spySocketRx.callCount > 0)
@@ -95,7 +95,7 @@ describe "wsServerListener", ->
       Promise.delay(200)
       .then -> mainStory.info "This message should be received by the client"
       .then -> h.waitUntil(1000, -> _spySocketRx.callCount > 0)
-      .then -> 
+      .then ->
         expect(_spySocketRx).to.have.been.calledOnce
         msg = _spySocketRx.args[0][0]
         expect(msg.type).to.equal 'RECORDS'
@@ -109,8 +109,8 @@ describe "wsServerListener", ->
 
       _listener = null
       _socket = null
-      before -> 
-        _listener = storyboard.addListener wsServerListener, 
+      before ->
+        _listener = storyboard.addListener wsServerListener,
           throttle: 0
           authenticate: ({login, password}) -> login is 'admin'
         return new Promise (resolve, reject) ->
@@ -192,8 +192,8 @@ describe "wsServerListener", ->
 
       _listener = null
       _socket = null
-      before -> 
-        _listener = storyboard.addListener wsServerListener, 
+      before ->
+        _listener = storyboard.addListener wsServerListener,
           throttle: 50
           authenticate: (o) -> true
         return new Promise (resolve, reject) ->
@@ -230,10 +230,10 @@ describe "wsServerListener", ->
     _spySocketRx = null
     _listener = null
     _httpServer = null
-    before -> 
+    before ->
       _httpServer = http.createServer(->)
       _spySocketRx = sinon.spy()
-      _listener = storyboard.addListener wsServerListener, 
+      _listener = storyboard.addListener wsServerListener,
         throttle: 0
         httpServer: _httpServer
       return new Promise (resolve, reject) ->
@@ -244,7 +244,7 @@ describe "wsServerListener", ->
         _socket.on 'MSG', _spySocketRx
         _socket.on 'connect', resolve
 
-    after -> 
+    after ->
       storyboard.removeListener _listener
       _httpServer.close()
 

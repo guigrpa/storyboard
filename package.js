@@ -11,17 +11,25 @@ const KEYWORDS = ['log', 'logging', 'websockets', 'console', 'isomorphic'];
 // ===============================================
 // Helpers
 // ===============================================
-const runMultiple = arr => arr.join(' && ');
-const runTestCov = env => {
-  const envStr = env != null ? ` ${env}` : '';
+const runMultiple = (arr) => arr.join(' && ');
+const runTestCov = (env, name) => {
+  const envStr = env != null ? `${env} ` : '';
   return runMultiple([
-    `cross-env${envStr} nyc node_modules/mocha/bin/_mocha`,
+    `cross-env ${envStr}nyc node_modules/mocha/bin/_mocha`,
     'mv .nyc_output/* .nyc_tmp/',
+    'rm -rf .nyc_output',
+    `cross-env ${envStr}jest --coverage`,
+    `mv .nyc_output/coverage-final.json .nyc_tmp/coverage-${name}.json`,
     'rm -rf .nyc_output',
   ]);
 };
 
-const WEBPACK_OPTS = '--color --progress --display-modules --display-chunks';
+const WEBPACK_OPTS = [
+  '--color',
+  '--progress',
+  // '--display-modules',
+  '--display-chunks',
+].join(' ');
 // const WEBPACK_OPTS            = '--colors --progress'
 const WEBPACK_EXTENSION = `webpack --config src/chromeExtension/webpackConfig ${WEBPACK_OPTS}`;
 const WEBPACK_SERVER_LOGS_APP = `webpack --config src/serverLogsApp/webpackConfig ${WEBPACK_OPTS}`;
@@ -115,14 +123,13 @@ const specs = {
 
     // Static analysis
     lint:                       'eslint src',
-    /* eslint-disable quotes */
-    xxl:                        "xxl --src \"[\\\"src\\\"]\"",
-    /* eslint-enable quotes */
+    xxl:                        "xxl --src \"[\\\"src\\\"]\"",  // eslint-disable-line quotes
 
     // Testing - general
-    jest:                       'jest',
+    jest:                       'jest --watch --coverage',
+    'jest-html':                'jest-html --snapshot-patterns "testJest/**/*.snap"',
     test:                       'npm run testCovFull',
-    testFast:                   'mocha',
+    testFast:                   runMultiple(['mocha', 'jest']),
     testCovFull:                runMultiple([
                                   'npm run testCovPrepare',
                                   'npm run testDev',
@@ -146,12 +153,11 @@ const specs = {
                                   'rm -rf ./coverage .nyc_output .nyc_tmp',
                                   'mkdir .nyc_tmp',
                                 ]),
-    testDev:                    runTestCov('NODE_ENV=development'),
-    testProd:                   runTestCov('NODE_ENV=production'),
-    testBrowser:                runTestCov('NODE_ENV=development TEST_BROWSER=true'),
+    testDev:                    runTestCov('NODE_ENV=development', 'dev'),
+    testProd:                   runTestCov('NODE_ENV=production', 'prod'),
+    testBrowser:                runTestCov('NODE_ENV=development TEST_BROWSER=true', 'browser'),
     testCovReport:              runMultiple([
-                                  'mkdir .nyc_output',
-                                  'cp .nyc_tmp/* .nyc_output/',
+                                  'cp -r .nyc_tmp .nyc_output',
                                   'nyc report --reporter=html --reporter=lcov --reporter=text',
                                 ]),
   },
@@ -160,19 +166,19 @@ const specs = {
   // Storyboard library dependencies
   // ===============================================
   dependencies: {
-    'timm': '1.1.2',
+    'timm': '1.2.1',
     'clocksy': '1.1.0',
     'chalk': '1.x',
-    'bluebird': '3.4.1',
+    'bluebird': '3.4.6',
     'express': '4.14.0',
-    'socket.io': '1.4.8',
-    'socket.io-client': '1.4.8',
+    'socket.io': '1.6.0',
+    'socket.io-client': '1.6.0',
     'node-uuid': '1.4.7',
-    'lodash': '4.13.1',
+    'lodash': '4.17.2',
     'platform': '1.3.1',
     'split': '1.0.0',
     'pg': '6.0.2',
-    'ms': '0.7.1',
+    'ms': '0.7.2',
     'commander': '2.9.0',
   },
 
@@ -184,18 +190,17 @@ const specs = {
     // -----------------------------------------------
     // Packaged in the Chrome extension
     // -----------------------------------------------
-    'babel-polyfill': '6.9.1',
-    'giu': '0.7.1',
+    'babel-polyfill': '6.16.0',
+    'giu': '0.8.1',
 
     // React
-    'react':                          '15.2.0',
-    'react-dom':                      '15.2.0',
-    'react-addons-pure-render-mixin': '15.2.0',
-    'react-addons-perf':              '15.2.0',
+    'react':                          '15.4.1',
+    'react-dom':                      '15.4.1',
+    'react-addons-perf':              '15.4.1',
 
     // Redux
-    'redux': '3.5.2',
-    'react-redux': '4.4.5',
+    'redux': '3.6.0',
+    'react-redux': '4.4.6',
     'redux-saga': '0.9.4',
     'redux-thunk': '2.1.0',
 
@@ -214,7 +219,7 @@ const specs = {
     // -----------------------------------------------
     // Extra deps used in the example
     // -----------------------------------------------
-    'body-parser': '1.15.0',
+    'body-parser': '1.15.2',
     'isomorphic-fetch': '2.2.1',
 
     // -----------------------------------------------
@@ -223,67 +228,81 @@ const specs = {
     'coffee-script': '1.10.0',
 
     // Babel + plugins
-    'babel-cli': '6.11.4',
-    'babel-core': '6.13.1',
-    'babel-preset-es2015': '6.13.1',
-    'babel-preset-react': '6.11.1',
-    'babel-preset-stage-2': '6.13.0',
+    'babel-cli': '6.18.0',
+    'babel-core': '6.18.2',
+    'babel-preset-es2015': '6.18.0',
+    'babel-preset-react': '6.16.0',
+    'babel-preset-stage-2': '6.18.0',
 
     // Webpack + loaders (+ related stuff)
-    'webpack': '1.13.1',
-    'babel-loader': '6.2.4',
+    'webpack': '1.13.3',
+    'babel-loader': '6.2.5',
     'coffee-loader': '0.7.2',
-    'cjsx-loader': '2.1.0',
     'file-loader': '0.8.5',
     'json-loader': '0.5.4',
-    'css-loader': '0.23.1',
-    'style-loader': '0.13.0',
+    'css-loader': '0.26.0',
+    'style-loader': '0.13.1',
     'sass-loader': '3.1.2',
     'node-sass': '3.7.0',
 
     // Linting
-    'eslint': '2.13.1',
-    'eslint-config-airbnb': '9.0.1',
-    'eslint-plugin-react': '5.2.2',
-    'eslint-plugin-jsx-a11y': '1.5.3',
-    'eslint-plugin-import': '1.9.2',
-    'babel-eslint': '6.1.2',
+    eslint: '3.8.1',
+    'eslint-config-airbnb': '12.0.0',
+    'eslint-plugin-flowtype': '2.20.0',
+    'eslint-plugin-import': '1.16.0',
+    'eslint-plugin-jsx-a11y': '2.2.3',
+    'eslint-plugin-react': '6.4.1',
+    'babel-eslint': '7.0.0',
 
-    // Testing
-    'jest': '16.0.0',
-    'react-test-renderer': '15.3.2',
-    'babel-jest': '16.0.0',
-    'chai': '3.5.0',
-    'sinon': '1.17.3',
-    'sinon-chai': '2.8.0',
+    // Testing with Jest
+    'jest': '17.0.3',
+    'jest-html': '^1.2.0',
+    'react-test-renderer': '15.4.1',
+    'babel-jest': '17.0.2',
+
+    // Testing with Mocha
     'mocha': '2.4.5',
+    'chai': '3.5.0',
+    'sinon': '1.17.6',
+    'sinon-chai': '2.8.0',
     'ignore-styles': '4.0.0',
-    'nyc': '7.1.0',
-    'coffee-coverage': '1.0.1',
-    'coveralls': '2.11.6',
-    'diveSync': '0.3.0',
+
+    // Coverage testing
+    'nyc': '8.4.0',
+    'coveralls': '2.11.15',
+    // 'diveSync': '0.3.0',
 
     // Building tools
-    'envify': '3.4.0',
+    // 'envify': '3.4.0',
+    // 'uglifyjs': '2.4.10',
     'cross-env': '1.0.7',
-    'uglifyjs': '2.4.10',
     'bestzip': '1.1.3',
     'xxl': '0.1.1',
 
+    // CJSX conversion
+    // 'globby': '6.0.0',
+    // 'coffee-react': '5.0.1',  // the cjsx binary
+    // 'lebab': '2.6.1',
+    // 'babel-plugin-transform-react-createelement-to-jsx': '1.0.1',
+
     // yarn bug #629
-    chokidar: '1.6.0',
+    // chokidar: '1.6.0',
   },
 
   // -----------------------------------------------
   // Other configs
   // -----------------------------------------------
   nyc: {
-    exclude: ['lib/vendor/**'],
+    exclude: [
+      'lib/vendor/**',
+      'node_modules/**/*',
+      'test/**',
+    ],
   },
   jest: {
     // Default test path:
     // testRegex: '(/__tests__/.*|\\.(test|spec))\\.(js|jsx)$',
-    testRegex: 'src/.*__tests__/.*\\.(test|spec)\\.(coffee|js|jsx)$',
+    testRegex: 'testJest/.*\\.(test|spec)\\.(js|jsx)$',
     moduleNameMapper: {
       '^.+\\.(css|less|sass)$': '<rootDir>/test/emptyObject.js',
       '^.+\\.(gif|ttf|eot|svg)$': '<rootDir>/test/emptyString.js',
@@ -291,22 +310,35 @@ const specs = {
     },
     coverageDirectory: '.nyc_output',
     coverageReporters: ['json', 'text', 'html'],
+    snapshotSerializers: ['<rootDir>/node_modules/jest-html'],
     collectCoverageFrom: [
-      'src/**/*.js',
+      'lib/**/*.js',
+      '!lib/cli.js',
+      '!lib/noPlugins.js',
+      '!lib/stdinLogger.js',
+      '!lib/withConsoleListener.js',
+      '!lib/chromeExtension/*.js',  // at the base of the extension folder
+      '!lib/chromeExtension/store/**',
+      '!lib/example/**',
+      '!lib/serverLogsApp/**',
+      '!lib/vendor/**',
+      '!test/**',
+      '!testJest/**',
+      '!**/webpack*',
       '!**/node_modules/**',
       '!**/__tests__/**',
       '!**/__mocks__/**',
     ],
-    // setupTestFrameworkScriptFile: './test/setup.js',
+    // setupTestFrameworkScriptFile: './testJest/setup.js',
   },
 };
 
 // ===============================================
 // Build package.json
 // ===============================================
-const sortDeps = deps => {
+const sortDeps = (deps) => {
   const newDeps = {};
-  Object.keys(deps).sort().forEach(key => {
+  Object.keys(deps).sort().forEach((key) => {
     newDeps[key] = deps[key];
   });
   return newDeps;

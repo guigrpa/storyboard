@@ -1,0 +1,43 @@
+exports[`settingsReducer 01 should update settings with new values 1`] = `
+Object {
+  "colorClientBg": "aliceblue",
+  "colorClientBgIsDark": false,
+  "colorClientFg": "black",
+  "colorServerBg": "rgb(214, 236, 255)",
+  "colorServerBgIsDark": false,
+  "colorServerFg": "black",
+  "colorUiBg": "white",
+  "colorUiBgIsDark": false,
+  "colorUiFg": "rgb(64, 64, 64)",
+  "fCollapseAllNewStories": false,
+  "fDiscardRemoteClientLogs": false,
+  "fExpandAllNewAttachments": false,
+  "fShorthandForDuplicates": true,
+  "fShowClosedActions": false,
+  "forgetHysteresis": 0.25,
+  "maxRecords": 800,
+  "timeType": "LOCAL",
+}
+`;
+
+exports[`settingsReducer 01 should update settings with new values 2`] = `
+Object {
+  "colorClientBg": "aliceblue",
+  "colorClientBgIsDark": false,
+  "colorClientFg": "black",
+  "colorServerBg": "rgb(214, 236, 255)",
+  "colorServerBgIsDark": false,
+  "colorServerFg": "black",
+  "colorUiBg": "white",
+  "colorUiBgIsDark": false,
+  "colorUiFg": "rgb(64, 64, 64)",
+  "fCollapseAllNewStories": false,
+  "fDiscardRemoteClientLogs": false,
+  "fExpandAllNewAttachments": false,
+  "fShorthandForDuplicates": true,
+  "fShowClosedActions": false,
+  "forgetHysteresis": 0.5,
+  "maxRecords": 2000,
+  "timeType": "LOCAL",
+}
+`;

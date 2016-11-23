@@ -1,9 +1,9 @@
+import chalk from 'chalk';
 import {
   LEVEL_STR_TO_NUM,
   FILTER_KEY,
   DEFAULT_FILTER,
 } from './constants';
-import chalk from 'chalk';
 
 let included = null;
 let excluded = null;
@@ -11,7 +11,7 @@ let cachedThreshold = null;
 let mainStory = null;
 let onChangeFilter = null;
 
-const init = deps => {
+const init = (deps) => {
   mainStory = deps.mainStory;
   /* istanbul ignore if */
   if (!mainStory) throw new Error('MISSING_DEPENDENCIES');
@@ -24,7 +24,7 @@ const setUpFilters = () => {
   cachedThreshold = {};
   const filter = getConfig();
   const specs = filter.split(/[\s,]+/);
-  specs.forEach(spec => {
+  specs.forEach((spec) => {
     if (!spec.length) return;
     const tokens = spec.split(':');
     const src = tokens[0].replace(/\*/g, '.*?');
@@ -46,9 +46,11 @@ const setUpFilters = () => {
 };
 
 const getStorage = () => (
+  /* eslint-disable no-undef */
   typeof window !== 'undefined' && window && window.localStorage ?
     window.localStorage :
     process.env
+  /* eslint-enable no-undef */
 );
 
 const getConfig = () => {
@@ -58,7 +60,7 @@ const getConfig = () => {
   return filter;
 };
 
-const config = filter => {
+const config = (filter) => {
   const store = getStorage();
   store[FILTER_KEY] = filter || '';
   cachedThreshold = null;
@@ -72,7 +74,7 @@ const setOnChangeFilter = (fn) => {
   onChangeFilter = fn;
 };
 
-const calcThreshold = src => {
+const calcThreshold = (src) => {
   for (let i = 0; i < excluded.length; i++) {
     if (excluded[i].re.test(src)) return null;
   }
@@ -82,6 +84,7 @@ const calcThreshold = src => {
   return null;
 };
 
+/* eslint-disable no-prototype-builtins */
 const passesFilter = (src, level) => {
   let thresh;
   if (cachedThreshold.hasOwnProperty(src)) {
@@ -91,6 +94,7 @@ const passesFilter = (src, level) => {
   }
   return thresh != null && level >= thresh;
 };
+/* eslint-enable no-prototype-builtins */
 
 setUpFilters();
 

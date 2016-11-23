@@ -1,23 +1,42 @@
 parser: babel-eslint
 extends: airbnb
 rules:
-  eqeqeq:
-    - error
-    - allow-null
+  eqeqeq: ['error', 'allow-null']
   no-unused-expressions:
     - error
     - allowShortCircuit: true
   no-use-before-define: off
   no-multi-spaces: off
   no-nested-ternary: off
-  no-cond-assign:
+  no-cond-assign: ['error', 'except-parens']
+  no-underscore-dangle: off
+  no-plusplus:
     - error
-    - except-parens
+    - allowForLoopAfterthoughts: true
+  no-continue: off
   key-spacing:
     - warn
-    - 
-      beforeColon: false
+    - beforeColon: false
       afterColon: true
       mode: 'minimum'
+  object-property-newline: off
+  class-methods-use-this: off
+  arrow-parens: ['error', 'always']
   react/sort-comp: off
-  import/no-unresolved: off  # since we are still migrating from CoffeeScript to JS
+  react/jsx-first-prop-new-line: off
+  react/jsx-indent: off
+  react/jsx-indent-props: off
+  react/jsx-closing-bracket-location: off
+  react/jsx-filename-extension: off
+  react/forbid-prop-types: off
+  react/prop-types: off
+  react/require-extension: off
+  import/no-extraneous-dependencies:
+    - error
+    - devDependencies: true
+      peerDependencies: true
+      optionalDependencies: false
+  import/prefer-default-export: off
+  jsx-a11y/no-static-element-interactions: off
+globals:
+  chrome: false

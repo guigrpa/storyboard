@@ -1,11 +1,11 @@
 import { merge, addDefaults, set as timmSet } from 'timm';
-import ansiColors from '../gral/ansiColors';
-import k from '../gral/constants';
+import { getBrowserConsoleArgs } from '../gral/ansiColors';
+import { IS_BROWSER } from '../gral/constants';
 import recordToLines from './helpers/recordToLines';
 
 const DEFAULT_CONFIG = {
   moduleNameLength: 20,
-  relativeTime: k.IS_BROWSER,
+  relativeTime: IS_BROWSER,
   colors: true,
   useStderr: false,
 };
@@ -38,7 +38,7 @@ class ConsoleListener {
   process(msg) {
     if (msg.type !== 'RECORDS') return;
     if (msg.hubId !== this.hubId) return; // only log local records
-    msg.data.forEach(record => this.processRecord(record));
+    msg.data.forEach((record) => this.processRecord(record));
   }
 
   processRecord(record) {
@@ -53,13 +53,11 @@ class ConsoleListener {
   // -----------------------------------------
   // Helpers
   // -----------------------------------------
-  /* eslint-disable no-console */
+  /* eslint-disable no-console, prefer-spread */
   outputLog(text, level, fLongDelay) {
-    const args = k.IS_BROWSER ?
-      ansiColors.getBrowserConsoleArgs(text) :
-      [text];
+    const args = IS_BROWSER ? getBrowserConsoleArgs(text) : [text];
     if (fLongDelay) console.log('          ...');
-    if (k.IS_BROWSER) {
+    if (IS_BROWSER) {
       switch (level) {
         case 40:
           console.warn.apply(console, args);
@@ -73,11 +71,13 @@ class ConsoleListener {
           break;
       }
     } else {
+      /* eslint-disable no-lonely-if */
       if (this.config.useStderr && level >= 50) {
         console.error.apply(console, args);
       } else {
         console.log.apply(console, args);
       }
+      /* eslint-enable no-lonely-if */
     }
   }
   /* eslint-enable no-console */

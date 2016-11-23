@@ -27,7 +27,7 @@ describe "wsClientListener", ->
   _io = _ioNamespace = null
   _serverSocket = null
 
-  before -> 
+  before ->
     # Reset Storyboard and spies
     storyboard.removeAllListeners()
     storyboard.config {filter: '*:*'}
@@ -68,7 +68,7 @@ describe "wsClientListener", ->
     # Prevent setup from possibly interfering with tests
     .delay 250
 
-  after -> 
+  after ->
     storyboard.removeAllListeners()
     _httpServer.close()
     _io.close()
@@ -159,4 +159,3 @@ describe "wsClientListener", ->
         expect(msg.type).to.equal 'RECORDS'
         expect(msg.data[0].t).to.equal(SAMPLE_RECORDS[0].t + tDelta)
         expect(msg.data[1].t).to.equal(SAMPLE_RECORDS[1].t + tDelta)
-        
