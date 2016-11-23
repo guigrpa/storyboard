@@ -2,8 +2,10 @@
 
 *[M]: major change; [m]: minor change*
 
-* Library:
-    - [M] Completed migration from CS to JS
+## 2.3.0 (November 23, 2016)
+
+* Internal:
+    - [M] Completed migration from CS to JS. I hope I didn't break anything, despite the large test suite! **Note on the decreased test coverage figure**: the new figure (~82%) is more accurate, since it now includes files that were previously not pulled in (or *instrumented*) by the tests, notably action creators in the browser extension. Test coverage for the library is around 98%, same as before the migration.
 * Browser extension:
     - **Bugfix** fix a case in which `forgetHysteresis` and `maxRecords` settings could not be modified due to incoming messages resetting these parameters.
 
