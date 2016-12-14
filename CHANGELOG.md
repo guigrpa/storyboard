@@ -2,6 +2,11 @@
 
 *[M]: major change; [m]: minor change*
 
+## 2.3.1 (December 14, 2016)
+
+* Library:
+    - Avoid cumbersome deprecation warning from Node when enabling the file listener.
+
 ## 2.3.0 (November 23, 2016)
 
 * Internal:

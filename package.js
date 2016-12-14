@@ -4,7 +4,7 @@
 // Basic config
 // ===============================================
 const NAME = 'storyboard';
-const VERSION = '2.3.0';
+const VERSION = '2.3.1';
 const DESCRIPTION = 'End-to-end, hierarchical, real-time, colorful logs and stories';
 const KEYWORDS = ['log', 'logging', 'websockets', 'console', 'isomorphic'];
 
@@ -243,7 +243,7 @@ const specs = {
     'css-loader': '0.26.0',
     'style-loader': '0.13.1',
     'sass-loader': '3.1.2',
-    'node-sass': '3.7.0',
+    'node-sass': '3.13.1',
 
     // Linting
     eslint: '3.8.1',
