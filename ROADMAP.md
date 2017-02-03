@@ -1,3 +1,45 @@
+- **Conversion to monorepo**
+    + Foreseen dir structure:
+        - packages
+            - storyboard (<-- src/gral, .flow types, recordToLines, vendor)
+            - storyboard-cli
+            - storyboard-listener-console
+            - storyboard-listener-file
+            - storyboard-listener-db-postgres (--> pg)
+            - storyboard-listener-browser-extension
+            - storyboard-listener-ws-client (--> socket.io-client)
+            - storyboard-listener-ws-server (--> express, socket.io). Includes serverLogsApp
+            - storyboard-extension-chrome (private)
+            - storyboard-examples (private)
+        - docs
+        - scripts
+        - test
+        - testJest
+        - tools
+        - ...
+    + Remove deprecated SW:
+        - noPlugins.js
+        - stdinLogger.js
+        - withConsoleListener.js
+    + Each package should have:
+        - src
+        - lib
+        - mini-readme, pointing to the main readme
+    + Versioning: synchronised, but packages that have no changes are not released.
+      This should be automated to avoid problems. The tool should ask for a new version number,
+      and then determine which packages will be released. A commit is then performed and tagged.
+    + Publishing:
+        - Tool builds, which includes:
+            - Copy README to packages/storyboard
+            - Copy README stub to other packages
+            - Copy certain fields from <root>/package.json to all packages:
+              description, keywords, author, license, etc.
+        - Tool asks for new version number
+        - Tool determines which packages will be released
+        - Tool updates selected packages
+        - Tool commits and tags
+        -
+
 - Hints: login, settings
 
 - Bugs:

@@ -1,4 +1,4 @@
-import uuid from 'node-uuid';
+import uuid from 'uuid';
 import { merge } from 'timm';
 
 const DEFAULT_CONFIG = {

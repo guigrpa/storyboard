@@ -1,11 +1,11 @@
 import { merge } from 'timm';
 import chalk from 'chalk';
-import { padStart } from '../../vendor/lodash';
-import * as ansiColors from '../../gral/ansiColors';
-import { LEVEL_STR_TO_NUM } from '../../gral/constants';
-import * as filters from '../../gral/filters';
-import { deserialize } from '../../gral/serialize';
-import treeLines from '../../gral/treeLines';
+import { padStart } from '../vendor/lodash';
+import * as ansiColors from './ansiColors';
+import { LEVEL_STR_TO_NUM } from './constants';
+import * as filters from './filters';
+import { deserialize } from './serialize';
+import treeLines from './treeLines';
 
 const TIME_COL_RELATIVE_LENGTH = 7;
 const TIME_COL_RELATIVE_EMPTY = padStart('', TIME_COL_RELATIVE_LENGTH);
