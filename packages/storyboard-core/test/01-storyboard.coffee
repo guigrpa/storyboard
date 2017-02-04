@@ -1,31 +1,30 @@
-{storyboard, expect, sinon} = require './imports'
-{STORYBOARD_TYPE_ATTR} = require '../../lib/gral/serialize'
-hub = require '../../lib/gral/hub'
-k   = require '../../lib/gral/constants'
+{expect, sinon} = require './imports'
+{STORYBOARD_TYPE_ATTR} = require '../lib/gral/serialize'
+hub = require '../lib/gral/hub'
+k   = require '../lib/gral/constants'
+filters = require '../lib/gral/filters'
+mainStory = require('../lib/gral/stories').default
 
 _spyListenerProcess = sinon.spy()
 _listenerFactory = ->
   init: ->
   process: _spyListenerProcess
-{mainStory} = storyboard
 
 #-====================================================
 # ## Tests
 #-====================================================
-describe 'storyboard v2', ->
-
-  it 'should include no listeners by default', ->
-    expect(storyboard.getListeners()).to.have.length 0
-
 describe 'storyboard', ->
 
   before ->
-    storyboard.addListener _listenerFactory
-    storyboard.config {filter: '*:*', bufSize: 5}
-    expect(storyboard.getListeners()).to.have.length 1
+    hub.init({mainStory})
+    hub.configure({ bufSize: 5 })
+    filters.init({mainStory})
+    filters.config '*:*'
+    hub.addListener _listenerFactory
+    expect(hub.getListeners()).to.have.length 1
 
   after ->
-    storyboard.removeAllListeners()
+    hub.removeAllListeners()
 
   beforeEach -> _spyListenerProcess.reset()
 
@@ -142,12 +141,12 @@ describe 'storyboard', ->
 
     foo = null
     beforeEach ->
-      storyboard.config {filter: 'foo:INFO,*:*'}
+      filters.config 'foo:INFO,*:*'
       _spyListenerProcess.reset() # Forget the 'filter changed' log
       foo = mainStory.child {src: 'foo', title: 'Foo', level: 'DEBUG'}
 
     afterEach ->
-      storyboard.config {filter: '*:*'}
+      filters.config '*:*'
       _spyListenerProcess.reset() # Forget the 'filter changed' log
 
     it 'should NOT emit action records', ->

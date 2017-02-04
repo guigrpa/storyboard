@@ -1,7 +1,7 @@
 _ = require 'lodash'
 chalk = require 'chalk'
 {expect} = require './imports'
-{serialize, deserialize, CIRCULAR_REF, STORYBOARD_TYPE_ATTR} = require '../../lib/gral/serialize'
+{serialize, deserialize, CIRCULAR_REF, STORYBOARD_TYPE_ATTR} = require '../lib/gral/serialize'
 
 describe 'serialize', ->
 

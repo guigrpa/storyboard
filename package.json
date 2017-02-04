@@ -2,9 +2,10 @@
   "private": true,
   "scripts": {
     "bootstrap": "babel-node scripts/bootstrap",
-    "compile": "babel-node scripts/forEach \"yarn run compile\"",
     "lint": "eslint packages",
-    "xxl": "xxl --src packages --exclude node_modules"
+    "compile": "babel-node scripts/forEach \"yarn run compile\"",
+    "xxl": "xxl --src packages --exclude node_modules,/lib/",
+    "testFast": "mocha" 
   },
   "devDependencies": {
     "babel-cli": "6.18.0",

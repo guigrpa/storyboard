@@ -1,11 +1,12 @@
-{storyboard, expect} = require './imports'
-filters = require '../../lib/gral/filters'
+{expect} = require './imports'
+filters = require '../lib/gral/filters'
+mainStory = require('../lib/gral/stories').default
 
-{passesFilter} = filters
-config = (filter) ->
-  storyboard.config {filter}
+{init, config, passesFilter} = filters
 
 describe 'filters', ->
+  beforeEach -> init({mainStory})
+
   it "should correctly apply: 'hello:INFO'", ->
     config 'hello:INFO'
     expect(passesFilter 'hi',    20).to.be.false

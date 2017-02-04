@@ -4,3 +4,4 @@
 -R spec
 --colors
 --timeout 6000
+./packages/*/test/*

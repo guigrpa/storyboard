@@ -1,7 +1,7 @@
 chalk = require 'chalk'
 {expect, sinon} = require './imports'
-treeLines = require('../../lib/gral/treeLines').default
-{serialize} = require '../../lib/gral/serialize'
+treeLines = require('../lib/gral/treeLines').default
+{serialize} = require '../lib/gral/serialize'
 
 describe 'treeLines', ->
 
