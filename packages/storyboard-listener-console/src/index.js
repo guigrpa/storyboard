@@ -1,8 +1,7 @@
 import { merge, addDefaults, set as timmSet } from 'timm';
-import { getBrowserConsoleArgs } from '../gral/ansiColors';
-import { IS_BROWSER } from '../gral/constants';
-import recordToLines from './helpers/recordToLines';
+import { ansiColors, constants, recordToLines } from 'storyboard-core';
 
+const { IS_BROWSER } = constants;
 const DEFAULT_CONFIG = {
   moduleNameLength: 20,
   relativeTime: IS_BROWSER,
@@ -55,7 +54,7 @@ class ConsoleListener {
   // -----------------------------------------
   /* eslint-disable no-console, prefer-spread */
   outputLog(text, level, fLongDelay) {
-    const args = IS_BROWSER ? getBrowserConsoleArgs(text) : [text];
+    const args = IS_BROWSER ? ansiColors.getBrowserConsoleArgs(text) : [text];
     if (fLongDelay) console.log('          ...');
     if (IS_BROWSER) {
       switch (level) {

@@ -1,0 +1,19 @@
+{
+  "name": "storyboard-listener-db-postgres",
+  "version": "3.0.0",
+  "author": "Guillermo Grau Panea",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guigrpa/storyboard.git"
+  },
+  "main": "lib/index.js",
+  "scripts": {
+    "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src"
+  },
+  "dependencies": {
+    "timm": "^1.2.3",
+    "pg": "6.0.2",
+    "storyboard-core": "^3.0.0"
+  }
+}

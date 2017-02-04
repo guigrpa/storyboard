@@ -7,7 +7,7 @@ import { passesFilter } from './filters';
 import { getHubId, emitMsgWithFields } from './hub';
 import { serialize } from './serialize';
 
-const version = require('../../../package.json').version;
+const version = require('../../../../package.json').version;
 
 const DEFAULT_SRC = 'main';
 const DEFAULT_CHILD_TITLE = '';

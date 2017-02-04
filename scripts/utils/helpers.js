@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 
 import shell from 'shelljs';
-import { mainStory, chalk } from 'storyboard';
 import split from 'split';
+import { mainStory, chalk } from './storyboard';
 
 const cd = (dir, { story = mainStory } = {}) => {
   story.trace(`Changing working directory to ${chalk.cyan.bold(dir)}...`);

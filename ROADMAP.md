@@ -1,44 +1,43 @@
 - **Conversion to monorepo**
     + Foreseen dir structure:
         - packages
-            - storyboard (<-- src/gral, .flow types, recordToLines, vendor)
-            - storyboard-cli
-            - storyboard-listener-console
-            - storyboard-listener-file
-            - storyboard-listener-db-postgres (--> pg)
-            - storyboard-listener-browser-extension
-            - storyboard-listener-ws-client (--> socket.io-client)
-            - storyboard-listener-ws-server (--> express, socket.io). Includes serverLogsApp
-            - storyboard-extension-chrome (private)
-            - storyboard-examples (private)
+            - [x] storyboard
+            - [x] storyboard-core (<-- src/gral, .flow types, recordToLines, vendor)
+            - [x] storyboard-cli
+            - [x] storyboard-listener-console
+            - [x] storyboard-listener-file
+            - [x] storyboard-listener-db-postgres (--> pg)
+            - [ ] storyboard-listener-ws-server (--> express, socket.io). Includes serverLogsApp
+            - [ ] storyboard-listener-browser-extension
+            - [ ] storyboard-listener-ws-client (--> socket.io-client)
+            - [ ] storyboard-extension-chrome (private)
+            - [ ] storyboard-examples (private)
         - docs
         - scripts
         - test
         - testJest
         - tools
         - ...
-    + Remove deprecated SW:
+    + [x] Remove deprecated SW:
         - noPlugins.js
         - stdinLogger.js
         - withConsoleListener.js
-    + Each package should have:
-        - src
-        - lib
-        - mini-readme, pointing to the main readme
-    + Versioning: synchronised, but packages that have no changes are not released.
+    + [ ] Versioning: synchronised, but packages that have no changes are not released.
       This should be automated to avoid problems. The tool should ask for a new version number,
       and then determine which packages will be released. A commit is then performed and tagged.
-    + Publishing:
+    + [ ] Publishing:
         - Tool builds, which includes:
             - Copy README to packages/storyboard
             - Copy README stub to other packages
             - Copy certain fields from <root>/package.json to all packages:
-              description, keywords, author, license, etc.
+              description, keywords, author, license, homepage/bugs/repository, etc.
         - Tool asks for new version number
         - Tool determines which packages will be released
         - Tool updates selected packages
         - Tool commits and tags
         -
+    + [ ] Tests
+    + [ ] Preset: check with default and named exports
 
 - Hints: login, settings
 

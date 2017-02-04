@@ -1,23 +1,11 @@
 {
-  "name": "storyboard",
-  "version": "3.0.0",
-  "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
-  "main": "lib/storyboard.js",
+  "private": true,
   "scripts": {
-    "compile": "babel-node scripts/forEach compile",
+    "bootstrap": "babel-node scripts/bootstrap",
+    "compile": "babel-node scripts/forEach \"yarn run compile\"",
     "lint": "eslint packages",
     "xxl": "xxl --src packages --exclude node_modules"
   },
-  "keywords": [
-    "log",
-    "logging",
-    "websockets",
-    "console",
-    "isomorphic"
-  ],
-  "author": "Guillermo Grau Panea",
-  "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
     "babel-cli": "6.18.0",
     "babel-core": "6.18.2",
@@ -40,6 +28,7 @@
     "eslint-plugin-jsx-a11y": "2.2.3",
     "eslint-plugin-react": "6.4.1",
     "file-loader": "0.8.5",
+    "globby": "^6.1.0",
     "ignore-styles": "4.0.0",
     "jest": "17.0.3",
     "jest-html": "^1.2.0",
@@ -47,9 +36,12 @@
     "mocha": "2.4.5",
     "node-sass": "3.13.1",
     "sass-loader": "3.1.2",
+    "shelljs": "^0.7.6",
     "sinon": "1.17.6",
     "sinon-chai": "2.8.0",
+    "split": "^1.0.0",
     "style-loader": "0.13.1",
+    "timm": "^1.2.3",
     "webpack": "1.13.3",
     "xxl": "^1.0.0"
   },

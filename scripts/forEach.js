@@ -1,4 +1,4 @@
-import 'storyboard/lib/withConsoleListener';
+import './utils/storyboard';
 import forAllPackages from './utils/forAllPackages';
 
 if (process.argv.length < 3) {

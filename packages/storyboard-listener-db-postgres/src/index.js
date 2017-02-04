@@ -1,7 +1,6 @@
-import chalk from 'chalk';
-import { addDefaults } from 'timm';
 import pg from 'pg';
-import { throttle } from '../vendor/lodash';
+import { addDefaults } from 'timm';
+import { chalk, _ } from 'storyboard-core';
 
 const DEFAULT_CONFIG = {
   host: 'localhost',
@@ -34,7 +33,7 @@ class DbPostgresListener {
     this.bufRecords = [];
     const { throttle: throttlePeriod } = config;
     if (throttlePeriod) {
-      this.saveRecords = throttle(this.saveRecords, throttlePeriod).bind(this);
+      this.saveRecords = _.throttle(this.saveRecords, throttlePeriod).bind(this);
     }
     // pg.on('error', err => console.log(err));
     this.client.on('error', () => {});

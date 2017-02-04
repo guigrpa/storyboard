@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
-import { mainStory, chalk } from 'storyboard/lib/withConsoleListener';
 import { omit, set as timmSet } from 'timm';
+import { mainStory, chalk } from './utils/storyboard';
 import listPackages from './utils/listPackages';
 import { exec } from './utils/helpers';
 

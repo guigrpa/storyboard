@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 
-/* eslint-disable import/newline-after-import */
-
 import split from 'split';
 import { exec } from 'child_process';
 import program from 'commander';
-import { mainStory, addListener, chalk } from './storyboard';
+import { mainStory, hub, chalk } from 'storyboard-core';
+import consoleListener from 'storyboard-listener-console';
+import fileListener from 'storyboard-listener-file';
+import wsServerListener from 'storyboard-listener-ws-server';
+
+const { addListener } = hub;
 
 const pkg = require('../package.json');
 
@@ -38,22 +41,11 @@ if (cmdWithArgs == null) {
 // stderr / stdout asynchronously:
 // https://nodejs.org/api/console.html#console_asynchronous_vs_synchronous_consoles
 // (there's nothing we can do to prevent that!)
-/* eslint-disable global-require */
 if (program.console) {
-  const consoleListener = require('./listeners/console').default;
   addListener(consoleListener, { useStderr: program.stderr, colors: program.colors });
 }
-
-if (program.server) {
-  const wsServerListener = require('./listeners/wsServer').default;
-  addListener(wsServerListener, { port: program.port });
-}
-
-if (program.file) {
-  const fileListener = require('./listeners/file').default;
-  addListener(fileListener, { filePath: program.file });
-}
-/* eslint-enable global-require */
+if (program.file) addListener(fileListener, { filePath: program.file });
+if (program.server) addListener(wsServerListener, { port: program.port });
 
 const child = exec(cmdWithArgs);
 

@@ -10,18 +10,11 @@
 // Chalk is disabled by default in the browser. Override
 // this default (we'll handle ANSI code conversion ourselves
 // when needed)
-import chalk from 'chalk';
-import mainStory from './gral/stories';
-import * as filters from './gral/filters';
-import {
-  init as hubInit,
-  configure as hubConfigure,
-  getListeners, addListener, removeListener, removeAllListeners,
-} from './gral/hub';
+import { chalk, mainStory, filters, hub } from 'storyboard-core';
 
 chalk.enabled = true;
 
-hubInit({ mainStory });
+hub.init({ mainStory });
 filters.init({ mainStory });
 
 const config = (options = {}) => {
@@ -35,7 +28,7 @@ const config = (options = {}) => {
         filters.setOnChangeFilter(val);
         break;
       case 'bufSize':
-        hubConfigure({ bufSize: val });
+        hub.configure({ bufSize: val });
         break;
       /* istanbul ignore next */
       default:
@@ -46,7 +39,7 @@ const config = (options = {}) => {
 
 const gracefulExit = () => {
   mainStory.close();
-  removeAllListeners();
+  hub.removeAllListeners();
 };
 /* istanbul ignore next */
 try {
@@ -61,6 +54,8 @@ try {
 // -------------------------------------
 // API
 // -------------------------------------
+const { getListeners, addListener, removeListener, removeAllListeners } = hub;
+
 export {
   mainStory,
   chalk,

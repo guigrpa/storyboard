@@ -1,8 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import chalk from 'chalk';
 import { addDefaults } from 'timm';
-import recordToLines from './helpers/recordToLines';
+import { chalk, recordToLines } from 'storyboard-core';
 
 const DEFAULT_CONFIG = {
   filePath: 'storyboard.log',
