@@ -1,5 +1,5 @@
 import { addDefaults, set as timmSet } from 'timm';
-import * as filters from '../gral/filters';
+import { filters } from 'storyboard-core';
 
 const DEFAULT_CONFIG = {};
 

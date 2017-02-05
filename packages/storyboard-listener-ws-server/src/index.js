@@ -3,13 +3,11 @@ import http from 'http';
 import express from 'express';
 import socketio from 'socket.io';
 import Promise from 'bluebird';
-import chalk from 'chalk';
 import { addDefaults } from 'timm';
 import { ClocksyServer } from 'clocksy';
-import { throttle } from '../vendor/lodash';
-import * as filters from '../gral/filters';
-import { WS_NAMESPACE } from '../gral/constants';
+import { chalk, _, filters, constants } from 'storyboard-core';
 
+const { WS_NAMESPACE } = constants;
 const DEFAULT_CONFIG = {
   port: 8090,
   throttle: 200,
@@ -39,7 +37,7 @@ class WsServerListener {
     this.bufBroadcast = [];
     const { throttle: throttlePeriod } = config;
     if (throttlePeriod) {
-      this.socketBroadcast = throttle(this.socketBroadcast, throttlePeriod).bind(this);
+      this.socketBroadcast = _.throttle(this.socketBroadcast, throttlePeriod).bind(this);
     }
   }
 

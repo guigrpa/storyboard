@@ -1,5 +1,5 @@
 {
-  "name": "storyboard-cli",
+  "name": "storyboard-listener-browser-extension",
   "version": "3.0.0",
   "author": "Guillermo Grau Panea",
   "license": "MIT",
@@ -7,18 +7,12 @@
     "type": "git",
     "url": "https://github.com/guigrpa/storyboard.git"
   },
-  "bin": {
-    "sb": "lib/index.js"
-  },
+  "main": "lib/index.js",
   "scripts": {
     "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src"
   },
   "dependencies": {
-    "commander": "2.9.0",
-    "split": "1.0.0",
-    "storyboard-core": "^3.0.0",
-    "storyboard-listener-console": "^3.0.0",
-    "storyboard-listener-file": "^3.0.0",
-    "storyboard-listener-ws-server": "^3.0.0"
+    "timm": "^1.2.3",
+    "storyboard-core": "^3.0.0"
   }
 }

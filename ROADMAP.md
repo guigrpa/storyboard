@@ -8,8 +8,8 @@
             - [x] storyboard-listener-file
             - [x] storyboard-listener-db-postgres (--> pg)
             - [ ] storyboard-listener-ws-server (--> express, socket.io). Includes serverLogsApp
-            - [ ] storyboard-listener-browser-extension
-            - [ ] storyboard-listener-ws-client (--> socket.io-client)
+            - [x] storyboard-listener-browser-extension
+            - [x] storyboard-listener-ws-client (--> socket.io-client)
             - [ ] storyboard-extension-chrome (private)
             - [ ] storyboard-examples (private)
         - docs
@@ -38,6 +38,9 @@
         -
     + [ ] Tests
     + [ ] Preset: check with default and named exports
+    + [ ] Normal: check flow interface
+
+- [ ] **Bump versions**
 
 - Hints: login, settings
 

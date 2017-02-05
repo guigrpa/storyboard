@@ -1,11 +1,10 @@
 import socketio from 'socket.io-client';
 import ms from 'ms';
 import { merge, addDefaults, setIn, set as timmSet } from 'timm';
-import chalk from 'chalk';
 import { ClocksyClient } from 'clocksy';
-import { throttle } from '../vendor/lodash';
-import { WS_NAMESPACE } from '../gral/constants';
+import { chalk, _, constants } from 'storyboard-core';
 
+const { WS_NAMESPACE } = constants;
 const DEFAULT_CONFIG = {
   uploadClientStories: false,
   throttleUpload: null,
@@ -34,7 +33,7 @@ class WsClientListener {
     this.bufUpload = [];
     const { throttleUpload: throttlePeriod } = config;
     if (throttlePeriod) {
-      this.socketUploadRecords = throttle(this.socketUploadRecords, throttlePeriod).bind(this);
+      this.socketUploadRecords = _.throttle(this.socketUploadRecords, throttlePeriod).bind(this);
     }
   }
 
