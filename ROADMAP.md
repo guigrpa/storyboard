@@ -41,6 +41,7 @@
     + [ ] Normal: check flow interface
 
 - [ ] **Bump versions**
+- [ ] **Migrate to webpack 2**
 
 - Hints: login, settings
 

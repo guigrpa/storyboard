@@ -1,8 +1,8 @@
 /* eslint-disable no-useless-escape */
 
 const path = require('path');
-const webpack = require('webpack');
-const pkg = require('../package.json');
+const webpack = require('webpack'); /* from the root package */ // eslint-disable-line
+const pkg = require('../../../package.json');
 
 const LANGS = ['en_gb'];
 
