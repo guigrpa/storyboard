@@ -1,11 +1,9 @@
 /* eslint-env browser */
 
-// Here you'd write 'storyboard' or 'storyboard/lib/listeners/xxx':
-import Promise from 'bluebird';
-import { mainStory, chalk, addListener } from '../storyboard';
-import consoleListener from '../listeners/console';
-import browserExtensionListener from '../listeners/browserExtension';
-import wsClientListener from '../listeners/wsClient';
+import { mainStory, chalk, addListener } from 'storyboard';
+import consoleListener from 'storyboard-listener-console';
+import browserExtensionListener from 'storyboard-listener-browser-extension';
+import wsClientListener from 'storyboard-listener-ws-client';
 
 require('babel-polyfill');    // for IE
 require('isomorphic-fetch');  // for IE
@@ -60,6 +58,7 @@ setInterval(() => mainStory.debug('Repeated message'), 5000);
 
 // Uncomment the following block to mount the developer tools
 // in the main page (for faster development)
+// TO BE UPDATED (pre-3.0)
 /*
 const devToolsApp = require('../chromeExtension/devToolsApp');
 

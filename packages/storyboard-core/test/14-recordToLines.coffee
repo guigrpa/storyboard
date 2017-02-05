@@ -1,9 +1,9 @@
-{storyboard, expect, sinon, Promise, h} = require './imports'
-recordToLines = require('../../lib/listeners/helpers/recordToLines').default
 chalk = require 'chalk'
 {merge} = require 'timm'
+filters = require '../lib/gral/filters'
+recordToLines = require('../lib/gral/recordToLines').default
 
-RECORD = 
+RECORD =
   t: new Date()
   src: 'main'
   msg: "this is an #{chalk.green.bold('important')} message"
@@ -19,6 +19,8 @@ RECORD =
 # ## Tests
 #-====================================================
 describe 'recordToLines', ->
+  beforeEach ->
+    filters.config '*:*'
 
   it 'should include colors by default', ->
     lines = recordToLines RECORD,

@@ -1,8 +1,7 @@
-// Here you'd write 'storyboard' or 'storyboard/lib/listeners/xxx':
-import { mainStory, config, addListener } from '../storyboard';
-import consoleListener from '../listeners/console';
-import wsServerListener from '../listeners/wsServer';
-import dbPostgresListener from '../listeners/dbPostgres';
+import { mainStory, config, addListener } from 'storyboard';
+import consoleListener from 'storyboard-listener-console';
+import wsServerListener from 'storyboard-listener-ws-server';
+import dbPostgresListener from 'storyboard-listener-db-postgres';
 
 import createHttpServer from './httpServer';
 import db from './db';

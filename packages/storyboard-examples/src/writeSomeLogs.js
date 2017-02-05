@@ -1,4 +1,4 @@
-import { mainStory, chalk } from '../storyboard';
+import { mainStory, chalk } from 'storyboard';
 
 const writeSomeLogs = () => {
   // Some example logs (including a circular reference)

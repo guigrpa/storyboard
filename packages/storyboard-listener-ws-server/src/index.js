@@ -51,7 +51,7 @@ class WsServerListener {
         `Error initialising standalone server logs on port ${chalk.cyan.bold(port)}`);
       try {
         const expressApp = express();
-        expressApp.use(express.static(path.join(__dirname, '../../serverLogsApp')));
+        expressApp.use(express.static(path.join(__dirname, './public')));
         const httpServer = http.createServer(expressApp);
         httpServer.on('error', httpInitError);
         httpServer.on('listening', () => {

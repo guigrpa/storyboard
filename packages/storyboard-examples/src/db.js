@@ -1,7 +1,7 @@
 // This module simulates database access
-import _ from 'lodash';
 import Promise from 'bluebird';
-import { mainStory, chalk } from '../storyboard';
+import _ from 'lodash';
+import { mainStory, chalk } from 'storyboard';
 
 const ANIMALS = ['Cow', 'Hummingbird', 'Rhinoceros', 'Capybara', 'Igel', 'Sheep'];
 

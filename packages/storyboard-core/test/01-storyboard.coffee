@@ -1,4 +1,3 @@
-{expect, sinon} = require './imports'
 {STORYBOARD_TYPE_ATTR} = require '../lib/gral/serialize'
 hub = require '../lib/gral/hub'
 k   = require '../lib/gral/constants'

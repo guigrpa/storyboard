@@ -1,8 +1,8 @@
-{storyboard, expect, sinon, Promise} = require './imports'
-{CIRCULAR_REF} = require '../../lib/gral/serialize';
-consoleListener = require('../../lib/listeners/console').default
+{filters, hub, mainStory, serialize} = require 'storyboard-core'
+Promise = require 'bluebird'
+consoleListener = require('../lib').default
 
-{mainStory} = storyboard
+{CIRCULAR_REF} = serialize;
 
 _isMochaOutput = (txt) ->
   if txt.length is 0 then return false
@@ -23,17 +23,19 @@ describe "consoleListener", ->
   _spyLog   = null
   _spyWarn  = null
   _spyError = null
-  before -> 
-    storyboard.removeAllListeners()
+  before ->
+    hub.init { mainStory }
+    filters.init { mainStory }
+    hub.removeAllListeners()
 
     sinon.stub console, 'log'
-    storyboard.addListener consoleListener
-    storyboard.config filter: '*:*'
+    hub.addListener consoleListener
+    filters.config '*:*'
     console.log.restore()
 
-    _listener = storyboard.getListeners()[0]
+    _listener = hub.getListeners()[0]
 
-  beforeEach -> 
+  beforeEach ->
     _listener.configure useStderr: false
     consoleLog = console.log
     consoleError = console.error

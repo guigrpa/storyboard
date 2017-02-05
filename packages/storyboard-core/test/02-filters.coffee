@@ -1,4 +1,3 @@
-{expect} = require './imports'
 filters = require '../lib/gral/filters'
 mainStory = require('../lib/gral/stories').default
 

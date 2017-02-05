@@ -1,6 +1,5 @@
 _ = require 'lodash'
 chalk = require 'chalk'
-{expect} = require './imports'
 ansiColors = require '../lib/gral/ansiColors'
 
 RED = "#cc0000"

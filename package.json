@@ -4,7 +4,8 @@
     "bootstrap": "babel-node scripts/bootstrap",
     "lint": "eslint packages",
     "compile": "babel-node scripts/forEach \"yarn run compile\"",
-    "build:serverLogsApp": "cd packages/storyboard-server-logs-app && npm run build",
+    "start": "cd packages/storyboard-examples && yarn run example",
+    "build:serverLogsApp": "cd packages/storyboard-server-logs-app && yarn run build",
     "xxl": "xxl --src packages --exclude node_modules,/lib/",
     "testFast": "mocha"
   },

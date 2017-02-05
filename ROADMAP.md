@@ -7,7 +7,7 @@
             - [x] storyboard-listener-console
             - [x] storyboard-listener-file
             - [x] storyboard-listener-db-postgres (--> pg)
-            - [ ] storyboard-listener-ws-server (--> express, socket.io). Includes serverLogsApp
+            - [x] storyboard-listener-ws-server (--> express, socket.io). Includes serverLogsApp
             - [x] storyboard-listener-browser-extension
             - [x] storyboard-listener-ws-client (--> socket.io-client)
             - [ ] storyboard-extension-chrome (private)

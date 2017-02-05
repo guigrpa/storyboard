@@ -1,9 +1,8 @@
 /* eslint-env browser */
 
-// Here you'd write 'storyboard' or 'storyboard/lib/listeners/xxx':
-import { mainStory, chalk, addListener } from '../storyboard';
-import browserExtensionListener from '../listeners/browserExtension';
-import wsClientListener from '../listeners/wsClient';
+import { mainStory, chalk, addListener } from 'storyboard';
+import browserExtensionListener from 'storyboard-listener-browser-extension';
+import wsClientListener from 'storyboard-listener-ws-client';
 
 require('babel-polyfill');    // for IE
 require('isomorphic-fetch');  // for IE
