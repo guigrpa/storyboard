@@ -1,6 +1,6 @@
-import { addListener } from '../storyboard';
-import browserExtension from '../listeners/browserExtension';
-import wsClient from '../listeners/wsClient';
+import { addListener } from 'storyboard';
+import browserExtension from 'storyboard-listener-browser-extension';
+import wsClient from 'storyboard-listener-ws-client';
 
 addListener(browserExtension);
 

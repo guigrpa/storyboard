@@ -4,8 +4,9 @@
     "bootstrap": "babel-node scripts/bootstrap",
     "lint": "eslint packages",
     "compile": "babel-node scripts/forEach \"yarn run compile\"",
+    "build:serverLogsApp": "cd packages/storyboard-server-logs-app && npm run build",
     "xxl": "xxl --src packages --exclude node_modules,/lib/",
-    "testFast": "mocha" 
+    "testFast": "mocha"
   },
   "devDependencies": {
     "babel-cli": "6.18.0",

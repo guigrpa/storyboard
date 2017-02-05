@@ -1,13 +1,21 @@
-/* eslint-disable no-useless-escape */
-
 const path = require('path');
-const webpack = require('webpack'); /* from the root package */ // eslint-disable-line
-const pkg = require('../../../package.json');
+const webpack = require('webpack');  /* from the root package */ // eslint-disable-line
+const pkg = require('../../package.json');
 
 module.exports = {
+  entry: {
+    app: ['./src/index.js'],
+  },
+
+  output: {
+    filename: '[name].js',
+    path: path.resolve(process.cwd(), '../storyboard-listener-ws-server/lib/public'),
+    publicPath: '/',
+  },
+
   resolve: {
     // Add automatically the following extensions to required modules
-    extensions: ['', '.coffee', '.js'],
+    extensions: ['', '.js'],
   },
 
   plugins: [
