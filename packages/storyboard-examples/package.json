@@ -17,7 +17,6 @@
     "exampleWithDb": "node lib/serverWithDb"
   },
   "dependencies": {
-    "babel-polyfill": "6.16.0",
     "bluebird": "3.4.7",
     "body-parser": "1.15.2",
     "express": "4.14.0",

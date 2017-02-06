@@ -2,7 +2,7 @@
 
 import Promise from 'bluebird';
 import Saga from 'redux-saga/effects';
-import { debounce } from '../../vendor/lodash';
+import { _ } from 'storyboard-core';
 
 const CHECK_FORGET_PERIOD = 3000;
 const QUICK_FIND_DEBOUNCE = 250;
@@ -18,7 +18,7 @@ const collapseAllStories = () => ({ type: 'COLLAPSE_ALL_STORIES' });
 const clearLogs = () => ({ type: 'CLEAR_LOGS' });
 const quickFind = (txt) => (dispatch) => _quickFind(dispatch, txt);
 
-const _quickFind = debounce((dispatch, txt) =>
+const _quickFind = _.debounce((dispatch, txt) =>
   dispatch({ type: 'QUICK_FIND', txt })
 , QUICK_FIND_DEBOUNCE);
 

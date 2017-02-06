@@ -13,7 +13,7 @@ import initActions, * as actions from './actions/actions';
 import createStore from './store/createStore';
 import RootComponent from './components/000-root';
 
-require('babel-polyfill');
+require('babel-polyfill');  /* from root packages */ // eslint-disable-line
 
 if (process.env.NODE_ENV !== 'production') {
   window.ReactPerf = require('react-addons-perf');

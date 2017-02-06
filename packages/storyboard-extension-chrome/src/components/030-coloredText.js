@@ -1,6 +1,6 @@
 import { merge } from 'timm';
 import React from 'react';
-import { getStyledSegments } from '../../gral/ansiColors';
+import { ansiColors } from 'storyboard-core';
 
 class ColoredText extends React.PureComponent {
   static propTypes = {
@@ -11,7 +11,7 @@ class ColoredText extends React.PureComponent {
 
   // -----------------------------------------------------
   render() {
-    const segments = getStyledSegments(this.props.text);
+    const segments = ansiColors.getStyledSegments(this.props.text);
     if (segments.length === 1) {
       const segment = segments[0];
       const extraProps = {

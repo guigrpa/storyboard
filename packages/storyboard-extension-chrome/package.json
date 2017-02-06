@@ -10,10 +10,24 @@
   },
   "main": "lib/index.js",
   "scripts": {
-    "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src"
+    "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src",
+    "build": "../../node_modules/.bin/webpack -p --config ./webpackConfig.js --color --progress --display-chunks"
   },
   "dependencies": {
     "timm": "^1.2.3",
+    "giu": "0.8.1",
+    "chalk": "1.x",
+    "bluebird": "3.4.6",
+    "moment": "2.14.1",
+    "react": "15.4.1",
+    "react-addons-perf": "15.4.1",
+    "react-dom": "15.4.1",
+    "react-redux": "4.4.6",
+    "redux": "3.6.0",
+    "redux-logger": "2.6.1",
+    "redux-saga": "0.9.4",
+    "redux-thunk": "2.1.0",
+    "tinycolor2": "1.4.1",
     "storyboard-core": "^3.0.0"
   }
 }

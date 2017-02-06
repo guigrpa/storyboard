@@ -1,8 +1,7 @@
 /* eslint-disable no-useless-escape */
 
 import timm from 'timm';
-import * as _ from '../../vendor/lodash';
-import * as k from '../../gral/constants';
+import { _, constants as k } from 'storyboard-core';
 
 const mainStoryPathStr = (fServer) => (fServer ? 'records/1' : 'records/0');
 

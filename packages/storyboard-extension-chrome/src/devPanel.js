@@ -1,6 +1,6 @@
 import { merge } from 'timm';
 
-require('babel-polyfill');
+require('babel-polyfill');  /* from root packages */ // eslint-disable-line
 const { init, processMsg } = require('./devToolsApp');  // eslint-disable-line import/no-unresolved, import/extensions
 
 // Initialise connection to background page. All incoming

@@ -2,7 +2,7 @@ import http from 'http';
 import path from 'path';
 import bodyParser from 'body-parser';
 import express from 'express';
-import 'babel-polyfill';
+import 'babel-polyfill';  /* from root packages */ // eslint-disable-line
 import { mainStory, chalk } from 'storyboard';
 import db from './db';
 

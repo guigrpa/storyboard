@@ -5,11 +5,7 @@ import { set as timmSet } from 'timm';
 import moment from 'moment';
 import chalk from 'chalk';
 import { Icon, Spinner } from 'giu';
-import * as _ from '../../vendor/lodash';
-import { LEVEL_NUM_TO_COLORED_STR, getSrcChalkColor } from '../../gral/ansiColors';
-import treeLines from '../../gral/treeLines';
-import { deserialize } from '../../gral/serialize';
-import { LEVEL_STR_TO_NUM } from '../../gral/constants';
+import { _, ansiColors, treeLines, serialize, constants } from 'storyboard-core';
 import * as actions from '../actions/actions';
 import ColoredText from './030-coloredText';
 
@@ -161,7 +157,7 @@ class Story extends React.Component {
       'level', 'timeType', 'setTimeType',
       'quickFind', 'seqFullRefresh', 'colors',
     ]);
-    const lines = version >= 2 ? treeLines(deserialize(obj), objOptions) : obj;
+    const lines = version >= 2 ? treeLines(serialize.deserialize(obj), objOptions) : obj;
     return lines.map((line, idx) =>
       <AttachmentLine
         key={`${storyId}_${id}_${idx}`}
@@ -481,9 +477,9 @@ class Line extends React.PureComponent {
 
   renderMsg(fStoryObject, msg0, level) {
     let msg = doQuickFind(msg0, this.props.quickFind);
-    if (level >= LEVEL_STR_TO_NUM.ERROR) {
+    if (level >= constants.LEVEL_STR_TO_NUM.ERROR) {
       msg = chalk.red.bold(msg);
-    } else if (level >= LEVEL_STR_TO_NUM.WARN) {
+    } else if (level >= constants.LEVEL_STR_TO_NUM.WARN) {
       msg = chalk.red.yellow(msg);
     }
     if (!fStoryObject) return <ColoredText text={msg} />;
@@ -690,7 +686,7 @@ class Severity extends React.PureComponent {
   render() {
     const { level } = this.props;
     return level != null
-      ? <ColoredText text={LEVEL_NUM_TO_COLORED_STR[level]} />
+      ? <ColoredText text={ansiColors.LEVEL_NUM_TO_COLORED_STR[level]} />
       : <span>      </span>;  // eslint-disable-line react/self-closing-comp
   }
 }
@@ -706,7 +702,7 @@ class Src extends React.PureComponent {
   render() {
     const { src } = this.props;
     if (src != null) {
-      const srcStr = getSrcChalkColor(src)(_.padStart(`${src} `, 20));
+      const srcStr = ansiColors.getSrcChalkColor(src)(_.padStart(`${src} `, 20));
       return <ColoredText text={srcStr} />;
     }
     return <span>{_.repeat(' ', 20)}</span>;

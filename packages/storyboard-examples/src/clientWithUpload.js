@@ -4,7 +4,7 @@ import { mainStory, chalk, addListener } from 'storyboard';
 import browserExtensionListener from 'storyboard-listener-browser-extension';
 import wsClientListener from 'storyboard-listener-ws-client';
 
-require('babel-polyfill');    // for IE
+require('babel-polyfill');  /* from root packages */ // eslint-disable-line
 require('isomorphic-fetch');  // for IE
 
 addListener(browserExtensionListener);
