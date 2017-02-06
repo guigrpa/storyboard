@@ -10,8 +10,8 @@
             - [x] storyboard-listener-ws-server (--> express, socket.io). Includes serverLogsApp
             - [x] storyboard-listener-browser-extension
             - [x] storyboard-listener-ws-client (--> socket.io-client)
+            - [x] storyboard-examples (private)
             - [ ] storyboard-extension-chrome (private)
-            - [ ] storyboard-examples (private)
         - docs
         - scripts
         - test
@@ -22,6 +22,8 @@
         - noPlugins.js
         - stdinLogger.js
         - withConsoleListener.js
+    + [ ] Finalise migration of Mocha tests
+    + [ ] Migrate Jest tests
     + [ ] Versioning: synchronised, but packages that have no changes are not released.
       This should be automated to avoid problems. The tool should ask for a new version number,
       and then determine which packages will be released. A commit is then performed and tagged.

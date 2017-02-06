@@ -16,12 +16,13 @@ const sassLoader = {
 
 module.exports = {
   entry: {
-    app: ['./src/index.js'],
+    app: ['./src/client.js'],
+    exampleUpload: ['./src/clientWithUpload.js'],
   },
 
   output: {
     filename: '[name].js',
-    path: path.resolve(process.cwd(), '../storyboard-listener-ws-server/lib/public'),
+    path: path.resolve(process.cwd(), './lib/public'),
     publicPath: '/',
   },
 

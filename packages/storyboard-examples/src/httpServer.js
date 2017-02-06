@@ -2,6 +2,7 @@ import http from 'http';
 import path from 'path';
 import bodyParser from 'body-parser';
 import express from 'express';
+import 'babel-polyfill';
 import { mainStory, chalk } from 'storyboard';
 import db from './db';
 
@@ -11,8 +12,8 @@ const createHttpServer = () => {
   const app = express();
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(express.static(path.join(process.cwd(), 'example')));
-  app.post('/animals', (req, res) => {
+  app.use(express.static(path.join(process.cwd(), 'lib/public')));
+  app.post('/animals', async (req, res) => {
     const { storyId } = req.body;
     let extraParents;
     if (storyId != null) extraParents = [storyId];
@@ -21,13 +22,14 @@ const createHttpServer = () => {
       title: `HTTP request ${chalk.green(req.url)}`,
       extraParents,
     });
-    db.getItems({ story })
-    .then((result) => {
+    try {
+      const result = await db.getItems({ story });
       story.debug('httpServer', `HTTP response: ${result.length} animals`,
         { attachInline: result });
       res.json(result);
-    })
-    .finally(() => story.close());
+    } finally {
+      story.close();
+    }
   });
   const httpServer = http.createServer(app);
   httpServer.listen(PORT);

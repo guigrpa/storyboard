@@ -20,7 +20,7 @@ const nodeButton = document.getElementById('refresh');
 const nodeItems = document.getElementById('items');
 nodeButton.addEventListener('click', () => refresh('Click on Refresh'));
 
-const refresh = (storyTitle) => {
+const refresh = async (storyTitle) => {
   const seq = Math.floor(Math.random() * 100);
   const story = mainStory.child({
     src: 'client',
@@ -29,27 +29,27 @@ const refresh = (storyTitle) => {
   });
   story.info('serverInterface', 'Fetching animals from server...');
   nodeItems.innerHTML = 'Fetching...';
-  return Promise.resolve()
-  .then(() => fetch(`/animals?seq=${seq}`, {
-    method: 'post',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ storyId: story.storyId }),
-  }))
-  .then((response) => response.json())
-  .then((items) => {
+  try {
+    const response = await fetch(`/animals?seq=${seq}`, {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ storyId: story.storyId }),
+    });
+    const items = await response.json();
     if (Array.isArray(items)) {
       story.info('serverInterface',
         `Fetched animals from server: ${chalk.cyan.bold(items.length)}`,
         { attach: items });
       nodeItems.innerHTML = items.map((o) => `<li>${o}</li>`).join('');
     }
-  })
+  } finally {
+    story.close();
+  }
   // .delay(7000)
   // .then(() => story.warn('A revelation!'))
-  .finally(() => story.close());
 };
 
 refresh('Initial fetch');
