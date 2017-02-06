@@ -10,8 +10,11 @@
   },
   "main": "lib/index.js",
   "scripts": {
-    "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src",
-    "build": "../../node_modules/.bin/webpack -p --config ./webpackConfig.js --color --progress --display-chunks"
+    "compile": "rm -rf lib && mkdir lib && cp -r src/public lib",
+    "build": "yarn run buildProd && node writeManifest && yarn run zip",
+    "buildProd": "../../node_modules/.bin/webpack -p --config ./webpackConfig.js --color --progress --display-chunks",
+    "buildWatch": "../../node_modules/.bin/webpack -w --config ./webpackConfig.js --color --progress --display-chunks",
+    "zip": "rm -f lib/public.zip && bestzip public.zip lib/public/* && mv public.zip lib"
   },
   "dependencies": {
     "timm": "^1.2.3",
@@ -29,5 +32,8 @@
     "redux-thunk": "2.1.0",
     "tinycolor2": "1.4.1",
     "storyboard-core": "^3.0.0"
+  },
+  "devDependencies": {
+    "bestzip": "1.1.3"
   }
 }

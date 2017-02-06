@@ -12,6 +12,7 @@
   "scripts": {
     "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src && cp -r src/public lib",
     "build": "../../node_modules/.bin/webpack -p --config ./webpackConfig.js --color --progress --display-chunks",
+    "buildWatch": "../../node_modules/.bin/webpack -w --config ./webpackConfig.js --color --progress --display-chunks",
     "start": "yarn run example",
     "example": "node lib/server",
     "exampleWithDb": "node lib/serverWithDb"

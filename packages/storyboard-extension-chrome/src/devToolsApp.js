@@ -9,15 +9,18 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { chalk } from 'storyboard-core';
 import initActions, * as actions from './actions/actions';
 import createStore from './store/createStore';
 import RootComponent from './components/000-root';
 
 require('babel-polyfill');  /* from root packages */ // eslint-disable-line
 
+chalk.enabled = true;
+
 if (process.env.NODE_ENV !== 'production') {
-  window.ReactPerf = require('react-addons-perf');
-  window.chalk = require('chalk');
+  window.ReactPerf = require('react-addons-perf');  // eslint-disable-line import/newline-after-import
+  window.chalk = chalk;
 }
 
 // =======================================

@@ -11,7 +11,8 @@
   "main": "lib/index.js",
   "scripts": {
     "compile": "echo Nothing to be done",
-    "build": "../../node_modules/.bin/webpack -p --config ./webpackConfig.js --color --progress --display-chunks"
+    "build": "../../node_modules/.bin/webpack -p --config ./webpackConfig.js --color --progress --display-chunks",
+    "buildWatch": "../../node_modules/.bin/webpack -w --config ./webpackConfig.js --color --progress --display-chunks"
   },
   "dependencies": {
     "storyboard": "^3.0.0",

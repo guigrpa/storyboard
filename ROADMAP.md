@@ -1,5 +1,5 @@
 - **Conversion to monorepo**
-    + Foreseen dir structure:
+    + [ ] Foreseen dir structure:
         - packages
             - [x] storyboard
             - [x] storyboard-core (<-- src/gral, .flow types, recordToLines, vendor)
@@ -11,17 +11,16 @@
             - [x] storyboard-listener-browser-extension
             - [x] storyboard-listener-ws-client (--> socket.io-client)
             - [x] storyboard-examples (private)
-            - [ ] storyboard-extension-chrome (private)
+            - [x] storyboard-extension-chrome (private)
         - docs
         - scripts
         - test
         - testJest
         - tools
         - ...
-    + [x] Remove deprecated SW:
-        - noPlugins.js
-        - stdinLogger.js
-        - withConsoleListener.js
+    + [ ] Bugfix: Chrome extension:
+        - [ ] Some colors not appearing (e.g. closed actions)
+        - [ ] Colors OK?
     + [ ] Finalise migration of Mocha tests
     + [ ] Migrate Jest tests
     + [ ] Versioning: synchronised, but packages that have no changes are not released.
