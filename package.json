@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "bootstrap": "yarn install && babel-node scripts/bootstrap",
+    "bootstrap": "babel-node scripts/bootstrap",
     "lint": "eslint packages",
     "compile": "babel-node scripts/forEach \"yarn run compile\"",
     "start": "cd packages/storyboard-examples && yarn run example",
@@ -9,7 +9,9 @@
     "buildServerLogsApp": "cd packages/storyboard-server-logs-app && yarn run build",
     "buildExamples": "cd packages/storyboard-examples && yarn run build",
     "xxl": "xxl --src packages --exclude node_modules,/lib/",
-    "testFast": "mocha"
+    "testFast": "mocha",
+    "test": "yarn run testFast",
+    "travis": "yarn run bootstrap && yarn run compile && yarn run test"
   },
   "devDependencies": {
     "babel-cli": "6.18.0",
