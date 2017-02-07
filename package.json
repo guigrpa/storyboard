@@ -11,7 +11,7 @@
     "buildExtension": "cd packages/storyboard-extension-chrome && yarn run build",
     "xxl": "xxl --src packages --exclude node_modules,/lib/",
     "jest": "jest --watch --coverage",
-    "jest-html": "jest-html --snapshot-patterns \"testJest/**/*.snap\"",
+    "jest-html": "jest-html --css-patterns test/snapshot.css --snapshot-patterns \"packages/**/*.snap\"",
     "test": "yarn run testFast",
     "testFast": "mocha && jest",
     "travis": "yarn run bootstrap && yarn run compile && yarn run test"
