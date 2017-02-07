@@ -12,8 +12,6 @@
 // when needed)
 import { chalk, mainStory, filters, hub } from 'storyboard-core';
 
-chalk.enabled = true;
-
 hub.init({ mainStory });
 filters.init({ mainStory });
 

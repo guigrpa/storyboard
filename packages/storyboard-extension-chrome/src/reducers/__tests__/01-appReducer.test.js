@@ -1,6 +1,6 @@
 /* eslint-env jest */
 /* eslint-disable no-extend-native */
-import reducer from '../../../lib/chromeExtension/reducers/appReducer';
+import reducer from '../appReducer';
 
 describe('appReducer', () => {
   it('01 should have correct initial state', () => {

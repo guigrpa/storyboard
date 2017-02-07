@@ -3,9 +3,8 @@ import React from 'react';
 import * as ReactRedux from 'react-redux';
 import { set as timmSet } from 'timm';
 import moment from 'moment';
-import chalk from 'chalk';
 import { Icon, Spinner } from 'giu';
-import { _, ansiColors, treeLines, serialize, constants } from 'storyboard-core';
+import { _, chalk, ansiColors, treeLines, serialize, constants } from 'storyboard-core';
 import * as actions from '../actions/actions';
 import ColoredText from './030-coloredText';
 

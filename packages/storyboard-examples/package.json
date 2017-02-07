@@ -10,9 +10,10 @@
   },
   "main": "lib/index.js",
   "scripts": {
-    "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src && cp -r src/public lib",
-    "build": "../../node_modules/.bin/webpack -p --config ./webpackConfig.js --color --progress --display-chunks",
-    "buildWatch": "../../node_modules/.bin/webpack -w --config ./webpackConfig.js --color --progress --display-chunks",
+    "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src",
+    "copyPublic": "cp -r src/public lib",
+    "build": "yarn run copyPublic && ../../node_modules/.bin/webpack -p --config ./webpackConfig.js --color --progress --display-chunks",
+    "buildWatch": "yarn run copyPublic && ../../node_modules/.bin/webpack -w --config ./webpackConfig.js --color --progress --display-chunks",
     "start": "yarn run example",
     "example": "node lib/server",
     "exampleWithDb": "node lib/serverWithDb"

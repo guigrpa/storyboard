@@ -2,8 +2,8 @@
 /* eslint-disable no-extend-native */
 import React from 'react';
 import renderer from 'react-test-renderer';
-import chalk from 'chalk';
-import ColoredText from '../../../lib/chromeExtension/components/030-coloredText';
+import { chalk } from 'storyboard-core';
+import ColoredText from '../030-coloredText';
 
 describe('ColoredText', () => {
   it('renders correctly with unstyled text', () => {

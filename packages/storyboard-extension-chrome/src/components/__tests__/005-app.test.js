@@ -2,14 +2,12 @@
 /* eslint-disable no-extend-native, global-require */
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { _App as App } from '../../../lib/chromeExtension/components/005-app';
+import { _App as App } from '../005-app';
 import { BASE_COLORS } from './fixtures';
 
 jest.mock('react-dom');
-jest.mock('../../../lib/chromeExtension/components/015-toolbar', () =>
-  require('./mockComponent')('Toolbar'));
-jest.mock('../../../lib/chromeExtension/components/020-story', () =>
-  require('./mockComponent')('Story'));
+jest.mock('../015-toolbar', () => require('./mockComponent')('Toolbar'));
+jest.mock('../020-story', () => require('./mockComponent')('Story'));
 
 describe('App', () => {
   it('renders correctly when disconnected', () => {

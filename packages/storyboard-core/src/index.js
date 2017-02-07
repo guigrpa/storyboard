@@ -7,7 +7,10 @@ import * as hub from './gral/hub';
 import recordToLines from './gral/recordToLines';
 import * as serialize from './gral/serialize';
 import mainStory from './gral/stories';
-import * as treeLines from './gral/treeLines';
+import treeLines from './gral/treeLines';
+
+// We export a custom version of chalk, with colors always on
+chalk.enabled = true;
 
 export {
   chalk,

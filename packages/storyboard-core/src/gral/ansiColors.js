@@ -3,8 +3,6 @@ import chalk from 'chalk';
 import * as _ from '../vendor/lodash';
 import * as k from './constants';
 
-chalk.enabled = true;
-
 // -------------------------------------------------
 // Map severity level to a colored string
 // -------------------------------------------------

@@ -16,8 +16,6 @@ import RootComponent from './components/000-root';
 
 require('babel-polyfill');  /* from root packages */ // eslint-disable-line
 
-chalk.enabled = true;
-
 if (process.env.NODE_ENV !== 'production') {
   window.ReactPerf = require('react-addons-perf');  // eslint-disable-line import/newline-after-import
   window.chalk = chalk;

@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import reducer from '../../../lib/chromeExtension/reducers/cxReducer';
+import reducer from '../cxReducer';
 
 describe('cxReducer', () => {
   let state;

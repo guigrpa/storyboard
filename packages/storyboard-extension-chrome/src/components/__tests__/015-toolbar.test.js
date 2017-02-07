@@ -2,15 +2,13 @@
 /* eslint-disable global-require, import/newline-after-import */
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { _Toolbar as Toolbar } from '../../../lib/chromeExtension/components/015-toolbar';
+import { _Toolbar as Toolbar } from '../015-toolbar';
 import { BASE_COLORS } from './fixtures';
 import $ from './jestQuery';
 
 jest.mock('react-dom');
-jest.mock('../../../lib/chromeExtension/components/010-login', () =>
-  require('./mockComponent')('Login'));
-jest.mock('../../../lib/chromeExtension/components/016-settings', () =>
-  require('./mockComponent')('Settings'));
+jest.mock('../010-login', () => require('./mockComponent')('Login'));
+jest.mock('../016-settings', () => require('./mockComponent')('Settings'));
 
 describe('Toolbar', () => {
   it('renders correctly when disconnected', () => {

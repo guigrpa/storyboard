@@ -1,8 +1,8 @@
 /* eslint-env jest */
 /* eslint-disable max-len, no-extend-native, no-plusplus */
 import timm from 'timm';
-import reducer from '../../../lib/chromeExtension/reducers/storiesReducer';
-import treeLines from '../../../lib/gral/treeLines';
+import { treeLines } from 'storyboard-core';
+import reducer from '../storiesReducer';
 
 Date.prototype.getTime = jest.genMockFunction().mockReturnValue(0);
 

@@ -1,12 +1,10 @@
 import { addDefaults } from 'timm';
-import isObject from 'lodash/isObject';
-import isFunction from 'lodash/isFunction';
-import isString from 'lodash/isString';
+import { _ } from 'storyboard-core';
 
 const $ = (root, options0, fnMatch0) => {
   let options = options0;
   let fnMatch = fnMatch0;
-  if (isFunction(options0) || isString(options0)) {
+  if (_.isFunction(options0) || _.isString(options0)) {
     options = {};
     fnMatch = options0;
   }
@@ -14,7 +12,7 @@ const $ = (root, options0, fnMatch0) => {
     fIncludeTextElements: false,
     fLog: false,
   });
-  if (isString(fnMatch)) fnMatch = getMatcher(fnMatch);
+  if (_.isString(fnMatch)) fnMatch = getMatcher(fnMatch);
   return visitElement(root, options, fnMatch);
 };
 
@@ -34,7 +32,7 @@ const getMatcher = (selector0) => {
 };
 
 const visitElement = (tree, options, fnMatch) => {
-  if (isObject(tree) || options.fIncludeTextElements) {
+  if (_.isObject(tree) || options.fIncludeTextElements) {
     // eslint-disable-next-line
     if (options.fLog) console.log(tree);
     if (fnMatch(tree)) return tree;

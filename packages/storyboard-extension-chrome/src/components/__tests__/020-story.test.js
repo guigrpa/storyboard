@@ -2,10 +2,9 @@
 /* eslint-disable global-require, import/newline-after-import, max-len, no-plusplus */
 import React from 'react';
 import renderer from 'react-test-renderer';
-import chalk from 'chalk';
 import { merge, setIn } from 'timm';
-import { serialize } from '../../../lib/gral/serialize';
-import { _Story as Story } from '../../../lib/chromeExtension/components/020-story';
+import { chalk, serialize } from 'storyboard-core';
+import { _Story as Story } from '../020-story';
 import { BASE_COLORS, DARK_COLORS, EMPTY_MAIN_STORY, buildLogRecord, buildStory } from './fixtures';
 
 jest.mock('react-dom');
@@ -91,7 +90,7 @@ describe('Story', () => {
   });
 
   it('06 renders attachments correctly', () => {
-    const attachment = serialize({ a: 3, b: false, c: true, d: undefined, e: 'foo', f: Buffer.from([1, 2, 3]), g: { g1: { g2: 4 } }, h: null, i: new Date(0) });
+    const attachment = serialize.serialize({ a: 3, b: false, c: true, d: undefined, e: 'foo', f: Buffer.from([1, 2, 3]), g: { g1: { g2: 4 } }, h: null, i: new Date(0) });
     const errorMsg = {
       __SB_TYPE__: 'ERROR',
       name: 'CustomError',

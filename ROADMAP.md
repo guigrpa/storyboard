@@ -1,28 +1,6 @@
 - **Conversion to monorepo**
-    + [ ] Foreseen dir structure:
-        - packages
-            - [x] storyboard
-            - [x] storyboard-core (<-- src/gral, .flow types, recordToLines, vendor)
-            - [x] storyboard-cli
-            - [x] storyboard-listener-console
-            - [x] storyboard-listener-file
-            - [x] storyboard-listener-db-postgres (--> pg)
-            - [x] storyboard-listener-ws-server (--> express, socket.io). Includes serverLogsApp
-            - [x] storyboard-listener-browser-extension
-            - [x] storyboard-listener-ws-client (--> socket.io-client)
-            - [x] storyboard-examples (private)
-            - [x] storyboard-extension-chrome (private)
-        - docs
-        - scripts
-        - test
-        - testJest
-        - tools
-        - ...
-    + [ ] Bugfix: Chrome extension:
-        - [ ] Some colors not appearing (e.g. closed actions)
-        - [ ] Colors OK?
     + [ ] Finalise migration of Mocha tests
-    + [ ] Migrate Jest tests
+    + [ ] Configure test coverage
     + [ ] Versioning: synchronised, but packages that have no changes are not released.
       This should be automated to avoid problems. The tool should ask for a new version number,
       and then determine which packages will be released. A commit is then performed and tagged.
@@ -36,14 +14,12 @@
         - Tool determines which packages will be released
         - Tool updates selected packages
         - Tool commits and tags
-        -
-    + [ ] Tests
     + [ ] Preset: check with default and named exports
     + [ ] Normal: check flow interface
 
 - [ ] **Bump versions**
 
-- Hints: login, settings
+- Add hints: login, settings
 
 - Bugs:
     +

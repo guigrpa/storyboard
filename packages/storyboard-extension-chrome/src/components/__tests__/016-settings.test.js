@@ -3,7 +3,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { Floats } from 'giu';
-import { _Settings as Settings } from '../../../lib/chromeExtension/components/016-settings';
+import { _Settings as Settings } from '../016-settings';
 import { BASE_COLORS } from './fixtures';
 
 jest.mock('react-dom');

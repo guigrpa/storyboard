@@ -10,7 +10,7 @@
     "buildExamples": "cd packages/storyboard-examples && yarn run build",
     "buildExtension": "cd packages/storyboard-extension-chrome && yarn run build",
     "xxl": "xxl --src packages --exclude node_modules,/lib/",
-    "testFast": "mocha",
+    "testFast": "mocha && jest",
     "test": "yarn run testFast",
     "travis": "yarn run bootstrap && yarn run compile && yarn run test"
   },
@@ -51,7 +51,7 @@
     "style-loader": "0.13.1",
     "timm": "^1.2.3",
     "webpack": "2.2.1",
-    "xxl": "^1.0.0"
+    "xxl": "^1.0.1"
   },
   "nyc": {
     "exclude": [
@@ -62,11 +62,10 @@
     ]
   },
   "jest": {
-    "testRegex": "testJest/.*\\.(test|spec)\\.(js|jsx)$",
+    "testRegex": "packages/.*__tests__/.*\\.(test|spec)\\.(js|jsx)$",
     "moduleNameMapper": {
       "^.+\\.(css|less|sass)$": "<rootDir>/test/emptyObject.js",
-      "^.+\\.(gif|ttf|eot|svg)$": "<rootDir>/test/emptyString.js",
-      "node-uuid": "<rootDir>/test/mockUuid.js"
+      "^.+\\.(gif|ttf|eot|svg)$": "<rootDir>/test/emptyString.js"
     },
     "coverageDirectory": ".nyc_output",
     "coverageReporters": [
@@ -78,19 +77,10 @@
       "<rootDir>/node_modules/jest-html"
     ],
     "collectCoverageFrom": [
-      "packages/**/lib/**/*.js",
-      "!lib/cli.js",
-      "!lib/noPlugins.js",
-      "!lib/stdinLogger.js",
-      "!lib/withConsoleListener.js",
-      "!lib/chromeExtension/*.js",
-      "!lib/chromeExtension/store/**",
-      "!lib/example/**",
-      "!lib/serverLogsApp/**",
-      "!lib/vendor/**",
+      "packages/*/src/**/*.js",
+      "!packages/storyboard-cli/**",
+      "!packages/storyboard-examples/**",
       "!test/**",
-      "!testJest/**",
-      "!**/webpack*",
       "!**/node_modules/**",
       "!**/__tests__/**",
       "!**/__mocks__/**"
