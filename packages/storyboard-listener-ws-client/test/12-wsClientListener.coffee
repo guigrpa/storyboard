@@ -1,11 +1,8 @@
-{storyboard, expect, sinon, Promise, h} = require './imports'
-chalk             = require 'chalk'
-http              = require 'http'
-socketio          = require 'socket.io'
-wsClientListener  = require('../../lib/listeners/wsClient').default
-k                 = require '../../lib/gral/constants'
-
-{mainStory} = storyboard
+Promise = require 'bluebird'
+http = require 'http'
+socketio = require 'socket.io'
+{hub, filters, mainStory, constants: k, chalk} = require 'storyboard-core'
+wsClientListener = require('../lib').default
 
 SAMPLE_RECORDS = [
   {t: new Date().getTime()}
@@ -29,8 +26,10 @@ describe "wsClientListener", ->
 
   before ->
     # Reset Storyboard and spies
-    storyboard.removeAllListeners()
-    storyboard.config {filter: '*:*'}
+    hub.init {mainStory}
+    hub.removeAllListeners()
+    filters.init {mainStory}
+    filters.config '*:*'
     _spyServerRxMsg = sinon.spy (msg) ->
       # console.log msg.type
       if msg.type is 'CLOCKSY'
@@ -58,18 +57,18 @@ describe "wsClientListener", ->
       # as well as a fake listener to serve as a spy
       Promise.delay 100
       .then ->
-        _listener = storyboard.addListener wsClientListener,
+        _listener = hub.addListener wsClientListener,
           clockSync: true
-        storyboard.addListener -> {process: _spyClientHub}
+        hub.addListener -> {process: _spyClientHub}
 
     # Allow time for clock sync
-    .then -> h.waitUntil(1000, -> _listener.fSocketConnected)
+    .then -> waitUntil(1000, -> _listener.fSocketConnected)
 
     # Prevent setup from possibly interfering with tests
     .delay 250
 
   after ->
-    storyboard.removeAllListeners()
+    hub.removeAllListeners()
     _httpServer.close()
     _io.close()
 
@@ -84,7 +83,7 @@ describe "wsClientListener", ->
 
     it "should relay all messages in this direction", ->
       _serverSocket.emit 'MSG', {type: 'EXAMPLE_RESPONSE', result: 'success', data: {b: 4}}
-      h.waitUntil(1000, -> _spyClientHub.callCount > 0)
+      waitUntil(1000, -> _spyClientHub.callCount > 0)
       .then ->
         msg = _spyClientHub.args[0][0]
         expect(msg.type).to.equal 'EXAMPLE_RESPONSE'
@@ -92,7 +91,7 @@ describe "wsClientListener", ->
 
     it "should correct time stamps in RECORDS messages", ->
       _serverSocket.emit 'MSG', {type: 'RECORDS', data: SAMPLE_RECORDS}
-      h.waitUntil(1000, -> _spyClientHub.callCount > 0)
+      waitUntil(1000, -> _spyClientHub.callCount > 0)
       .then ->
         msg = _spyClientHub.args[0][0]
         expect(msg.type).to.equal 'RECORDS'
@@ -102,7 +101,7 @@ describe "wsClientListener", ->
 
     it "should correct time stamps in LOGIN_RESPONSE messages", ->
       _serverSocket.emit 'MSG', {type: 'LOGIN_RESPONSE', data: {bufferedRecords: SAMPLE_RECORDS}}
-      h.waitUntil(1000, -> _spyClientHub.callCount > 0)
+      waitUntil(1000, -> _spyClientHub.callCount > 0)
       .then ->
         msg = _spyClientHub.args[0][0]
         expect(msg.type).to.equal 'LOGIN_RESPONSE'
@@ -113,7 +112,7 @@ describe "wsClientListener", ->
   describe "socket <- hub", ->
     it "should report on its connection status when a CONNECT_REQUEST reaches it", ->
       _listener.process {type: 'CONNECT_REQUEST'}
-      h.waitUntil(1000, -> _spyClientHub.callCount >= 1)
+      waitUntil(1000, -> _spyClientHub.callCount >= 1)
       .then ->
         msg = _spyClientHub.args[0][0]
         expect(msg.type).to.equal 'WS_CONNECTED'
@@ -124,7 +123,7 @@ describe "wsClientListener", ->
       _listener.process {type: 'LOGIN_REQUIRED_QUESTION'}
       _listener.process {type: 'GET_SERVER_FILTER'}
       _listener.process {type: 'SET_SERVER_FILTER'}
-      h.waitUntil(1000, -> _spyServerRxMsg.callCount >= 5)
+      waitUntil(1000, -> _spyServerRxMsg.callCount >= 5)
       .then ->
         msg = _spyServerRxMsg.args[0][0]
         expect(msg.type).to.equal 'LOGIN_REQUEST'
@@ -146,7 +145,7 @@ describe "wsClientListener", ->
 
       beforeEach ->
         _listener.process {type: 'RECORDS', data: SAMPLE_RECORDS}
-        return h.waitUntil(1000, -> _spyServerRxMsg.callCount >= 1)
+        return waitUntil(1000, -> _spyServerRxMsg.callCount >= 1)
 
       it "should upload records", ->
         msg = _spyServerRxMsg.args[0][0]

@@ -1,11 +1,8 @@
-{storyboard, expect, sinon, Promise, h} = require './imports'
-chalk = require 'chalk'
+Promise = require 'bluebird'
 http = require 'http'
 socketio = require 'socket.io-client'
-wsServerListener = require('../../lib/listeners/wsServer').default
-k = require '../../lib/gral/constants'
-
-{mainStory} = storyboard
+{hub, filters, mainStory, constants: k, chalk} = require 'storyboard-core'
+wsServerListener = require('../lib').default
 
 #-====================================================
 # ## Tests
@@ -18,12 +15,16 @@ describe "wsServerListener", ->
 
   _spySocketRx = null
   before ->
-    storyboard.removeAllListeners()
-    storyboard.config {filter: '*:*'}
+    hub.init {mainStory}
+    hub.removeAllListeners()
+    filters.init {mainStory}
+    filters.config '*:*'
     # _spySocketRx = sinon.spy((msg) -> console.log msg.type)
     _spySocketRx = sinon.spy()
 
   beforeEach -> _spySocketRx.reset()
+
+  after -> hub.removeAllListeners()
 
   #-====================================================
   # ### Server without auth
@@ -33,20 +34,20 @@ describe "wsServerListener", ->
     _listener = null
     _socket = null
     before ->
-      _listener = storyboard.addListener wsServerListener, {throttle: 0}
+      _listener = hub.addListener wsServerListener, {throttle: 0}
       return new Promise (resolve, reject) ->
         _socket = socketio "http://localhost:8090#{k.WS_NAMESPACE}"
         _socket.on 'MSG', _spySocketRx
         _socket.on 'connect', resolve
 
-    after -> storyboard.removeListener _listener
+    after -> hub.removeListener _listener
 
     it "sanity", ->
       expect(_listener.getConfig().hasOwnProperty('port')).to.be.true
 
     it "should not require a log in", ->
       _socket.emit 'MSG', {type: 'LOGIN_REQUIRED_QUESTION'}
-      h.waitUntil(1000, -> _spySocketRx.callCount > 0)
+      waitUntil(1000, -> _spySocketRx.callCount > 0)
       .then (res) ->
         expect(_spySocketRx).to.have.been.calledOnce
         msg = _spySocketRx.args[0][0]
@@ -55,7 +56,7 @@ describe "wsServerListener", ->
 
     it "should send log records generated via e.g. mainStory.info()", ->
       mainStory.info "Msg through web sockets"
-      h.waitUntil(1000, -> _spySocketRx.callCount > 0)
+      waitUntil(1000, -> _spySocketRx.callCount > 0)
       .then (res) ->
         expect(_spySocketRx).to.have.been.calledOnce
         msg = _spySocketRx.args[0][0]
@@ -69,7 +70,7 @@ describe "wsServerListener", ->
         data: [
           {src: 'fontana di trevi', msg: 'water1'}
         ]
-      h.waitUntil(1000, -> _spySocketRx.callCount > 0)
+      waitUntil(1000, -> _spySocketRx.callCount > 0)
       .then (res) ->
         expect(_spySocketRx).to.have.been.calledOnce
         msg = _spySocketRx.args[0][0]
@@ -81,20 +82,20 @@ describe "wsServerListener", ->
       _socket.emit 'MSG',
         type: 'SET_SERVER_FILTER'
         data: '-*'
-      h.waitUntil(1000, -> _spySocketRx.callCount > 0)
+      waitUntil(1000, -> _spySocketRx.callCount > 0)
       .then ->
         expect(_spySocketRx).to.have.been.calledOnce
         msg = _spySocketRx.args[0][0]
         expect(msg.type).to.equal 'SERVER_FILTER'
         expect(msg.data).to.deep.equal {filter: '-*'}
       .delay 200  # allow the log message to disappear
-      .then -> storyboard.config {filter: '*:*'}
+      .then -> filters.config '*:*'
 
     it "should ignore a log out (this is a server without auth)", ->
       _socket.emit 'MSG', {type: 'LOG_OUT'}
       Promise.delay(200)
       .then -> mainStory.info "This message should be received by the client"
-      .then -> h.waitUntil(1000, -> _spySocketRx.callCount > 0)
+      .then -> waitUntil(1000, -> _spySocketRx.callCount > 0)
       .then ->
         expect(_spySocketRx).to.have.been.calledOnce
         msg = _spySocketRx.args[0][0]
@@ -110,7 +111,7 @@ describe "wsServerListener", ->
       _listener = null
       _socket = null
       before ->
-        _listener = storyboard.addListener wsServerListener,
+        _listener = hub.addListener wsServerListener,
           throttle: 0
           authenticate: ({login, password}) -> login is 'admin'
         return new Promise (resolve, reject) ->
@@ -118,11 +119,11 @@ describe "wsServerListener", ->
           _socket.on 'MSG', _spySocketRx
           _socket.on 'connect', resolve
 
-      after -> storyboard.removeListener _listener
+      after -> hub.removeListener _listener
 
       it "should require a log in", ->
         _socket.emit 'MSG', {type: 'LOGIN_REQUIRED_QUESTION'}
-        h.waitUntil(1000, -> _spySocketRx.callCount > 0)
+        waitUntil(1000, -> _spySocketRx.callCount > 0)
         .then (res) ->
           expect(_spySocketRx).to.have.been.calledOnce
           msg = _spySocketRx.args[0][0]
@@ -131,7 +132,7 @@ describe "wsServerListener", ->
 
       it "should reject invalid credentials", ->
         _socket.emit 'MSG', {type: 'LOGIN_REQUEST', data: {login: 'pepinillo', password: 'b'}}
-        h.waitUntil(1000, -> _spySocketRx.callCount > 0)
+        waitUntil(1000, -> _spySocketRx.callCount > 0)
         .then (res) ->
           expect(_spySocketRx).to.have.been.called
           msg = _spySocketRx.args[0][0]
@@ -141,7 +142,7 @@ describe "wsServerListener", ->
 
       it "should accept a log in (and reply with buffered records)", ->
         _socket.emit 'MSG', {type: 'LOGIN_REQUEST', data: {login: 'admin', password: 'b'}}
-        h.waitUntil(1000, -> _spySocketRx.callCount > 0)
+        waitUntil(1000, -> _spySocketRx.callCount > 0)
         .then (res) ->
           expect(_spySocketRx).to.have.been.called
           msg = _spySocketRx.args[0][0]
@@ -151,7 +152,7 @@ describe "wsServerListener", ->
 
       it "should send log records generated via e.g. mainStory.info()", ->
         mainStory.info "Msg through web sockets"
-        h.waitUntil(1000, -> _spySocketRx.callCount > 0)
+        waitUntil(1000, -> _spySocketRx.callCount > 0)
         .then (res) ->
           expect(_spySocketRx).to.have.been.calledOnce
           msg = _spySocketRx.args[0][0]
@@ -161,7 +162,7 @@ describe "wsServerListener", ->
 
       it "should send log records with attachments", ->
         mainStory.info "Msg with object", attach: {a: 4, b: 3}
-        h.waitUntil(1000, -> _spySocketRx.callCount > 0)
+        waitUntil(1000, -> _spySocketRx.callCount > 0)
         .then (res) ->
           expect(_spySocketRx).to.have.been.calledOnce
           msg = _spySocketRx.args[0][0]
@@ -171,7 +172,7 @@ describe "wsServerListener", ->
 
       it "should report invalid messages", ->
         _socket.emit 'MSG', {type: 'INVALID_MSG_TYPE'}
-        h.waitUntil(1000, -> _spySocketRx.callCount > 0)
+        waitUntil(1000, -> _spySocketRx.callCount > 0)
         .then (res) ->
           expect(_spySocketRx).to.have.been.calledOnce
           msg = _spySocketRx.args[0][0]
@@ -193,7 +194,7 @@ describe "wsServerListener", ->
       _listener = null
       _socket = null
       before ->
-        _listener = storyboard.addListener wsServerListener,
+        _listener = hub.addListener wsServerListener,
           throttle: 50
           authenticate: (o) -> true
         return new Promise (resolve, reject) ->
@@ -202,13 +203,13 @@ describe "wsServerListener", ->
           _socket.on 'MSG', _spySocketRx
         .then ->
           _socket.emit 'MSG', {type: 'LOGIN_REQUEST', data: {login: 'a', password: 'b'}}
-        .then -> h.waitUntil(3000, -> _spySocketRx.callCount > 1)  # LOGIN_RESPONSE, initial RECORDS
+        .then -> waitUntil(3000, -> _spySocketRx.callCount > 1)  # LOGIN_RESPONSE, initial RECORDS
 
-      after -> storyboard.removeListener _listener
+      after -> hub.removeListener _listener
 
       it "should send log records generated via e.g. mainStory.info()", ->
         mainStory.info "Msg2 through web sockets"
-        h.waitUntil(3000, -> _spySocketRx.callCount > 0)
+        waitUntil(3000, -> _spySocketRx.callCount > 0)
         .then (res) ->
           expect(_spySocketRx).to.have.been.calledOnce
           msg = _spySocketRx.args[0][0]
@@ -233,7 +234,7 @@ describe "wsServerListener", ->
     before ->
       _httpServer = http.createServer(->)
       _spySocketRx = sinon.spy()
-      _listener = storyboard.addListener wsServerListener,
+      _listener = hub.addListener wsServerListener,
         throttle: 0
         httpServer: _httpServer
       return new Promise (resolve, reject) ->
@@ -245,14 +246,14 @@ describe "wsServerListener", ->
         _socket.on 'connect', resolve
 
     after ->
-      storyboard.removeListener _listener
+      hub.removeListener _listener
       _httpServer.close()
 
     beforeEach -> _spySocketRx.reset()
 
     it "should send log records generated via e.g. mainStory.info()", ->
       mainStory.info "Msg through web sockets"
-      h.waitUntil(3000, -> _spySocketRx.callCount > 0)
+      waitUntil(3000, -> _spySocketRx.callCount > 0)
       .then (res) ->
         expect(_spySocketRx).to.have.been.calledOnce
         msg = _spySocketRx.args[0][0]

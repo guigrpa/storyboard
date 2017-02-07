@@ -1,5 +1,4 @@
 - **Conversion to monorepo**
-    + [ ] Finalise migration of Mocha tests
     + [ ] Versioning: synchronised, but packages that have no changes are not released.
       This should be automated to avoid problems. The tool should ask for a new version number,
       and then determine which packages will be released. A commit is then performed and tagged.

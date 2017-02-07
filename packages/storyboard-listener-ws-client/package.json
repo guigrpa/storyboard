@@ -17,5 +17,8 @@
     "ms": "0.7.2",
     "socket.io-client": "1.6.0",
     "storyboard-core": "^3.0.0"
+  },
+  "devDependencies": {
+    "socket.io": "1.6.0"
   }
 }

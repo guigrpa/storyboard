@@ -1,6 +1,6 @@
-{filters, hub, mainStory, serialize} = require 'storyboard-core'
 Promise = require 'bluebird'
 consoleListener = require('../lib').default
+{filters, hub, mainStory, serialize} = require 'storyboard-core'
 
 {CIRCULAR_REF} = serialize;
 
@@ -25,8 +25,8 @@ describe "consoleListener", ->
   _spyError = null
   before ->
     hub.init { mainStory }
-    filters.init { mainStory }
     hub.removeAllListeners()
+    filters.init { mainStory }
 
     sinon.stub console, 'log'
     hub.addListener consoleListener
@@ -52,6 +52,8 @@ describe "consoleListener", ->
     console.log.restore()
     console.error.restore()
     console.warn.restore()
+
+  after -> hub.removeAllListeners()
 
   it "sanity", ->
     expect(_listener.getConfig().hasOwnProperty('moduleNameLength')).to.be.true

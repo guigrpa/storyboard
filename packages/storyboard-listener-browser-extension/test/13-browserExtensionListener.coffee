@@ -1,12 +1,8 @@
-{storyboard, expect, sinon, Promise, h} = require './imports'
-{merge}           = require 'timm'
-chalk             = require 'chalk'
-browserExtModule  = require '../../lib/listeners/browserExtension'
-browserExtensionListener = browserExtModule.default
-setMockWindow            = browserExtModule._setWindow
-k                 = require '../../lib/gral/constants'
-
-{mainStory} = storyboard
+Promise = require 'bluebird'
+{merge} = require 'timm'
+{hub, filters, mainStory, constants: k, chalk} = require 'storyboard-core'
+browserExtensionListener = require('../lib').default
+setMockWindow = require('../lib')._setWindow
 
 #-====================================================
 # ## Tests
@@ -28,8 +24,10 @@ describe "browserExtensionListener", ->
 
   before ->
     # Reset Storyboard and spies
-    storyboard.removeAllListeners()
-    storyboard.config {filter: '*:*'}
+    hub.init {mainStory}
+    hub.removeAllListeners()
+    filters.init {mainStory}
+    filters.config '*:*'
     _spyClientWinTxMsg = sinon.spy() # (ev) -> console.log ev
     _spyClientHub = sinon.spy() # (msg) -> console.log msg.type
 
@@ -41,15 +39,15 @@ describe "browserExtensionListener", ->
     setMockWindow _mockWindow
 
     # Create listener, and make it believe that the extension is ready
-    _listener = storyboard.addListener browserExtensionListener
-    storyboard.addListener -> {process: _spyClientHub}
+    _listener = hub.addListener browserExtensionListener
+    hub.addListener -> {process: _spyClientHub}
     _extensionTxMsg {type: 'CONNECT_RESPONSE'}
 
     # Prevent setup from possibly interfering with tests
     return Promise.delay 250
 
   after ->
-    storyboard.removeAllListeners()
+    hub.removeAllListeners()
 
   beforeEach ->
     _spyClientWinTxMsg.reset()
@@ -61,7 +59,7 @@ describe "browserExtensionListener", ->
   describe 'extension <- hub', ->
     it "should relay all messages in this direction", ->
       _listener.process {type: 'WHATEVER', data: {b: 4}}
-      h.waitUntil(1000, -> _spyClientWinTxMsg.callCount > 0)
+      waitUntil(1000, -> _spyClientWinTxMsg.callCount > 0)
       .then ->
         msg = _spyClientWinTxMsg.args[0][0]
         expect(msg.type).to.equal 'WHATEVER'
@@ -70,7 +68,7 @@ describe "browserExtensionListener", ->
   describe 'extension -> hub', ->
     it "should relay messages by default", ->
       _extensionTxMsg {type: 'WHATEVER', data: {b: 4}}
-      h.waitUntil(1000, -> _spyClientHub.callCount > 0)
+      waitUntil(1000, -> _spyClientHub.callCount > 0)
       .then ->
         msg = _spyClientHub.args[0][0]
         expect(msg.type).to.equal 'WHATEVER'
@@ -80,7 +78,7 @@ describe "browserExtensionListener", ->
       _extensionTxMsg {type: 'GET_LOCAL_CLIENT_FILTER'}
       Promise.delay(200)
       .then -> expect(_spyClientHub).not.to.have.been.called
-      .then -> h.waitUntil(1000, -> _spyClientWinTxMsg.callCount > 0)
+      .then -> waitUntil(1000, -> _spyClientWinTxMsg.callCount > 0)
       .then ->
         msg = _spyClientWinTxMsg.args[0][0]
         expect(msg.type).to.equal 'LOCAL_CLIENT_FILTER'
@@ -89,11 +87,11 @@ describe "browserExtensionListener", ->
     it "should respond to CONNECT_REQUEST messages with its hub ID; AND ALSO relay them", ->
       _extensionTxMsg {type: 'CONNECT_REQUEST'}
       Promise.resolve()
-      .then -> h.waitUntil(1000, -> _spyClientHub.callCount > 0)
+      .then -> waitUntil(1000, -> _spyClientHub.callCount > 0)
       .then ->
         msg = _spyClientHub.args[0][0]
         expect(msg.type).to.equal 'CONNECT_REQUEST'
-      .then -> h.waitUntil(1000, -> _spyClientWinTxMsg.callCount > 0)
+      .then -> waitUntil(1000, -> _spyClientWinTxMsg.callCount > 0)
       .then ->
         msg = _spyClientWinTxMsg.args[0][0]
         expect(msg.type).to.equal 'CONNECT_RESPONSE'
