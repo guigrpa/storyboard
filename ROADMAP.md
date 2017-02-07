@@ -1,4 +1,5 @@
 - **Conversion to monorepo**
+    + [ ] Configure jest-html
     + [ ] Finalise migration of Mocha tests
     + [ ] Configure test coverage
     + [ ] Versioning: synchronised, but packages that have no changes are not released.

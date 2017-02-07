@@ -10,8 +10,10 @@
     "buildExamples": "cd packages/storyboard-examples && yarn run build",
     "buildExtension": "cd packages/storyboard-extension-chrome && yarn run build",
     "xxl": "xxl --src packages --exclude node_modules,/lib/",
-    "testFast": "mocha && jest",
+    "jest": "jest --watch --coverage",
+    "jest-html": "jest-html --snapshot-patterns \"testJest/**/*.snap\"",
     "test": "yarn run testFast",
+    "testFast": "mocha && jest",
     "travis": "yarn run bootstrap && yarn run compile && yarn run test"
   },
   "devDependencies": {
@@ -55,7 +57,7 @@
   },
   "nyc": {
     "exclude": [
-      "packages/storyboard/lib/vendor/**",
+      "packages/storyboard-core/lib/vendor/**",
       "node_modules/**/*",
       "**/node_modules/**/*",
       "test/**"
@@ -79,6 +81,7 @@
     "collectCoverageFrom": [
       "packages/*/src/**/*.js",
       "!packages/storyboard-cli/**",
+      "!packages/storyboard-core/lib/vendor/**",
       "!packages/storyboard-examples/**",
       "!test/**",
       "!**/node_modules/**",
