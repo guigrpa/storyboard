@@ -1,6 +1,6 @@
 import React from 'react';
 import * as ReactRedux from 'react-redux';
-import { Icon, isDark } from 'giu';
+import { Icon, isDark, hintShow } from 'giu';
 import Login from './010-login';
 import Settings from './016-settings';
 import * as actions from '../actions/actions';
@@ -68,6 +68,13 @@ class Toolbar extends React.PureComponent {
               onClick={this.props.clearLogs}
               style={style.icon(colors)}
             />
+            <Icon
+              icon="info-circle"
+              size="lg"
+              title="Show hints"
+              onClick={this.showHints}
+              style={style.icon(colors)}
+            />
             {' '}
             <input
               id="quickFind"
@@ -117,6 +124,10 @@ class Toolbar extends React.PureComponent {
   // -----------------------------------------------------
   toggleSettings = () => {
     this.setState({ fSettingsShown: !this.state.fSettingsShown });
+  }
+
+  showHints = () => {
+    hintShow('main', true);
   }
 
   onChangeQuickFind = (ev) => {

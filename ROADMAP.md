@@ -7,8 +7,6 @@
     + [ ] Normal: check flow interface
     * Once published, update package.json to use storyboard@3 ourselves
 
-- Add hints to changelog
-- Add info button to show hints again
 - Add right-click to set reference timestamp
 
 - Bugs:
