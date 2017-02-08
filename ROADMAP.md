@@ -7,8 +7,6 @@
     + [ ] Normal: check flow interface
     * Once published, update package.json to use storyboard@3 ourselves
 
-- [ ] **Bump versions**
-
 - Add hints: login, settings
 
 - Bugs:
