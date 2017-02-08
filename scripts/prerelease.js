@@ -1,5 +1,6 @@
 import path from 'path';
 import { merge } from 'timm';
+import semver from 'semver';
 import { mainStory, chalk } from './utils/storyboard';
 import readAllSpecs, { ROOT_PACKAGE } from './utils/readAllSpecs';
 import writeSpecs from './utils/writeSpecs';
@@ -15,6 +16,27 @@ const run = async () => {
   const allSpecs = await readAllSpecs();
   const pkgNames = Object.keys(allSpecs);
   const rootSpecs = allSpecs[ROOT_PACKAGE].specs;
+
+  // Check version numbers! Allow bumping
+  const masterVersion = rootSpecs.version;
+  for (let i = 0; i < pkgNames.length; i++) {
+    const pkgName = pkgNames[i];
+    if (pkgName === ROOT_PACKAGE) continue;
+    const { specs } = allSpecs[pkgName];
+    const { version } = specs;
+    if (specs.private) continue;
+    if (!semver.valid(version)) {
+      mainStory.error(`Invalid version for ${chalk.bold(pkgName)}: ${chalk.bold(version)}`);
+      process.exit(1);
+    }
+    if (semver.gt(version, masterVersion)) {
+      mainStory.error(`Version for ${pkgName} (${chalk.bold(version)}) > master version (${chalk.bold(masterVersion)})`);
+      process.exit(1);
+    }
+      if (semver.lt(version, masterVersion)) {
+      // TODO: check whether there are changes in the package; if so, correct them
+    }
+  }
 
   // Copy READMEs to all non-private packages
   for (let i = 0; i < pkgNames.length; i++) {

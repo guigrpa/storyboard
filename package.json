@@ -1,7 +1,7 @@
 {
   "name": "storyboard",
   "private": true,
-  "version": "3.0.0",
+  "version": "3.0.0-rc.1",
   "author": "Guillermo Grau Panea",
   "license": "MIT",
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
@@ -12,19 +12,25 @@
     "console",
     "isomorphic"
   ],
+  "homepage": "https://github.com/guigrpa/storyboard#readme",
+  "bugs": {
+    "url": "https://github.com/guigrpa/storyboard/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/guigrpa/storyboard.git"
   },
   "scripts": {
+    "travis": "yarn run bootstrap && yarn run compile && yarn run test",
+    "build": "yarn run bootstrap && yarn run lint && yarn run compile && yarn run buildAllProducts && yarn run test && yarn run xxl && yarn run prerelease",
     "bootstrap": "babel-node scripts/bootstrap",
-    "lint": "eslint packages",
     "compile": "babel-node scripts/forEach \"yarn run compile\"",
-    "start": "cd packages/storyboard-examples && yarn run example",
     "buildAllProducts": "yarn run buildServerLogsApp && yarn run buildExamples && yarn run buildExtension",
     "buildServerLogsApp": "cd packages/storyboard-server-logs-app && yarn run build",
     "buildExamples": "cd packages/storyboard-examples && yarn run build",
     "buildExtension": "cd packages/storyboard-extension-chrome && yarn run build",
+    "start": "cd packages/storyboard-examples && yarn run example",
+    "lint": "eslint packages",
     "xxl": "xxl --src packages --exclude node_modules,/lib/",
     "jest": "jest --watch --coverage",
     "jest-html": "jest-html --css-patterns test/snapshot.css --snapshot-patterns \"packages/**/*.snap\"",
@@ -38,7 +44,8 @@
     "testProd": "cross-env NODE_ENV=production yarn run testCov && mv .nyc_tmp/coverage-final.json .nyc_tmp/coverage-prod.json",
     "testBrowser": "cross-env NODE_ENV=development TEST_BROWSER=true yarn run testCov && mv .nyc_tmp/coverage-final.json .nyc_tmp/coverage-browser.json",
     "testCov": "nyc node_modules/mocha/bin/_mocha && mv .nyc_output/* .nyc_tmp/ && rm -rf .nyc_output && jest --coverage && mv .nyc_output/coverage-final.json .nyc_tmp && rm -rf .nyc_output",
-    "travis": "yarn run bootstrap && yarn run compile && yarn run test"
+    "prerelease": "babel-node scripts/prerelease",
+    "release": "babel-node scripts/release"
   },
   "devDependencies": {
     "babel-cli": "6.18.0",
@@ -70,6 +77,7 @@
     "node-sass": "4.5.0",
     "nyc": "8.4.0",
     "sass-loader": "4.1.1",
+    "semver": "5.3.0",
     "shelljs": "^0.7.6",
     "sinon": "1.17.6",
     "sinon-chai": "2.8.0",

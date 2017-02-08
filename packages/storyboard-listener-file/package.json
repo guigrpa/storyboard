@@ -1,6 +1,6 @@
 {
   "name": "storyboard-listener-file",
-  "version": "3.0.0",
+  "version": "3.0.0-rc.1",
   "main": "lib/index.js",
   "scripts": {
     "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src"

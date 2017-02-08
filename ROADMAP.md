@@ -1,12 +1,10 @@
 - **Conversion to monorepo**
-    + [ ] Versioning: synchronised, but packages that have no changes are not released.
-      This should be automated to avoid problems. The tool should ask for a new version number,
-      and then determine which packages will be released. A commit is then performed and tagged.
-    + [ ] Publishing:
-        - Tool asks for new version number
-        - Tool determines which packages will be released
-        - Tool updates selected packages
-        - Tool commits and tags
+    * Prerelease: check versions: none should be higher than the master one
+    * Manual version updates, tagging
+    * Automated publishing:
+        * Ask the user whether he has run yarn build
+        * Determine which packages need publishing and do it (npm publish)
+    * Automated publishing (warn if not master, compare published version with current package, publish if needed)
     + [ ] Preset: check with default and named exports
     + [ ] Normal: check flow interface
 
@@ -23,8 +21,3 @@
         * [ ] Algorithm for fixing server stories received *before* their parent client stories (e.g. when uploading: server stories that happen before the socket is established): save story IDs for which the client-parent is unavailable for later (a hash, just like `openStories` and `closedStories`: `pendingClientParentStories`? :) ). When the client-parent appears, move the story and delete the story ID from the list.
 - **Lib**:
     + [ ] React App: embeddable SB components (without requiring extension)
-- **Chrome extension**:
-    + [ ] Remove CJSX code
-    + [ ] Add Jest snapshots to assist in code conversion
-    + [ ] Clean up automatically converted CJSX code
-    + [ ] Bump React, use PureComponent where possible

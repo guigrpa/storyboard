@@ -20,11 +20,11 @@ const mv = (src, dst, { story = mainStory } = {}) => {
   shell.mv('-rf', path.normalize(src), path.normalize(dst));
 };
 
-const exec = async (cmd, { story = mainStory, cwd } = {}) => {
+const exec = async (cmd, { story = mainStory, logLevel = 'info', cwd } = {}) => {
   const prevWd = shell.pwd();
   let title = `Run cmd ${chalk.green.bold(cmd)}`;
   if (cwd) title += ` at ${chalk.green(cwd)}`;
-  const ownStory = story.child({ title });
+  const ownStory = story.child({ title, level: logLevel });
   try {
     if (cwd) cd(cwd, { story });
     const result = await _exec(cmd, ownStory);

@@ -1,5 +1,5 @@
 /* eslint-env jest */
-/* eslint-disable no-extend-native */
+/* eslint-disable no-extend-native, react/jsx-no-duplicate-props */
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { Floats } from 'giu';
