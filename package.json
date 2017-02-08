@@ -1,5 +1,21 @@
 {
+  "name": "storyboard",
   "private": true,
+  "version": "3.0.0",
+  "author": "Guillermo Grau Panea",
+  "license": "MIT",
+  "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
+  "keywords": [
+    "log",
+    "logging",
+    "websockets",
+    "console",
+    "isomorphic"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guigrpa/storyboard.git"
+  },
   "scripts": {
     "bootstrap": "babel-node scripts/bootstrap",
     "lint": "eslint packages",

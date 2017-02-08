@@ -4,8 +4,6 @@
       and then determine which packages will be released. A commit is then performed and tagged.
     + [ ] Publishing:
         - Tool builds, which includes:
-            - Copy README to packages/storyboard
-            - Copy README stub to other packages
             - Copy certain fields from <root>/package.json to all packages:
               description, keywords, author, license, homepage/bugs/repository, etc.
         - Tool asks for new version number

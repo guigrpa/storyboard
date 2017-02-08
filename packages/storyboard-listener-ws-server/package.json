@@ -1,12 +1,6 @@
 {
   "name": "storyboard-listener-ws-server",
   "version": "3.0.0",
-  "author": "Guillermo Grau Panea",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/guigrpa/storyboard.git"
-  },
   "main": "lib/index.js",
   "scripts": {
     "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src"
@@ -21,5 +15,23 @@
   },
   "devDependencies": {
     "socket.io-client": "1.6.0"
+  },
+  "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
+  "keywords": [
+    "log",
+    "logging",
+    "websockets",
+    "console",
+    "isomorphic"
+  ],
+  "author": "Guillermo Grau Panea",
+  "license": "MIT",
+  "homepage": "https://github.com/guigrpa/storyboard#readme",
+  "bugs": {
+    "url": "https://github.com/guigrpa/storyboard/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guigrpa/storyboard.git"
   }
 }

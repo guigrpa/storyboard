@@ -1,12 +1,6 @@
 {
   "name": "storyboard-cli",
   "version": "3.0.0",
-  "author": "Guillermo Grau Panea",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/guigrpa/storyboard.git"
-  },
   "bin": {
     "sb": "lib/index.js"
   },
@@ -20,5 +14,23 @@
     "storyboard-listener-console": "^3.0.0",
     "storyboard-listener-file": "^3.0.0",
     "storyboard-listener-ws-server": "^3.0.0"
+  },
+  "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
+  "keywords": [
+    "log",
+    "logging",
+    "websockets",
+    "console",
+    "isomorphic"
+  ],
+  "author": "Guillermo Grau Panea",
+  "license": "MIT",
+  "homepage": "https://github.com/guigrpa/storyboard#readme",
+  "bugs": {
+    "url": "https://github.com/guigrpa/storyboard/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guigrpa/storyboard.git"
   }
 }

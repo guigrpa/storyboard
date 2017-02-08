@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 
+import path from 'path';
 import shell from 'shelljs';
 import split from 'split';
 import { mainStory, chalk } from './storyboard';
@@ -7,6 +8,16 @@ import { mainStory, chalk } from './storyboard';
 const cd = (dir, { story = mainStory } = {}) => {
   story.trace(`Changing working directory to ${chalk.cyan.bold(dir)}...`);
   shell.cd(dir);
+};
+
+const cp = (src, dst, { story = mainStory } = {}) => {
+  story.debug(`Copying ${chalk.cyan.bold(src)} -> ${chalk.cyan.bold(dst)}...`);
+  shell.cp('-rf', path.normalize(src), path.normalize(dst));
+};
+
+const mv = (src, dst, { story = mainStory } = {}) => {
+  story.debug(`Moving ${chalk.cyan.bold(src)} -> ${chalk.cyan.bold(dst)}...`);
+  shell.mv('-rf', path.normalize(src), path.normalize(dst));
 };
 
 const exec = async (cmd, { story = mainStory, cwd } = {}) => {
@@ -45,5 +56,6 @@ const _exec = (cmd, story) => new Promise((resolve, reject) => {
 
 export {
   cd,
+  cp, mv,
   exec,
 };

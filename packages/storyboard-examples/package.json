@@ -2,12 +2,6 @@
   "name": "storyboard-examples",
   "private": true,
   "version": "3.0.0",
-  "author": "Guillermo Grau Panea",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/guigrpa/storyboard.git"
-  },
   "main": "lib/index.js",
   "scripts": {
     "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src",
@@ -32,5 +26,11 @@
     "storyboard-listener-ws-client": "^3.0.0",
     "storyboard-listener-ws-server": "^3.0.0",
     "storyboard-listener-db-postgres": "^3.0.0"
+  },
+  "author": "Guillermo Grau Panea",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guigrpa/storyboard.git"
   }
 }
