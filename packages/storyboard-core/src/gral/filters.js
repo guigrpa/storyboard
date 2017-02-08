@@ -90,7 +90,8 @@ const passesFilter = (src, level) => {
   if (cachedThreshold.hasOwnProperty(src)) {
     thresh = cachedThreshold[src];
   } else {
-    thresh = cachedThreshold[src] = calcThreshold(src);
+    cachedThreshold[src] = calcThreshold(src);
+    thresh = cachedThreshold[src];
   }
   return thresh != null && level >= thresh;
 };

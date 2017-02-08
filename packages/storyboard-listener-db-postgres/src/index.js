@@ -68,7 +68,6 @@ class DbPostgresListener {
       if (err) {
         mainStory.error(LOG_SRC, 'Could not connect to PG database (will not save logs)',
           { attach: err });
-        return;
       }
     });
   }

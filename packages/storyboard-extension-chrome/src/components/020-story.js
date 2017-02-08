@@ -158,12 +158,14 @@ class Story extends React.Component {
     ]);
     const lines = version >= 2 ? treeLines(serialize.deserialize(obj), objOptions) : obj;
     return lines.map((line, idx) =>
+      /* eslint-disable react/no-array-index-key */
       <AttachmentLine
         key={`${storyId}_${id}_${idx}`}
         record={record}
         {...props}
         msg={line}
       />
+      /* eslint-enable react/no-array-index-key */
     );
   }
 
