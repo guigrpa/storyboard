@@ -101,6 +101,7 @@ exports[`Settings renders correctly 1`] = `
               "borderRadius": 2,
               "color": "red",
               "marginBottom": 10,
+              "maxWidth": 500,
               "padding": 15,
             }
           }>
@@ -833,7 +834,7 @@ exports[`Settings renders correctly 1`] = `
         >
         <div
           class="allowUserSelect"
-          style="border:1px solid red;border-radius:2px;color:red;margin-bottom:10px;padding:15px;"
+          style="border:1px solid red;border-radius:2px;color:red;margin-bottom:10px;max-width:500px;padding:15px;"
         >
           Changes to these settings can&#39;t be saved (beyond your current session) due to your current Chrome configuration. Please visit 
           <b>

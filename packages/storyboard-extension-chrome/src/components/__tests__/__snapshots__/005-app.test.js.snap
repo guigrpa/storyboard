@@ -31,6 +31,105 @@ exports[`App renders correctly when connected 1`] = `
       }
     } />
   <div
+    className="giu-hints">
+    <div
+      className="giu-hint-screen"
+      onClick={[Function]}
+      style={
+        Object {
+          "height": "100vh",
+          "left": 0,
+          "position": "fixed",
+          "top": 0,
+          "width": "100vw",
+          "zIndex": 50,
+        }
+      }>
+      <div
+        className="giu-backdrop"
+        onTouchMove={[Function]}
+        onWheel={[Function]}
+        style={
+          Object {
+            "backgroundColor": "black",
+            "cursor": "pointer",
+            "height": "100vh",
+            "left": 0,
+            "position": "fixed",
+            "top": 0,
+            "width": "100vw",
+          }
+        } />
+      <div
+        style={
+          Object {
+            "color": "white",
+            "fontFamily": "\"Gloria Hallelujah\", sans-serif",
+            "fontSize": 20,
+          }
+        }>
+        <svg
+          style={
+            Object {
+              "fill": "transparent",
+              "height": "100vh",
+              "pointerEvents": "none",
+              "position": "fixed",
+              "stroke": "white",
+              "strokeWidth": 2,
+              "width": "100vw",
+            }
+          }>
+          <path
+            className="giu-hint-arrow"
+            d="M45,230 C22.25,235.25,14.75,247.25,20,270 M20,270 l2.9246155276374792,-9.562772820448144 M20,270 l-6.819296429308718,-7.3141777534605605" />
+        </svg>
+        <div
+          className="giu-hint-label"
+          style={
+            Object {
+              "left": 50,
+              "pointerEvents": "none",
+              "position": "fixed",
+              "top": 230,
+              "width": 0,
+            }
+          }>
+          <div
+            style={
+              Object {
+                "fontSize": 20,
+                "left": 0,
+                "lineHeight": "25px",
+                "marginLeft": 8,
+                "marginRight": 8,
+                "marginTop": -14,
+                "position": "absolute",
+                "textAlign": "left",
+                "width": 300,
+              }
+            }>
+            Click on timestamps to toggle: local, UTC, relative
+          </div>
+        </div>
+        <div
+          style={
+            Object {
+              "border": "1px solid white",
+              "borderRadius": 8,
+              "bottom": 20,
+              "cursor": "pointer",
+              "padding": "5px 25px",
+              "position": "fixed",
+              "right": 20,
+            }
+          }>
+          Enjoy!
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
     colors={
       Object {
         "colorClientBg": "aliceblue",
@@ -110,6 +209,38 @@ exports[`App renders correctly when connected 1`] = `
     style="bottom:20px;max-width:350px;position:fixed;right:20px;z-index:9000;"
   >
   </div>
+  <div class="giu-hints">
+    <div
+      class="giu-hint-screen"
+      style="height:100vh;left:0;position:fixed;top:0;width:100vw;z-index:50;"
+    >
+      <div
+        class="giu-backdrop"
+        style="background-color:black;cursor:pointer;height:100vh;left:0;position:fixed;top:0;width:100vw;"
+      >
+      </div>
+      <div style="color:white;font-family:\"Gloria Hallelujah\", sans-serif;font-size:20px;">
+        <svg style="fill:transparent;height:100vh;pointer-events:none;position:fixed;stroke:white;stroke-width:2;width:100vw;">
+          <path
+            class="giu-hint-arrow"
+            d="M45,230 C22.25,235.25,14.75,247.25,20,270 M20,270 l2.9246155276374792,-9.562772820448144 M20,270 l-6.819296429308718,-7.3141777534605605"
+          >
+          </path>
+        </svg>
+        <div
+          class="giu-hint-label"
+          style="left:50px;pointer-events:none;position:fixed;top:230px;width:0;"
+        >
+          <div style="font-size:20px;left:0;line-height:25px;margin-left:8px;margin-right:8px;margin-top:-14px;position:absolute;text-align:left;width:300px;">
+            Click on timestamps to toggle: local, UTC, relative
+          </div>
+        </div>
+        <div style="border:1px solid white;border-radius:8px;bottom:20px;cursor:pointer;padding:5px 25px;position:fixed;right:20px;">
+          Enjoy!
+        </div>
+      </div>
+    </div>
+  </div>
   <div dataMockType="Toolbar">
     <div style="color:blue;font-weight:bold;">
       Toolbar
@@ -158,6 +289,8 @@ exports[`App renders correctly when disconnected 1`] = `
       }
     } />
   <div
+    className="giu-hints" />
+  <div
     className="giu-large-message"
     style={
       Object {
@@ -201,6 +334,7 @@ exports[`App renders correctly when disconnected 1`] = `
     style="bottom:20px;max-width:350px;position:fixed;right:20px;z-index:9000;"
   >
   </div>
+  <div class="giu-hints"></div>
   <div
     class="giu-large-message"
     style="color:rgb(115, 115, 115);font-size:1.4em;font-weight:700;padding:0.8em;text-align:center;"

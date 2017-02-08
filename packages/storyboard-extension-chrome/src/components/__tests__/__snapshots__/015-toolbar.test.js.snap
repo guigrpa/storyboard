@@ -1,5 +1,6 @@
 exports[`Toolbar renders correctly when connected 1`] = `
-<div>
+<div
+  id="sbToolbar">
   <div
     style={
       Object {
@@ -87,6 +88,7 @@ exports[`Toolbar renders correctly when connected 1`] = `
         type="search" />
       <i
         className="giu-icon fa fa-chain fa-lg"
+        id="sbWsStatusIcon"
         style={
           Object {
             "color": "green",
@@ -138,7 +140,7 @@ exports[`Toolbar renders correctly when connected 1`] = `
     } />
 </div>
 ------------HTML PREVIEW---------------
-<div>
+<div id="sbToolbar">
   <div style="background-color:white;border-bottom:1px solid #555;display:flex;flex-direction:row;height:30px;left:0;position:fixed;top:0;white-space:nowrap;width:100%;z-index:10;">
     <div style="padding:4px 4px 4px 8px;">
       <i
@@ -175,6 +177,7 @@ exports[`Toolbar renders correctly when connected 1`] = `
       >
       <i
         class="giu-icon fa fa-chain fa-lg"
+        id="sbWsStatusIcon"
         style="color:green;cursor:default;letter-spacing:normal;margin-left:10px;margin-right:5px;"
         title="Connection with the server is UP"
       >
@@ -192,7 +195,8 @@ exports[`Toolbar renders correctly when connected 1`] = `
 `;
 
 exports[`Toolbar renders correctly when disconnected 1`] = `
-<div>
+<div
+  id="sbToolbar">
   <div
     style={
       Object {
@@ -280,6 +284,7 @@ exports[`Toolbar renders correctly when disconnected 1`] = `
         type="search" />
       <i
         className="giu-icon fa fa-chain-broken fa-lg"
+        id="sbWsStatusIcon"
         style={
           Object {
             "color": "red",
@@ -331,7 +336,7 @@ exports[`Toolbar renders correctly when disconnected 1`] = `
     } />
 </div>
 ------------HTML PREVIEW---------------
-<div>
+<div id="sbToolbar">
   <div style="background-color:white;border-bottom:1px solid #555;display:flex;flex-direction:row;height:30px;left:0;position:fixed;top:0;white-space:nowrap;width:100%;z-index:10;">
     <div style="padding:4px 4px 4px 8px;">
       <i
@@ -368,6 +373,7 @@ exports[`Toolbar renders correctly when disconnected 1`] = `
       >
       <i
         class="giu-icon fa fa-chain-broken fa-lg"
+        id="sbWsStatusIcon"
         style="color:red;cursor:default;letter-spacing:normal;margin-left:10px;margin-right:5px;"
         title="Connection with the server is DOWN"
       >
@@ -385,7 +391,8 @@ exports[`Toolbar renders correctly when disconnected 1`] = `
 `;
 
 exports[`Toolbar shows settings when the corresponding icon is clicked 1`] = `
-<div>
+<div
+  id="sbToolbar">
   <div
     colors={
       Object {
@@ -499,6 +506,7 @@ exports[`Toolbar shows settings when the corresponding icon is clicked 1`] = `
         type="search" />
       <i
         className="giu-icon fa fa-chain fa-lg"
+        id="sbWsStatusIcon"
         style={
           Object {
             "color": "green",
@@ -550,7 +558,7 @@ exports[`Toolbar shows settings when the corresponding icon is clicked 1`] = `
     } />
 </div>
 ------------HTML PREVIEW---------------
-<div>
+<div id="sbToolbar">
   <div dataMockType="Settings">
     <div style="color:blue;font-weight:bold;">
       Settings
@@ -592,6 +600,7 @@ exports[`Toolbar shows settings when the corresponding icon is clicked 1`] = `
       >
       <i
         class="giu-icon fa fa-chain fa-lg"
+        id="sbWsStatusIcon"
         style="color:green;cursor:default;letter-spacing:normal;margin-left:10px;margin-right:5px;"
         title="Connection with the server is UP"
       >

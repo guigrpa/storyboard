@@ -35,7 +35,7 @@ class Toolbar extends React.PureComponent {
   render() {
     const { colors } = this.props;
     return (
-      <div>
+      <div id="sbToolbar">
         {this.renderSettings()}
         <div style={style.outer(colors)}>
           <div style={style.left}>
@@ -105,6 +105,7 @@ class Toolbar extends React.PureComponent {
       : 'Connection with the server is DOWN';
     return (
       <Icon
+        id="sbWsStatusIcon"
         icon={icon}
         size="lg"
         title={title}

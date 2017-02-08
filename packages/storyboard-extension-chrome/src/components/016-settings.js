@@ -368,6 +368,7 @@ const style = {
     padding: 15,
     marginBottom: 10,
     borderRadius: 2,
+    maxWidth: 500,
   },
   maxLogsDesc: { cursor: 'pointer' },
   filters: {

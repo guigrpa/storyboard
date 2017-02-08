@@ -45,13 +45,16 @@ const setUpFilters = () => {
   });
 };
 
-const getStorage = () => (
-  /* eslint-disable no-undef */
-  typeof window !== 'undefined' && window && window.localStorage ?
-    window.localStorage :
-    process.env
-  /* eslint-enable no-undef */
-);
+const getStorage = () => {
+  if (typeof window === 'undefined') return process.env;
+  try {
+    /* eslint-disable no-undef */
+    return window && window.localStorage ? window.localStorage : {};
+    /* eslint-enable no-undef */
+  } catch (err) {
+    return {};  // no storage available
+  }
+};
 
 const getConfig = () => {
   const store = getStorage();

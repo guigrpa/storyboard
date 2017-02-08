@@ -131,38 +131,54 @@ class App extends React.PureComponent {
     this.fAttempted = true;
     const elements = () => {
       const out = [];
-      const nodeSettings = document.getElementById('sbBtnShowSettings');
-      if (nodeSettings) {
-        const bcr = nodeSettings.getBoundingClientRect();
-        const x = 50;
+      const nodeToolbar = document.getElementById('sbToolbar');
+      if (nodeToolbar) {
+        const wWin = window.innerWidth;
+        const bcr = nodeToolbar.getBoundingClientRect();
+        let x;
+        x = 50;
         const y = 80;
         out.push({
           type: 'LABEL', x, y, align: 'left',
-          children: 'Settings',
+          children: <span>Settings, collapse/expand…<br />that sort of stuff</span>,
+          style: { width: 150 },
         });
         out.push({
           type: 'ARROW', from: { x: x - 5, y },
-          to: { x: (bcr.left + bcr.right) / 2, y: bcr.bottom + 5 },
+          to: { x: 20, y: bcr.bottom - 2 },
+        });
+        // ----------
+        x = wWin - 50;
+        out.push({
+          type: 'LABEL', x, y, align: 'right',
+          children: <span>Maybe you need to log in to see <span style={{ color: 'yellow' }}>server logs</span></span>,
+          style: { width: 150 },
+        });
+        out.push({
+          type: 'ARROW', from: { x: x + 5, y },
+          to: { x: wWin - 20, y: bcr.bottom - 2 },
+          counterclockwise: true,
         });
       }
-      // const nodeAddLang = document.getElementById('madyBtnAddLang');
-      // if (nodeAddLang) {
-      //   const bcr = nodeAddLang.getBoundingClientRect();
-      //   const x = window.innerWidth - 50;
-      //   out.push({
-      //     type: 'LABEL', x, y: 140, align: 'right',
-      //     children: _t('hint_Add language column'),
-      //   });
-      //   out.push({
-      //     type: 'ARROW', from: { x, y: 140 },
-      //     to: { x: (bcr.left + bcr.right) / 2, y: bcr.bottom },
-      //     counterclockwise: true,
-      //   });
-      // }
+      // ----------
+      {
+        const x = 50;
+        const y = 230;
+        out.push({
+          type: 'LABEL', x, y, align: 'left',
+          children: 'Click on timestamps to toggle: local, UTC, relative',
+          style: { width: 300 },
+        });
+        out.push({
+          type: 'ARROW', from: { x: x - 5, y },
+          to: { x: 20, y: y + 40 },
+          counterclockwise: true,
+        });
+      }
       return out;
     }
     hintDefine('main', { elements, closeLabel: 'Enjoy!' });
-    hintShow('main', true);
+    hintShow('main');
   }
 }
 
