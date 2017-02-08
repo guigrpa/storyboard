@@ -18,7 +18,8 @@ const run = async () => {
     mainStory.info(`${chalk.bold('PASS 1:')} processing ${chalk.cyan.bold(pkgName)}...`);
 
     // Link
-    await exec('yarn link', { cwd: pkgPath });
+    mainStory.info('  - Registering...');
+    await exec('yarn link', { cwd: pkgPath, logLevel: 'debug' });
 
     // Rewrite package.json without own packages, install, and revert changes
     try {
@@ -30,7 +31,8 @@ const run = async () => {
         nextSpecs = timmSet(nextSpecs, type, nextDeps);
       });
       if (nextSpecs !== prevSpecs) writeSpecs(specPath, nextSpecs);
-      await exec('yarn install', { cwd: pkgPath });
+      mainStory.info('  - Installing external dependencies...');
+      await exec('yarn install', { cwd: pkgPath, logLevel: 'trace' });
     } finally {
       if (prevSpecs != null) writeSpecs(specPath, prevSpecs);
     }
@@ -50,7 +52,8 @@ const run = async () => {
         const deps = specs[DEP_TYPES[m]];
         if (deps == null) continue;
         if (deps[depName]) {
-          await exec(`yarn link ${depName}`, { cwd: pkgPath });
+          mainStory.info(`  - Linking to ${chalk.cyan.bold(depName)}...`);
+          await exec(`yarn link ${depName}`, { cwd: pkgPath, logLevel: 'trace' });
           break;
         }
       }
