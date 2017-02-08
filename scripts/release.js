@@ -1,8 +1,21 @@
+import semver from 'semver';
+import inquirer from 'inquirer';
 import { exec } from './utils/helpers';
+import readAllSpecs, { ROOT_PACKAGE } from './utils/readAllSpecs';
 import { mainStory, chalk } from './utils/storyboard';
 
 const run = async () => {
-  // TODO: Ask the user whether he has run `yarn run build`
+  const allSpecs = await readAllSpecs();
+  const pkgNames = Object.keys(allSpecs);
+
+  // Confirm that we have run build
+  const { confirmBuild } = await inquirer.prompt([{
+    name: 'confirmBuild',
+    type: 'confirm',
+    message: `Have you run ${chalk.cyan.bold('yarn run build')}?`,
+    default: false,
+  }]);
+  if (!confirmBuild) process.exit(0);
 
   // Check current branch
   let { stdout: branch } = await exec('git symbolic-ref --short HEAD', { logLevel: 'trace' });
@@ -32,7 +45,48 @@ const run = async () => {
   }
   mainStory.info('Remote history matches local history');
 
-  // TODO: Package by package, check whether it needs publishing and do it
+  // Determine which packages need publishing
+  mainStory.info('Determining which packages need publishing...');
+  const dirtyPackages = {};
+  for (let i = 0; i < pkgNames.length; i++) {
+    const pkgName = pkgNames[i];
+    if (pkgName === ROOT_PACKAGE) continue;
+    const { specs } = allSpecs[pkgName];
+    if (specs.private) continue;
+    const { version } = specs;
+    try {
+      let { stdout: publishedVersion } = await exec(`npm show ${pkgName} version`, { logLevel: 'info' });
+      publishedVersion = publishedVersion.trim();
+      if (semver.gt(version, publishedVersion)) {
+        dirtyPackages[pkgName] = publishedVersion;
+      } else if (semver.lt(version, publishedVersion)) {
+        mainStory.error(`New version for ${pkgName} (${chalk.bold(version)}) < published version (${chalk.bold(publishedVersion)})!`);
+        process.exit(1);
+      }
+    } catch (err) {
+      dirtyPackages[pkgName] = 'unknown (not published?)';
+    }
+  }
+  const dirtyPkgNames = Object.keys(dirtyPackages);
+  dirtyPkgNames.forEach((name) => {
+    mainStory.info(`  - ${name}: ${chalk.cyan.bold(dirtyPackages[name])} -> ${chalk.cyan.bold(allSpecs[name].specs.version)}`);
+  });
+
+  // Confirm before publishing
+  const { confirmPublish } = await inquirer.prompt([{
+    name: 'confirmPublish',
+    type: 'confirm',
+    message: 'Confirm publish?',
+    default: false,
+  }]);
+  if (!confirmPublish) process.exit(0);
+
+  // Publish
+  for (let i = 0; i < dirtyPkgNames.length; i++) {
+    const pkgName = dirtyPkgNames[i];
+    const { pkgPath } = allSpecs[pkgName];
+    await exec('npm publish', { cwd: pkgPath });
+  }
 };
 
 run();

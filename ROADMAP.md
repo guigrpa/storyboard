@@ -1,10 +1,5 @@
 - **Conversion to monorepo**
-    * Prerelease: check versions: none should be higher than the master one
-    * Manual version updates, tagging
-    * Automated publishing:
-        * Ask the user whether he has run yarn build
-        * Determine which packages need publishing and do it (npm publish)
-    * Automated publishing (warn if not master, compare published version with current package, publish if needed)
+    * Add utility to bump all packages to a given (higher) version
     + [ ] Preset: check with default and named exports
     + [ ] Normal: check flow interface
 

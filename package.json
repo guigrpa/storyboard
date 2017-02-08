@@ -22,7 +22,7 @@
   },
   "scripts": {
     "travis": "yarn run bootstrap && yarn run compile && yarn run test",
-    "build": "yarn run bootstrap && yarn run lint && yarn run compile && yarn run buildAllProducts && yarn run test && yarn run xxl && yarn run prerelease",
+    "build": "yarn run bootstrap && yarn run lint && yarn run compile && yarn run buildAllProducts && yarn run test && yarn run xxl && yarn run prepareRelease",
     "bootstrap": "babel-node scripts/bootstrap",
     "compile": "babel-node scripts/forEach \"yarn run compile\"",
     "buildAllProducts": "yarn run buildServerLogsApp && yarn run buildExamples && yarn run buildExtension",
@@ -44,7 +44,7 @@
     "testProd": "cross-env NODE_ENV=production yarn run testCov && mv .nyc_tmp/coverage-final.json .nyc_tmp/coverage-prod.json",
     "testBrowser": "cross-env NODE_ENV=development TEST_BROWSER=true yarn run testCov && mv .nyc_tmp/coverage-final.json .nyc_tmp/coverage-browser.json",
     "testCov": "nyc node_modules/mocha/bin/_mocha && mv .nyc_output/* .nyc_tmp/ && rm -rf .nyc_output && jest --coverage && mv .nyc_output/coverage-final.json .nyc_tmp && rm -rf .nyc_output",
-    "prerelease": "babel-node scripts/prerelease",
+    "prepareRelease": "babel-node scripts/prepareRelease",
     "release": "babel-node scripts/release"
   },
   "devDependencies": {
@@ -71,6 +71,7 @@
     "file-loader": "0.10.0",
     "globby": "^6.1.0",
     "ignore-styles": "4.0.0",
+    "inquirer": "^3.0.1",
     "jest": "17.0.3",
     "jest-html": "^1.2.0",
     "mocha": "2.4.5",
