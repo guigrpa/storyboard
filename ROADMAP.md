@@ -1,5 +1,6 @@
 - **Conversion to monorepo**
     * Add utility to bump all packages to a given (higher) version
+    * Remove _old.json from root
     + [ ] Preset: check with default and named exports
     + [ ] Normal: check flow interface
 
