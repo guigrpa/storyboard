@@ -251,9 +251,9 @@ loose-envify@^1.0.0, loose-envify@^1.1.0:
   dependencies:
     brace-expansion "^1.0.0"
 
-moment@2.14.1:
-  version "2.14.1"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.14.1.tgz#b35b27c47e57ed2ddc70053d6b07becdb291741c"
+moment@2.17.1:
+  version "2.17.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.17.1.tgz#fed9506063f36b10f066c8b59a144d7faebe1d82"
 
 node-fetch@^1.0.1:
   version "1.6.3"
