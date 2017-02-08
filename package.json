@@ -60,7 +60,7 @@
     "chai": "3.5.0",
     "coffee-script": "1.12.3",
     "coveralls": "2.11.16",
-    "cross-env": "1.0.7",
+    "cross-env": "3.1.4",
     "css-loader": "0.26.1",
     "eslint": "3.15.0",
     "eslint-config-airbnb": "14.1.0",
@@ -70,14 +70,14 @@
     "eslint-plugin-react": "6.9.0",
     "file-loader": "0.10.0",
     "globby": "6.1.0",
-    "ignore-styles": "4.0.0",
+    "ignore-styles": "5.0.1",
     "inquirer": "3.0.1",
     "jest": "18.1.0",
     "jest-html": "^1.2.0",
-    "mocha": "2.4.5",
+    "mocha": "3.2.0",
     "node-sass": "4.5.0",
-    "nyc": "8.4.0",
-    "sass-loader": "4.1.1",
+    "nyc": "10.1.2",
+    "sass-loader": "5.0.0",
     "semver": "5.3.0",
     "shelljs": "0.7.6",
     "sinon": "1.17.7",
@@ -92,8 +92,6 @@
   "nyc": {
     "exclude": [
       "packages/storyboard-core/lib/vendor/**",
-      "node_modules/**/*",
-      "**/node_modules/**/*",
       "test/**"
     ]
   },
