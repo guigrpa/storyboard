@@ -72,6 +72,18 @@ exports[`Toolbar renders correctly when connected 1`] = `
           }
         }
         title="Clear logs" />
+      <i
+        className="giu-icon fa fa-info-circle fa-lg"
+        onClick={[Function]}
+        style={
+          Object {
+            "color": "rgb(64, 64, 64)",
+            "cursor": "pointer",
+            "letterSpacing": "normal",
+            "marginRight": 10,
+          }
+        }
+        title="Show hints" />
        
       <input
         id="quickFind"
@@ -166,6 +178,12 @@ exports[`Toolbar renders correctly when connected 1`] = `
         class="giu-icon fa fa-remove fa-lg"
         style="color:rgb(64, 64, 64);cursor:pointer;letter-spacing:normal;margin-right:10px;"
         title="Clear logs"
+      >
+      </i>
+      <i
+        class="giu-icon fa fa-info-circle fa-lg"
+        style="color:rgb(64, 64, 64);cursor:pointer;letter-spacing:normal;margin-right:10px;"
+        title="Show hints"
       >
       </i>
        
@@ -268,6 +286,18 @@ exports[`Toolbar renders correctly when disconnected 1`] = `
           }
         }
         title="Clear logs" />
+      <i
+        className="giu-icon fa fa-info-circle fa-lg"
+        onClick={[Function]}
+        style={
+          Object {
+            "color": "rgb(64, 64, 64)",
+            "cursor": "pointer",
+            "letterSpacing": "normal",
+            "marginRight": 10,
+          }
+        }
+        title="Show hints" />
        
       <input
         id="quickFind"
@@ -362,6 +392,12 @@ exports[`Toolbar renders correctly when disconnected 1`] = `
         class="giu-icon fa fa-remove fa-lg"
         style="color:rgb(64, 64, 64);cursor:pointer;letter-spacing:normal;margin-right:10px;"
         title="Clear logs"
+      >
+      </i>
+      <i
+        class="giu-icon fa fa-info-circle fa-lg"
+        style="color:rgb(64, 64, 64);cursor:pointer;letter-spacing:normal;margin-right:10px;"
+        title="Show hints"
       >
       </i>
        
@@ -490,6 +526,18 @@ exports[`Toolbar shows settings when the corresponding icon is clicked 1`] = `
           }
         }
         title="Clear logs" />
+      <i
+        className="giu-icon fa fa-info-circle fa-lg"
+        onClick={[Function]}
+        style={
+          Object {
+            "color": "rgb(64, 64, 64)",
+            "cursor": "pointer",
+            "letterSpacing": "normal",
+            "marginRight": 10,
+          }
+        }
+        title="Show hints" />
        
       <input
         id="quickFind"
@@ -589,6 +637,12 @@ exports[`Toolbar shows settings when the corresponding icon is clicked 1`] = `
         class="giu-icon fa fa-remove fa-lg"
         style="color:rgb(64, 64, 64);cursor:pointer;letter-spacing:normal;margin-right:10px;"
         title="Clear logs"
+      >
+      </i>
+      <i
+        class="giu-icon fa fa-info-circle fa-lg"
+        style="color:rgb(64, 64, 64);cursor:pointer;letter-spacing:normal;margin-right:10px;"
+        title="Show hints"
       >
       </i>
        

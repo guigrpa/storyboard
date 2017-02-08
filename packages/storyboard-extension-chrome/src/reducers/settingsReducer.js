@@ -24,6 +24,7 @@ const addDerivedColorState = (state) => {
 
 const INITIAL_STATE = {
   timeType: 'LOCAL',
+  timeRef: null,
   fShowClosedActions: false,
   fShorthandForDuplicates: true,
   fCollapseAllNewStories: false,

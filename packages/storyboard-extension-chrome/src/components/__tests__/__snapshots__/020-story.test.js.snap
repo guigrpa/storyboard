@@ -328,6 +328,7 @@ exports[`Story 02 renders correctly server and client records (root level) 1`] =
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -396,6 +397,7 @@ exports[`Story 02 renders correctly server and client records (root level) 1`] =
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -475,6 +477,7 @@ exports[`Story 02 renders correctly server and client records (root level) 1`] =
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -598,6 +601,7 @@ exports[`Story 02 renders correctly server and client records (root level) 1`] =
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -772,6 +776,7 @@ exports[`Story 03 renders correctly different time types 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -840,6 +845,7 @@ exports[`Story 03 renders correctly different time types 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -1058,6 +1064,7 @@ exports[`Story 03 renders correctly different time types 2`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -1126,6 +1133,7 @@ exports[`Story 03 renders correctly different time types 2`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -1344,6 +1352,7 @@ exports[`Story 04 renders messages with different sources 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -1423,6 +1432,7 @@ exports[`Story 04 renders messages with different sources 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -1502,6 +1512,7 @@ exports[`Story 04 renders messages with different sources 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -1727,6 +1738,7 @@ exports[`Story 05 renders messages with different levels 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -1806,6 +1818,7 @@ exports[`Story 05 renders messages with different levels 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -1885,6 +1898,7 @@ exports[`Story 05 renders messages with different levels 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -1964,6 +1978,7 @@ exports[`Story 05 renders messages with different levels 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -2047,6 +2062,7 @@ exports[`Story 05 renders messages with different levels 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -2132,6 +2148,7 @@ exports[`Story 05 renders messages with different levels 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -2375,6 +2392,7 @@ exports[`Story 06 renders attachments correctly 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -2455,6 +2473,7 @@ exports[`Story 06 renders attachments correctly 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -3271,6 +3290,7 @@ exports[`Story 06 renders attachments correctly 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -3351,6 +3371,7 @@ exports[`Story 06 renders attachments correctly 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -3852,6 +3873,7 @@ exports[`Story 07 renders repetitions correctly 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -3958,6 +3980,7 @@ exports[`Story 07 renders repetitions correctly 1`] = `
       </span>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -4130,6 +4153,7 @@ exports[`Story 07 renders repetitions correctly 2`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -4236,6 +4260,7 @@ exports[`Story 07 renders repetitions correctly 2`] = `
       </span>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -4412,6 +4437,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -4488,6 +4514,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -4598,6 +4625,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -4666,6 +4694,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -4747,6 +4776,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -4846,6 +4876,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -4926,6 +4957,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -5025,6 +5057,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -5093,6 +5126,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -5162,6 +5196,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -5231,6 +5266,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -5300,6 +5336,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -5368,6 +5405,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -5645,6 +5683,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -5721,6 +5760,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -5831,6 +5871,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -5899,6 +5940,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -5980,6 +6022,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -6079,6 +6122,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -6159,6 +6203,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -6259,6 +6304,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -6328,6 +6374,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -6397,6 +6444,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -6465,6 +6513,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -6734,6 +6783,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -6810,6 +6860,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -6920,6 +6971,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -6988,6 +7040,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -7069,6 +7122,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -7182,6 +7236,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -7251,6 +7306,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -7319,6 +7375,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -7572,6 +7629,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 4`] 
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -7648,6 +7706,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 4`] 
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -7772,6 +7831,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 4`] 
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -7840,6 +7900,7 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 4`] 
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -8070,6 +8131,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -8146,6 +8208,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -8256,6 +8319,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -8324,6 +8388,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -8405,6 +8470,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -8504,6 +8570,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -8584,6 +8651,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -8683,6 +8751,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -8751,6 +8820,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -8820,6 +8890,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -8889,6 +8960,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -8958,6 +9030,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -9026,6 +9099,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -9303,6 +9377,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -9379,6 +9454,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -9489,6 +9565,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -9557,6 +9634,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -9638,6 +9716,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -9737,6 +9816,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -9817,6 +9897,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -9916,6 +9997,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -9984,6 +10066,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -10053,6 +10136,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -10122,6 +10206,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -10191,6 +10276,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -10259,6 +10345,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -10536,6 +10623,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -10612,6 +10700,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -10722,6 +10811,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -10790,6 +10880,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -10871,6 +10962,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -10970,6 +11062,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -11042,6 +11135,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -11134,6 +11228,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -11202,6 +11297,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -11270,6 +11366,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -11338,6 +11435,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -11431,6 +11529,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -11500,6 +11599,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -11568,6 +11668,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -11842,6 +11943,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -11918,6 +12020,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -12028,6 +12131,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -12096,6 +12200,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -12169,6 +12274,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -12261,6 +12367,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -12333,6 +12440,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -12425,6 +12533,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -12493,6 +12602,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -12561,6 +12671,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -12629,6 +12740,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -12721,6 +12833,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -12789,6 +12902,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -12882,6 +12996,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -12950,6 +13065,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -13221,6 +13337,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -13289,6 +13406,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -13381,6 +13499,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -13449,6 +13568,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -13522,6 +13642,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -13614,6 +13735,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -13686,6 +13808,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -13778,6 +13901,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -13846,6 +13970,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -13914,6 +14039,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -13982,6 +14108,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -14074,6 +14201,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -14142,6 +14270,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -14210,6 +14339,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -14278,6 +14408,7 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -14564,6 +14695,7 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -14656,6 +14788,7 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -14766,6 +14899,7 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -14846,6 +14980,7 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -14927,6 +15062,7 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -15026,6 +15162,7 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -15106,6 +15243,7 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -15205,6 +15343,7 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -15273,6 +15412,7 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -15354,6 +15494,7 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -15435,6 +15576,7 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -15516,6 +15658,7 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -15600,6 +15743,7 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -15893,6 +16037,7 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -15969,6 +16114,7 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -16079,6 +16225,7 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -16147,6 +16294,7 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -16228,6 +16376,7 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -16327,6 +16476,7 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -16407,6 +16557,7 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -16506,6 +16657,7 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -16574,6 +16726,7 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -16642,6 +16795,7 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -16715,6 +16869,7 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -16783,6 +16938,7 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -16856,6 +17012,7 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -16925,6 +17082,7 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -16993,6 +17151,7 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -17278,6 +17437,7 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -17354,6 +17514,7 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -17464,6 +17625,7 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -17532,6 +17694,7 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -17613,6 +17776,7 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -17712,6 +17876,7 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -17792,6 +17957,7 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -17891,6 +18057,7 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -17959,6 +18126,7 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
             }>
             <span
               onClick={[Function]}
+              onContextMenu={[Function]}
               style={
                 Object {
                   "cursor": "pointer",
@@ -18028,6 +18196,7 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
           }>
           <span
             onClick={[Function]}
+            onContextMenu={[Function]}
             style={
               Object {
                 "cursor": "pointer",
@@ -18097,6 +18266,7 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
         }>
         <span
           onClick={[Function]}
+          onContextMenu={[Function]}
           style={
             Object {
               "cursor": "pointer",
@@ -18166,6 +18336,7 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",
@@ -18234,6 +18405,7 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
       }>
       <span
         onClick={[Function]}
+        onContextMenu={[Function]}
         style={
           Object {
             "cursor": "pointer",

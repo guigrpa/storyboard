@@ -26,6 +26,7 @@ Object {
     "fShowClosedActions": false,
     "forgetHysteresis": 0.25,
     "maxRecords": 800,
+    "timeRef": null,
     "timeType": "LOCAL",
   },
   "stories": Object {

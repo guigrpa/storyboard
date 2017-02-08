@@ -3,7 +3,7 @@ import React from 'react';
 import * as ReactRedux from 'react-redux';
 import { set as timmSet } from 'timm';
 import moment from 'moment';
-import { Icon, Spinner } from 'giu';
+import { Icon, Spinner, cancelEvent } from 'giu';
 import { _, chalk, ansiColors, treeLines, serialize, constants } from 'storyboard-core';
 import * as actions from '../actions/actions';
 import ColoredText from './030-coloredText';
@@ -19,12 +19,14 @@ const doQuickFind = (msg0, quickFind) => {
 // ======================================================
 const mapStateToProps = (state) => ({
   timeType: state.settings.timeType,
+  timeRef: state.settings.timeRef,
   fShowClosedActions: state.settings.fShowClosedActions,
   quickFind: state.stories.quickFind,
 });
 
 const mapDispatchToProps = {
   setTimeType: actions.setTimeType,
+  setTimeRef: actions.setTimeRef,
   onToggleExpanded: actions.toggleExpanded,
   onToggleHierarchical: actions.toggleHierarchical,
   onToggleAttachment: actions.toggleAttachment,
@@ -39,9 +41,11 @@ class Story extends React.Component {
     // From Redux.connect (for the top-most story; other
     // child stories inherit them)
     timeType: React.PropTypes.string.isRequired,
+    timeRef: React.PropTypes.number,
     fShowClosedActions: React.PropTypes.bool.isRequired,
     quickFind: React.PropTypes.string.isRequired,
     setTimeType: React.PropTypes.func.isRequired,
+    setTimeRef: React.PropTypes.func.isRequired,
     onToggleExpanded: React.PropTypes.func.isRequired,
     onToggleHierarchical: React.PropTypes.func.isRequired,
     onToggleAttachment: React.PropTypes.func.isRequired,
@@ -80,7 +84,9 @@ class Story extends React.Component {
           level={this.props.level}
           fDirectChild={false}
           timeType={this.props.timeType}
+          timeRef={this.props.timeRef}
           setTimeType={this.props.setTimeType}
+          setTimeRef={this.props.setTimeRef}
           quickFind={this.props.quickFind}
           onToggleExpanded={this.toggleExpanded}
           onToggleHierarchical={this.toggleHierarchical}
@@ -121,9 +127,11 @@ class Story extends React.Component {
           seqFullRefresh={this.props.seqFullRefresh}
           colors={this.props.colors}
           timeType={this.props.timeType}
+          timeRef={this.props.timeRef}
           fShowClosedActions={this.props.fShowClosedActions}
           quickFind={this.props.quickFind}
           setTimeType={this.props.setTimeType}
+          setTimeRef={this.props.setTimeRef}
           onToggleExpanded={this.props.onToggleExpanded}
           onToggleHierarchical={this.props.onToggleHierarchical}
           onToggleAttachment={this.props.onToggleAttachment}
@@ -141,7 +149,9 @@ class Story extends React.Component {
         level={this.props.level}
         fDirectChild={fDirectChild}
         timeType={this.props.timeType}
+        timeRef={this.props.timeRef}
         setTimeType={this.props.setTimeType}
+        setTimeRef={this.props.setTimeRef}
         quickFind={this.props.quickFind}
         onToggleAttachment={this.toggleAttachment}
         seqFullRefresh={this.props.seqFullRefresh}
@@ -153,7 +163,7 @@ class Story extends React.Component {
   renderAttachment(record) {
     const { storyId, id, obj, objOptions, version } = record;
     const props = _.pick(this.props, [
-      'level', 'timeType', 'setTimeType',
+      'level', 'timeType', 'timeRef', 'setTimeType', 'setTimeRef',
       'quickFind', 'seqFullRefresh', 'colors',
     ]);
     const lines = version >= 2 ? treeLines(serialize.deserialize(obj), objOptions) : obj;
@@ -172,7 +182,7 @@ class Story extends React.Component {
   renderRepetitions(record) {
     const { storyId, id } = record;
     const props = _.pick(this.props, [
-      'level', 'timeType', 'setTimeType',
+      'level', 'timeType', 'timeRef', 'setTimeType', 'setTimeRef',
       'quickFind', 'seqFullRefresh', 'colors',
     ]);
     return (
@@ -335,7 +345,9 @@ class AttachmentLine extends React.PureComponent {
     record: React.PropTypes.object.isRequired,
     level: React.PropTypes.number.isRequired,
     timeType: React.PropTypes.string.isRequired,
+    timeRef: React.PropTypes.number,
     setTimeType: React.PropTypes.func.isRequired,
+    setTimeRef: React.PropTypes.func.isRequired,
     seqFullRefresh: React.PropTypes.number.isRequired,
     msg: React.PropTypes.string.isRequired,
     quickFind: React.PropTypes.string.isRequired,
@@ -352,7 +364,9 @@ class AttachmentLine extends React.PureComponent {
         <Time
           fShowFull={false}
           timeType={this.props.timeType}
+          timeRef={this.props.timeRef}
           setTimeType={this.props.setTimeType}
+          setTimeRef={this.props.setTimeRef}
           seqFullRefresh={this.props.seqFullRefresh}
         />
         <Src src={record.src} />
@@ -373,7 +387,9 @@ class RepetitionLine extends React.PureComponent {
     record: React.PropTypes.object.isRequired,
     level: React.PropTypes.number.isRequired,
     timeType: React.PropTypes.string.isRequired,
+    timeRef: React.PropTypes.number,
     setTimeType: React.PropTypes.func.isRequired,
+    setTimeRef: React.PropTypes.func.isRequired,
     seqFullRefresh: React.PropTypes.number.isRequired,
     quickFind: React.PropTypes.string.isRequired,
     colors: React.PropTypes.object.isRequired,
@@ -381,7 +397,13 @@ class RepetitionLine extends React.PureComponent {
 
   // -----------------------------------------------------
   render() {
-    const { record, level, timeType, setTimeType, seqFullRefresh, colors } = this.props;
+    const {
+      record, level,
+      timeType, timeRef,
+      setTimeType, setTimeRef,
+      seqFullRefresh,
+      colors,
+    } = this.props;
     const style = styleLine.log(record, colors);
     let msg = ` x${record.repetitions + 1}, latest: `;
     msg = doQuickFind(msg, this.props.quickFind);
@@ -390,7 +412,9 @@ class RepetitionLine extends React.PureComponent {
         <Time
           fShowFull={false}
           timeType={timeType}
+          timeRef={timeRef}
           setTimeType={setTimeType}
+          setTimeRef={setTimeRef}
           seqFullRefresh={seqFullRefresh}
         />
         <Src />
@@ -403,7 +427,9 @@ class RepetitionLine extends React.PureComponent {
           t={record.tLastRepetition}
           fTrim
           timeType={timeType}
+          timeRef={timeRef}
           setTimeType={setTimeType}
+          setTimeRef={setTimeRef}
           seqFullRefresh={seqFullRefresh}
         />
       </div>
@@ -420,7 +446,9 @@ class Line extends React.PureComponent {
     level: React.PropTypes.number.isRequired,
     fDirectChild: React.PropTypes.bool.isRequired,
     timeType: React.PropTypes.string.isRequired,
+    timeRef: React.PropTypes.number,
     setTimeType: React.PropTypes.func.isRequired,
+    setTimeRef: React.PropTypes.func.isRequired,
     quickFind: React.PropTypes.string.isRequired,
     onToggleExpanded: React.PropTypes.func,
     onToggleHierarchical: React.PropTypes.func,
@@ -495,14 +523,16 @@ class Line extends React.PureComponent {
 
   renderTime(record) {
     const { fStoryObject, t } = record;
-    const { level, timeType, setTimeType, seqFullRefresh } = this.props;
+    const { level, timeType, timeRef, setTimeType, setTimeRef, seqFullRefresh } = this.props;
     const fShowFull = (fStoryObject && level <= 2) || (level <= 1);
     return (
       <Time
         t={t}
         fShowFull={fShowFull}
         timeType={timeType}
+        timeRef={timeRef}
         setTimeType={setTimeType}
+        setTimeRef={setTimeRef}
         seqFullRefresh={seqFullRefresh}
       />
     );
@@ -621,13 +651,15 @@ class Time extends React.PureComponent {
     t: React.PropTypes.number,
     fShowFull: React.PropTypes.bool,
     timeType: React.PropTypes.string.isRequired,
+    timeRef: React.PropTypes.number,
     setTimeType: React.PropTypes.func.isRequired,
+    setTimeRef: React.PropTypes.func.isRequired,
     seqFullRefresh: React.PropTypes.number.isRequired, // eslint-disable-line react/no-unused-prop-types, max-len
     fTrim: React.PropTypes.bool,
   };
 
   render() {
-    const { t, fShowFull, timeType, fTrim } = this.props;
+    const { t, fShowFull, timeType, timeRef, fTrim } = this.props;
     if (t == null) return <span>{_.padEnd('', TIME_LENGTH)}</span>;
     let fRelativeTime = false;
     const m = moment(t);
@@ -648,6 +680,7 @@ class Time extends React.PureComponent {
     return (
       <span
         onClick={this.onClick}
+        onContextMenu={this.onRightClick}
         style={styleTime(fRelativeTime)}
         title={timeType !== 'LOCAL' ? localTime : undefined}
       >
@@ -657,7 +690,11 @@ class Time extends React.PureComponent {
   }
 
   // -----------------------------------------------------
-  onClick = () => {
+  onClick = (ev) => {
+    if (ev.ctrlKey) {
+      this.onRightClick(ev);
+      return;
+    }
     let newTimeType;
     if (this.props.timeType === 'LOCAL') {
       newTimeType = 'RELATIVE';
@@ -667,6 +704,12 @@ class Time extends React.PureComponent {
       newTimeType = 'LOCAL';
     }
     this.props.setTimeType(newTimeType);
+  }
+
+  onRightClick = (ev) => {
+    cancelEvent(ev);
+    const { t, timeRef } = this.props;
+    this.props.setTimeRef(timeRef !== t ? t : null);
   }
 }
 

@@ -16,9 +16,11 @@ const renderMainStory = (props) =>
     seqFullRefresh={0}
     colors={BASE_COLORS}
     timeType="LOCAL"
+    timeRef={null}
     fShowClosedActions={false}
     quickFind=""
     setTimeType={() => {}}
+    setTimeRef={() => {}}
     onToggleExpanded={() => {}}
     onToggleHierarchical={() => {}}
     onToggleAttachment={() => {}}

@@ -16,6 +16,7 @@ Object {
   "fShowClosedActions": false,
   "forgetHysteresis": 0.25,
   "maxRecords": 800,
+  "timeRef": null,
   "timeType": "LOCAL",
 }
 `;
@@ -38,6 +39,7 @@ Object {
   "fShowClosedActions": false,
   "forgetHysteresis": 0.5,
   "maxRecords": 2000,
+  "timeRef": null,
   "timeType": "LOCAL",
 }
 `;
