@@ -6,6 +6,7 @@ import React from 'react';
 import * as ReactRedux from 'react-redux';
 import {
   Floats, Notifications,
+  Hints, hintDefine, hintShow,
   LargeMessage,
   Spinner,
   isDark,
@@ -51,6 +52,7 @@ class App extends React.PureComponent {
   componentDidMount() {
     this.timerFullRefresh = setInterval(this.fullRefresh, 30e3);
     window.addEventListener('scroll', this.onScroll);
+    this.showHint();
   }
 
   componentWillUnmount() {
@@ -63,6 +65,7 @@ class App extends React.PureComponent {
     if (this.fAnchoredToBottom) {
       window.scrollTo(0, document.body.scrollHeight);
     }
+    this.showHint();
   }
 
   // -----------------------------------------------------
@@ -90,6 +93,7 @@ class App extends React.PureComponent {
       <div ref="outer" id="appRoot" style={style.outer(colors)}>
         <Floats />
         <Notifications />
+        <Hints />
         {!fConnected && this.renderConnecting()}
         {fConnected && <Toolbar colors={colors} />}
         {fConnected && this.renderStories()}
@@ -118,6 +122,47 @@ class App extends React.PureComponent {
         <div>Navigate to your Storyboard-equipped app (and log in if required)</div>
       </LargeMessage>
     );
+  }
+
+  // -----------------------------------------------------
+  showHint() {
+    if (this.props.cxState !== 'CONNECTED') return;
+    if (this.fAttempted) return;
+    this.fAttempted = true;
+    const elements = () => {
+      const out = [];
+      const nodeSettings = document.getElementById('sbBtnShowSettings');
+      if (nodeSettings) {
+        const bcr = nodeSettings.getBoundingClientRect();
+        const x = 50;
+        const y = 80;
+        out.push({
+          type: 'LABEL', x, y, align: 'left',
+          children: 'Settings',
+        });
+        out.push({
+          type: 'ARROW', from: { x: x - 5, y },
+          to: { x: (bcr.left + bcr.right) / 2, y: bcr.bottom + 5 },
+        });
+      }
+      // const nodeAddLang = document.getElementById('madyBtnAddLang');
+      // if (nodeAddLang) {
+      //   const bcr = nodeAddLang.getBoundingClientRect();
+      //   const x = window.innerWidth - 50;
+      //   out.push({
+      //     type: 'LABEL', x, y: 140, align: 'right',
+      //     children: _t('hint_Add language column'),
+      //   });
+      //   out.push({
+      //     type: 'ARROW', from: { x, y: 140 },
+      //     to: { x: (bcr.left + bcr.right) / 2, y: bcr.bottom },
+      //     counterclockwise: true,
+      //   });
+      // }
+      return out;
+    }
+    hintDefine('main', { elements, closeLabel: 'Enjoy!' });
+    hintShow('main', true);
   }
 }
 
