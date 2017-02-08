@@ -3,9 +3,6 @@
       This should be automated to avoid problems. The tool should ask for a new version number,
       and then determine which packages will be released. A commit is then performed and tagged.
     + [ ] Publishing:
-        - Tool builds, which includes:
-            - Copy certain fields from <root>/package.json to all packages:
-              description, keywords, author, license, homepage/bugs/repository, etc.
         - Tool asks for new version number
         - Tool determines which packages will be released
         - Tool updates selected packages
