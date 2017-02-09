@@ -46,6 +46,7 @@ class App extends React.PureComponent {
     super(props);
     this.state = {
       seqFullRefresh: 0,
+      timeRef: null,
     };
   }
 
@@ -109,6 +110,8 @@ class App extends React.PureComponent {
           story={this.props.mainStory}
           level={0}
           seqFullRefresh={this.state.seqFullRefresh}
+          timeRef={this.state.timeRef}
+          setTimeRef={this.setTimeRef}
           colors={this.props.colors}
         />
       </div>
@@ -125,6 +128,8 @@ class App extends React.PureComponent {
   }
 
   // -----------------------------------------------------
+  setTimeRef = (timeRef) => { this.setState({ timeRef }); }
+
   showHint() {
     if (this.props.cxState !== 'CONNECTED') return;
     if (this.fAttempted) return;
@@ -138,17 +143,19 @@ class App extends React.PureComponent {
         let x;
         x = 50;
         const y = 80;
-        out.push({
-          type: 'LABEL', x, y, align: 'left',
-          children: <span>Settings, collapse/expand…<br />that sort of stuff</span>,
-          style: { width: 150 },
-        });
-        out.push({
-          type: 'ARROW', from: { x: x - 5, y },
-          to: { x: 20, y: bcr.bottom - 2 },
-        });
+        if (wWin > 500) {
+          out.push({
+            type: 'LABEL', x, y, align: 'left',
+            children: <span>Settings, collapse/expand…<br />that sort of stuff</span>,
+            style: { width: 150 },
+          });
+          out.push({
+            type: 'ARROW', from: { x: x - 5, y },
+            to: { x: 20, y: bcr.bottom - 2 },
+          });
+        }
         // ----------
-        x = wWin - 50;
+        x = wWin - 80;
         out.push({
           type: 'LABEL', x, y, align: 'right',
           children: <span>Maybe you need to log in to see <span style={{ color: 'yellow' }}>server logs</span></span>,
@@ -156,7 +163,7 @@ class App extends React.PureComponent {
         });
         out.push({
           type: 'ARROW', from: { x: x + 5, y },
-          to: { x: wWin - 20, y: bcr.bottom - 2 },
+          to: { x: wWin - 50, y: bcr.bottom - 2 },
           counterclockwise: true,
         });
       }
@@ -166,8 +173,14 @@ class App extends React.PureComponent {
         const y = 230;
         out.push({
           type: 'LABEL', x, y, align: 'left',
-          children: 'Click on timestamps to toggle: local, UTC, relative',
-          style: { width: 300 },
+          children: (
+            <span>
+              <span style={{ color: '#4df950' }}>Click</span> on timestamps to toggle: local, UTC, relative to now
+              <br />
+              <span style={{ color: '#4df950' }}>Right-click</span> to set a reference timestamp
+            </span>
+          ),
+          style: { width: 2000 },
         });
         out.push({
           type: 'ARROW', from: { x: x - 5, y },
@@ -176,7 +189,7 @@ class App extends React.PureComponent {
         });
       }
       return out;
-    }
+    };
     hintDefine('main', { elements, closeLabel: 'Enjoy!' });
     hintShow('main');
   }

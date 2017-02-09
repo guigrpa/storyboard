@@ -9,6 +9,7 @@ TBW - separate packages
 **Other changes**
 
 * Browser extension:
+    - [M] The user can now set **reference timestamps** via ctrl-click or right-click on a timestamp. When set, all other timestamps are displayed as relative to the reference.
     - [m] Add usage hints (popping up when first the app is first used, as well as when the user clicks on the dedicated button)
 
 ## 2.3.1 (December 14, 2016)

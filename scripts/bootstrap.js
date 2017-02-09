@@ -19,7 +19,11 @@ const run = async () => {
 
     // Link
     mainStory.info('  - Registering...');
-    await exec('yarn link', { cwd: pkgPath, logLevel: 'debug' });
+    await exec('yarn link', {
+      cwd: pkgPath,
+      logLevel: 'trace',
+      errorLogLevel: 'info',
+    });
 
     // Rewrite package.json without own packages, install, and revert changes
     try {

@@ -23,11 +23,9 @@ const updateSettings = (settings) => {
 };
 
 const setTimeType = (timeType) => ({ type: 'UPDATE_SETTINGS', settings: { timeType } });
-const setTimeRef = (timeRef) => ({ type: 'UPDATE_SETTINGS', settings: { timeRef } });
 
 export {
   loadSettings,
   updateSettings,
   setTimeType,
-  setTimeRef,
 };

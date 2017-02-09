@@ -2,7 +2,8 @@
 import React from 'react';
 import * as ReactRedux from 'react-redux';
 import { set as timmSet } from 'timm';
-import moment from 'moment';
+import dateFormat from 'date-fns/format';
+import dateDistanceInWords from 'date-fns/distance_in_words_strict';
 import { Icon, Spinner, cancelEvent } from 'giu';
 import { _, chalk, ansiColors, treeLines, serialize, constants } from 'storyboard-core';
 import * as actions from '../actions/actions';
@@ -19,14 +20,12 @@ const doQuickFind = (msg0, quickFind) => {
 // ======================================================
 const mapStateToProps = (state) => ({
   timeType: state.settings.timeType,
-  timeRef: state.settings.timeRef,
   fShowClosedActions: state.settings.fShowClosedActions,
   quickFind: state.stories.quickFind,
 });
 
 const mapDispatchToProps = {
   setTimeType: actions.setTimeType,
-  setTimeRef: actions.setTimeRef,
   onToggleExpanded: actions.toggleExpanded,
   onToggleHierarchical: actions.toggleHierarchical,
   onToggleAttachment: actions.toggleAttachment,
@@ -37,15 +36,15 @@ class Story extends React.Component {
     story: React.PropTypes.object.isRequired,
     level: React.PropTypes.number.isRequired,
     seqFullRefresh: React.PropTypes.number.isRequired,
+    timeRef: React.PropTypes.number,
+    setTimeRef: React.PropTypes.func.isRequired,
     colors: React.PropTypes.object.isRequired,
     // From Redux.connect (for the top-most story; other
     // child stories inherit them)
     timeType: React.PropTypes.string.isRequired,
-    timeRef: React.PropTypes.number,
     fShowClosedActions: React.PropTypes.bool.isRequired,
     quickFind: React.PropTypes.string.isRequired,
     setTimeType: React.PropTypes.func.isRequired,
-    setTimeRef: React.PropTypes.func.isRequired,
     onToggleExpanded: React.PropTypes.func.isRequired,
     onToggleHierarchical: React.PropTypes.func.isRequired,
     onToggleAttachment: React.PropTypes.func.isRequired,
@@ -661,28 +660,58 @@ class Time extends React.PureComponent {
   render() {
     const { t, fShowFull, timeType, timeRef, fTrim } = this.props;
     if (t == null) return <span>{_.padEnd('', TIME_LENGTH)}</span>;
-    let fRelativeTime = false;
-    const m = moment(t);
-    const localTime = m.format('YYYY-MM-DD HH:mm:ss.SSS');
+    let fTimeInWords = false;
+    let fRefTimestamp = false;
+    const localTime = dateFormat(t, 'YYYY-MM-DD HH:mm:ss.SSS');
     let shownTime;
-    if (timeType === 'RELATIVE') {
-      shownTime = m.fromNow();
-      fRelativeTime = true;
+
+    // No time reference
+    if (timeRef == null) {
+      if (timeType === 'RELATIVE') {
+        shownTime = dateDistanceInWords(new Date(), t, { addSuffix: true });
+        fTimeInWords = true;
+      } else {
+        shownTime = timeType === 'UTC'
+          ? new Date(t).toISOString().replace(/T/g, ' ')
+          : localTime;
+        shownTime = fShowFull ? shownTime : `           ${shownTime.slice(11)}`;
+      }
+
+    // There's a time ref, and it matches this timestamp
+    } else if (t === timeRef) {
+      shownTime = timeType === 'UTC'
+        ? new Date(t).toISOString().replace(/T/g, ' ')
+        : localTime;
+      fRefTimestamp = true;
+
+    // There's a time ref, but it's not this timestamp
+    } else if (timeType === 'RELATIVE') {
+      shownTime = dateDistanceInWords(timeRef, t, { partialMethod: 'round' });
+      shownTime += timeRef > t ? ' before' : ' later';
+      fTimeInWords = true;
     } else {
-      if (timeType === 'UTC') m.utc();
-      shownTime = fShowFull
-        ? m.format('YYYY-MM-DD HH:mm:ss.SSS')
-        : `           ${m.format('HH:mm:ss.SSS')}`;
-      if (timeType === 'UTC') shownTime += 'Z';
+      const delta = Math.abs(t - timeRef);
+      shownTime = new Date(delta).toISOString().replace(/T/g, ' ').slice(0, 23);
+      if (shownTime.slice(0, 4) === '1970') shownTime = shownTime.slice(5);
+      if (shownTime.slice(0, 2) === '01') shownTime = shownTime.slice(3);
+      if (shownTime.slice(0, 2) === '01') shownTime = shownTime.slice(3);
+      if (shownTime.slice(0, 2) === '00') shownTime = shownTime.slice(3);
+      shownTime = `${timeRef > t ? '-' : '+'}${shownTime}`;
+      shownTime = _.padStart(shownTime, 23);
     }
+
+    // Finishing touches
     shownTime = _.padEnd(shownTime, TIME_LENGTH);
+    if (shownTime.length > TIME_LENGTH) {
+      shownTime = `${shownTime.slice(0, TIME_LENGTH - 1)}…`;
+    }
     if (fTrim) shownTime = shownTime.trim();
     return (
       <span
         onClick={this.onClick}
-        onContextMenu={this.onRightClick}
-        style={styleTime(fRelativeTime)}
-        title={timeType !== 'LOCAL' ? localTime : undefined}
+        onContextMenu={this.onClick}
+        style={styleTime(fTimeInWords, fRefTimestamp)}
+        title={shownTime.trim() !== localTime ? localTime : undefined}
       >
         {shownTime}
       </span>
@@ -691,32 +720,28 @@ class Time extends React.PureComponent {
 
   // -----------------------------------------------------
   onClick = (ev) => {
-    if (ev.ctrlKey) {
-      this.onRightClick(ev);
-      return;
-    }
-    let newTimeType;
-    if (this.props.timeType === 'LOCAL') {
-      newTimeType = 'RELATIVE';
-    } else if (this.props.timeType === 'RELATIVE') {
-      newTimeType = 'UTC';
+    const fSetTimeRef = ev.type === 'contextmenu' || ev.ctrlKey;
+    if (fSetTimeRef) cancelEvent(ev);
+    const { t, timeType: prevTimeType, timeRef: prevTimeRef } = this.props;
+    if (fSetTimeRef) {
+      const nextTimeRef = t !== prevTimeRef ? t : null;
+      this.props.setTimeRef(nextTimeRef);
     } else {
-      newTimeType = 'LOCAL';
+      let nextTimeType;
+      if (prevTimeType === 'LOCAL') nextTimeType = 'RELATIVE';
+      else if (prevTimeType === 'RELATIVE') nextTimeType = 'UTC';
+      else nextTimeType = 'LOCAL';
+      this.props.setTimeType(nextTimeType);
     }
-    this.props.setTimeType(newTimeType);
-  }
-
-  onRightClick = (ev) => {
-    cancelEvent(ev);
-    const { t, timeRef } = this.props;
-    this.props.setTimeRef(timeRef !== t ? t : null);
   }
 }
 
-const styleTime = (fRelativeTime) => ({
+const styleTime = (fTimeInWords, fRefTimestamp) => ({
   display: 'inline',
   cursor: 'pointer',
-  fontStyle: fRelativeTime ? 'italic' : undefined,
+  fontStyle: fTimeInWords ? 'italic' : undefined,
+  fontWeight: fRefTimestamp ? 'bold' : undefined,
+  backgroundColor: fRefTimestamp ? '#d1bd0c' : undefined,
 });
 
 // ======================================================
