@@ -216,8 +216,8 @@ localStorage.STORYBOARD = '*:*'
 Alternatively, you can configure the log filters programatically:
 
 ```js
-import storyboard from 'storyboard';
-storyboard.config({ filter: '*:*' });
+import { config } from 'storyboard';
+config({ filter: '*:*' });
 ```
 
 And even more convenient: configure filters remotely and without reloading by using the [Storyboard DevTools](#storyboard-devtools).
@@ -424,6 +424,7 @@ Some highlighted features:
 * Collapse/expand stories: click on the caret. Even when stories are collapsed, detect that they contain an error or warning thanks to a special icon.
 * Open attachments and exceptions: click on the folder icon.
 * Choose among 3 timestamp formats: UTC, local or relative to now: click on any timestamp.
+* Set reference timestamps: right-click or control-click on any timestamp.
 * Use quick find (case-insensitive) to highlight what you're looking for.
 * Squash identical, consecutive messages into a convenient summary line.
 * Configure when and how Storyboard *forgets* old logs and stories.

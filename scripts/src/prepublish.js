@@ -17,7 +17,7 @@ const run = async () => {
   const pkgNames = Object.keys(allSpecs);
   const rootSpecs = allSpecs[ROOT_PACKAGE].specs;
 
-  // Check version numbers! Allow bumping
+  // Check version numbers!
   const masterVersion = rootSpecs.version;
   for (let i = 0; i < pkgNames.length; i++) {
     const pkgName = pkgNames[i];
@@ -60,4 +60,4 @@ const run = async () => {
   }
 };
 
-run();
+export default run;
