@@ -60,10 +60,3 @@ export {
   config,
   getListeners, addListener, removeListener, removeAllListeners,
 };
-
-export default {
-  mainStory,
-  chalk,
-  config,
-  getListeners, addListener, removeListener, removeAllListeners,
-};

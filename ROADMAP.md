@@ -1,8 +1,8 @@
 - **Conversion to monorepo**
     * Add utility to bump all packages to a given (higher) version
-    * Remove default export from `storyboard` package
+    * Add clean option to clean all deps
+    * Make addListener fault-tolerant
     * Add docs
-    * Add appveyor
     + [ ] Preset: check with default and named exports
     + [ ] Normal: check flow interface
     * Once published, update package.json to use storyboard@3 ourselves

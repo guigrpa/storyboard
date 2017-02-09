@@ -136,13 +136,3 @@ declare export function removeListener(
 declare export function removeAllListeners(
   ...args: Array<void>
 ): void;
-
-declare export default {
-  mainStory: typeof mainStory,
-  chalk: typeof chalk,
-  config: typeof config,
-  getListeners: typeof getListeners,
-  addListener: typeof addListener,
-  removeListener: typeof removeListener,
-  removeAllListeners: typeof removeAllListeners,
-};

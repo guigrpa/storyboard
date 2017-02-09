@@ -216,8 +216,8 @@ localStorage.STORYBOARD = '*:*'
 Alternatively, you can configure the log filters programatically:
 
 ```js
-import storyboard from 'storyboard';
-storyboard.config({ filter: '*:*' });
+import { config } from 'storyboard';
+config({ filter: '*:*' });
 ```
 
 And even more convenient: configure filters remotely and without reloading by using the [Storyboard DevTools](#storyboard-devtools).
