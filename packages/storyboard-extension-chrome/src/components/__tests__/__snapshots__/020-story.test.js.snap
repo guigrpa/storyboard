@@ -331,9 +331,11 @@ exports[`Story 02 renders correctly server and client records (root level) 1`] =
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -400,9 +402,11 @@ exports[`Story 02 renders correctly server and client records (root level) 1`] =
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -480,9 +484,11 @@ exports[`Story 02 renders correctly server and client records (root level) 1`] =
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -604,9 +610,11 @@ exports[`Story 02 renders correctly server and client records (root level) 1`] =
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -779,9 +787,11 @@ exports[`Story 03 renders correctly different time types 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title="1970-01-01 01:00:00.000">
@@ -848,9 +858,11 @@ exports[`Story 03 renders correctly different time types 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title="1970-01-01 01:00:00.000">
@@ -1067,9 +1079,11 @@ exports[`Story 03 renders correctly different time types 2`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": "italic",
+            "fontWeight": undefined,
           }
         }
         title="1970-01-01 01:00:00.000">
@@ -1136,9 +1150,11 @@ exports[`Story 03 renders correctly different time types 2`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": "italic",
+            "fontWeight": undefined,
           }
         }
         title="1970-01-01 01:00:00.000">
@@ -1355,9 +1371,11 @@ exports[`Story 04 renders messages with different sources 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -1435,9 +1453,11 @@ exports[`Story 04 renders messages with different sources 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -1515,9 +1535,11 @@ exports[`Story 04 renders messages with different sources 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -1741,9 +1763,11 @@ exports[`Story 05 renders messages with different levels 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -1821,9 +1845,11 @@ exports[`Story 05 renders messages with different levels 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -1901,9 +1927,11 @@ exports[`Story 05 renders messages with different levels 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -1981,9 +2009,11 @@ exports[`Story 05 renders messages with different levels 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -2065,9 +2095,11 @@ exports[`Story 05 renders messages with different levels 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -2151,9 +2183,11 @@ exports[`Story 05 renders messages with different levels 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -2395,9 +2429,11 @@ exports[`Story 06 renders attachments correctly 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -2476,9 +2512,11 @@ exports[`Story 06 renders attachments correctly 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -3293,9 +3331,11 @@ exports[`Story 06 renders attachments correctly 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -3374,9 +3414,11 @@ exports[`Story 06 renders attachments correctly 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -3876,9 +3918,11 @@ exports[`Story 07 renders repetitions correctly 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -3983,12 +4027,14 @@ exports[`Story 07 renders repetitions correctly 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
-        title={undefined}>
+        title="1970-01-01 01:00:03.000">
         01:00:03.000
       </span>
     </div>
@@ -4067,7 +4113,9 @@ exports[`Story 07 renders repetitions correctly 1`] = `
       style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
     ><span>                         </span><span>                    </span><span>      </span><div style="display:inline-block;width:0;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><i
     class="giu-icon fa fa-copy"
-    style="color:currentColor;letter-spacing:normal;"></i><span style=""> x53, latest: </span><span style="cursor:pointer;display:inline;">01:00:03.000</span></div>
+    style="color:currentColor;letter-spacing:normal;"></i><span style=""> x53, latest: </span><span
+    style="cursor:pointer;display:inline;"
+    title="1970-01-01 01:00:03.000">01:00:03.000</span></div>
   </div>
   <div
     class="rootStory"
@@ -4156,9 +4204,11 @@ exports[`Story 07 renders repetitions correctly 2`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title="1970-01-01 01:00:00.000">
@@ -4263,9 +4313,11 @@ exports[`Story 07 renders repetitions correctly 2`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title="1970-01-01 01:00:03.000">
@@ -4440,9 +4492,11 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -4517,9 +4571,11 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
           title={undefined}>
@@ -4628,12 +4684,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.005">
                      01:00:01.005  
         </span>
         <span
@@ -4697,12 +4755,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.010">
                      01:00:01.010  
         </span>
         <span
@@ -4779,12 +4839,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.500">
                        01:00:01.500  
           </span>
           <span
@@ -4879,12 +4941,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.510">
                        01:00:01.510  
           </span>
           <span
@@ -4960,12 +5024,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:01.700">
                          01:00:01.700  
             </span>
             <span
@@ -5060,12 +5126,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:01.801">
                          01:00:01.801  
             </span>
             <span
@@ -5129,12 +5197,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:03.500">
                          01:00:03.500  
             </span>
             <span
@@ -5199,12 +5269,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.910">
                        01:00:01.910  
           </span>
           <span
@@ -5269,12 +5341,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.800">
                      01:00:01.800  
         </span>
         <span
@@ -5339,9 +5413,11 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -5408,9 +5484,11 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -5542,11 +5620,15 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message1</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.005">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message1</span></div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.010">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
       <div
         class="story"
         style="background-color:aliceblue;color:black;"
@@ -5554,13 +5636,17 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
         <div
           class="storyTitle allowUserSelect fadeIn"
           style="font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.500">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
         class="giu-icon fa fa-caret-down"
         style="cursor:pointer;letter-spacing:normal;"></i></span><span style="cursor:pointer;"><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A1</span><span style=""> </span></span></div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.510  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#ff6600;">WARN  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#ff6600;">Warning, warning!!</span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.510">           01:00:01.510  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#ff6600;">WARN  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#ff6600;">Warning, warning!!</span></div>
         <div
           class="story"
           style="background-color:aliceblue;color:black;"
@@ -5568,27 +5654,37 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 1`] 
           <div
             class="storyTitle allowUserSelect fadeIn"
             style="font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:01.700  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:01.700">           01:00:01.700  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
           class="giu-icon fa fa-caret-down"
           style="cursor:pointer;letter-spacing:normal;"></i></span><span style="cursor:pointer;"><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A11</span><span style=""> </span></span></div>
           <div
             class="log allowUserSelect fadeIn"
             style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:01.801  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">foo1</span></div>
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:01.801">           01:00:01.801  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">foo1</span></div>
           <div
             class="log allowUserSelect fadeIn"
             style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:03.500  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">Message at the END in flat mode</span></div>
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:03.500">           01:00:03.500  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">Message at the END in flat mode</span></div>
         </div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.910  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:grey;">DEBUG </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">A debug message</span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.910">           01:00:01.910  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:grey;">DEBUG </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">A debug message</span></div>
       </div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message2</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.800">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message2</span></div>
     </div>
     <div
       class="log allowUserSelect fadeIn"
@@ -5686,9 +5782,11 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -5763,9 +5861,11 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
           title={undefined}>
@@ -5874,12 +5974,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.005">
                      01:00:01.005  
         </span>
         <span
@@ -5943,12 +6045,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.010">
                      01:00:01.010  
         </span>
         <span
@@ -6025,12 +6129,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.500">
                        01:00:01.500  
           </span>
           <span
@@ -6125,12 +6231,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.510">
                        01:00:01.510  
           </span>
           <span
@@ -6206,12 +6314,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:01.700">
                          01:00:01.700  
             </span>
             <span
@@ -6307,12 +6417,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.910">
                        01:00:01.910  
           </span>
           <span
@@ -6377,12 +6489,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.800">
                      01:00:01.800  
         </span>
         <span
@@ -6447,9 +6561,11 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -6516,9 +6632,11 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -6650,11 +6768,15 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message1</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.005">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message1</span></div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.010">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
       <div
         class="story"
         style="background-color:aliceblue;color:black;"
@@ -6662,13 +6784,17 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
         <div
           class="storyTitle allowUserSelect fadeIn"
           style="font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.500">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
         class="giu-icon fa fa-caret-down"
         style="cursor:pointer;letter-spacing:normal;"></i></span><span style="cursor:pointer;"><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A1</span><span style=""> </span></span></div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.510  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#ff6600;">WARN  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#ff6600;">Warning, warning!!</span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.510">           01:00:01.510  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#ff6600;">WARN  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#ff6600;">Warning, warning!!</span></div>
         <div
           class="story"
           style="background-color:aliceblue;color:black;"
@@ -6676,19 +6802,25 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 2`] 
           <div
             class="storyTitle allowUserSelect fadeIn"
             style="font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:01.700  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:01.700">           01:00:01.700  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
           class="giu-icon fa fa-caret-right"
           style="cursor:pointer;letter-spacing:normal;"></i></span><span style="cursor:pointer;"><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A11</span><span style=""> </span></span></div>
         </div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.910  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:grey;">DEBUG </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">A debug message</span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.910">           01:00:01.910  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:grey;">DEBUG </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">A debug message</span></div>
       </div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message2</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.800">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message2</span></div>
     </div>
     <div
       class="log allowUserSelect fadeIn"
@@ -6786,9 +6918,11 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -6863,9 +6997,11 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
           title={undefined}>
@@ -6974,12 +7110,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.005">
                      01:00:01.005  
         </span>
         <span
@@ -7043,12 +7181,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.010">
                      01:00:01.010  
         </span>
         <span
@@ -7125,12 +7265,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.500">
                        01:00:01.500  
           </span>
           <span
@@ -7239,12 +7381,14 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.800">
                      01:00:01.800  
         </span>
         <span
@@ -7309,9 +7453,11 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -7378,9 +7524,11 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -7512,11 +7660,15 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message1</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.005">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message1</span></div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.010">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
       <div
         class="story"
         style="background-color:aliceblue;color:black;"
@@ -7524,7 +7676,9 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
         <div
           class="storyTitle allowUserSelect fadeIn"
           style="font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.500">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
         class="giu-icon fa fa-caret-right"
         style="cursor:pointer;letter-spacing:normal;"></i></span><span style="cursor:pointer;"><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A1</span><span style=""> </span></span><i
         class="giu-icon fa fa-warning"
@@ -7534,7 +7688,9 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 3`] 
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message2</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.800">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message2</span></div>
     </div>
     <div
       class="log allowUserSelect fadeIn"
@@ -7632,9 +7788,11 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 4`] 
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -7709,9 +7867,11 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 4`] 
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
           title={undefined}>
@@ -7834,9 +7994,11 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 4`] 
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -7903,9 +8065,11 @@ exports[`Story 08 hierarchical stories 01 renders collapse/expand correctly 4`] 
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -8134,9 +8298,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -8211,9 +8377,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
           title={undefined}>
@@ -8322,12 +8490,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.005">
                      01:00:01.005  
         </span>
         <span
@@ -8391,12 +8561,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.010">
                      01:00:01.010  
         </span>
         <span
@@ -8473,12 +8645,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.500">
                        01:00:01.500  
           </span>
           <span
@@ -8573,12 +8747,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.510">
                        01:00:01.510  
           </span>
           <span
@@ -8654,12 +8830,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:01.700">
                          01:00:01.700  
             </span>
             <span
@@ -8754,12 +8932,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:01.801">
                          01:00:01.801  
             </span>
             <span
@@ -8823,12 +9003,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:03.500">
                          01:00:03.500  
             </span>
             <span
@@ -8893,12 +9075,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.910">
                        01:00:01.910  
           </span>
           <span
@@ -8963,12 +9147,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.800">
                      01:00:01.800  
         </span>
         <span
@@ -9033,9 +9219,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -9102,9 +9290,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -9236,11 +9426,15 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message1</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.005">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message1</span></div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.010">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
       <div
         class="story"
         style="background-color:aliceblue;color:black;"
@@ -9248,13 +9442,17 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
         <div
           class="storyTitle allowUserSelect fadeIn"
           style="font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.500">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
         class="giu-icon fa fa-caret-down"
         style="cursor:pointer;letter-spacing:normal;"></i></span><span style="cursor:pointer;"><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A1</span><span style=""> </span></span></div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.510  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#ff6600;">WARN  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#ff6600;">Warning, warning!!</span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.510">           01:00:01.510  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#ff6600;">WARN  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#ff6600;">Warning, warning!!</span></div>
         <div
           class="story"
           style="background-color:aliceblue;color:black;"
@@ -9262,27 +9460,37 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 1`
           <div
             class="storyTitle allowUserSelect fadeIn"
             style="font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:01.700  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:01.700">           01:00:01.700  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
           class="giu-icon fa fa-caret-down"
           style="cursor:pointer;letter-spacing:normal;"></i></span><span style="cursor:pointer;"><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A11</span><span style=""> </span></span></div>
           <div
             class="log allowUserSelect fadeIn"
             style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:01.801  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">foo1</span></div>
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:01.801">           01:00:01.801  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">foo1</span></div>
           <div
             class="log allowUserSelect fadeIn"
             style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:03.500  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">Message at the END in flat mode</span></div>
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:03.500">           01:00:03.500  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">Message at the END in flat mode</span></div>
         </div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.910  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:grey;">DEBUG </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">A debug message</span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.910">           01:00:01.910  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:grey;">DEBUG </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">A debug message</span></div>
       </div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message2</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.800">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message2</span></div>
     </div>
     <div
       class="log allowUserSelect fadeIn"
@@ -9380,9 +9588,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -9457,9 +9667,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
           title={undefined}>
@@ -9568,12 +9780,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.005">
                      01:00:01.005  
         </span>
         <span
@@ -9637,12 +9851,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.010">
                      01:00:01.010  
         </span>
         <span
@@ -9719,12 +9935,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.500">
                        01:00:01.500  
           </span>
           <span
@@ -9819,12 +10037,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.510">
                        01:00:01.510  
           </span>
           <span
@@ -9900,12 +10120,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:01.700">
                          01:00:01.700  
             </span>
             <span
@@ -10000,12 +10222,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:01.801">
                          01:00:01.801  
             </span>
             <span
@@ -10069,12 +10293,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:03.500">
                          01:00:03.500  
             </span>
             <span
@@ -10139,12 +10365,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.910">
                        01:00:01.910  
           </span>
           <span
@@ -10209,12 +10437,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.800">
                      01:00:01.800  
         </span>
         <span
@@ -10279,9 +10509,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -10348,9 +10580,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -10482,11 +10716,15 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message1</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.005">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message1</span></div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.010">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
       <div
         class="story"
         style="background-color:aliceblue;color:black;"
@@ -10494,13 +10732,17 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
         <div
           class="storyTitle allowUserSelect fadeIn"
           style="font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.500">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
         class="giu-icon fa fa-caret-down"
         style="cursor:pointer;letter-spacing:normal;"></i></span><span style="cursor:pointer;"><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A1</span><span style=""> </span></span></div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.510  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#ff6600;">WARN  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#ff6600;">Warning, warning!!</span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.510">           01:00:01.510  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#ff6600;">WARN  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#ff6600;">Warning, warning!!</span></div>
         <div
           class="story"
           style="background-color:aliceblue;color:black;"
@@ -10508,27 +10750,37 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 2`
           <div
             class="storyTitle allowUserSelect fadeIn"
             style="font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:01.700  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:01.700">           01:00:01.700  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
           class="giu-icon fa fa-caret-down"
           style="cursor:pointer;letter-spacing:normal;"></i></span><span style="cursor:pointer;"><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A11</span><span style=""> </span></span></div>
           <div
             class="log allowUserSelect fadeIn"
             style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:01.801  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">foo1</span></div>
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:01.801">           01:00:01.801  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">foo1</span></div>
           <div
             class="log allowUserSelect fadeIn"
             style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:03.500  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">Message at the END in flat mode</span></div>
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:03.500">           01:00:03.500  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">Message at the END in flat mode</span></div>
         </div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.910  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:grey;">DEBUG </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">A debug message</span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.910">           01:00:01.910  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:grey;">DEBUG </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">A debug message</span></div>
       </div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message2</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.800">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message2</span></div>
     </div>
     <div
       class="log allowUserSelect fadeIn"
@@ -10626,9 +10878,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -10703,9 +10957,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
           title={undefined}>
@@ -10814,12 +11070,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.005">
                      01:00:01.005  
         </span>
         <span
@@ -10883,12 +11141,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.010">
                      01:00:01.010  
         </span>
         <span
@@ -10965,12 +11225,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.500">
                        01:00:01.500  
           </span>
           <span
@@ -11065,12 +11327,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.510">
                        01:00:01.510  
           </span>
           <span
@@ -11138,12 +11402,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.700">
                        01:00:01.700  
           </span>
           <span
@@ -11231,12 +11497,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.801">
                        01:00:01.801  
           </span>
           <span
@@ -11300,12 +11568,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.910">
                        01:00:01.910  
           </span>
           <span
@@ -11369,12 +11639,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:03.500">
                        01:00:03.500  
           </span>
           <span
@@ -11438,12 +11710,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:03.500">
                        01:00:03.500  
           </span>
           <span
@@ -11532,12 +11806,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.800">
                      01:00:01.800  
         </span>
         <span
@@ -11602,9 +11878,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -11671,9 +11949,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -11805,11 +12085,15 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message1</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.005">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message1</span></div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.010">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
       <div
         class="story"
         style="background-color:aliceblue;color:black;"
@@ -11817,38 +12101,54 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 3`
         <div
           class="storyTitle allowUserSelect fadeIn"
           style="font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.500">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
         class="giu-icon fa fa-caret-down"
         style="cursor:pointer;letter-spacing:normal;"></i></span><span style="cursor:pointer;"><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A1</span><span style=""> </span></span></div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.510  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#ff6600;">WARN  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#ff6600;">Warning, warning!!</span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.510">           01:00:01.510  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#ff6600;">WARN  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#ff6600;">Warning, warning!!</span></div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.700  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A11</span><span style=""> </span><span style="color:grey;">[CREATED]</span></span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.700">           01:00:01.700  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A11</span><span style=""> </span><span style="color:grey;">[CREATED]</span></span></div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.801  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">foo1</span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.801">           01:00:01.801  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">foo1</span></div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.910  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:grey;">DEBUG </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">A debug message</span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.910">           01:00:01.910  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:grey;">DEBUG </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">A debug message</span></div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:03.500  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">Message at the END in flat mode</span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:03.500">           01:00:03.500  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">Message at the END in flat mode</span></div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:03.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A11</span><span style=""> </span><span style="color:grey;">[CLOSED]</span></span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:03.500">           01:00:03.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A11</span><span style=""> </span><span style="color:grey;">[CLOSED]</span></span></div>
       </div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message2</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.800">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message2</span></div>
     </div>
     <div
       class="log allowUserSelect fadeIn"
@@ -11946,9 +12246,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -12023,9 +12325,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
           title={undefined}>
@@ -12134,12 +12438,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.005">
                      01:00:01.005  
         </span>
         <span
@@ -12203,12 +12509,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.010">
                      01:00:01.010  
         </span>
         <span
@@ -12277,12 +12585,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.500">
                      01:00:01.500  
         </span>
         <span
@@ -12370,12 +12680,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.510">
                      01:00:01.510  
         </span>
         <span
@@ -12443,12 +12755,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.700">
                      01:00:01.700  
         </span>
         <span
@@ -12536,12 +12850,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.800">
                      01:00:01.800  
         </span>
         <span
@@ -12605,12 +12921,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.801">
                      01:00:01.801  
         </span>
         <span
@@ -12674,12 +12992,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.910">
                      01:00:01.910  
         </span>
         <span
@@ -12743,12 +13063,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.910">
                      01:00:01.910  
         </span>
         <span
@@ -12836,12 +13158,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:03.500">
                      01:00:03.500  
         </span>
         <span
@@ -12905,12 +13229,14 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:03.500">
                      01:00:03.500  
         </span>
         <span
@@ -12999,9 +13325,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -13068,9 +13396,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -13202,47 +13532,69 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 4`
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message1</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.005">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message1</span></div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.010">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A1</span><span style=""> </span><span style="color:grey;">[CREATED]</span></span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.500">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A1</span><span style=""> </span><span style="color:grey;">[CREATED]</span></span></div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.510  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#ff6600;">WARN  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#ff6600;">Warning, warning!!</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.510">           01:00:01.510  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#ff6600;">WARN  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#ff6600;">Warning, warning!!</span></div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.700  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A11</span><span style=""> </span><span style="color:grey;">[CREATED]</span></span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.700">           01:00:01.700  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A11</span><span style=""> </span><span style="color:grey;">[CREATED]</span></span></div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message2</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.800">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message2</span></div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.801  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">foo1</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.801">           01:00:01.801  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">foo1</span></div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.910  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:grey;">DEBUG </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">A debug message</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.910">           01:00:01.910  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:grey;">DEBUG </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">A debug message</span></div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.910  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A1</span><span style=""> </span><span style="color:grey;">[CLOSED]</span></span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.910">           01:00:01.910  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A1</span><span style=""> </span><span style="color:grey;">[CLOSED]</span></span></div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:03.500  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">Message at the END in flat mode</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:03.500">           01:00:03.500  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">Message at the END in flat mode</span></div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:03.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A11</span><span style=""> </span><span style="color:grey;">[CLOSED]</span></span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:03.500">           01:00:03.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A11</span><span style=""> </span><span style="color:grey;">[CLOSED]</span></span></div>
     </div>
     <div
       class="log allowUserSelect fadeIn"
@@ -13340,9 +13692,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -13409,9 +13763,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -13502,9 +13858,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -13571,9 +13929,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -13645,9 +14005,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -13738,9 +14100,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -13811,9 +14175,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -13904,9 +14270,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -13973,9 +14341,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -14042,9 +14412,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -14111,9 +14483,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -14204,9 +14578,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -14273,9 +14649,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -14342,9 +14720,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -14411,9 +14791,11 @@ exports[`Story 08 hierarchical stories 02 renders flat/hierarchical correctly 5`
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -14698,9 +15080,11 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -14791,9 +15175,11 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
           title={undefined}>
@@ -14902,12 +15288,14 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.005">
                      01:00:01.005  
         </span>
         <span
@@ -14983,12 +15371,14 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.010">
                      01:00:01.010  
         </span>
         <span
@@ -15065,12 +15455,14 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.500">
                        01:00:01.500  
           </span>
           <span
@@ -15165,12 +15557,14 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.510">
                        01:00:01.510  
           </span>
           <span
@@ -15246,12 +15640,14 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:01.700">
                          01:00:01.700  
             </span>
             <span
@@ -15346,12 +15742,14 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:01.801">
                          01:00:01.801  
             </span>
             <span
@@ -15415,12 +15813,14 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:03.500">
                          01:00:03.500  
             </span>
             <span
@@ -15497,12 +15897,14 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.910">
                        01:00:01.910  
           </span>
           <span
@@ -15579,12 +15981,14 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.800">
                      01:00:01.800  
         </span>
         <span
@@ -15661,9 +16065,11 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -15746,9 +16152,11 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -15896,11 +16304,15 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="background-color:#ff6600;color:white;">message</span><span style="">1</span></span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.005">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="background-color:#ff6600;color:white;">message</span><span style="">1</span></span></div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.010">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
       <div
         class="story"
         style="background-color:aliceblue;color:black;"
@@ -15908,13 +16320,17 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
         <div
           class="storyTitle allowUserSelect fadeIn"
           style="font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.500">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
         class="giu-icon fa fa-caret-down"
         style="cursor:pointer;letter-spacing:normal;"></i></span><span style="cursor:pointer;"><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A1</span><span style=""> </span></span></div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.510  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#ff6600;">WARN  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#ff6600;">Warning, warning!!</span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.510">           01:00:01.510  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#ff6600;">WARN  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#ff6600;">Warning, warning!!</span></div>
         <div
           class="story"
           style="background-color:aliceblue;color:black;"
@@ -15922,27 +16338,37 @@ exports[`Story 08 hierarchical stories 03 renders quick-find correctly 1`] = `
           <div
             class="storyTitle allowUserSelect fadeIn"
             style="font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:01.700  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:01.700">           01:00:01.700  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
           class="giu-icon fa fa-caret-down"
           style="cursor:pointer;letter-spacing:normal;"></i></span><span style="cursor:pointer;"><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A11</span><span style=""> </span></span></div>
           <div
             class="log allowUserSelect fadeIn"
             style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:01.801  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">foo1</span></div>
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:01.801">           01:00:01.801  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">foo1</span></div>
           <div
             class="log allowUserSelect fadeIn"
             style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:03.500  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="background-color:#ff6600;color:white;">Message</span><span style=""> at the END in flat mode</span></span></div>
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:03.500">           01:00:03.500  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="background-color:#ff6600;color:white;">Message</span><span style=""> at the END in flat mode</span></span></div>
         </div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.910  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:grey;">DEBUG </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="">A debug </span><span style="background-color:#ff6600;color:white;">message</span></span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.910">           01:00:01.910  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:grey;">DEBUG </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="">A debug </span><span style="background-color:#ff6600;color:white;">message</span></span></div>
       </div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="background-color:#ff6600;color:white;">message</span><span style="">2</span></span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.800">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span><span style="background-color:#ff6600;color:white;">message</span><span style="">2</span></span></div>
     </div>
     <div
       class="log allowUserSelect fadeIn"
@@ -16040,9 +16466,11 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -16117,9 +16545,11 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
           title={undefined}>
@@ -16228,12 +16658,14 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.005">
                      01:00:01.005  
         </span>
         <span
@@ -16297,12 +16729,14 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.010">
                      01:00:01.010  
         </span>
         <span
@@ -16379,12 +16813,14 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.500">
                        01:00:01.500  
           </span>
           <span
@@ -16479,12 +16915,14 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.510">
                        01:00:01.510  
           </span>
           <span
@@ -16560,12 +16998,14 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:01.700">
                          01:00:01.700  
             </span>
             <span
@@ -16660,12 +17100,14 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:01.801">
                          01:00:01.801  
             </span>
             <span
@@ -16729,12 +17171,14 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:03.500">
                          01:00:03.500  
             </span>
             <span
@@ -16798,12 +17242,14 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:03.500">
                          01:00:03.500  
             </span>
             <span
@@ -16872,12 +17318,14 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.910">
                        01:00:01.910  
           </span>
           <span
@@ -16941,12 +17389,14 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.910">
                        01:00:01.910  
           </span>
           <span
@@ -17015,12 +17465,14 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.800">
                      01:00:01.800  
         </span>
         <span
@@ -17085,9 +17537,11 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -17154,9 +17608,11 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -17288,11 +17744,15 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message1</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.005">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message1</span></div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.010">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
       <div
         class="story"
         style="background-color:aliceblue;color:black;"
@@ -17300,13 +17760,17 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
         <div
           class="storyTitle allowUserSelect fadeIn"
           style="font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.500">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
         class="giu-icon fa fa-caret-down"
         style="cursor:pointer;letter-spacing:normal;"></i></span><span style="cursor:pointer;"><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A1</span><span style=""> </span></span></div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.510  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#ff6600;">WARN  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#ff6600;">Warning, warning!!</span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.510">           01:00:01.510  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#ff6600;">WARN  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#ff6600;">Warning, warning!!</span></div>
         <div
           class="story"
           style="background-color:aliceblue;color:black;"
@@ -17314,35 +17778,49 @@ exports[`Story 08 hierarchical stories 04 renders closed actions correctly 1`] =
           <div
             class="storyTitle allowUserSelect fadeIn"
             style="font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:01.700  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:01.700">           01:00:01.700  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
           class="giu-icon fa fa-caret-down"
           style="cursor:pointer;letter-spacing:normal;"></i></span><span style="cursor:pointer;"><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A11</span><span style=""> </span></span></div>
           <div
             class="log allowUserSelect fadeIn"
             style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:01.801  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">foo1</span></div>
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:01.801">           01:00:01.801  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">foo1</span></div>
           <div
             class="log allowUserSelect fadeIn"
             style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:03.500  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">Message at the END in flat mode</span></div>
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:03.500">           01:00:03.500  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">Message at the END in flat mode</span></div>
           <div
             class="log allowUserSelect fadeIn"
             style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:03.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:grey;">[CLOSED]</span></div>
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:03.500">           01:00:03.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:grey;">[CLOSED]</span></div>
         </div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.910  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:grey;">DEBUG </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">A debug message</span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.910">           01:00:01.910  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:grey;">DEBUG </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">A debug message</span></div>
         <div
           class="log allowUserSelect fadeIn"
           style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.910  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:grey;">[CLOSED]</span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.910">           01:00:01.910  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:grey;">[CLOSED]</span></div>
       </div>
       <div
         class="log allowUserSelect fadeIn"
         style="background-color:aliceblue;color:black;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message2</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.800">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message2</span></div>
     </div>
     <div
       class="log allowUserSelect fadeIn"
@@ -17440,9 +17918,11 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -17517,9 +17997,11 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
           title={undefined}>
@@ -17628,12 +18110,14 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.005">
                      01:00:01.005  
         </span>
         <span
@@ -17697,12 +18181,14 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.010">
                      01:00:01.010  
         </span>
         <span
@@ -17779,12 +18265,14 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.500">
                        01:00:01.500  
           </span>
           <span
@@ -17879,12 +18367,14 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.510">
                        01:00:01.510  
           </span>
           <span
@@ -17960,12 +18450,14 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:01.700">
                          01:00:01.700  
             </span>
             <span
@@ -18060,12 +18552,14 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:01.801">
                          01:00:01.801  
             </span>
             <span
@@ -18129,12 +18623,14 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
               onContextMenu={[Function]}
               style={
                 Object {
+                  "backgroundColor": undefined,
                   "cursor": "pointer",
                   "display": "inline",
                   "fontStyle": undefined,
+                  "fontWeight": undefined,
                 }
               }
-              title={undefined}>
+              title="1970-01-01 01:00:03.500">
                          01:00:03.500  
             </span>
             <span
@@ -18199,12 +18695,14 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
             onContextMenu={[Function]}
             style={
               Object {
+                "backgroundColor": undefined,
                 "cursor": "pointer",
                 "display": "inline",
                 "fontStyle": undefined,
+                "fontWeight": undefined,
               }
             }
-            title={undefined}>
+            title="1970-01-01 01:00:01.910">
                        01:00:01.910  
           </span>
           <span
@@ -18269,12 +18767,14 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
           onContextMenu={[Function]}
           style={
             Object {
+              "backgroundColor": undefined,
               "cursor": "pointer",
               "display": "inline",
               "fontStyle": undefined,
+              "fontWeight": undefined,
             }
           }
-          title={undefined}>
+          title="1970-01-01 01:00:01.800">
                      01:00:01.800  
         </span>
         <span
@@ -18339,9 +18839,11 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -18408,9 +18910,11 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
         onContextMenu={[Function]}
         style={
           Object {
+            "backgroundColor": undefined,
             "cursor": "pointer",
             "display": "inline",
             "fontStyle": undefined,
+            "fontWeight": undefined,
           }
         }
         title={undefined}>
@@ -18542,11 +19046,15 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
       <div
         class="log allowUserSelect"
         style="background-color:rgb(17, 22, 54);color:white;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message1</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.005">           01:00:01.005  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message1</span></div>
       <div
         class="log allowUserSelect"
         style="background-color:rgb(17, 22, 54);color:white;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.010">           01:00:01.010  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#cc0000;">ERROR </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#cc0000;font-weight:bold;">Error, error!!</span></div>
       <div
         class="story"
         style="background-color:rgb(17, 22, 54);color:white;"
@@ -18554,13 +19062,17 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
         <div
           class="storyTitle allowUserSelect"
           style="font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.500">           01:00:01.500  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
         class="giu-icon fa fa-caret-down"
         style="cursor:pointer;letter-spacing:normal;"></i></span><span style="cursor:pointer;"><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A1</span><span style=""> </span></span></div>
         <div
           class="log allowUserSelect"
           style="background-color:rgb(17, 22, 54);color:white;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.510  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#ff6600;">WARN  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#ff6600;">Warning, warning!!</span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.510">           01:00:01.510  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:#ff6600;">WARN  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="color:#ff6600;">Warning, warning!!</span></div>
         <div
           class="story"
           style="background-color:rgb(17, 22, 54);color:white;"
@@ -18568,27 +19080,37 @@ exports[`Story 08 hierarchical stories 05 renders with dark backgrounds correctl
           <div
             class="storyTitle allowUserSelect"
             style="font-family:Menlo, Consolas, monospace;font-weight:900;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:01.700  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:01.700">           01:00:01.700  </span><span style="color:#ff6600;font-weight:bold;">                one </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"><i
           class="giu-icon fa fa-caret-down"
           style="cursor:pointer;letter-spacing:normal;"></i></span><span style="cursor:pointer;"><span style="">Story </span><span style="color:darkturquoise;font-weight:bold;">A11</span><span style=""> </span></span></div>
           <div
             class="log allowUserSelect"
             style="background-color:rgb(17, 22, 54);color:white;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:01.801  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">foo1</span></div>
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:01.801">           01:00:01.801  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">foo1</span></div>
           <div
             class="log allowUserSelect"
             style="background-color:rgb(17, 22, 54);color:white;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-          ><span style="cursor:pointer;display:inline;">           01:00:03.500  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">Message at the END in flat mode</span></div>
+          ><span
+          style="cursor:pointer;display:inline;"
+          title="1970-01-01 01:00:03.500">           01:00:03.500  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:60px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">Message at the END in flat mode</span></div>
         </div>
         <div
           class="log allowUserSelect"
           style="background-color:rgb(17, 22, 54);color:white;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-        ><span style="cursor:pointer;display:inline;">           01:00:01.910  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:grey;">DEBUG </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">A debug message</span></div>
+        ><span
+        style="cursor:pointer;display:inline;"
+        title="1970-01-01 01:00:01.910">           01:00:01.910  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="color:grey;">DEBUG </span><div style="display:inline-block;width:40px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">A debug message</span></div>
       </div>
       <div
         class="log allowUserSelect"
         style="background-color:rgb(17, 22, 54);color:white;font-family:Menlo, Consolas, monospace;overflow-x:hidden;text-overflow:ellipsis;white-space:pre;"
-      ><span style="cursor:pointer;display:inline;">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message2</span></div>
+      ><span
+      style="cursor:pointer;display:inline;"
+      title="1970-01-01 01:00:01.800">           01:00:01.800  </span><span style="color:darkturquoise;font-weight:bold;">               main </span><span style="font-weight:bold;">INFO  </span><div style="display:inline-block;width:20px;"></div><span style="cursor:pointer;display:inline-block;padding-left:10px;width:30px;"></span><span style="">message2</span></div>
     </div>
     <div
       class="log allowUserSelect"

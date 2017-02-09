@@ -106,10 +106,30 @@ exports[`App renders correctly when connected 1`] = `
                 "marginTop": -14,
                 "position": "absolute",
                 "textAlign": "left",
-                "width": 300,
+                "width": 2000,
               }
             }>
-            Click on timestamps to toggle: local, UTC, relative
+            <span>
+              <span
+                style={
+                  Object {
+                    "color": "#4df950",
+                  }
+                }>
+                Click
+              </span>
+               on timestamps to toggle: local, UTC, relative to now
+              <br />
+              <span
+                style={
+                  Object {
+                    "color": "#4df950",
+                  }
+                }>
+                Right-click
+              </span>
+               to set a reference timestamp
+            </span>
           </div>
         </div>
         <div
@@ -177,11 +197,13 @@ exports[`App renders correctly when connected 1`] = `
       dataMockType="Story"
       level={0}
       seqFullRefresh={0}
+      setTimeRef={[Function]}
       story={
         Object {
           "placeholderFor": "mainStory",
         }
-      }>
+      }
+      timeRef={null}>
       <div
         style={
           Object {
@@ -231,8 +253,18 @@ exports[`App renders correctly when connected 1`] = `
           class="giu-hint-label"
           style="left:50px;pointer-events:none;position:fixed;top:230px;width:0;"
         >
-          <div style="font-size:20px;left:0;line-height:25px;margin-left:8px;margin-right:8px;margin-top:-14px;position:absolute;text-align:left;width:300px;">
-            Click on timestamps to toggle: local, UTC, relative
+          <div style="font-size:20px;left:0;line-height:25px;margin-left:8px;margin-right:8px;margin-top:-14px;position:absolute;text-align:left;width:2000px;">
+            <span>
+              <span style="color:#4df950;">
+                Click
+              </span>
+               on timestamps to toggle: local, UTC, relative to now
+              <br>
+              <span style="color:#4df950;">
+                Right-click
+              </span>
+               to set a reference timestamp
+            </span>
           </div>
         </div>
         <div style="border:1px solid white;border-radius:8px;bottom:20px;cursor:pointer;padding:5px 25px;position:fixed;right:20px;">
