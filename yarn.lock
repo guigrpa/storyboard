@@ -4055,6 +4055,19 @@ nyc@10.1.2:
     yargs "^6.6.0"
     yargs-parser "^4.0.2"
 
+oao@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/oao/-/oao-0.1.0.tgz#45c5b17fd50555d5517a10149c664ae59079d660"
+  dependencies:
+    commander "2.9.0"
+    globby "6.1.0"
+    inquirer "3.0.1"
+    semver "5.3.0"
+    shelljs "0.7.6"
+    split "1.0.0"
+    storyboard "^2.0.0"
+    timm "^1.2.3"
+
 oauth-sign@~0.8.1:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.8.2.tgz#46a6ab7f0aead8deae9ec0565780b7d4efeb9d43"

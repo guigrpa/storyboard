@@ -1,7 +1,6 @@
 - **Conversion to monorepo**
     * Add utility to bump all packages to a given (higher) version
     * Add clean option to clean all deps
-    * Segregate monorepo tools
     * Add docs
     * Once published:
         - [ ] Update monorepo tools (and package.json) to use storyboard@3 ourselves
