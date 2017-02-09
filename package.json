@@ -24,8 +24,8 @@
     "sandbox": "mono-repo bootstrap",
     "travis": "yarn run bootstrap && yarn run compile && yarn run test",
     "build": "yarn run bootstrap && yarn run lint && yarn run compile && yarn run buildAllProducts && yarn run test && yarn run xxl && yarn run prepareRelease",
-    "bootstrap": "node scripts/lib bootstrap",
-    "compile": "node scripts/lib all \"yarn run compile\"",
+    "bootstrap": "babel-node scripts/src bootstrap",
+    "compile": "babel-node scripts/src all \"yarn run compile\"",
     "buildAllProducts": "yarn run buildServerLogsApp && yarn run buildExamples && yarn run buildExtension",
     "buildServerLogsApp": "cd packages/storyboard-server-logs-app && yarn run build",
     "buildExamples": "cd packages/storyboard-examples && yarn run build",
@@ -45,8 +45,8 @@
     "_testProd": "cross-env NODE_ENV=production yarn run _testCov && mv .nyc_tmp/coverage-final.json .nyc_tmp/coverage-prod.json",
     "_testBrowser": "cross-env NODE_ENV=development TEST_BROWSER=true yarn run _testCov && mv .nyc_tmp/coverage-final.json .nyc_tmp/coverage-browser.json",
     "_testCov": "nyc node_modules/mocha/bin/_mocha && mv .nyc_output/* .nyc_tmp/ && rm -rf .nyc_output && jest --coverage && mv .nyc_output/coverage-final.json .nyc_tmp && rm -rf .nyc_output",
-    "prepareRelease": "node scripts/lib prepublish",
-    "release": "node scripts/lib publish"
+    "prepareRelease": "babel-node scripts/src prepublish",
+    "release": "babel-node scripts/src publish"
   },
   "devDependencies": {
     "babel-cli": "6.22.2",
