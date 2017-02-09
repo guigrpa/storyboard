@@ -9,6 +9,7 @@ install:
   - ps: Install-Product node $env:nodejs_version x64
   - node --version
   - yarn --version
+  - yarn
 
 cache:
   - node_modules
