@@ -25,7 +25,7 @@
     "storyboard-listener-browser-extension": "^3.0.0",
     "storyboard-listener-ws-client": "^3.0.0",
     "storyboard-listener-ws-server": "^3.0.0",
-    "storyboard-listener-db-postgres": "^3.0.0"		
+    "storyboard-listener-db-postgres": "^3.0.0"
   },
   "author": "Guillermo Grau Panea",
   "license": "MIT",
