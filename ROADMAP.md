@@ -1,7 +1,8 @@
 - **Conversion to monorepo**
-    * Automatic versions
-    * Add clean option to clean all deps
-    * Add docs
+    * [ ] Add clean option to clean all deps
+    * [ ] Add docs
+        - [ ] DB listener? - at least, link to the initialisation SQL
+    * [ ] Make CLI tool also modular?
     * Once published:
         - [ ] Update monorepo tools (and package.json) to use storyboard@3 ourselves
         + [ ] Normal: check flow interface

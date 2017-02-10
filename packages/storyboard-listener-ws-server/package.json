@@ -10,7 +10,9 @@
     "clocksy": "1.1.0",
     "bluebird": "3.4.6",
     "express": "4.14.0",
-    "socket.io": "1.6.0",
+    "socket.io": "1.6.0"
+  },
+  "peerDependencies": {
     "storyboard-core": "^3.0.0"
   },
   "devDependencies": {

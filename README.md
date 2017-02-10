@@ -4,20 +4,23 @@
 
 A library, plus a [Chrome DevTools extension](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc).
 
-Demo: https://storyboard-bhibtchlhy.now.sh/ (might be a bit slow; free hosting!)
+Demo: https://storyboard-bhibtchlhy.now.sh/ (might be a bit slow at first; free hosting!)
 
-## Why?
+**These docs are for Storyboard v3. Docs for v2 [are also available](https://github.com/guigrpa/storyboard/blob/v2.3.1/README.md), but you're [encouraged to upgrade](https://github.com/guigrpa/storyboard/blob/master/CHANGELOG.md)!**
+
+## Why? :sparkles:
 
 * **Hierarchical stories**: put logs in context (*stories*), and group them in stories. Stories are extremely useful with concurrent user actions and async events.
-* Get the whole picture with *end-to-end stories*: see all **client and server tasks** triggered by a user action (a click on the *Login* button, maybe) **in a single place**.
-* Use the **Storyboard DevTools Chrome extension** to view client and server logs with a clean and detail-rich interface. Now with **remote client log monitoring for mobile devices** and non-Chrome browsers.
-* Not ready to change your application to use this library? No worries, wrap it with the **Storyboard CLI** for remote access to your logs and compatibility with the Storyboard DevTools.
-* Push server logs in **real time** to the Storyboard DevTools extension via WebSockets, with **opt-in client-server clock synchronisation**. Even more: **control the level of detail you get from various parts of your server remotely, without relaunching**.
-* Ask for **authentication** to see server logs; hook up your own auth function.
+* **End-to-end stories**: see all *client and server* tasks triggered by a user action (a click on the *Login* button, maybe) in a single place.
+* **Storyboard DevTools Chrome extension**: view client and server logs with a clean and detail-rich interface, including advanced features such as **remote monitoring** (for mobile devices and non-Chrome browsers) and relative timestamps.
+* **Storyboard CLI**: wrap any application with it (no changes required), and suddenly you can monitor it remotely via the Storyboard DevTools.
+* **Real-time push** of server logs to the Storyboard DevTools extension via WebSockets, with **opt-in client-server clock synchronisation**. Even more: **control the level of detail you get from various parts of your server remotely, without relaunching**.
+* **Secure** server logs: remote access is opt-in, and can be **authenticated**.
 * **Attach anything** to your logs for further investigation.
-* Integrate your app with Storyboard's **flexible plugin architecture**. Built-in plugins include Console, WebSocket Server & Client, File, (PostgreSQL) Database, and Browser Extension, but you can write your own too!
-* Give logs **source and severity** attributes and apply **coarse- or fine-grained filtering**, with white and black lists.
-* Use **colour** to highlight what's important. Storyboard extends the popular [chalk](https://github.com/chalk/chalk) library so that it can also be used on the browser.
+* **Plug-in architecture**. Available plugins include Console, WebSocket Server & Client, File, (PostgreSQL) Database, and Browser Extension, but you can write your own too!
+* **Lightweight**. Plugins are now (v3) available separately, so you only need to bring in the dependencies you actually use.
+* **Rich filter options**: give logs *source* and *severity* attributes and apply *fine-grained filtering*, with white and black lists.
+* **Colorful**: use color to convey meaning and importance. Storyboard extends the popular [chalk](https://github.com/chalk/chalk) library so that it can also be used on the browser.
 * Enjoy the **simple-yet-powerful API** (I hope!).
 * **[Flow](https://flowtype.org/)-compatible** (with zero config).
 
@@ -27,14 +30,14 @@ Demo: https://storyboard-bhibtchlhy.now.sh/ (might be a bit slow; free hosting!)
 To add the **Storyboard library** to your project:
 
 ```bash
-$ npm install --save storyboard
+$ npm install --save storyboard-preset-console
 ```
 
 If you only need the CLI tool, see [this section](#cli-tool).
 
 To install the **Storyboard DevTools** Chrome extension, [get it from the Chrome Web Store](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc). Optional, but highly recommended! After installing it, open the Storyboard pane in the Chrome DevTools and point your browser to a Storyboard-equipped page (see below for how to use the library).
 
-Feel free to check out the [example](https://github.com/guigrpa/storyboard/blob/master/src/example): just clone the repo and run `npm install && npm start`. You can also test-drive the PostgreSQL Database listener with `npm run exampleWithDb`, but make sure you run [these SQL scripts](https://github.com/guigrpa/storyboard/blob/master/src/example/db.sql) before on your DB and [customise the connection parameters](https://github.com/guigrpa/storyboard/blob/master/src/example/serverWithDb.js#L14).
+Feel free to check out the [example](https://github.com/guigrpa/storyboard/blob/master/src/example): just clone the repo and run `yarn && yarn build && yarn start`. You can also test-drive the PostgreSQL Database listener with `cd packages/storyboard-examples && yarn run exampleWithDb`, but make sure you run [these SQL scripts](https://github.com/guigrpa/storyboard/blob/master/packages/storyboard-examples/src/db.sql) before on your DB and [customise the connection parameters](https://github.com/guigrpa/storyboard/blob/master/packages/storyboard-examples/src/serverWithDb.js#L12).
 
 
 ## CLI tool
@@ -42,7 +45,7 @@ Feel free to check out the [example](https://github.com/guigrpa/storyboard/blob/
 Hopefully the next sections will convince you of the benefits of adding Storyboard to your project. If you don't want to modify your existing application but still want to use the Storyboard DevTools or other Storyboard features, you can use the `sb` CLI tool:
 
 ```bash
-$ npm install -g storyboard
+$ npm install -g storyboard-cli
 $ sb --server ls
 
 2016-07-15T17:26:33.974Z           storyboard INFO  ┌── ROOT STORY [CREATED]
@@ -106,13 +109,11 @@ $ sb --help
 
 ```js
 import { mainStory, addListener } from 'storyboard';
-import consoleListener from 'storyboard/lib/listeners/console';
+import consoleListener from 'storyboard-listener-console';
 addListener(consoleListener);
 
 mainStory.info('Hello world!');
 ```
-
-**_Note this breaking change in v2.x:_ As you can see above, Storyboard [no longer](https://github.com/guigrpa/storyboard/blob/master/CHANGELOG.md) enables listeners (plugins) by default, so you will need to do this manually upon startup.**
 
 
 ### Severity levels
@@ -435,11 +436,11 @@ You can check out your new extension navigating to: http://storyboard-demo.herok
 Storyboard DevTools is built with [React](https://facebook.github.io/react/), [Redux](http://redux.js.org/) and [Redux-Saga](http://yelouafi.github.io/redux-saga/).
 
 
-## [Changelog](https://github.com/guigrpa/storyboard/blob/master/CHANGELOG.md)
+## [Changelog](https://github.com/guigrpa/storyboard/blob/master/CHANGELOG.md) :scroll:
 
-## License (MIT)
+## License (MIT) :books:
 
-Copyright (c) [Guillermo Grau Panea](https://github.com/guigrpa) 2016
+Copyright (c) [Guillermo Grau Panea](https://github.com/guigrpa) 2016-now
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
