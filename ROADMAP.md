@@ -1,5 +1,5 @@
 - **Conversion to monorepo**
-    * Add utility to bump all packages to a given (higher) version
+    * Automatic versions
     * Add clean option to clean all deps
     * Add docs
     * Once published:
