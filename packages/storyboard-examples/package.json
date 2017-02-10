@@ -18,7 +18,14 @@
     "express": "4.14.0",
     "isomorphic-fetch": "2.2.1",
     "lodash": "4.17.4",
-    "timm": "^1.2.3"
+    "timm": "^1.2.3",
+    "storyboard": "^3.0.0",
+    "storyboard-listener-console": "^3.0.0",
+    "storyboard-listener-file": "^3.0.0",
+    "storyboard-listener-browser-extension": "^3.0.0",
+    "storyboard-listener-ws-client": "^3.0.0",
+    "storyboard-listener-ws-server": "^3.0.0",
+    "storyboard-listener-db-postgres": "^3.0.0"		
   },
   "author": "Guillermo Grau Panea",
   "license": "MIT",
