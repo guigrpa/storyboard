@@ -30,7 +30,7 @@ Demo: https://storyboard-bhibtchlhy.now.sh/ (might be a bit slow at first; free 
 To add the **Storyboard library** to your project:
 
 ```bash
-$ npm install --save storyboard-preset-console
+$ npm install --save storyboard storyboard-preset-console
 ```
 
 If you only need the CLI tool, see [this section](#cli-tool).
@@ -108,6 +108,15 @@ $ sb --help
 ### Basic usage
 
 ```js
+import { mainStory } from 'storyboard';
+import 'storyboard-preset-console';
+
+mainStory.info('Hello world!');
+```
+
+We're using the `storyboard-preset-console` preset for convenience, which is equivalent to:
+
+```js
 import { mainStory, addListener } from 'storyboard';
 import consoleListener from 'storyboard-listener-console';
 addListener(consoleListener);
@@ -115,6 +124,7 @@ addListener(consoleListener);
 mainStory.info('Hello world!');
 ```
 
+See more details on plugins in [Listeners](#listeners-plugins) below.
 
 ### Severity levels
 

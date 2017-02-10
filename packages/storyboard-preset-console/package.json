@@ -6,8 +6,10 @@
     "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src"
   },
   "dependencies": {
-    "storyboard": "^3.0.0",
     "storyboard-listener-console": "^3.0.0"
+  },
+  "peerDependencies": {
+    "storyboard": "^3.0.0"
   },
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
   "keywords": [

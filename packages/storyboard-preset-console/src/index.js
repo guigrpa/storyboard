@@ -3,6 +3,4 @@
 import { addListener } from 'storyboard';
 import consoleListener from 'storyboard-listener-console';
 
-export * from 'storyboard';
-
 addListener(consoleListener);
