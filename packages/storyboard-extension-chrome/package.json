@@ -25,7 +25,7 @@
     "redux-saga": "0.9.4",
     "redux-thunk": "2.1.0",
     "tinycolor2": "1.4.1",
-    "storyboard-core": "^3.0.0"
+    "storyboard-core": "^3.0.0-rc.0"
   },
   "remarks": [
     "moment is kept in devDependencies so that webpack doesn't complain when building giu"

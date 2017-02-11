@@ -10,7 +10,7 @@
     "pg": "6.0.2"
   },
   "peerDependencies": {
-    "storyboard-core": "^3.0.0"
+    "storyboard-core": "^3.0.0-rc.0"
   },
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
   "keywords": [

@@ -9,7 +9,7 @@
     "timm": "^1.2.3"
   },
   "peerDependencies": {
-    "storyboard-core": "^3.0.0"
+    "storyboard-core": "^3.0.0-rc.0"
   },
   "devDependencies": {
     "bluebird": "3.4.7"

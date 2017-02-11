@@ -10,10 +10,10 @@
   "dependencies": {
     "commander": "2.9.0",
     "split": "1.0.0",
-    "storyboard-core": "^3.0.0",
-    "storyboard-listener-console": "^3.0.0",
-    "storyboard-listener-file": "^3.0.0",
-    "storyboard-listener-ws-server": "^3.0.0"
+    "storyboard-core": "^3.0.0-rc.0",
+    "storyboard-listener-console": "^3.0.0-rc.0",
+    "storyboard-listener-file": "^3.0.0-rc.0",
+    "storyboard-listener-ws-server": "^3.0.0-rc.0"
   },
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
   "keywords": [
