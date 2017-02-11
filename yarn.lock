@@ -4055,9 +4055,9 @@ nyc@10.1.2:
     yargs "^6.6.0"
     yargs-parser "^4.0.2"
 
-oao@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/oao/-/oao-0.2.0.tgz#ec8e0325daef45809c501c3bcb3deded33c8c89e"
+oao@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/oao/-/oao-0.3.0.tgz#21272b1320216e5c022ca0bb700e473ece53aa5a"
   dependencies:
     commander "2.9.0"
     globby "6.1.0"
