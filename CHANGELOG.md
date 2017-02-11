@@ -2,6 +2,8 @@
 
 *[M]: major change; [m]: minor change*
 
+## 3.0.0 release candidates 0, 1 (February 12, 2017)
+
 **Breaking changes**
 
 TBW - separate packages
