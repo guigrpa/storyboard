@@ -22,7 +22,7 @@
   },
   "scripts": {
     "travis": "yarn run bootstrap && yarn run compile && yarn run test",
-    "build": "yarn run bootstrap && yarn run lint && yarn run compile && yarn run buildAllProducts && yarn run test && yarn run xxl && yarn run prepareRelease",
+    "build": "yarn run bootstrap && yarn run compile && yarn run lint && yarn run buildAllProducts && yarn run test && yarn run xxl && yarn run prepareRelease",
     "bootstrap": "oao bootstrap",
     "compile": "oao all \"yarn run compile\"",
     "buildAllProducts": "yarn run buildServerLogsApp && yarn run buildExamples && yarn run buildExtension",
