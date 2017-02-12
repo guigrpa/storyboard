@@ -2,6 +2,10 @@
 
 *[M]: major change; [m]: minor change*
 
+## 2.3.2 (February 17, 2017)
+
+* npm management release (no changes).
+
 ## 2.3.1 (December 14, 2016)
 
 * Library:
