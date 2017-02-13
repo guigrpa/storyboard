@@ -8,9 +8,6 @@
   "dependencies": {
     "timm": "^1.2.3"
   },
-  "peerDependencies": {
-    "storyboard": "^3.0.0-rc.2"
-  },
   "devDependencies": {
     "bluebird": "3.4.7"
   },
