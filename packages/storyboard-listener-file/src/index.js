@@ -61,5 +61,6 @@ class FileListener {
 // -----------------------------------------
 const create = (userConfig, context) =>
   new FileListener(addDefaults(userConfig, DEFAULT_CONFIG), context);
+create.requiredCoreVersion = '^3.0.0-rc.2';
 
 export default create;

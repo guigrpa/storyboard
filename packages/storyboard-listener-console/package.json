@@ -8,10 +8,8 @@
   "dependencies": {
     "timm": "^1.2.3"
   },
-  "peerDependencies": {
-    "storyboard": "^3.0.0-rc.2"
-  },
   "devDependencies": {
+    "storyboard": "^3.0.0-rc.2",
     "bluebird": "3.4.7"
   },
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",

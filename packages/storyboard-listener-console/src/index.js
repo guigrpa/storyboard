@@ -92,5 +92,6 @@ class ConsoleListener {
 // -----------------------------------------
 const create = (userConfig, context) =>
   new ConsoleListener(addDefaults(userConfig, DEFAULT_CONFIG), context);
+create.requiredCoreVersion = '^3.0.0-rc.2';
 
 export default create;
