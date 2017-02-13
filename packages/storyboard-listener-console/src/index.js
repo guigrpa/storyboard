@@ -1,7 +1,10 @@
 import { merge, addDefaults, set as timmSet } from 'timm';
-import { ansiColors, constants, recordToLines } from 'storyboard-core';
 
-const { IS_BROWSER } = constants;
+/* eslint-disable no-undef */
+const IS_BROWSER = (typeof window !== 'undefined' && window !== null) ||
+  (process.env.TEST_BROWSER != null);
+/* eslint-enable no-undef */
+
 const DEFAULT_CONFIG = {
   moduleNameLength: 20,
   relativeTime: IS_BROWSER,
@@ -13,11 +16,13 @@ const DEFAULT_CONFIG = {
 // Listener
 // -----------------------------------------
 class ConsoleListener {
-  constructor(config, { hub }) {
+  constructor(config, { hub, ansiColors, recordToLines }) {
     this.type = 'CONSOLE';
     this.config = config;
     this.hub = hub;
     this.hubId = hub.getHubId();
+    this.ansiColors = ansiColors;
+    this.recordToLines = recordToLines;
     this.prevTime = 0;
   }
 
@@ -42,7 +47,7 @@ class ConsoleListener {
 
   processRecord(record) {
     const options = timmSet(this.config, 'prevTime', this.prevTime);
-    const lines = recordToLines(record, options);
+    const lines = this.recordToLines(record, options);
     this.prevTime = new Date(record.t);
     lines.forEach(({ text, level, fLongDelay }) =>
       this.outputLog(text, level, fLongDelay)
@@ -54,7 +59,7 @@ class ConsoleListener {
   // -----------------------------------------
   /* eslint-disable no-console, prefer-spread */
   outputLog(text, level, fLongDelay) {
-    const args = IS_BROWSER ? ansiColors.getBrowserConsoleArgs(text) : [text];
+    const args = IS_BROWSER ? this.ansiColors.getBrowserConsoleArgs(text) : [text];
     if (fLongDelay) console.log('          ...');
     if (IS_BROWSER) {
       switch (level) {

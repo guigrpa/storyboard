@@ -1,8 +1,10 @@
 Promise = require 'bluebird'
 http = require 'http'
 socketio = require 'socket.io'
-{hub, filters, mainStory, constants: k, chalk} = require 'storyboard-core'
+{removeAllListeners, addListener, config, chalk} = require 'storyboard'
 wsClientListener = require('../lib').default
+
+WS_NAMESPACE = '/STORYBOARD'
 
 SAMPLE_RECORDS = [
   {t: new Date().getTime()}
@@ -26,10 +28,8 @@ describe "wsClientListener", ->
 
   before ->
     # Reset Storyboard and spies
-    hub.init {mainStory}
-    hub.removeAllListeners()
-    filters.init {mainStory}
-    filters.config '*:*'
+    removeAllListeners()
+    config filter: '*:*'
     _spyServerRxMsg = sinon.spy (msg) ->
       # console.log msg.type
       if msg.type is 'CLOCKSY'
@@ -47,7 +47,7 @@ describe "wsClientListener", ->
     # Set up mock socket.io server and wait for a connection
     .then -> new Promise (resolve, reject) ->
       _io = socketio _httpServer
-      _ioNamespace = _io.of k.WS_NAMESPACE
+      _ioNamespace = _io.of WS_NAMESPACE
       _ioNamespace.on 'connection', (socket) ->
         _serverSocket = socket
         _serverSocket.on 'MSG', _spyServerRxMsg
@@ -57,9 +57,9 @@ describe "wsClientListener", ->
       # as well as a fake listener to serve as a spy
       Promise.delay 100
       .then ->
-        _listener = hub.addListener wsClientListener,
+        _listener = addListener wsClientListener,
           clockSync: true
-        hub.addListener -> {process: _spyClientHub}
+        addListener -> {process: _spyClientHub}
 
     # Allow time for clock sync
     .then -> waitUntil(1000, -> _listener.fSocketConnected)
@@ -68,7 +68,7 @@ describe "wsClientListener", ->
     .delay 250
 
   after ->
-    hub.removeAllListeners()
+    removeAllListeners()
     _httpServer.close()
     _io.close()
 

@@ -1,8 +1,8 @@
 Promise = require 'bluebird'
 consoleListener = require('../lib').default
-{filters, hub, mainStory, serialize} = require 'storyboard-core'
+{getListeners, removeAllListeners, addListener, config, mainStory} = require 'storyboard'
 
-{CIRCULAR_REF} = serialize;
+CIRCULAR_REF = '__SB_CIRCULAR__';
 
 _isMochaOutput = (txt) ->
   if txt.length is 0 then return false
@@ -24,16 +24,14 @@ describe "consoleListener", ->
   _spyWarn  = null
   _spyError = null
   before ->
-    hub.init { mainStory }
-    hub.removeAllListeners()
-    filters.init { mainStory }
+    removeAllListeners()
 
     sinon.stub console, 'log'
-    hub.addListener consoleListener
-    filters.config '*:*'
+    addListener consoleListener
+    config filter: '*:*'
     console.log.restore()
 
-    _listener = hub.getListeners()[0]
+    _listener = getListeners()[0]
 
   beforeEach ->
     _listener.configure useStderr: false
@@ -53,7 +51,7 @@ describe "consoleListener", ->
     console.error.restore()
     console.warn.restore()
 
-  after -> hub.removeAllListeners()
+  after -> removeAllListeners()
 
   it "sanity", ->
     expect(_listener.getConfig().hasOwnProperty('moduleNameLength')).to.be.true

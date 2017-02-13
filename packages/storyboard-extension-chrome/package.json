@@ -16,6 +16,8 @@
     "giu": "0.9.2",
     "bluebird": "3.4.7",
     "date-fns": "1.27.2",
+    "lodash": "4.17.4",
+    "chalk": "1.x",
     "react": "15.4.1",
     "react-addons-perf": "15.4.1",
     "react-dom": "15.4.1",
@@ -25,7 +27,7 @@
     "redux-saga": "0.9.4",
     "redux-thunk": "2.1.0",
     "tinycolor2": "1.4.1",
-    "storyboard-core": "^3.0.0-rc.0"
+    "storyboard-core": "^3.0.0-rc.2"
   },
   "remarks": [
     "moment is kept in devDependencies so that webpack doesn't complain when building giu"

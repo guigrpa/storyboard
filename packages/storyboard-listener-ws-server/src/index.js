@@ -5,9 +5,9 @@ import socketio from 'socket.io';
 import Promise from 'bluebird';
 import { addDefaults } from 'timm';
 import { ClocksyServer } from 'clocksy';
-import { chalk, _, filters, constants } from 'storyboard-core';
+import throttle from 'lodash/throttle';
 
-const { WS_NAMESPACE } = constants;
+const WS_NAMESPACE = '/STORYBOARD';
 const DEFAULT_CONFIG = {
   port: 8090,
   throttle: 200,
@@ -22,12 +22,14 @@ const SOCKET_ROOM = 'authenticated';
 // Listener
 // -----------------------------------------
 class WsServerListener {
-  constructor(config, { hub, mainStory }) {
+  constructor(config, { hub, mainStory, chalk, filters }) {
     this.type = 'WS_SERVER';
     this.config = config;
     this.hub = hub;
     this.hubId = hub.getHubId();
     this.mainStory = mainStory;
+    this.chalk = chalk;
+    this.filters = filters;
     this.ioStandaloneServer = null;
     this.ioStandaloneNamespace = null;
     this.ioServerAdaptor = null;
@@ -37,7 +39,7 @@ class WsServerListener {
     this.bufBroadcast = [];
     const { throttle: throttlePeriod } = config;
     if (throttlePeriod) {
-      this.socketBroadcast = _.throttle(this.socketBroadcast, throttlePeriod).bind(this);
+      this.socketBroadcast = throttle(this.socketBroadcast, throttlePeriod).bind(this);
     }
   }
 
@@ -48,7 +50,7 @@ class WsServerListener {
     // Launch stand-alone log server
     if (port != null) {
       const httpInitError = logError(mainStory,
-        `Error initialising standalone server logs on port ${chalk.cyan.bold(port)}`);
+        `Error initialising standalone server logs on port ${this.chalk.cyan.bold(port)}`);
       try {
         const expressApp = express();
         expressApp.use(express.static(path.join(__dirname, './public')));
@@ -56,7 +58,7 @@ class WsServerListener {
         httpServer.on('error', httpInitError);
         httpServer.on('listening', () => {
           const tmpPort = httpServer.address().port;
-          mainStory.info(LOG_SRC, `Logs available via web on port ${chalk.cyan.bold(tmpPort)}`);
+          mainStory.info(LOG_SRC, `Logs available via web on port ${this.chalk.cyan.bold(tmpPort)}`);
         });
         this.ioStandaloneServer = socketio(httpServer);
         this.ioStandaloneNamespace = this.ioStandaloneServer.of(WS_NAMESPACE);
@@ -81,7 +83,7 @@ class WsServerListener {
         httpServer.on('listening', () => {
           const tmpPort = httpServer.address().port;
           mainStory.info(LOG_SRC,
-            `Logs available through main HTTP server on port ${chalk.cyan.bold(tmpPort)}`);
+            `Logs available through main HTTP server on port ${this.chalk.cyan.bold(tmpPort)}`);
         });
       } catch (err) { httpInitError(err); }
     }
@@ -133,8 +135,8 @@ class WsServerListener {
         break;
       case 'GET_SERVER_FILTER':
       case 'SET_SERVER_FILTER':
-        if (type === 'SET_SERVER_FILTER') filters.config(data);
-        this.socketTx(socket, 'SERVER_FILTER', 'SUCCESS', { filter: filters.getConfig() });
+        if (type === 'SET_SERVER_FILTER') this.filters.config(data);
+        this.socketTx(socket, 'SERVER_FILTER', 'SUCCESS', { filter: this.filters.getConfig() });
         break;
 
       // Uploaded records:
@@ -175,7 +177,7 @@ class WsServerListener {
       this.socketTx(socket, 'LOGIN_RESPONSE', result, rspData);
       if (result === 'SUCCESS') {
         this.log('info', `User '${login}' authenticated successfully`);
-        // this.log('debug', `Piggybacked ${chalk.cyan(bufferedRecords.length)} records`);
+        // this.log('debug', `Piggybacked ${this.chalk.cyan(bufferedRecords.length)} records`);
       } else {
         this.log('warn', `User '${login}' authentication failed`);
       }

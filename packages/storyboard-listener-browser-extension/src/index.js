@@ -1,5 +1,4 @@
 import { addDefaults, set as timmSet } from 'timm';
-import { filters } from 'storyboard-core';
 
 const DEFAULT_CONFIG = {};
 
@@ -19,11 +18,12 @@ const setWindow = (w) => { windowCopy = w; };
 // Listener
 // -----------------------------------------
 class BrowserExtensionListener {
-  constructor(config, { hub }) {
+  constructor(config, { hub, filters }) {
     this.type = 'BROWSER_EXTENSION';
     this.config = config;
     this.hub = hub;
     this.hubId = hub.getHubId();
+    this.filters = filters;
     this.fExtensionReady = false;
     this.extensionRx = this.extensionRx.bind(this);
     this.bufMessages = [];
@@ -69,9 +69,9 @@ class BrowserExtensionListener {
       // GET|SET_LOCAL_CLIENT_FILTER are handled here
       case 'GET_LOCAL_CLIENT_FILTER':
       case 'SET_LOCAL_CLIENT_FILTER':
-        if (type === 'SET_LOCAL_CLIENT_FILTER') filters.config(data);
+        if (type === 'SET_LOCAL_CLIENT_FILTER') this.filters.config(data);
         this.extensionTx(this.buildMsg('LOCAL_CLIENT_FILTER', 'SUCCESS',
-          { filter: filters.getConfig() }
+          { filter: this.filters.getConfig() }
         ));
         break;
 

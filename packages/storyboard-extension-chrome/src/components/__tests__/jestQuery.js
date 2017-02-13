@@ -1,5 +1,5 @@
 import { addDefaults } from 'timm';
-import { _ } from 'storyboard-core';
+import * as _ from 'lodash';
 
 const $ = (root, options0, fnMatch0) => {
   let options = options0;

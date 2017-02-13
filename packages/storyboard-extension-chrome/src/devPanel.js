@@ -1,4 +1,7 @@
 import { merge } from 'timm';
+import chalk from 'chalk';
+
+chalk.enabled = true;
 
 require('babel-polyfill');  /* from root packages */ // eslint-disable-line
 const { init, processMsg } = require('./devToolsApp');  // eslint-disable-line import/no-unresolved, import/extensions

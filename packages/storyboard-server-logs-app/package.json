@@ -10,9 +10,9 @@
     "buildWatch": "yarn run copyPublic && ../../node_modules/.bin/webpack -w --config ./webpackConfig.js --color --progress --display-chunks"
   },
   "dependencies": {
-    "storyboard": "^3.0.0-rc.0",
-    "storyboard-listener-browser-extension": "^3.0.0-rc.0",
-    "storyboard-listener-ws-client": "^3.0.0-rc.0"
+    "storyboard": "^3.0.0-rc.2",
+    "storyboard-listener-browser-extension": "^3.0.0-rc.2",
+    "storyboard-listener-ws-client": "^3.0.0-rc.2"
   },
   "author": "Guillermo Grau Panea",
   "license": "MIT",

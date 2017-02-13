@@ -6,7 +6,7 @@
     "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src && cp src/index.js.flow lib"
   },
   "dependencies": {
-    "storyboard-core": "^3.0.0-rc.0"
+    "storyboard-core": "^3.0.0-rc.2"
   },
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
   "keywords": [

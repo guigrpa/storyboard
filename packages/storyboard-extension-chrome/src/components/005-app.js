@@ -12,7 +12,7 @@ import {
   isDark,
 } from 'giu';
 import tinycolor from 'tinycolor2';
-import { _ } from 'storyboard-core';
+import pick from 'lodash/pick';
 import Toolbar from './015-toolbar';
 import Story from './020-story';
 // let ReduxDevTools;
@@ -26,7 +26,7 @@ const mapStateToProps = (state) => ({
   fRelativeTime: state.settings.timeType === 'RELATIVE',
   cxState: state.cx.cxState,
   mainStory: state.stories.mainStory,
-  colors: _.pick(state.settings, [
+  colors: pick(state.settings, [
     'colorClientBg', 'colorServerBg', 'colorUiBg',
     'colorClientFg', 'colorServerFg', 'colorUiFg',
     'colorClientBgIsDark', 'colorServerBgIsDark', 'colorUiBgIsDark',

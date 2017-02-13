@@ -1,8 +1,10 @@
 Promise = require 'bluebird'
 http = require 'http'
 socketio = require 'socket.io-client'
-{hub, filters, mainStory, constants: k, chalk} = require 'storyboard-core'
+{removeListener, removeAllListeners, addListener, config, chalk, mainStory} = require 'storyboard'
 wsServerListener = require('../lib').default
+
+WS_NAMESPACE = '/STORYBOARD'
 
 #-====================================================
 # ## Tests
@@ -15,16 +17,14 @@ describe "wsServerListener", ->
 
   _spySocketRx = null
   before ->
-    hub.init {mainStory}
-    hub.removeAllListeners()
-    filters.init {mainStory}
-    filters.config '*:*'
+    removeAllListeners()
+    config filter: '*:*'
     # _spySocketRx = sinon.spy((msg) -> console.log msg.type)
     _spySocketRx = sinon.spy()
 
   beforeEach -> _spySocketRx.reset()
 
-  after -> hub.removeAllListeners()
+  after -> removeAllListeners()
 
   #-====================================================
   # ### Server without auth
@@ -34,13 +34,13 @@ describe "wsServerListener", ->
     _listener = null
     _socket = null
     before ->
-      _listener = hub.addListener wsServerListener, {throttle: 0}
+      _listener = addListener wsServerListener, {throttle: 0}
       return new Promise (resolve, reject) ->
-        _socket = socketio "http://localhost:8090#{k.WS_NAMESPACE}"
+        _socket = socketio "http://localhost:8090#{WS_NAMESPACE}"
         _socket.on 'MSG', _spySocketRx
         _socket.on 'connect', resolve
 
-    after -> hub.removeListener _listener
+    after -> removeListener _listener
 
     it "sanity", ->
       expect(_listener.getConfig().hasOwnProperty('port')).to.be.true
@@ -89,7 +89,7 @@ describe "wsServerListener", ->
         expect(msg.type).to.equal 'SERVER_FILTER'
         expect(msg.data).to.deep.equal {filter: '-*'}
       .delay 200  # allow the log message to disappear
-      .then -> filters.config '*:*'
+      .then -> config filter: '*:*'
 
     it "should ignore a log out (this is a server without auth)", ->
       _socket.emit 'MSG', {type: 'LOG_OUT'}
@@ -111,15 +111,15 @@ describe "wsServerListener", ->
       _listener = null
       _socket = null
       before ->
-        _listener = hub.addListener wsServerListener,
+        _listener = addListener wsServerListener,
           throttle: 0
           authenticate: ({login, password}) -> login is 'admin'
         return new Promise (resolve, reject) ->
-          _socket = socketio "http://localhost:8090#{k.WS_NAMESPACE}"
+          _socket = socketio "http://localhost:8090#{WS_NAMESPACE}"
           _socket.on 'MSG', _spySocketRx
           _socket.on 'connect', resolve
 
-      after -> hub.removeListener _listener
+      after -> removeListener _listener
 
       it "should require a log in", ->
         _socket.emit 'MSG', {type: 'LOGIN_REQUIRED_QUESTION'}
@@ -194,18 +194,18 @@ describe "wsServerListener", ->
       _listener = null
       _socket = null
       before ->
-        _listener = hub.addListener wsServerListener,
+        _listener = addListener wsServerListener,
           throttle: 50
           authenticate: (o) -> true
         return new Promise (resolve, reject) ->
-          _socket = socketio "http://localhost:8090#{k.WS_NAMESPACE}"
+          _socket = socketio "http://localhost:8090#{WS_NAMESPACE}"
           _socket.on 'connect', resolve
           _socket.on 'MSG', _spySocketRx
         .then ->
           _socket.emit 'MSG', {type: 'LOGIN_REQUEST', data: {login: 'a', password: 'b'}}
         .then -> waitUntil(3000, -> _spySocketRx.callCount > 1)  # LOGIN_RESPONSE, initial RECORDS
 
-      after -> hub.removeListener _listener
+      after -> removeListener _listener
 
       it "should send log records generated via e.g. mainStory.info()", ->
         mainStory.info "Msg2 through web sockets"
@@ -234,19 +234,19 @@ describe "wsServerListener", ->
     before ->
       _httpServer = http.createServer(->)
       _spySocketRx = sinon.spy()
-      _listener = hub.addListener wsServerListener,
+      _listener = addListener wsServerListener,
         throttle: 0
         httpServer: _httpServer
       return new Promise (resolve, reject) ->
         _httpServer.on 'listening', resolve
         _httpServer.listen 3000
       .then -> return new Promise (resolve, reject) ->
-        _socket = socketio "http://localhost:3000#{k.WS_NAMESPACE}"
+        _socket = socketio "http://localhost:3000#{WS_NAMESPACE}"
         _socket.on 'MSG', _spySocketRx
         _socket.on 'connect', resolve
 
     after ->
-      hub.removeListener _listener
+      removeListener _listener
       _httpServer.close()
 
     beforeEach -> _spySocketRx.reset()

@@ -1,5 +1,9 @@
 import uuid from 'uuid';
 import { merge } from 'timm';
+import chalk from 'chalk';
+import * as filters from './filters';
+import * as ansiColors from './ansiColors';
+import recordToLines from './recordToLines';
 
 const DEFAULT_CONFIG = {
   bufMsgSize: 1000,
@@ -32,7 +36,14 @@ let listeners = [];
 const getListeners = () => listeners;
 
 const addListener = (listenerCreate, userConfig = {}) => {
-  const listener = listenerCreate(userConfig, { mainStory, hub: hubApiForListeners });
+  const listener = listenerCreate(userConfig, {
+    mainStory,
+    filters,
+    ansiColors,
+    recordToLines,
+    chalk,
+    hub: hubApiForListeners,
+  });
   listeners.push(listener);
   if (listener.init) listener.init();
   getBufferedMessages().forEach((msg) => listener.process(msg));

@@ -1,7 +1,8 @@
 /* eslint-disable no-useless-escape */
 
 import timm from 'timm';
-import { _, constants as k } from 'storyboard-core';
+import isEqual from 'lodash/isEqual';
+import { constants as k } from 'storyboard-core';
 
 const mainStoryPathStr = (fServer) => (fServer ? 'records/1' : 'records/0');
 
@@ -175,7 +176,7 @@ const rxStory = (state0, record0, options) => {
   } else {
     const { parents } = record;
     if (parents != null && parents.length) {
-      let parentStoryId = _.find(parents, (o) => o[0] === 'c');
+      let parentStoryId = parents.find((o) => o[0] === 'c');
       if (parentStoryId == null) parentStoryId = parents[0];
       pathStr = openStories[parentStoryId];
       if (pathStr == null && fPastRecords) pathStr = state.closedStories[parentStoryId];
@@ -261,7 +262,7 @@ const addLog = (state0, pathStr, record0, options) => {
     // Handle duplicates when including past records
     if (fPastRecords) {
       const { storyId, id } = record;
-      if (_.find(prevRecords, (o) => o.storyId === storyId && o.id === id)) {
+      if (prevRecords.find((o) => o.storyId === storyId && o.id === id)) {
         return prevRecords;
       }
     }
@@ -273,7 +274,7 @@ const addLog = (state0, pathStr, record0, options) => {
       if (prevLastRecord != null &&
         prevLastRecord.msg === record.msg &&
         prevLastRecord.src === record.src &&
-        _.isEqual(prevLastRecord.obj, record.obj)
+        isEqual(prevLastRecord.obj, record.obj)
       ) {
         fDuplicate = true;
         const repetitions = prevLastRecord.repetitions || 0;

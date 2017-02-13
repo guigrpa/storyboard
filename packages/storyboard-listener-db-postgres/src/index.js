@@ -1,6 +1,6 @@
 import pg from 'pg';
 import { addDefaults } from 'timm';
-import { chalk, _ } from 'storyboard-core';
+import throttle from 'lodash/throttle';
 
 const DEFAULT_CONFIG = {
   host: 'localhost',
@@ -20,12 +20,13 @@ const BUF_LENGTH = 2000;
 // Listener
 // -----------------------------------------
 class DbPostgresListener {
-  constructor(config, { hub, mainStory }) {
+  constructor(config, { hub, mainStory, chalk }) {
     this.type = 'DB_POSTGRES';
     this.config = config;
     this.hub = hub;
     this.hubId = hub.getHubId();
     this.mainStory = mainStory;
+    this.chalk = chalk;
     this.client = new pg.Client(config);
     this.fConnected = false;
     // Short buffer for records to be saved
@@ -33,7 +34,7 @@ class DbPostgresListener {
     this.bufRecords = [];
     const { throttle: throttlePeriod } = config;
     if (throttlePeriod) {
-      this.saveRecords = _.throttle(this.saveRecords, throttlePeriod).bind(this);
+      this.saveRecords = throttle(this.saveRecords, throttlePeriod).bind(this);
     }
     // pg.on('error', err => console.log(err));
     this.client.on('error', () => {});
@@ -95,9 +96,9 @@ class DbPostgresListener {
     const { insertQuery, config } = this;
     this.bufRecords.forEach((r) => {
       const jsonObj = r.obj != null ? JSON.stringify(r.obj) : undefined;
-      const msg = config.colors ? r.msg : chalk.stripColor(r.msg);
+      const msg = config.colors ? r.msg : this.chalk.stripColor(r.msg);
       let title = r.title;
-      if (!config.colors && title) title = chalk.stripColor(title);
+      if (!config.colors && title) title = this.chalk.stripColor(title);
       this.client.query(insertQuery, [
         // Common to stories and logs
         r.hubId, r.version, r.fStory, r.fServer,

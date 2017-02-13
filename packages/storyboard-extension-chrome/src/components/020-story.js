@@ -5,7 +5,13 @@ import { set as timmSet } from 'timm';
 import dateFormat from 'date-fns/format';
 import dateDistanceInWords from 'date-fns/distance_in_words_strict';
 import { Icon, Spinner, cancelEvent } from 'giu';
-import { _, chalk, ansiColors, treeLines, serialize, constants } from 'storyboard-core';
+import pick from 'lodash/pick';
+import sortBy from 'lodash/sortBy';
+import padEnd from 'lodash/padEnd';
+import padStart from 'lodash/padStart';
+import repeat from 'lodash/repeat';
+import chalk from 'chalk';
+import { ansiColors, treeLines, serialize, constants } from 'storyboard-core';
 import * as actions from '../actions/actions';
 import ColoredText from './030-coloredText';
 
@@ -161,7 +167,7 @@ class Story extends React.Component {
 
   renderAttachment(record) {
     const { storyId, id, obj, objOptions, version } = record;
-    const props = _.pick(this.props, [
+    const props = pick(this.props, [
       'level', 'timeType', 'timeRef', 'setTimeType', 'setTimeRef',
       'quickFind', 'seqFullRefresh', 'colors',
     ]);
@@ -180,7 +186,7 @@ class Story extends React.Component {
 
   renderRepetitions(record) {
     const { storyId, id } = record;
-    const props = _.pick(this.props, [
+    const props = pick(this.props, [
       'level', 'timeType', 'timeRef', 'setTimeType', 'setTimeRef',
       'quickFind', 'seqFullRefresh', 'colors',
     ]);
@@ -209,7 +215,7 @@ class Story extends React.Component {
   // -----------------------------------------------------
   prepareRecords(records) {
     return this.props.story.fHierarchical
-      ? _.sortBy(records, 't')
+      ? sortBy(records, 't')
       : this.flatten(records);
   }
 
@@ -223,7 +229,7 @@ class Story extends React.Component {
         out.push(record);
       }
     }
-    if (level === 0) out = _.sortBy(out, 't');
+    if (level === 0) out = sortBy(out, 't');
     return out;
   }
 }
@@ -659,7 +665,7 @@ class Time extends React.PureComponent {
 
   render() {
     const { t, fShowFull, timeType, timeRef, fTrim } = this.props;
-    if (t == null) return <span>{_.padEnd('', TIME_LENGTH)}</span>;
+    if (t == null) return <span>{padEnd('', TIME_LENGTH)}</span>;
     let fTimeInWords = false;
     let fRefTimestamp = false;
     const localTime = dateFormat(t, 'YYYY-MM-DD HH:mm:ss.SSS');
@@ -697,11 +703,11 @@ class Time extends React.PureComponent {
       if (shownTime.slice(0, 2) === '01') shownTime = shownTime.slice(3);
       if (shownTime.slice(0, 2) === '00') shownTime = shownTime.slice(3);
       shownTime = `${timeRef > t ? '-' : '+'}${shownTime}`;
-      shownTime = _.padStart(shownTime, 23);
+      shownTime = padStart(shownTime, 23);
     }
 
     // Finishing touches
-    shownTime = _.padEnd(shownTime, TIME_LENGTH);
+    shownTime = padEnd(shownTime, TIME_LENGTH);
     if (shownTime.length > TIME_LENGTH) {
       shownTime = `${shownTime.slice(0, TIME_LENGTH - 1)}…`;
     }
@@ -771,10 +777,10 @@ class Src extends React.PureComponent {
   render() {
     const { src } = this.props;
     if (src != null) {
-      const srcStr = ansiColors.getSrcChalkColor(src)(_.padStart(`${src} `, 20));
+      const srcStr = ansiColors.getSrcChalkColor(src)(padStart(`${src} `, 20));
       return <ColoredText text={srcStr} />;
     }
-    return <span>{_.repeat(' ', 20)}</span>;
+    return <span>{repeat(' ', 20)}</span>;
   }
 }
 

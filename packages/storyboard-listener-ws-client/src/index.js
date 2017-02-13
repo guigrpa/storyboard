@@ -2,9 +2,9 @@ import socketio from 'socket.io-client';
 import ms from 'ms';
 import { merge, addDefaults, setIn, set as timmSet } from 'timm';
 import { ClocksyClient } from 'clocksy';
-import { chalk, _, constants } from 'storyboard-core';
+import throttle from 'lodash/throttle';
 
-const { WS_NAMESPACE } = constants;
+const WS_NAMESPACE = '/STORYBOARD';
 const DEFAULT_CONFIG = {
   uploadClientStories: false,
   throttleUpload: null,
@@ -16,12 +16,13 @@ const BUF_UPLOAD_LENGTH = 2000;
 // Listener
 // -----------------------------------------
 class WsClientListener {
-  constructor(config, { hub, mainStory }) {
+  constructor(config, { hub, mainStory, chalk }) {
     this.type = 'WS_CLIENT';
     this.config = config;
     this.hub = hub;
     this.hubId = hub.getHubId();
     this.mainStory = mainStory;
+    this.chalk = chalk;
     this.socket = null;
     this.fSocketConnected = false;
     this.clocksy = new ClocksyClient({
@@ -33,7 +34,7 @@ class WsClientListener {
     this.bufUpload = [];
     const { throttleUpload: throttlePeriod } = config;
     if (throttlePeriod) {
-      this.socketUploadRecords = _.throttle(this.socketUploadRecords, throttlePeriod).bind(this);
+      this.socketUploadRecords = throttle(this.socketUploadRecords, throttlePeriod).bind(this);
     }
   }
 
@@ -93,7 +94,7 @@ class WsClientListener {
       const logLevel = this.fFirstDeltaShown ? 'trace' : 'debug';
       this.fFirstDeltaShown = true;
       this.mainStory[logLevel]('storyboard',
-        `Clock sync delta: ${chalk.blue(ms(tDelta))}, rtt: ${chalk.blue(ms(rtt))}`);
+        `Clock sync delta: ${this.chalk.blue(ms(tDelta))}, rtt: ${this.chalk.blue(ms(rtt))}`);
       return;
     }
 

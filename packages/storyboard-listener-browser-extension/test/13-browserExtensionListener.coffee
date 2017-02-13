@@ -1,6 +1,6 @@
 Promise = require 'bluebird'
 {merge} = require 'timm'
-{hub, filters, mainStory, constants: k, chalk} = require 'storyboard-core'
+{removeAllListeners, addListener, config, mainStory, chalk} = require 'storyboard'
 browserExtensionListener = require('../lib').default
 setMockWindow = require('../lib')._setWindow
 
@@ -24,10 +24,8 @@ describe "browserExtensionListener", ->
 
   before ->
     # Reset Storyboard and spies
-    hub.init {mainStory}
-    hub.removeAllListeners()
-    filters.init {mainStory}
-    filters.config '*:*'
+    removeAllListeners()
+    config filter: '*:*'
     _spyClientWinTxMsg = sinon.spy() # (ev) -> console.log ev
     _spyClientHub = sinon.spy() # (msg) -> console.log msg.type
 
@@ -39,15 +37,15 @@ describe "browserExtensionListener", ->
     setMockWindow _mockWindow
 
     # Create listener, and make it believe that the extension is ready
-    _listener = hub.addListener browserExtensionListener
-    hub.addListener -> {process: _spyClientHub}
+    _listener = addListener browserExtensionListener
+    addListener -> {process: _spyClientHub}
     _extensionTxMsg {type: 'CONNECT_RESPONSE'}
 
     # Prevent setup from possibly interfering with tests
     return Promise.delay 250
 
   after ->
-    hub.removeAllListeners()
+    removeAllListeners()
 
   beforeEach ->
     _spyClientWinTxMsg.reset()

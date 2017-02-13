@@ -9,7 +9,7 @@
     "timm": "^1.2.3"
   },
   "peerDependencies": {
-    "storyboard-core": "^3.0.0-rc.0"
+    "storyboard": "^3.0.0-rc.2"
   },
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
   "keywords": [

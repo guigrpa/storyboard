@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { addDefaults } from 'timm';
-import { chalk, recordToLines } from 'storyboard-core';
 
 const DEFAULT_CONFIG = {
   filePath: 'storyboard.log',
@@ -13,12 +12,14 @@ const DEFAULT_CONFIG = {
 // Listener
 // -----------------------------------------
 class FileListener {
-  constructor(config, { hub, mainStory }) {
+  constructor(config, { hub, mainStory, recordToLines, chalk }) {
     this.type = 'FILE';
     this.config = config;
     this.hub = hub;
     this.hubId = hub.getHubId();
     this.mainStory = mainStory;
+    this.recordToLines = recordToLines;
+    this.chalk = chalk;
     this.fd = null;
   }
 
@@ -26,7 +27,7 @@ class FileListener {
     const { filePath } = this.config;
     this.fd = fs.openSync(filePath, 'a');
     this.mainStory.info('storyboard',
-      `Logs available at ${chalk.cyan.bold(path.resolve(filePath))}`);
+      `Logs available at ${this.chalk.cyan.bold(path.resolve(filePath))}`);
   }
 
   tearDown() {
@@ -50,7 +51,7 @@ class FileListener {
   processRecord(record) {
     const { fd } = this;
     if (fd == null) return;
-    const lines = recordToLines(record, this.config);
+    const lines = this.recordToLines(record, this.config);
     lines.forEach(({ text }) => fs.write(fd, `${text}\n`, () => {}, 'utf8'));
   }
 }
