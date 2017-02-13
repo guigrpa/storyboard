@@ -3,12 +3,10 @@
 import split from 'split';
 import { exec } from 'child_process';
 import program from 'commander';
-import { mainStory, hub, chalk } from 'storyboard-core';
+import { mainStory, addListener, chalk } from 'storyboard';
 import consoleListener from 'storyboard-listener-console';
 import fileListener from 'storyboard-listener-file';
 import wsServerListener from 'storyboard-listener-ws-server';
-
-const { addListener } = hub;
 
 const pkg = require('../package.json');
 

@@ -10,7 +10,7 @@
   "dependencies": {
     "commander": "2.9.0",
     "split": "1.0.0",
-    "storyboard-core": "^3.0.0-rc.2",
+    "storyboard": "^3.0.0-rc.2",
     "storyboard-listener-console": "^3.0.0-rc.2",
     "storyboard-listener-file": "^3.0.0-rc.2",
     "storyboard-listener-ws-server": "^3.0.0-rc.2"
