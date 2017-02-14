@@ -1,5 +1,6 @@
 import { addDefaults, set as timmSet } from 'timm';
 
+const REQUIRED_CORE_VERSION = '^3.0.0-rc.2';
 const DEFAULT_CONFIG = {};
 
 // -----------------------------------------
@@ -119,6 +120,7 @@ class BrowserExtensionListener {
 // -----------------------------------------
 const create = (userConfig, context) =>
   new BrowserExtensionListener(addDefaults(userConfig, DEFAULT_CONFIG), context);
+create.requiredCoreVersion = REQUIRED_CORE_VERSION;
 
 export default create;
 

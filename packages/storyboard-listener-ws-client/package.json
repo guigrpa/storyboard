@@ -12,11 +12,9 @@
     "lodash": "4.17.4",
     "socket.io-client": "1.6.0"
   },
-  "peerDependencies": {
-    "storyboard": "^3.0.0-rc.2"
-  },
   "devDependencies": {
-    "socket.io": "1.6.0"
+    "socket.io": "1.6.0",
+    "storyboard": "^3.0.0-rc.2"
   },
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
   "keywords": [

@@ -1,9 +1,12 @@
 import uuid from 'uuid';
 import { merge } from 'timm';
 import chalk from 'chalk';
+import semver from 'semver';
 import * as filters from './filters';
 import * as ansiColors from './ansiColors';
 import recordToLines from './recordToLines';
+
+const coreVersion = require('../../package.json').version;
 
 const DEFAULT_CONFIG = {
   bufMsgSize: 1000,
@@ -36,6 +39,13 @@ let listeners = [];
 const getListeners = () => listeners;
 
 const addListener = (listenerCreate, userConfig = {}) => {
+  const { requiredCoreVersion } = listenerCreate;
+  if (requiredCoreVersion && !semver.satisfies(coreVersion, requiredCoreVersion)) {
+    /* eslint-disable no-console */
+    console.error(`Incompatible listener (requires storyboard-core ${requiredCoreVersion}, current ${coreVersion})`);
+    /* eslint-enable no-console */
+    return null;
+  }
   const listener = listenerCreate(userConfig, {
     mainStory,
     filters,

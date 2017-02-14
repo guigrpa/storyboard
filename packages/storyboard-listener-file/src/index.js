@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { addDefaults } from 'timm';
 
+const REQUIRED_CORE_VERSION = '^3.0.0-rc.2';
 const DEFAULT_CONFIG = {
   filePath: 'storyboard.log',
   colors: false,
@@ -61,6 +62,6 @@ class FileListener {
 // -----------------------------------------
 const create = (userConfig, context) =>
   new FileListener(addDefaults(userConfig, DEFAULT_CONFIG), context);
-create.requiredCoreVersion = '^3.0.0-rc.2';
+create.requiredCoreVersion = REQUIRED_CORE_VERSION;
 
 export default create;

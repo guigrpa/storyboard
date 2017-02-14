@@ -7,6 +7,7 @@ import { addDefaults } from 'timm';
 import { ClocksyServer } from 'clocksy';
 import throttle from 'lodash/throttle';
 
+const REQUIRED_CORE_VERSION = '^3.0.0-rc.2';
 const WS_NAMESPACE = '/STORYBOARD';
 const DEFAULT_CONFIG = {
   port: 8090,
@@ -249,5 +250,6 @@ const logError = (mainStory, msg) => (err) => {
 // -----------------------------------------
 const create = (userConfig, context) =>
   new WsServerListener(addDefaults(userConfig, DEFAULT_CONFIG), context);
+create.requiredCoreVersion = REQUIRED_CORE_VERSION;
 
 export default create;

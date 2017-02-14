@@ -2,6 +2,8 @@ import pg from 'pg';
 import { addDefaults } from 'timm';
 import throttle from 'lodash/throttle';
 
+const REQUIRED_CORE_VERSION = '^3.0.0-rc.2';
+
 const DEFAULT_CONFIG = {
   host: 'localhost',
   port: process.env.PGPORT || 5432,
@@ -131,5 +133,6 @@ class DbPostgresListener {
 // -----------------------------------------
 const create = (userConfig, context) =>
   new DbPostgresListener(addDefaults(userConfig, DEFAULT_CONFIG), context);
+create.requiredCoreVersion = REQUIRED_CORE_VERSION;
 
 export default create;

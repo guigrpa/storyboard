@@ -1,5 +1,7 @@
 import { merge, addDefaults, set as timmSet } from 'timm';
 
+const REQUIRED_CORE_VERSION = '^3.0.0-rc.2';
+
 /* eslint-disable no-undef */
 const IS_BROWSER = (typeof window !== 'undefined' && window !== null) ||
   (process.env.TEST_BROWSER != null);
@@ -92,6 +94,6 @@ class ConsoleListener {
 // -----------------------------------------
 const create = (userConfig, context) =>
   new ConsoleListener(addDefaults(userConfig, DEFAULT_CONFIG), context);
-create.requiredCoreVersion = '^3.0.0-rc.2';
+create.requiredCoreVersion = REQUIRED_CORE_VERSION;
 
 export default create;

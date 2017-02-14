@@ -4,6 +4,7 @@ import { merge, addDefaults, setIn, set as timmSet } from 'timm';
 import { ClocksyClient } from 'clocksy';
 import throttle from 'lodash/throttle';
 
+const REQUIRED_CORE_VERSION = '^3.0.0-rc.2';
 const WS_NAMESPACE = '/STORYBOARD';
 const DEFAULT_CONFIG = {
   uploadClientStories: false,
@@ -209,5 +210,6 @@ class WsClientListener {
 // -----------------------------------------
 const create = (userConfig, context) =>
   new WsClientListener(addDefaults(userConfig, DEFAULT_CONFIG), context);
+create.requiredCoreVersion = REQUIRED_CORE_VERSION;
 
 export default create;

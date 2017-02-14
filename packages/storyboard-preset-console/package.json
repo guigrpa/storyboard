@@ -8,7 +8,7 @@
   "dependencies": {
     "storyboard-listener-console": "^3.0.0-rc.2"
   },
-  "peerDependencies": {
+  "devDependencies": {
     "storyboard": "^3.0.0-rc.2"
   },
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",

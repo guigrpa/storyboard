@@ -8,6 +8,7 @@ _spyListenerProcess = sinon.spy()
 _listenerFactory = ->
   init: ->
   process: _spyListenerProcess
+_listenerFactory.requiredCoreVersion = '^3.0.0-rc.2';
 
 #-====================================================
 # ## Tests
