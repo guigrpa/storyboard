@@ -75,10 +75,11 @@
     "mocha": "3.2.0",
     "node-sass": "4.5.0",
     "nyc": "10.1.2",
-    "oao": "^0.4.0",
+    "oao": "^0.5.0",
     "sass-loader": "5.0.0",
     "sinon": "1.17.7",
     "sinon-chai": "2.8.0",
+    "storyboard": "^3.0.0-rc.2",
     "style-loader": "0.13.1",
     "webpack": "2.2.1",
     "xxl": "^1.0.1"
