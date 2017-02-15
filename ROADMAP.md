@@ -4,10 +4,7 @@
         - [ ] DB listener? - at least, link to the initialisation SQL
         - [ ] README
         - [ ] CHANGELOG
-    * Once published:
-        - [ ] Update monorepo tools (and package.json) to use storyboard@3 ourselves
-        + [ ] Normal: check flow interface
-        - [ ] Update other tools
+    * [ ] Update travis.ci to use the latest version of yarn
 
 - **Chrome extension**:
     + Add config screenshot
