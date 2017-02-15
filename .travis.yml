@@ -9,7 +9,7 @@ before_script:
 script: npm run travis
 after_success:
   - 'cat ./coverage/lcov.info | ./node_modules/.bin/coveralls'
-cache:
-  directories:
-    - ~/.yarn
-    - ~/.nvm
+# cache:
+#   directories:
+#     - ~/.yarn
+#     - ~/.nvm
