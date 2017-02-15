@@ -2,14 +2,14 @@ language: node_js
 node_js:
   - "stable"
 install:
-  - npm -g install yarn
+  - npm -g install yarn@0.19.1
   - yarn
 before_script:
   - export TZ=Europe/Madrid
 script: npm run travis
 after_success:
   - 'cat ./coverage/lcov.info | ./node_modules/.bin/coveralls'
-# cache:
-#   directories:
-#     - ~/.yarn
-#     - ~/.nvm
+cache:
+  directories:
+    - ~/.yarn
+    - ~/.nvm
