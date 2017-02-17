@@ -10,6 +10,7 @@ For an example of how to implement a Storyboard listener (plugin), check out the
 * **`config`** *object*: user configuration options. Should typically be merged with some defaults and stored in the listener instance.
 * **`context`** *object*:
     - **`hub`** *object*: the hub instance this listener is attached to. See [Hub API for listeners](#hub-api-for-listeners) below.
+    - **`chalk`** *object*: a pre-configured, always-enabled version of the chalk library.
     - **`mainStory`** *object*: Storyboard's main story, which can be used to generate logs the same way as a library user:
 
         ```js

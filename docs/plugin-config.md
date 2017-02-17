@@ -4,7 +4,7 @@ Remember the generic way to enable a listener:
 
 ```js
 import { addListener } from 'storyboard';
-import consoleListener from 'storyboard/lib/listeners/console';
+import consoleListener from 'storyboard-listener-console';
 addListener(consoleListener, options);
 ```
 
@@ -14,7 +14,7 @@ The following sections describe the parameters you can pass as `options`.
 
 **Purpose**: formats logs and sends them to `console.log` or `console.error`.
 
-**Module**: `storyboard/lib/listeners/console`
+**Package**: `storyboard-listener-console`
 
 **Options:**
 
@@ -27,7 +27,7 @@ The following sections describe the parameters you can pass as `options`.
 
 **Purpose**: encapsulates logs and pushes them in real time to WebSocket clients. Used jointly with the WebSocket Client and Browser Extension, it allows remote access to server stories.
 
-**Module**: `storyboard/lib/listeners/wsServer`
+**Package**: `storyboard-listener-ws-server`
 
 See [usage hints](https://github.com/guigrpa/storyboard/blob/master/README.md#remote-access-to-server-stories).
 
@@ -46,7 +46,7 @@ See [usage hints](https://github.com/guigrpa/storyboard/blob/master/README.md#re
 
 **Purpose**: downloads server logs from the WebSocket Server, and optionally uploads client logs to the server for remote monitoring.
 
-**Module**: `storyboard/lib/listeners/wsClient`
+**Package**: `storyboard-listener-ws-client`
 
 **Options:**
 
@@ -58,7 +58,7 @@ See [usage hints](https://github.com/guigrpa/storyboard/blob/master/README.md#re
 
 **Purpose**: relays logs to the Storyboard DevTools.
 
-**Module**: `storyboard/lib/listeners/browserExtension`
+**Package**: `storyboard-listener-browser-extension`
 
 *No options available.*
 
@@ -67,7 +67,7 @@ See [usage hints](https://github.com/guigrpa/storyboard/blob/master/README.md#re
 
 **Purpose**: saves logs to file.
 
-**Module**: `storyboard/lib/listeners/file`
+**Package**: `storyboard-listener-file`
 
 **Options:**
 
@@ -80,7 +80,7 @@ See [usage hints](https://github.com/guigrpa/storyboard/blob/master/README.md#re
 
 **Purpose**: saves logs to a PostgreSQL database for later retrieval, including (serialized) attachments, story hierarchy, etc.
 
-**Module**: `storyboard/lib/listeners/dbPostgres`
+**Package**: `storyboard-listener-db-postgres`
 
 **Options:**
 
