@@ -10,6 +10,13 @@ rules:
   no-nested-ternary: off
   no-cond-assign: ['error', 'except-parens']
   no-underscore-dangle: off
+  comma-dangle:
+    - error
+    - arrays: always-multiline
+      objects: always-multiline
+      imports: always-multiline
+      exports: always-multiline
+      functions: ignore
   no-plusplus:
     - error
     - allowForLoopAfterthoughts: true
@@ -31,6 +38,7 @@ rules:
   react/forbid-prop-types: off
   react/prop-types: off
   react/require-extension: off
+  react/require-default-props: off
   import/no-extraneous-dependencies:
     - error
     - devDependencies: true

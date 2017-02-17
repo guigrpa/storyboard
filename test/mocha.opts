@@ -1,6 +1,8 @@
 --compilers coffee:coffee-script/register
+--require ./test/mochaSetup.js
 --require ignore-styles
 --recursive
 -R spec
 --colors
 --timeout 6000
+./packages/*/test/*

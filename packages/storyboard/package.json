@@ -1,0 +1,29 @@
+{
+  "name": "storyboard",
+  "version": "3.0.0-rc.2",
+  "main": "lib/index.js",
+  "scripts": {
+    "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src && cp src/index.js.flow lib"
+  },
+  "dependencies": {
+    "storyboard-core": "^3.0.0-rc.2"
+  },
+  "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
+  "keywords": [
+    "log",
+    "logging",
+    "websockets",
+    "console",
+    "isomorphic"
+  ],
+  "author": "Guillermo Grau Panea",
+  "license": "MIT",
+  "homepage": "https://github.com/guigrpa/storyboard#readme",
+  "bugs": {
+    "url": "https://github.com/guigrpa/storyboard/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guigrpa/storyboard.git"
+  }
+}

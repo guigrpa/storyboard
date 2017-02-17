@@ -1,0 +1,23 @@
+{
+  "name": "storyboard-server-logs-app",
+  "private": true,
+  "version": "2.3.1",
+  "main": "lib/index.js",
+  "scripts": {
+    "compile": "echo Nothing to be done",
+    "copyPublic": "cp -r src/public ../storyboard-listener-ws-server/lib",
+    "build": "yarn run copyPublic && ../../node_modules/.bin/webpack -p --config ./webpackConfig.js --color --progress --display-chunks",
+    "buildWatch": "yarn run copyPublic && ../../node_modules/.bin/webpack -w --config ./webpackConfig.js --color --progress --display-chunks"
+  },
+  "dependencies": {
+    "storyboard": "^3.0.0-rc.2",
+    "storyboard-listener-browser-extension": "^3.0.0-rc.2",
+    "storyboard-listener-ws-client": "^3.0.0-rc.2"
+  },
+  "author": "Guillermo Grau Panea",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/guigrpa/storyboard.git"
+  }
+}

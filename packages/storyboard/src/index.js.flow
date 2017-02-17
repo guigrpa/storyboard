@@ -1,0 +1,138 @@
+// @flow
+
+type StoryIdT = string;
+type FuzzyLevelT =
+  'trace' | 'Trace' | 'TRACE' |
+  'debug' | 'Debug' | 'DEBUG' |
+  'info' | 'Info' | 'INFO' |
+  'warn' | 'Warn' | 'WARN' |
+  'error' | 'Error' | 'ERROR' |
+  'fatal' | 'Fatal' | 'FATAL';
+
+type ConfigT = {|
+  filter?: string,
+  onChangeFilter?: (newFilter: string) => void,
+  bufSize?: number,
+|};
+
+type StoryOptionsT = {|
+  src?: string,
+  title?: string,
+  extraParents?: Array<StoryIdT>,
+  level?: FuzzyLevelT,
+|};
+
+// Open object: other attributes will be included
+// in the emitted record under record.objOptions
+type AttachmentT = {
+  attach?: any,
+  attachInline?: boolean,
+  attachLevel?: FuzzyLevelT,
+};
+
+type LoggerFunctionT = (
+  srcOrMsg: string,
+  msgOrOptions?: string | AttachmentT,
+  options?: AttachmentT,
+  ...args: Array<void>
+) => void;
+
+export type StoryT = {
+  storyId: StoryIdT,
+  close(...args: Array<void>): void,
+  changeTitle(title: string, ...args: Array<void>): void,
+  changeStatus(status: string, ...args: Array<void>): void,
+  child(options?: ?StoryOptionsT, ...args: Array<void>): StoryT,
+  trace: LoggerFunctionT,
+  debug: LoggerFunctionT,
+  info: LoggerFunctionT,
+  warn: LoggerFunctionT,
+  error: LoggerFunctionT,
+  fatal: LoggerFunctionT,
+};
+
+type MessageT = {
+  src: MessageSourceT,
+  hubId: string,
+  type: MessageTypeT,
+  data: MessagePayloadT,
+};
+type MessageSourceT = string;
+type MessageTypeT = string;
+type MessagePayloadT = any;
+type RecordT = {
+  id: string,
+  hubId: string,
+  version: number,
+  fStory: boolean,
+  fServer: boolean,
+  storyId: string,
+  t: number,   // [ms]
+  src: ?string,
+  level: number,
+  signalType: ?string,  // e.g. REVEAL_SEPARATOR
+  // Only for stories
+  fRoot: boolean,
+  title: ?string,
+  action: ?string,
+  parents: Array<string>,
+  // Only for logs
+  msg: string,
+  obj: any,
+  objExpanded?: boolean,
+  objLevel?: number,
+  objOptions?: Object,
+  objIsError?: boolean,
+};
+
+type HubApiT = {
+  getHubId(...args: Array<void>): string,
+  emitMsgWithFields(
+    src: MessageSourceT,
+    type: MessageTypeT,
+    data: MessagePayloadT,
+    srcListener: ListenerT,
+    ...args: Array<void>
+  ): void,
+  emitMsg(
+    msg: MessageT,
+    ...args: Array<void>
+  ): void,
+  getBufferedMessages(...args: Array<void>): Array<MessageT>,
+  getBufferedRecords(...args: Array<void>): Array<RecordT>,
+};
+
+type ListenerT = (
+  msg: MessageT,
+  ...args: Array<void>
+) => void;
+
+type ListenerFactoryT = (
+  userConfig: any,
+  options: {
+    mainStory: StoryT,
+    hub: HubApiT,
+  }
+) => ListenerT;
+
+declare export var mainStory: StoryT;
+declare export var chalk: Object;
+declare export function config(
+  options?: ConfigT,
+  ...args: Array<void>
+): void;
+declare export function getListeners(
+  ...args: Array<void>
+): Array<ListenerT>;
+declare export function addListener(
+  listenerFactory: ListenerFactoryT,
+  userConfig: any,
+  ...args: Array<void>
+): void;
+declare export function removeListener(
+  listener: ListenerT,
+  ...args: Array<void>
+): void;
+declare export function removeAllListeners(
+  ...args: Array<void>
+): void;

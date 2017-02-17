@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "stable"
 install:
-  - npm -g install yarn
+  - npm -g install yarn@0.19.1
   - yarn
 before_script:
   - export TZ=Europe/Madrid

@@ -18,13 +18,13 @@ node_modules
 /chromeExtension/*.zip
 /docs/otherPromoAssets
 /docs/guigrpa
-/example/heroku
+/heroku
 
 
 # GIT-specific
 # ------------
 # All projects
-/lib
+lib
 
 # Project-specific
 /chromeExtension/*.js

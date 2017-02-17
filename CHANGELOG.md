@@ -2,6 +2,49 @@
 
 *[M]: major change; [m]: minor change*
 
+**Breaking change**
+
+* All Storyboard **listeners/plugins are now available as separate packages**. Following the steps of Babel and others, Storyboard no longer comes *with everything but the kitchen sink* built in. In other words, you need to add your listeners to your `package.json`, for example:
+
+  ```json
+  "dependencies": {
+    "storyboard": "^3.0.0",
+    "storyboard-listener-console": "^3.0.0",
+    "storyboard-listener-ws-server": "^3.0.0",
+    "storyboard-listener-ws-client": "^3.0.0",
+    "storyboard-listener-browser-extension": "^3.0.0",
+  }
+  ```
+
+  ...but in exchange you won't be dragging in `express`, `socket.io`, `socket.io-client` when you're only interested in the console, or `pg` when you have no database in sight.
+
+  Enabling listeners is pretty much the same as in Storyboard v2, only loaded from the separate package:
+
+  ```js
+  import { mainStory, addListener } from 'storyboard';
+  import consoleListener from 'storyboard-listener-console';
+  addListener(consoleListener, options);
+
+  mainStory.info('Hi there!');
+  ```
+
+  For convenience, a console preset is provided (make sure you add both `storyboard-preset-console` *and* `storyboard` to your `package.json` file):
+
+  ```js
+  import 'storyboard-preset-console';
+  import { mainStory } from 'storyboard';
+
+  mainStory.info('Hi there!');
+  ```
+
+  *Nerdy note: Storyboard is now a monorepo, i.e. separate packages, all under one roof, glued together with [yarn](https://yarnpkg.com/en/) a tool called [oao](http://github.com/guigrpa/oao)*.
+
+**Other changes**
+
+* Browser extension:
+    - [M] The user can now set **reference timestamps** via ctrl-click or right-click on a timestamp. When set, all other timestamps are displayed as relative to the reference.
+    - [m] Add usage hints (popping up when first the app is first used, as well as when the user clicks on the dedicated button)
+
 ## 2.3.2 (February 17, 2017)
 
 * npm management release (no changes).
