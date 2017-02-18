@@ -4,40 +4,38 @@
 
 A library, plus a [Chrome DevTools extension](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc).
 
-Demo: https://storyboard-bhibtchlhy.now.sh/ (might be a bit slow at first; free hosting!)
+Demo: https://storyboard-bhibtchlhy.now.sh (might be a bit slow at first; free hosting!)
 
-**These docs are for Storyboard v3. Docs for v2 [are also available](https://github.com/guigrpa/storyboard/blob/v2.3.1/README.md), but you're [encouraged to upgrade](https://github.com/guigrpa/storyboard/blob/master/CHANGELOG.md)!**
+**These docs are for Storyboard v3. [Docs for v2 are also available](https://github.com/guigrpa/storyboard/blob/v2.3.1/README.md), but you're [encouraged to upgrade](https://github.com/guigrpa/storyboard/blob/master/CHANGELOG.md)!**
 
 ## Why? :sparkles:
 
-* **Hierarchical stories**: put logs in context (*stories*), and group them in stories. Stories are extremely useful with concurrent user actions and async events.
+* **Hierarchical stories**: put logs in context (*stories*), and group them in higher-order stories; they can be a life-saver with concurrent user actions and async events.
 * **End-to-end stories**: see all *client and server* tasks triggered by a user action (a click on the *Login* button, maybe) in a single place.
 * **Storyboard DevTools Chrome extension**: view client and server logs with a clean and detail-rich interface, including advanced features such as **remote monitoring** (for mobile devices and non-Chrome browsers) and relative timestamps.
-* **Storyboard CLI**: wrap any application with it (no changes required), and suddenly you can monitor it remotely via the Storyboard DevTools.
-* **Real-time push** of server logs to the Storyboard DevTools extension via WebSockets, with **opt-in client-server clock synchronisation**. Even more: **control the level of detail you get from various parts of your server remotely, without relaunching**.
-* **Secure** server logs: remote access is opt-in, and can be **authenticated**.
+* **Storyboard CLI**: wrap any application with it (no changes required) to monitor it remotely with the Storyboard DevTools.
+* **Real-time push** of server logs to the Storyboard DevTools extension via WebSockets, with **opt-in client-server clock synchronization**. Even more: **control the level of detail you get from various parts of your server remotely, without relaunching**.
+* **Secure** server logs: remote access is opt-in, and can be authenticated.
 * **Attach anything** to your logs for further investigation.
 * **Plug-in architecture**. Available plugins include Console, WebSocket Server & Client, File, (PostgreSQL) Database, and Browser Extension, but you can write your own too!
 * **Lightweight**. Plugins are now (v3) available separately, so you only need to bring in the dependencies you actually use.
 * **Rich filter options**: give logs *source* and *severity* attributes and apply *fine-grained filtering*, with white and black lists.
 * **Colorful**: use color to convey meaning and importance. Storyboard extends the popular [chalk](https://github.com/chalk/chalk) library so that it can also be used on the browser.
-* Enjoy the **simple-yet-powerful API** (I hope!).
+* Enjoy the **simple-yet-powerful API**.
 * **[Flow](https://flowtype.org/)-compatible** (with zero config).
 
 
 ## Installation
 
-To add the **Storyboard library** to your project:
+For the simplest possible Storyboard installation (for more options, check out the [Listeners](#listeners-plugins) section below):
 
-```bash
+```sh
 $ npm install --save storyboard storyboard-preset-console
 ```
 
-If you only need the CLI tool, see [this section](#cli-tool).
+If you only want the (less powerful) CLI tool, see [this section](#cli-tool).
 
-To install the **Storyboard DevTools** Chrome extension, [get it from the Chrome Web Store](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc). Optional, but highly recommended! After installing it, open the Storyboard pane in the Chrome DevTools and point your browser to a Storyboard-equipped page (see below for how to use the library).
-
-Feel free to check out the [example](https://github.com/guigrpa/storyboard/blob/master/src/example): just clone the repo and run `yarn && yarn build && yarn start`. You can also test-drive the PostgreSQL Database listener with `cd packages/storyboard-examples && yarn run exampleWithDb`, but make sure you run [these SQL scripts](https://github.com/guigrpa/storyboard/blob/master/packages/storyboard-examples/src/db.sql) before on your DB and [customise the connection parameters](https://github.com/guigrpa/storyboard/blob/master/packages/storyboard-examples/src/serverWithDb.js#L12).
+To install the **Storyboard DevTools** Chrome extension, [get it from the Chrome Web Store](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc). Optional, but highly recommended! After installing it, open the Storyboard pane in the Chrome DevTools and point your browser to a Storyboard-equipped page (see [below](#storyboard-devtools) for how to use the library).
 
 
 ## CLI tool
@@ -132,11 +130,11 @@ See more details on plugins in [Listeners](#listeners-plugins) below.
 mainStory.trace('Teeny-weeny detail: x = 3, y = 4');
 mainStory.debug('Called login()');
 mainStory.info('User "admin" authenticated successfully');
-mainStory.warn('Sad we can\'t show colours in GFM');
+mainStory.warn('Sad we can\'t show colors in GFM');
 mainStory.error('User "admin" could not be authenticated', { attach: err });
 mainStory.fatal('Ooops! Crashed! Mayday!', { attach: fatalError });
 // ...
-// 2016-03-09T16:18:19.659Z           main WARN  Sad we can't show colours in GFM
+// 2016-03-09T16:18:19.659Z           main WARN  Sad we can't show colors in GFM
 // 2016-03-09T16:18:19.672Z           main ERROR User "admin" could not be authenticated
 // 2016-03-09T16:18:19.672Z           main ERROR   name: 'Error'
 // 2016-03-09T16:18:19.672Z           main ERROR   message: 'AUTHENTICATION_ERROR'
@@ -145,7 +143,7 @@ mainStory.fatal('Ooops! Crashed! Mayday!', { attach: fatalError });
 // ...
 ```
 
-Maybe you noticed that the `trace` call produces no output by default. See [Log filtering](#log-filtering) to understand why.
+Maybe you noticed that the `trace` call produces no output by default. See [Log filtering](#log-filtering) to fine-tune your filters.
 
 
 ### Sources
@@ -162,7 +160,7 @@ mainStory.info('db', 'Fetching item 25...');
 
 ### Colors
 
-Use colours to highlight important parts of your logs:
+Use colors to emphasize/de-emphasize parts of your logs:
 
 ```js
 import { mainStory, chalk } from 'storyboard';
@@ -172,12 +170,12 @@ mainStory.info('db', `Fetching item ${chalk.green.bold('26')}...`);
 // 2016-03-09T16:31:52.231Z             db INFO  Fetching item 26...
 ```
 
-As seen above, we recommend using the popular [chalk](https://github.com/chalk/chalk) library by Sindre Sorhus. Chalk is automatically extended by Storyboard for use in the browser. If you prefer another ANSI-colour library, make sure it's universal and doesn't disable itself in the browser.
+As seen above, we recommend using the popular [chalk](https://github.com/chalk/chalk) library by [Sindre Sorhus](https://sindresorhus.com/). Chalk is automatically extended by Storyboard for use in the browser. If you prefer another ANSI-color library, make sure it's universal and doesn't disable itself automatically in the browser.
 
 
 ### Attachments
 
-Attach anything to your logs that might provide additional context: an object, an array, an exception, a simple value... Don't worry about circular references, buffers, or `undefined`! Use the `attach` option to display it as a tree, or `attachInline` for a more compact, `JSON.stringify`-ed version.
+Attach anything to your logs that might provide additional context: an object, an array, an exception, a simple value... Don't worry about circular references, long buffers, or `undefined`! Use the `attach` option to display it as a tree, or `attachInline` for a more compact, `JSON.stringify`-ed version.
 
 You can also use the `attachLevel` option to control the (severity) level of the detailed object logs (by default: the same level of the main logged line). *Pro tip: use the `trace` level for long attachments ([hidden by default](#log-filtering)), so that they don't pollute your console but are still accessible via the [Storyboard DevTools](#storyboard-devtools) extension.*
 
@@ -192,6 +190,12 @@ mainStory.info('test', 'An object with a circular reference', {
 // 2016-03-09T16:52:48.882Z           test DEBUG   foo: 2
 // 2016-03-09T16:52:48.882Z           test DEBUG   bar: 3
 // 2016-03-09T16:52:48.882Z           test DEBUG   circularRef: [CIRCULAR]
+mainStory.info('test', 'This message is logged', {
+  attach: butThisHugeObjectIsNot,
+  attachLevel: 'trace',
+});
+// 2017-02-17T16:03:23.124Z           test INFO  This message is logged
+// [attachment is hidden; inspect it in the Storyboard DevTools]
 ```
 
 *Note: `attach` and `attachInline` have no effect on the way attachments are shown in the Storyboard DevTools.*
@@ -264,21 +268,23 @@ Logs emitted by stories are relayed by the Storyboard *Hub* to all attached *lis
 
 ![Typical configuration](https://raw.githubusercontent.com/guigrpa/storyboard/master/docs/typical-arch.png)
 
-Several listeners come built-in (check out their [configuration options](https://github.com/guigrpa/storyboard/blob/master/docs/built-in-plugins.md), as well as the following sections):
+Several listeners are readily available as separate packages:
 
-* **Console**: formats logs and sends them to `console.log` or `console.error`.
+* **Console** (`storyboard-listener-console`): formats logs and sends them to `console.log` or `console.error`.
 
-* **WebSocket Server**: encapsulates logs and pushes them to WebSocket clients. Used jointly with the WebSocket Client and Browser Extension, it allows [remote access to server stories](#remote-access-to-server-stories).
+* **WebSocket Server** (`storyboard-listener-ws-server`): encapsulates logs and pushes them to WebSocket clients. Used jointly with the WebSocket Client and Browser Extension, it allows [remote access to server stories](#remote-access-to-server-stories).
 
-* **WebSocket Client**: downloads logs from the WebSocket Server, and optionally [uploads client logs to the server for remote monitoring](#remote-access-to-client-stories).
+* **WebSocket Client** (`storyboard-listener-ws-client`): downloads logs from the WebSocket Server, and optionally [uploads client logs to the server for remote monitoring](#remote-access-to-client-stories).
 
-* **Browser Extension**: relays logs to the [Storyboard DevTools](#storyboard-devtools).
+* **Browser Extension** (`storyboard-listener-browser-extension`): relays logs to the [Storyboard DevTools](#storyboard-devtools).
 
-* **File**: saves logs to file.
+* **File** (`storyboard-listener-file`): saves logs to file.
 
-* **PostgreSQL Database**: saves logs to a PostgreSQL database, including attachments, story hierarchy, etc.
+* **PostgreSQL Database** (`storyboard-listener-db-postgres`): saves logs to a PostgreSQL database, including attachments, story hierarchy, etc.
 
-More listeners can be added by the user (see [the API](https://github.com/guigrpa/storyboard/blob/master/docs/plugin-api.md)), e.g. to support different databases, integrate with other services, etc. Get inspired by [winston](https://github.com/winstonjs/winston)'s and [bunyan](https://github.com/trentm/node-bunyan)'s plugins. PRs are welcome!
+Check out the [full listener configuration options](https://github.com/guigrpa/storyboard/blob/master/docs/plugin-config.md).
+
+More listeners can be added by the user (see [the API](https://github.com/guigrpa/storyboard/blob/master/docs/plugin-api.md)), e.g. to support different databases, integrate with other services, etc. Get inspired by [winston](https://github.com/winstonjs/winston)'s and [bunyan](https://github.com/trentm/node-bunyan)'s plugins.
 
 
 ### Remote access to server stories
@@ -290,7 +296,7 @@ The simplest way to add remote access to a Node application's logs is to enable 
 ```js
 // Server
 import { addListener } from 'storyboard';
-import wsServerListener from 'storyboard/lib/listeners/wsServer';
+import wsServerListener from 'storyboard-listener-ws-server';
 addListener(wsServerListener);
 ```
 
@@ -303,13 +309,13 @@ You can also integrate the log server functionality with your own application se
 ```js
 // Client
 import { addListener } from 'storyboard';
-import wsClientListener from 'storyboard/lib/listeners/wsClient';
-import browserExtListener from 'storyboard/lib/listeners/browserExtension';
+import wsClientListener from 'storyboard-listener-ws-client';
+import browserExtListener from 'storyboard-listener-browser-extension';
 addListener(wsClientListener);
 addListener(browserExtListener);
 ```
 
-At the server side, initialise the WebSocket Server listener with either your `http` `Server` instance, or your [socket.io](http://socket.io/) `Server` instance, depending on your case:
+At the server side, initialize the WebSocket Server listener with either your `http` `Server` instance, or your [socket.io](http://socket.io/) `Server` instance, depending on your case:
 
 ```js
 // If your application doesn't use WebSockets:
@@ -338,7 +344,7 @@ Now when you open your client-side application, you can see both server *and* cl
 
 #### User authentication
 
-You can add prevent unauthorised access to your logs via a listener option:
+You can add prevent unauthorized access to your logs via a listener option:
 
 ```js
 addListener(wsServerListener, {
@@ -354,7 +360,7 @@ For these cases, you can configure your WebSocket Client listener so that it upl
 
 ```js
 import { addListener } from 'storyboard';
-import wsClientListener from 'storyboard/lib/listeners/wsClient';
+import wsClientListener from 'storyboard-listener-ws-client';
 addListener(wsClientListener, { uploadClientStories: true });
 ```
 
@@ -367,21 +373,26 @@ Client logs will not pollute the server's own log, and will appear as a separate
 
 The icing on the cake is linking server- and client-side stories to get a complete picture of what is triggered by a user action (see video [at the top of this page](#what)).
 
-Storyboard provides a simple yet flexible way to achieve this: stories can have multiple parents, which are specified upon creation. This feature is leveraged by the [Storyboard DevTools](#storyboard-devtools): when it receives a new story from the server with multiple parents, it checks whether any of the parents is a client-side story. If so, it prioritises this parent for display purposes, since it is expected to provide more context.
+Storyboard provides a simple yet flexible way to achieve this: stories can have multiple parents, which are specified upon creation. This feature is leveraged by the [Storyboard DevTools](#storyboard-devtools): when it receives a new story from the server with multiple parents, it checks whether any of the parents is a client-side story. If so, it prioritizes this parent for display purposes, since it is expected to provide more context.
 
 For this to work, the client's `storyId` must be transmitted to the server *somehow*. This example uses the URL query string for simplicity, but feel free to use whatever technique you want (the body of a `POST` request, your own WebSocket messaging scheme, etc.):
 
 ```js
 // Client:
-const story = mainStory.child({
-  src: 'itemList',
-  title: 'User click on Refresh',
-});
-story.info('itemList', 'Fetching items...');
-fetch(`/items?storyId=${story.storyId}`)
-.then(response => response.json())
-.then(items => story.info('itemList', `Fetched ${items.length} items`))
-.finally(() => story.close());  // using Bluebird's terse API
+const onClick = async () => {
+  const story = mainStory.child({
+    src: 'itemList',
+    title: 'User click on Refresh',
+  });
+  try {
+    story.info('itemList', 'Fetching items...');
+    const response = await fetch(`/items?storyId=${story.storyId}`);
+    const items = await response.json();
+    story.info('itemList', `Fetched ${items.length} items`);
+  } finally {
+    story.close();
+  }
+};
 
 // Server (using Express):
 import express from 'express';
@@ -402,11 +413,11 @@ app.get('/items', (req, res) => {
 
 Want to see the end-to-end story? Use the Storyboard DevTools extension.
 
-*Note: end-to-end stories work better when server and client system clocks are not too different. Servers are typically NTP-synchronised, as are most modern PCs with Internet access. If this is not the case, enable Storyboard 2.x's time synchronisation function:*
+*Note: end-to-end stories work better when server and client system clocks are not too different. Servers are typically NTP-synchronized, as are most modern PCs with Internet access. If this is not the case, enable Storyboard's time synchronization function (available since v2.0.0):*
 
 ```js
 import { addListener } from 'storyboard';
-import wsClientListener from 'storyboard/lib/listeners/wsClient';
+import wsClientListener from 'storyboard-listener-ws-client';
 addListener(wsClientListener, { clockSync: true });
 ```
 
@@ -419,7 +430,7 @@ Enable the link to the browser extension in your application:
 
 ```js
 import { addListener } from 'storyboard';
-import browserExtListener from 'storyboard/lib/listeners/browserExtension';
+import browserExtListener from 'storyboard-listener-browser-extension';
 addListener(browserExtListener);
 ```
 
@@ -439,9 +450,9 @@ Some highlighted features:
 * Use quick find (case-insensitive) to highlight what you're looking for.
 * Squash identical, consecutive messages into a convenient summary line.
 * Configure when and how Storyboard *forgets* old logs and stories.
-* Customise colours to your heart's content!
+* Customize colors to your heart's content!
 
-You can check out your new extension navigating to: http://storyboard-demo.herokuapp.com/
+You can check out your new extension navigating to: https://storyboard-bhibtchlhy.now.sh (might be a bit slow at first; free hosting!)
 
 Storyboard DevTools is built with [React](https://facebook.github.io/react/), [Redux](http://redux.js.org/) and [Redux-Saga](http://yelouafi.github.io/redux-saga/).
 
