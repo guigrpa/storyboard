@@ -4,7 +4,7 @@
 
 A library, plus a [Chrome DevTools extension](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc).
 
-Demo: https://storyboard-bhibtchlhy.now.sh (might be a bit slow at first; free hosting!)
+Demo: https://storyboard-examples-ifkpkpoyhz.now.sh/ (might be a bit slow at first; free hosting!)
 
 **These docs are for Storyboard v3. [Docs for v2 are also available](https://github.com/guigrpa/storyboard/blob/v2.3.1/README.md), but you're [encouraged to upgrade](https://github.com/guigrpa/storyboard/blob/master/CHANGELOG.md)!**
 
@@ -452,7 +452,7 @@ Some highlighted features:
 * Configure when and how Storyboard *forgets* old logs and stories.
 * Customize colors to your heart's content!
 
-You can check out your new extension navigating to: https://storyboard-bhibtchlhy.now.sh (might be a bit slow at first; free hosting!)
+You can check out your new extension navigating to: https://storyboard-examples-ifkpkpoyhz.now.sh/ (might be a bit slow at first; free hosting!)
 
 Storyboard DevTools is built with [React](https://facebook.github.io/react/), [Redux](http://redux.js.org/) and [Redux-Saga](http://yelouafi.github.io/redux-saga/).
 

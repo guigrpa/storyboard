@@ -2,13 +2,14 @@
   "name": "storyboard-examples",
   "private": true,
   "version": "2.3.1",
-  "main": "lib/index.js",
+  "main": "lib/server.js",
   "scripts": {
     "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src",
     "copyPublic": "cp -r src/public lib",
     "build": "yarn run copyPublic && ../../node_modules/.bin/webpack -p --config ./webpackConfig.js --color --progress --display-chunks",
     "buildWatch": "yarn run copyPublic && ../../node_modules/.bin/webpack -w --config ./webpackConfig.js --color --progress --display-chunks",
-    "start": "yarn run example",
+    "now-build": "echo Nothing to be done!",
+    "start": "npm run example",
     "example": "node lib/server",
     "exampleWithDb": "node lib/serverWithDb"
   },
@@ -26,6 +27,9 @@
     "storyboard-listener-ws-client": "^3.0.0-rc.2",
     "storyboard-listener-ws-server": "^3.0.0-rc.2",
     "storyboard-listener-db-postgres": "^3.0.0-rc.2"
+  },
+  "devDependencies": {
+    "babel-polyfill": "6.22.0"
   },
   "author": "Guillermo Grau Panea",
   "license": "MIT",
