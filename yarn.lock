@@ -3983,9 +3983,9 @@ nyc@10.1.2:
     yargs "^6.6.0"
     yargs-parser "^4.0.2"
 
-oao@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/oao/-/oao-0.5.2.tgz#2fb44b10799ef2672fd913edc6b1046566f954d4"
+oao@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/oao/-/oao-0.5.3.tgz#c90d30977e18c33f741162faca7316e52424088b"
   dependencies:
     babel-polyfill "6.22.0"
     commander "2.9.0"
