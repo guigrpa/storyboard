@@ -2,6 +2,8 @@
 
 *[M]: major change; [m]: minor change*
 
+## 3.1.0 (February 27, 2017)
+
 * New **Parallel Console listener**: shows parallel, top-level stories in the console, with support for resizing. It should work correctly in the following terminals:
 
     * OS X: Terminal.app (default terminal), iTerm, Hyper
