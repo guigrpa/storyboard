@@ -2,6 +2,14 @@
 
 *[M]: major change; [m]: minor change*
 
+* New **Parallel Console listener**: shows parallel, top-level stories in the console, with support for resizing. It should work correctly in the following terminals:
+
+    * OS X: Terminal.app (default terminal), iTerm, Hyper
+    * Windows: cmd (default terminal), Console 2, Hyper
+
+
+## 3.0.0 (February 18, 2017)
+
 **Breaking change**
 
 * All Storyboard **listeners/plugins are now available as separate packages**. Following the steps of Babel and others, Storyboard no longer comes *with everything but the kitchen sink* built in. In other words, you need to add your listeners to your `package.json`, for example:
@@ -47,7 +55,7 @@
 
 ## 2.3.2 (February 17, 2017)
 
-* npm management release (no changes).
+* Management release (no changes).
 
 ## 2.3.1 (December 14, 2016)
 

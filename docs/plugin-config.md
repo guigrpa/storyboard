@@ -12,9 +12,25 @@ The following sections describe the parameters you can pass as `options`.
 
 ## Console
 
-**Purpose**: formats logs and sends them to `console.log` or `console.error`.
+**Purpose**: formats logs and sends them to the console (also in the browser).
 
 **Package**: `storyboard-listener-console`
+
+**Options:**
+
+* **`moduleNameLength`** *number* (default: `20`): number of characters dedicated to the `src` field (e.g. `main`, `storyboard`, `httpServer`, ...)
+* **`colors`** *boolean* (default: `true`): enable/disable colors in output.
+* **`relativeTime`** *boolean* (default: `true` browser-side, `false` otherwise): whether full timestamps are logged, or only relative. If `relativeTime` is enabled, time differences lower than 10 ms are not displayed, and those higher than 1 s introduce an extra line to make the log more readable.
+* **`useStderr`** *boolean* (default: `false`): output warning and errors to `stderr` instead of `stdout`.
+
+## Parallel console
+
+**Purpose**: shows parallel, top-level stories in the console, with support for resizing. It should work correctly in the following terminals:
+
+* OS X: Terminal.app (default terminal), iTerm, Hyper
+* Windows: cmd (default terminal), Console 2, Hyper
+
+**Package**: `storyboard-listener-console-parallel`
 
 **Options:**
 

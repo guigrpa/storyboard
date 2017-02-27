@@ -17,7 +17,7 @@ Demo: https://storyboard-examples-ifkpkpoyhz.now.sh/ (might be a bit slow at fir
 * **Real-time push** of server logs to the Storyboard DevTools extension via WebSockets, with **opt-in client-server clock synchronization**. Even more: **control the level of detail you get from various parts of your server remotely, without relaunching**.
 * **Secure** server logs: remote access is opt-in, and can be authenticated.
 * **Attach anything** to your logs for further investigation.
-* **Plug-in architecture**. Available plugins include Console, WebSocket Server & Client, File, (PostgreSQL) Database, and Browser Extension, but you can write your own too!
+* **Plug-in architecture**. Available plugins include Console (& Parallel Console), WebSocket Server & Client, File, (PostgreSQL) Database, and Browser Extension, but you can write your own too!
 * **Lightweight**. Plugins are now (v3) available separately, so you only need to bring in the dependencies you actually use.
 * **Rich filter options**: give logs *source* and *severity* attributes and apply *fine-grained filtering*, with white and black lists.
 * **Colorful**: use color to convey meaning and importance. Storyboard extends the popular [chalk](https://github.com/chalk/chalk) library so that it can also be used on the browser.
@@ -270,7 +270,9 @@ Logs emitted by stories are relayed by the Storyboard *Hub* to all attached *lis
 
 Several listeners are readily available as separate packages:
 
-* **Console** (`storyboard-listener-console`): formats logs and sends them to `console.log` or `console.error`.
+* **Console** (`storyboard-listener-console`): formats logs and sends them to the console (also in the browser).
+
+* **Parallel Console** (`storyboard-listener-console-parallel`): shows parallel, top-level stories in the console, with support for resizing.
 
 * **WebSocket Server** (`storyboard-listener-ws-server`): encapsulates logs and pushes them to WebSocket clients. Used jointly with the WebSocket Client and Browser Extension, it allows [remote access to server stories](#remote-access-to-server-stories).
 
