@@ -67,7 +67,6 @@ class ParallelConsoleListener {
     const threadId = this.getThread(record);
     if (threadId == null) return;
     if (record.action === 'CLOSED' && record.storyId === threadId) return;
-    // console.log(`fStory=${record.fStory}, parents=${record.parents}, action=${record.action}`)
     const options = timmSet(this.config, 'prevTime', this.prevTime);
     const lines = this.recordToLines(record, options);
     this.prevTime = new Date(record.t);
@@ -120,6 +119,10 @@ class ParallelConsoleListener {
   }
 
   addLineToThread(threadId, line) {
+    if (!term.height) {
+      console.log(line); // eslint-disable-line
+      return;
+    }
     const thread = this.threads[threadId];
     if (!thread) return;
     thread.lines.push(line);
@@ -147,12 +150,11 @@ class ParallelConsoleListener {
   }
 
   termRefreshAll() {
-    // this.termClear();
     const { threads, height: h0 } = this;
+    if (!h0) return;
+    this.termClear();
     const threadIds = Object.keys(threads);
     let len = threadIds.length;
-    console.log('lines: ' + h0);
-    return;
     if (!len) return;
     let truncated = false;
     let h = h0;
@@ -191,7 +193,6 @@ class ParallelConsoleListener {
   }
 
   termRefreshThread(threadId) {
-    return;
     const thread = this.threads[threadId];
     if (!thread || !thread.shown) return;
     const { y1, y2 } = thread;
