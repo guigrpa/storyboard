@@ -4,6 +4,8 @@
 
 * Library:
     * Bugfix: make Parallel Console compatible with zero-height terminals (e.g. in Travis CI builds).
+* Common:
+    * Bugfix: recover colors in log levels and sources, both in the Chrome Extension and in the browser-side Console Listener.
 
 ## 3.1.0 (February 27, 2017)
 

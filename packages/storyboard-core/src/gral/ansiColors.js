@@ -3,6 +3,10 @@ import chalk from 'chalk';
 import * as _ from '../vendor/lodash';
 import * as k from './constants';
 
+// We must ensure that `chalk` is enabled already; otherwise,
+// all of the following constant definitions will be monochrome
+chalk.enabled = true;
+
 // -------------------------------------------------
 // Map severity level to a colored string
 // -------------------------------------------------
