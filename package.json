@@ -24,7 +24,7 @@
     "status": "oao status",
     "travis": "yarn bootstrap && yarn temp1 && yarn temp2 && yarn compile && yarn test",
     "temp1": "cd packages/storyboard-listener-console-parallel && yarn compile",
-    "temp2": "ln -s packages/storyboard-listener-console-parallel node_modules/storyboard-listener-console-parallel",
+    "temp2": "cp -rf packages/storyboard-listener-console-parallel node_modules/storyboard-listener-console-parallel && ls node_modules/storyboard-listener-console-parallel/",
     "build": "yarn bootstrap && yarn compile && yarn lint && yarn buildAllProducts && yarn test && yarn xxl && yarn prepareRelease",
     "bootstrap": "oao bootstrap",
     "compile": "oao all --parallel \"yarn compile\"",
