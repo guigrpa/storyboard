@@ -119,6 +119,7 @@ class ParallelConsoleListener {
   }
 
   addLineToThread(threadId, line) {
+    // If terminal height is 0 (e.g. Travis), just print the lines out
     if (!term.height) {
       console.log(line); // eslint-disable-line
       return;
@@ -220,6 +221,7 @@ class ParallelConsoleListener {
   }
 
   resetCursorPos() {
+    if (!term.height) return;
     term.moveTo(1, this.height);
   }
 }
