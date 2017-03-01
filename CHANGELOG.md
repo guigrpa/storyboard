@@ -2,6 +2,9 @@
 
 *[M]: major change; [m]: minor change*
 
+* Library:
+    * Bugfix: make Parallel Console compatible with zero-height terminals (e.g. in Travis CI builds).
+
 ## 3.1.0 (February 27, 2017)
 
 * New **Parallel Console listener**: shows parallel, top-level stories in the console, with support for resizing. It should work correctly in the following terminals:
