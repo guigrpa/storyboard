@@ -1,7 +1,7 @@
 {
   "name": "storyboard-extension-chrome",
   "private": true,
-  "version": "3.0.0-rc.2",
+  "version": "3.1.1",
   "main": "lib/index.js",
   "scripts": {
     "compile": "rm -rf lib && mkdir lib",
@@ -27,7 +27,7 @@
     "redux-saga": "0.9.4",
     "redux-thunk": "2.1.0",
     "tinycolor2": "1.4.1",
-    "storyboard-core": "^3.0.0-rc.2"
+    "storyboard-core": "^3.1.1"
   },
   "remarks": [
     "moment is kept in devDependencies so that webpack doesn't complain when building giu"
