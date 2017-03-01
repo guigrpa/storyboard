@@ -147,10 +147,12 @@ class ParallelConsoleListener {
   }
 
   termRefreshAll() {
-    this.termClear();
+    // this.termClear();
     const { threads, height: h0 } = this;
     const threadIds = Object.keys(threads);
     let len = threadIds.length;
+    console.log('lines: ' + h0);
+    return;
     if (!len) return;
     let truncated = false;
     let h = h0;
@@ -189,6 +191,7 @@ class ParallelConsoleListener {
   }
 
   termRefreshThread(threadId) {
+    return;
     const thread = this.threads[threadId];
     if (!thread || !thread.shown) return;
     const { y1, y2 } = thread;
