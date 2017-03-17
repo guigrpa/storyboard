@@ -1,6 +1,4 @@
-# Changelog
-
-*[M]: major change; [m]: minor change*
+* Bugfix: fix a situation in which the Parallel Console would scroll and mix up all parallel stories.
 
 ## 3.1.1 (March 1st, 2017)
 

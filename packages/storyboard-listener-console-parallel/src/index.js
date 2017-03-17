@@ -158,10 +158,9 @@ class ParallelConsoleListener {
     let len = threadIds.length;
     if (!len) return;
     let truncated = false;
-    let h = h0;
+    const h = h0 - 1;
     if (len * 2 > h) {
       truncated = true;
-      h -= 1;
       len = Math.floor(h / 2);
     }
     const delta = h / len;
