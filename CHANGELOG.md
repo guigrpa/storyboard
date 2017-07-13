@@ -1,6 +1,6 @@
-# Changelog
+* Bugfix: show Node version in mainStory title (avoids this bug: https://github.com/bestiejs/platform.js/pull/130)
 
-*[M]: major change; [m]: minor change*
+## 3.1.1 (March 1, 2017)
 
 * Library:
     * Bugfix: make Parallel Console compatible with zero-height terminals (e.g. in Travis CI builds).
