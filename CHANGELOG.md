@@ -1,8 +1,10 @@
+* Bugfix: show Node version correctly in mainStory title (avoids this bug: https://github.com/bestiejs/platform.js/pull/130)
+
 ## 3.1.2 (2017-3-17)
 
 * Bugfix: fix a situation in which the Parallel Console would scroll and mix up all parallel stories.
 
-## 3.1.1 (March 1st, 2017)
+## 3.1.1 (March 1, 2017)
 
 * Library:
     * Bugfix: make Parallel Console compatible with zero-height terminals (e.g. in Travis CI builds).
