@@ -1,3 +1,5 @@
+## 3.1.3 (2017-8-16)
+
 * Bugfix: show Node version correctly in mainStory title (avoids this bug: https://github.com/bestiejs/platform.js/pull/130)
 
 ## 3.1.2 (2017-3-17)
