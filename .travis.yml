@@ -1,8 +1,9 @@
 language: node_js
 node_js:
-  - "stable"
+  - "8"
+  - "6"
 install:
-  - npm -g install yarn
+  - yarn config set workspaces-experimental true
   - yarn
 before_script:
   - export TZ=Europe/Madrid
@@ -10,6 +11,4 @@ script: npm run travis
 after_success:
   - 'cat ./coverage/lcov.info | ./node_modules/.bin/coveralls'
 cache:
-  directories:
-    - ~/.yarn
-    - ~/.nvm
+  yarn: true
