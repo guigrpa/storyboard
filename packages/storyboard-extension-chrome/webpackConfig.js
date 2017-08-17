@@ -39,7 +39,7 @@ module.exports = {
   module: {
     rules: [{
       test: /\.js$/,
-      exclude: path.resolve(process.cwd(), 'node_modules'),
+      exclude: [/node_modules/], // path.resolve(process.cwd(), 'node_modules'),
       loader: 'babel-loader',
     },
     {
