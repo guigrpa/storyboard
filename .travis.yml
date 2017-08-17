@@ -2,10 +2,9 @@ language: node_js
 node_js:
   - "8"
   - "6"
-install:
+before_install:
   - npm -g install yarn@^0.28.0
   - yarn config set workspaces-experimental true
-  - yarn
 before_script:
   - export TZ=Europe/Madrid
 script: npm run travis
