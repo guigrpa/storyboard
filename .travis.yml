@@ -3,6 +3,7 @@ node_js:
   - "8"
   - "6"
 install:
+  - npm -g install yarn@^0.28.0
   - yarn config set workspaces-experimental true
   - yarn
 before_script:
@@ -11,4 +12,6 @@ script: npm run travis
 after_success:
   - 'cat ./coverage/lcov.info | ./node_modules/.bin/coveralls'
 cache:
-  yarn: true
+  directories:
+    - ~/.yarn
+    - ~/.nvm
