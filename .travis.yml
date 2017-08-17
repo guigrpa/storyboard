@@ -8,7 +8,7 @@ before_install:
   - export PATH="$HOME/.yarn/bin:$PATH"
 before_script:
   - export TZ=Europe/Madrid
-script: ls -al node_modules && npm run travis
+script: npm run travis
 after_success:
   - 'cat ./coverage/lcov.info | ./node_modules/.bin/coveralls'
 cache:

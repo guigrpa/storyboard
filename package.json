@@ -25,7 +25,7 @@
   ],
   "scripts": {
     "status": "oao status",
-    "travis": "yarn bootstrap && yarn compile && yarn test",
+    "travis": "yarn compile && yarn test",
     "build": "yarn bootstrap && yarn compile && yarn lint && yarn buildAllProducts && yarn test && yarn xxl && yarn prepareRelease",
     "bootstrap": "oao bootstrap",
     "compile": "oao all \"yarn compile\"",
