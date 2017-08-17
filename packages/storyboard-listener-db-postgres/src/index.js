@@ -111,7 +111,7 @@ class DbPostgresListener {
         msg, jsonObj, r.objExpanded, r.objLevel, r.objOptions, r.objIsError,
       ])
       /* eslint-disable no-console */
-      .on('error', (err) => console.log(err));
+        .on('error', (err) => console.log(err));
       /* eslint-enable no-console */
     });
     this.bufRecords.length = 0;

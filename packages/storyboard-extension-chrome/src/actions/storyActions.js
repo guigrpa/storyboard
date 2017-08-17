@@ -20,7 +20,7 @@ const quickFind = (txt) => (dispatch) => _quickFind(dispatch, txt);
 
 const _quickFind = debounce((dispatch, txt) =>
   dispatch({ type: 'QUICK_FIND', txt })
-, QUICK_FIND_DEBOUNCE);
+  , QUICK_FIND_DEBOUNCE);
 
 // =============================================
 // Forget saga

@@ -55,7 +55,6 @@ class BrowserExtensionListener {
     if (src !== 'DT') return;
     // console.log(`[PG] RX ${src}/${type}`, data);
     switch (type) {
-
       // CONNECT_XX are replied here, but are also relayed to the hub
       case 'CONNECT_REQUEST':
       case 'CONNECT_RESPONSE':

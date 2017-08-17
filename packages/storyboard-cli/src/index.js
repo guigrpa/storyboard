@@ -12,18 +12,18 @@ const pkg = require('../package.json');
 
 let cmdWithArgs;
 program
-.version(pkg.version)
-.option('--no-console', 'Disable console output', false)
-.option('--stderr', 'Enable stderr for errors', false)
-.option('--no-colors', 'Disable color output', false)
-.option('-f, --file <path>', 'Save logs to file')
-.option('-s, --server', 'Launch web server for logs', false)
-.option('-p, --port <port>', 'Port for web server', parseInt)
-.arguments('<command> [args...]')
-.action((command, args) => {
-  cmdWithArgs = [command].concat(args).join(' ');
-})
-.parse(process.argv);
+  .version(pkg.version)
+  .option('--no-console', 'Disable console output', false)
+  .option('--stderr', 'Enable stderr for errors', false)
+  .option('--no-colors', 'Disable color output', false)
+  .option('-f, --file <path>', 'Save logs to file')
+  .option('-s, --server', 'Launch web server for logs', false)
+  .option('-p, --port <port>', 'Port for web server', parseInt)
+  .arguments('<command> [args...]')
+  .action((command, args) => {
+    cmdWithArgs = [command].concat(args).join(' ');
+  })
+  .parse(process.argv);
 
 /* eslint-disable no-console */
 if (cmdWithArgs == null) {
@@ -56,15 +56,15 @@ process.stderr.on('error', exit);
 process.stdin.pipe(child.stdin);
 
 child.stdout.pipe(split())
-.on('data', (line) => mainStory.info(line))
-.on('end', () => { if (!program.server) process.exit(); });
+  .on('data', (line) => mainStory.info(line))
+  .on('end', () => { if (!program.server) process.exit(); });
 
 child.stderr.pipe(split())
-.on('data', (line) => {
-  if (!line.length) return;
-  mainStory.error(line);
-})
-.on('end', () => { if (!program.server) process.exit(); });
+  .on('data', (line) => {
+    if (!line.length) return;
+    mainStory.error(line);
+  })
+  .on('end', () => { if (!program.server) process.exit(); });
 
 process.on('SIGINT', () => {
   mainStory.info('storyboard', 'SIGINT received');

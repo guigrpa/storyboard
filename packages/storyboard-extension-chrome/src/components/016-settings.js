@@ -305,19 +305,19 @@ class Settings extends React.Component {
       const ref = this.refs[key];
       if (!ref) throw new Error('Could not read form');
       return this.refs[key].validateAndGetValue()
-      .then((val) => { settings[key] = val; });
+        .then((val) => { settings[key] = val; });
     })
-    .then(() => {
-      const persistedSettings = omit(settings, ['serverFilter', 'localClientFilter']);
-      this.props.updateSettings(persistedSettings);
-      if (settings.serverFilter !== this.props.serverFilter) {
-        this.props.setServerFilter(settings.serverFilter);
-      }
-      if (settings.localClientFilter !== this.props.localClientFilter) {
-        this.props.setLocalClientFilter(settings.localClientFilter);
-      }
-      this.props.onClose();
-    });
+      .then(() => {
+        const persistedSettings = omit(settings, ['serverFilter', 'localClientFilter']);
+        this.props.updateSettings(persistedSettings);
+        if (settings.serverFilter !== this.props.serverFilter) {
+          this.props.setServerFilter(settings.serverFilter);
+        }
+        if (settings.localClientFilter !== this.props.localClientFilter) {
+          this.props.setLocalClientFilter(settings.localClientFilter);
+        }
+        this.props.onClose();
+      });
   }
 
   onReset = () => {

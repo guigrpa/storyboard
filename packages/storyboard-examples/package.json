@@ -22,11 +22,11 @@
     "timm": "^1.2.3",
     "storyboard": "^3.1.1",
     "storyboard-listener-console": "^3.1.1",
-    "storyboard-listener-file": "^3.1.1",
+    "storyboard-listener-file": "^3.0.0",
     "storyboard-listener-browser-extension": "^3.1.1",
     "storyboard-listener-ws-client": "^3.1.1",
     "storyboard-listener-ws-server": "^3.1.1",
-    "storyboard-listener-db-postgres": "^3.1.1"
+    "storyboard-listener-db-postgres": "^3.0.0"
   },
   "devDependencies": {
     "babel-polyfill": "6.22.0"

@@ -114,9 +114,9 @@ class Login extends React.PureComponent {
     const credentials = {};
     Promise.map(['login', 'password'], (key) =>
       this.refs[key].validateAndGetValue()
-      .then((val) => { credentials[key] = val; })
+        .then((val) => { credentials[key] = val; })
     )
-    .then(() => this.props.logIn(credentials));
+      .then(() => this.props.logIn(credentials));
   }
 
   logOut = () => { this.props.logOut(); }

@@ -12,7 +12,7 @@
     "split": "1.0.0",
     "storyboard": "^3.1.1",
     "storyboard-listener-console": "^3.1.1",
-    "storyboard-listener-file": "^3.1.1",
+    "storyboard-listener-file": "^3.0.0",
     "storyboard-listener-ws-server": "^3.1.1"
   },
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",

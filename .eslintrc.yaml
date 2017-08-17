@@ -35,6 +35,8 @@ rules:
   react/jsx-indent-props: off
   react/jsx-closing-bracket-location: off
   react/jsx-filename-extension: off
+  react/jsx-wrap-multilines: off
+  react/jsx-max-props-per-line: off
   react/forbid-prop-types: off
   react/prop-types: off
   react/require-extension: off
@@ -46,5 +48,7 @@ rules:
       optionalDependencies: false
   import/prefer-default-export: off
   jsx-a11y/no-static-element-interactions: off
+  jsx-a11y/href-no-hash: off
+  jsx-a11y/label-has-for: off
 globals:
   chrome: false

@@ -5,8 +5,8 @@ import { isDark } from 'giu';
 const calcFgColorForBgColor = (bg) => (isDark(bg) ? 'white' : 'black');
 const calcFgColorForUiBgColor = (bg) => (
   isDark(bg)
-  ? tinycolor('white').darken(25).toRgbString()
-  : tinycolor('black').lighten(25).toRgbString()
+    ? tinycolor('white').darken(25).toRgbString()
+    : tinycolor('black').lighten(25).toRgbString()
 );
 
 // in-place

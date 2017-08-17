@@ -160,37 +160,37 @@ class WsServerListener {
     const { login } = credentials;
     const fPreAuthenticated = socket.sbAuthenticated || authenticate == null;
     Promise.resolve(fPreAuthenticated || authenticate(credentials))
-    .then((fAuthValid) => {
-      let result;
-      let rspData;
-      let bufferedRecords;
-      if (fAuthValid) {
-        result = 'SUCCESS';
-        /* eslint-disable no-param-reassign */
-        socket.sbAuthenticated = true;
-        /* eslint-enable no-param-reassign */
-        socket.join(SOCKET_ROOM);
-        bufferedRecords = hub.getBufferedRecords();
-        rspData = { login, bufferedRecords };
-      } else {
-        result = 'ERROR';
-      }
-      this.socketTx(socket, 'LOGIN_RESPONSE', result, rspData);
-      if (result === 'SUCCESS') {
-        this.log('info', `User '${login}' authenticated successfully`);
-        // this.log('debug', `Piggybacked ${this.chalk.cyan(bufferedRecords.length)} records`);
-      } else {
-        this.log('warn', `User '${login}' authentication failed`);
-      }
-    });
+      .then((fAuthValid) => {
+        let result;
+        let rspData;
+        let bufferedRecords;
+        if (fAuthValid) {
+          result = 'SUCCESS';
+          /* eslint-disable no-param-reassign */
+          socket.sbAuthenticated = true;
+          /* eslint-enable no-param-reassign */
+          socket.join(SOCKET_ROOM);
+          bufferedRecords = hub.getBufferedRecords();
+          rspData = { login, bufferedRecords };
+        } else {
+          result = 'ERROR';
+        }
+        this.socketTx(socket, 'LOGIN_RESPONSE', result, rspData);
+        if (result === 'SUCCESS') {
+          this.log('info', `User '${login}' authenticated successfully`);
+          // this.log('debug', `Piggybacked ${this.chalk.cyan(bufferedRecords.length)} records`);
+        } else {
+          this.log('warn', `User '${login}' authentication failed`);
+        }
+      });
   }
 
   socketLogout(socket) {
     const { authenticate } = this.config;
     if (authenticate != null) {
-        /* eslint-disable no-param-reassign */
+      /* eslint-disable no-param-reassign */
       socket.sbAuthenticated = false;
-        /* eslint-enable no-param-reassign */
+      /* eslint-enable no-param-reassign */
       socket.leave(SOCKET_ROOM);
     }
   }

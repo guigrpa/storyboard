@@ -154,7 +154,6 @@ class WsClientListener {
   // -----------------------------------------
   process(msg) {
     switch (msg.type) {
-
       // Depending on the configuration, we may upload the records
       case 'RECORDS':
         this.processRecords(msg);
