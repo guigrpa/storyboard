@@ -1,3 +1,5 @@
+* Maintenance upgrade, to avoid circular dependencies between storyboard and oao.
+
 ## 3.1.3 (2017-8-16)
 
 * Bugfix: show Node version correctly in mainStory title (avoids this bug: https://github.com/bestiejs/platform.js/pull/130)
