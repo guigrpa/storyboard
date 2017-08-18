@@ -4,7 +4,7 @@
 
 A library, plus a [Chrome DevTools extension](https://chrome.google.com/webstore/detail/storyboard-devtools/gficinaagglofbelmgdkknaefhpknccc).
 
-Demo: https://storyboard-examples-ifkpkpoyhz.now.sh/ (might be a bit slow at first; free hosting!)
+Blog post: http://guigrpa.github.io/2016/07/18/untangling-spaghetti-logs/
 
 **These docs are for Storyboard v3. [Docs for v2 are also available](https://github.com/guigrpa/storyboard/blob/v2.3.1/README.md), but you're [encouraged to upgrade](https://github.com/guigrpa/storyboard/blob/master/CHANGELOG.md)!**
 
