@@ -4342,6 +4342,10 @@ moment@2.17.1:
   version "2.17.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.17.1.tgz#fed9506063f36b10f066c8b59a144d7faebe1d82"
 
+moment@^2.21.0:
+  version "2.21.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.21.0.tgz#2a114b51d2a6ec9e6d83cf803f838a878d8a023a"
+
 ms@0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.1.tgz#9cd13c03adbff25b65effde7ce864ee952017098"
@@ -6413,9 +6417,13 @@ timm@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/timm/-/timm-1.0.0.tgz#bef2179ecc129d4004bc546c5dcb2416b5295ef8"
 
-timm@1.2.5, timm@^1.2.1, timm@^1.2.3, timm@^1.2.4:
+timm@1.2.5, timm@^1.2.1, timm@^1.2.4:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/timm/-/timm-1.2.5.tgz#2892ac9f490a33e2300e5d94797f184cef16748b"
+
+timm@^1.2.3:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/timm/-/timm-1.4.1.tgz#5637cf46dd781fa837d1a8cedd68e739f9789b92"
 
 tinycolor2@1.4.1:
   version "1.4.1"

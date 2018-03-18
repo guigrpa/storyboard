@@ -6,11 +6,11 @@
     "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src"
   },
   "dependencies": {
-    "timm": "^1.2.3",
     "clocksy": "1.1.0",
-    "ms": "0.7.2",
     "lodash": "4.17.4",
-    "socket.io-client": "1.6.0"
+    "ms": "0.7.2",
+    "socket.io-client": "1.6.0",
+    "timm": "^1.2.3"
   },
   "devDependencies": {
     "socket.io": "1.6.0",
