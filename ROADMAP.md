@@ -4,7 +4,6 @@
         - [ ] DB listener? - at least, link to the initialisation SQL
         - [ ] README
         - [ ] CHANGELOG
-    * [ ] Update travis.ci to use the latest version of yarn
 
 - **Chrome extension**:
     + Add config screenshot
