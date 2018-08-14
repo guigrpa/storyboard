@@ -6477,9 +6477,9 @@ timm@1.2.5, timm@^1.2.1, timm@^1.2.4:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/timm/-/timm-1.2.5.tgz#2892ac9f490a33e2300e5d94797f184cef16748b"
 
-timm@^1.2.3:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/timm/-/timm-1.4.1.tgz#5637cf46dd781fa837d1a8cedd68e739f9789b92"
+timm@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/timm/-/timm-1.6.1.tgz#5f8aafc932248c76caf2c6af60542a32d3c30701"
 
 tinycolor2@1.4.1:
   version "1.4.1"

@@ -1,3 +1,5 @@
+* Bump some deps to fix vulnerabilities detected by GitHub.
+
 ## 3.1.3 (2017-8-16)
 
 * Bugfix: show Node version correctly in mainStory title (avoids this bug: https://github.com/bestiejs/platform.js/pull/130)

@@ -26,7 +26,7 @@
     "redux-saga": "0.9.4",
     "redux-thunk": "2.1.0",
     "storyboard-core": "^3.1.1",
-    "timm": "^1.2.3",
+    "timm": "^1.6.1",
     "tinycolor2": "1.4.1"
   },
   "remarks": [
