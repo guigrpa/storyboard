@@ -6,7 +6,7 @@
     "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src"
   },
   "dependencies": {
-    "lodash": "4.17.4",
+    "lodash": "^4.17.10",
     "pg": "6.0.5",
     "timm": "^1.2.3"
   },
