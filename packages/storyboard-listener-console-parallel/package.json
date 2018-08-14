@@ -1,6 +1,6 @@
 {
   "name": "storyboard-listener-console-parallel",
-  "version": "3.1.2",
+  "version": "3.1.4",
   "main": "lib/index.js",
   "scripts": {
     "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src"

@@ -1,3 +1,5 @@
+## 3.1.4 (2018-8-14)
+
 * Bump some deps to fix vulnerabilities detected by GitHub.
 
 ## 3.1.3 (2017-8-16)
