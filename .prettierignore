@@ -1,0 +1,9 @@
+node_modules
+.next
+locales
+packages/*/lib
+packages/*/out
+*.html
+packages/*/package.json
+/package.json
+*.md
