@@ -3,6 +3,10 @@ node_js:
   - "10"
   - "8"
   - "6"
+# Will not be needed once Travis installs this version or higher by default
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.9.4
+  - export PATH="$HOME/.yarn/bin:$PATH"
 before_script:
   - export TZ=Europe/Madrid
 script: npm run travis
