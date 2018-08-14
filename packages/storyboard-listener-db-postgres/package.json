@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "lodash": "4.17.4",
-    "pg": "6.0.2",
+    "pg": "6.0.5",
     "timm": "^1.2.3"
   },
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
