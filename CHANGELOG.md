@@ -1,3 +1,5 @@
+* Library: add chalk to all stories.
+
 ## 3.1.4 (2018-8-14)
 
 * Bump some deps to fix vulnerabilities detected by GitHub.

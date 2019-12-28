@@ -52,6 +52,7 @@ function Story({ parents, src, title, levelNum, fHiddenByFilter }) {
   if (this.fHiddenByFilter) {
     hiddenStories[this.storyId] = this;
   }
+  this.chalk = chalk;
   this.emitAction('CREATED', this.t);
 }
 
@@ -272,6 +273,7 @@ const mainStory = new Story({
   src: 'storyboard',
   title,
   levelNum: LEVEL_STR_TO_NUM.INFO,
+  chalk,
 });
 
 // -----------------------------------------------
