@@ -1,6 +1,6 @@
 {
   "name": "storyboard",
-  "version": "3.1.4",
+  "version": "3.2.1",
   "main": "lib/index.js",
   "scripts": {
     "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src && cp src/index.js.flow lib"

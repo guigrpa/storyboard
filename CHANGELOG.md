@@ -1,3 +1,5 @@
+## 3.2.1 (2019-12-28)
+
 ## 3.2.0 (2019-12-28)
 
 * Library: add chalk to all stories.

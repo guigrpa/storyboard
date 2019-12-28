@@ -1,7 +1,7 @@
 {
   "name": "storyboard",
   "private": true,
-  "version": "3.2.0",
+  "version": "3.2.1",
   "author": "Guillermo Grau Panea",
   "license": "MIT",
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
