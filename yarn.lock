@@ -4534,10 +4534,10 @@ nyc@10.1.2:
     yargs "^6.6.0"
     yargs-parser "^4.0.2"
 
-oao@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/oao/-/oao-2.0.0.tgz#2309ea06d9090d55fa1505e0ccee5ec710247c0f"
-  integrity sha512-ZIOSQ0rqm9CLjCDBARE47QA6Tb/dk4k+s+FuzIpW2ZgfMqh9tYioZ4B2p62Ye3ahRzrpAXVQiPshwPGte2lpiw==
+oao@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/oao/-/oao-2.0.1.tgz#47b3d83fa67c4300f467c62d3b69d32480f9e2df"
+  integrity sha512-YU/xiboef2xZniLTNhAWs9LLI2b3RFaGKHuQdM0VEzIKZtjFjrzto4ZBk0Vk8GMu9Htr3ZVd+2KvJiN0jtKMIg==
   dependencies:
     commander "2.19.0"
     execa "0.6.3"
@@ -4549,9 +4549,9 @@ oao@^2.0.0:
     semver "5.6.0"
     shelljs "0.7.8"
     split "1.0.1"
-    storyboard "3.1.4"
-    storyboard-listener-console "3.1.4"
-    storyboard-listener-console-parallel "3.1.4"
+    storyboard "^3.3.1"
+    storyboard-listener-console "^3.3.1"
+    storyboard-listener-console-parallel "^3.3.1"
     timm "^1.6.2"
 
 oauth-sign@~0.8.1, oauth-sign@~0.8.2:
@@ -6076,13 +6076,6 @@ stdout-stream@^1.4.0:
   resolved "https://registry.yarnpkg.com/stdout-stream/-/stdout-stream-1.4.0.tgz#a2c7c8587e54d9427ea9edb3ac3f2cd522df378b"
   dependencies:
     readable-stream "^2.0.1"
-
-storyboard@3.1.4:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/storyboard/-/storyboard-3.1.4.tgz#f39a908f168541ffae2af6ed8a06f27e0eed12e2"
-  integrity sha512-YkWhyz6IxvL/+kN9iMtcw3XVppqY/J8wBRDMpKxnkMniD/QKsKnHPMsxloob2B2+ONwASQPbzZkNXeyY2/kXwg==
-  dependencies:
-    storyboard-core "^3.1.1"
 
 stream-browserify@^2.0.1:
   version "2.0.1"
