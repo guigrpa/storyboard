@@ -66,7 +66,6 @@
     "bluebird": "^3.5.0",
     "chai": "3.5.0",
     "coffee-script": "^1.12.7",
-    "coveralls": "^2.13.1",
     "cross-env": "3.1.4",
     "css-loader": "^0.28.5",
     "eslint": "^4.4.1",

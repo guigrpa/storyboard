@@ -1,8 +1,8 @@
 language: node_js
 node_js:
-  - "10"
-  - "8"
-  - "6"
+  - '10'
+  - '8'
+  - '6'
 # Fix Travis version
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.9.4
@@ -10,7 +10,5 @@ before_install:
 before_script:
   - export TZ=Europe/Madrid
 script: npm run travis
-after_success:
-  - 'cat ./coverage/lcov.info | ./node_modules/.bin/coveralls'
 cache:
   yarn: true
