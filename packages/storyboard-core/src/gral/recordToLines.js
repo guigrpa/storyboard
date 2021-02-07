@@ -57,7 +57,7 @@ const recordToLines = (record, options) => {
         break;
     }
     msgStr = chalk.bold(record.title);
-    actionStr = ` [${chalk.bold(record.action)}]`;
+    actionStr = ` [${chalk.dim(shortId)}·${chalk.bold(record.action)}]`;
   } else {
     // parents = [storyId];
     prefix = fRoot || record.signalType ? '' : `\u2502${shortId}\u2502  `;
