@@ -1,6 +1,6 @@
 {
   "name": "storyboard-listener-console",
-  "version": "3.1.4",
+  "version": "3.3.1",
   "main": "lib/index.js",
   "scripts": {
     "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src"
@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "bluebird": "3.4.7",
-    "storyboard": "^3.1.1"
+    "storyboard": "^3.3.1"
   },
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
   "keywords": [
