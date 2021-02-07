@@ -33,7 +33,7 @@
     "moment is kept in devDependencies so that webpack doesn't complain when building giu"
   ],
   "devDependencies": {
-    "bestzip": "1.1.3",
+    "bestzip": "2.1.7",
     "moment": "^2.21.0",
     "react-test-renderer": "15.4.1"
   },
