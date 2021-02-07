@@ -43,7 +43,7 @@
     "jest": "jest --watch --coverage",
     "test": "yarn testCovFull",
     "testFast": "mocha && jest",
-    "testCovFull": "yarn _testCovPrepare && yarn _testDev && yarn _testProd && yarn _testBrowser && yarn _testCovReport",
+    "testCovFull": "yarn _testCovPrepare && yarn _testDev && yarn _testBrowser && yarn _testCovReport",
     "testCovFast": "yarn _testCovPrepare && yarn _testDev && yarn _testCovReport",
     "_testCovPrepare": "rm -rf ./coverage .nyc_output .nyc_tmp && mkdir .nyc_tmp",
     "_testCovReport": "cp -r .nyc_tmp .nyc_output && nyc report --reporter=html --reporter=lcov --reporter=text",
