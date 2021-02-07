@@ -216,76 +216,6 @@ exports[`App renders correctly when connected 1`] = `
     </div>
   </div>
 </div>
-------------HTML PREVIEW---------------
-<div
-  id="appRoot"
-  style="background-color:white;color:rgb(64, 64, 64);height:100%;"
->
-  <div
-    class="giu-floats"
-    style="height:0;left:0;position:absolute;top:0;width:0;"
-  >
-  </div>
-  <div
-    class="giu-notifications"
-    style="bottom:20px;max-width:350px;position:fixed;right:20px;z-index:9000;"
-  >
-  </div>
-  <div class="giu-hints">
-    <div
-      class="giu-hint-screen"
-      style="height:100vh;left:0;position:fixed;top:0;width:100vw;z-index:50;"
-    >
-      <div
-        class="giu-backdrop"
-        style="background-color:black;cursor:pointer;height:100vh;left:0;position:fixed;top:0;width:100vw;"
-      >
-      </div>
-      <div style="color:white;font-family:\"Gloria Hallelujah\", sans-serif;font-size:20px;">
-        <svg style="fill:transparent;height:100vh;pointer-events:none;position:fixed;stroke:white;stroke-width:2;width:100vw;">
-          <path
-            class="giu-hint-arrow"
-            d="M45,230 C22.25,235.25,14.75,247.25,20,270 M20,270 l2.9246155276374792,-9.562772820448144 M20,270 l-6.819296429308718,-7.3141777534605605"
-          >
-          </path>
-        </svg>
-        <div
-          class="giu-hint-label"
-          style="left:50px;pointer-events:none;position:fixed;top:230px;width:0;"
-        >
-          <div style="font-size:20px;left:0;line-height:25px;margin-left:8px;margin-right:8px;margin-top:-14px;position:absolute;text-align:left;width:2000px;">
-            <span>
-              <span style="color:#4df950;">
-                Click
-              </span>
-               on timestamps to toggle: local, UTC, relative to now
-              <br>
-              <span style="color:#4df950;">
-                Right-click
-              </span>
-               to set a reference timestamp
-            </span>
-          </div>
-        </div>
-        <div style="border:1px solid white;border-radius:8px;bottom:20px;cursor:pointer;padding:5px 25px;position:fixed;right:20px;">
-          Enjoy!
-        </div>
-      </div>
-    </div>
-  </div>
-  <div dataMockType="Toolbar">
-    <div style="color:blue;font-weight:bold;">
-      Toolbar
-    </div>
-  </div>
-  <div style="padding:4px;">
-    <div dataMockType="Story">
-      <div style="color:blue;font-weight:bold;">
-        Story
-      </div>
-    </div>
-  </div>
-</div>
 `;
 
 exports[`App renders correctly when disconnected 1`] = `
@@ -343,40 +273,6 @@ exports[`App renders correctly when disconnected 1`] = `
             "letterSpacing": "normal",
           }
         } />
-       Connecting to Storyboard...
-    </div>
-     
-    <div>
-      Navigate to your Storyboard-equipped app (and log in if required)
-    </div>
-  </div>
-</div>
-------------HTML PREVIEW---------------
-<div
-  id="appRoot"
-  style="background-color:white;color:rgb(64, 64, 64);height:100%;"
->
-  <div
-    class="giu-floats"
-    style="height:0;left:0;position:absolute;top:0;width:0;"
-  >
-  </div>
-  <div
-    class="giu-notifications"
-    style="bottom:20px;max-width:350px;position:fixed;right:20px;z-index:9000;"
-  >
-  </div>
-  <div class="giu-hints"></div>
-  <div
-    class="giu-large-message"
-    style="color:rgb(115, 115, 115);font-size:1.4em;font-weight:700;padding:0.8em;text-align:center;"
-  >
-    <div>
-      <i
-        class="giu-icon fa fa-circle-o-notch fa-spin"
-        style="cursor:pointer;letter-spacing:normal;"
-      >
-      </i>
        Connecting to Storyboard...
     </div>
      

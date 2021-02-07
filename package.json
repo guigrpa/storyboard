@@ -41,16 +41,14 @@
     "lint": "eslint packages",
     "xxl": "xxl --src packages --exclude node_modules,/lib/",
     "jest": "jest --watch --coverage",
-    "jest-html": "jest-html --css-patterns test/snapshot.css --snapshot-patterns \"packages/**/*.snap\"",
     "test": "yarn testCovFull",
     "testFast": "mocha && jest",
     "testCovFull": "yarn _testCovPrepare && yarn _testDev && yarn _testProd && yarn _testBrowser && yarn _testCovReport",
     "testCovFast": "yarn _testCovPrepare && yarn _testDev && yarn _testCovReport",
     "_testCovPrepare": "rm -rf ./coverage .nyc_output .nyc_tmp && mkdir .nyc_tmp",
     "_testCovReport": "cp -r .nyc_tmp .nyc_output && nyc report --reporter=html --reporter=lcov --reporter=text",
-    "_testDev": "cross-env NODE_ENV=development yarn _testCov && mv .nyc_tmp/coverage-final.json .nyc_tmp/coverage-dev.json",
-    "_testProd": "cross-env NODE_ENV=production yarn _testCov && mv .nyc_tmp/coverage-final.json .nyc_tmp/coverage-prod.json",
-    "_testBrowser": "cross-env NODE_ENV=development TEST_BROWSER=true yarn _testCov && mv .nyc_tmp/coverage-final.json .nyc_tmp/coverage-browser.json",
+    "_testDev": "NODE_ENV=development yarn _testCov && mv .nyc_tmp/coverage-final.json .nyc_tmp/coverage-dev.json",
+    "_testBrowser": "NODE_ENV=development TEST_BROWSER=true yarn _testCov && mv .nyc_tmp/coverage-final.json .nyc_tmp/coverage-browser.json",
     "_testCov": "nyc node_modules/mocha/bin/_mocha && mv .nyc_output/* .nyc_tmp/ && rm -rf .nyc_output && jest --coverage && mv .nyc_output/coverage-final.json .nyc_tmp && rm -rf .nyc_output",
     "prepareRelease": "oao prepublish",
     "release": "oao publish"
@@ -80,7 +78,6 @@
     "file-loader": "^0.11.2",
     "ignore-styles": "5.0.1",
     "jest": "18.1.0",
-    "jest-html": "^1.3.4",
     "mocha": "^3.5.0",
     "node-sass": "^4.9.3",
     "nyc": "10.1.2",
@@ -109,9 +106,6 @@
       "json",
       "text",
       "html"
-    ],
-    "snapshotSerializers": [
-      "<rootDir>/node_modules/jest-html"
     ],
     "collectCoverageFrom": [
       "packages/storyboard/src/**",
