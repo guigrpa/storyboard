@@ -15,14 +15,17 @@ const TIME_COL_ABSOLUTE_EMPTY = padStart('', TIME_COL_ABSOLUTE_LENGTH);
 const recordToLines = (record, options) => {
   const {
     // storyId,
-    src, level, fStory,
-    obj, objLevel, objOptions, objExpanded,
+    src,
+    level,
+    fRoot,
+    fStory,
+    shortId = ' ',
+    obj,
+    objLevel,
+    objOptions,
+    objExpanded,
   } = record;
-  const {
-    moduleNameLength,
-    relativeTime,
-    colors = true,
-  } = options;
+  const { moduleNameLength, relativeTime, colors = true } = options;
   const out = [];
 
   const tmp = getTimeStr(record, options);
@@ -37,26 +40,43 @@ const recordToLines = (record, options) => {
     timeStr = chalk.bold(timeStr);
     let storyPrefix;
     switch (record.action) {
-      case 'CREATED': storyPrefix = '\u250c\u2500\u2500'; break;
-      case 'CLOSED': storyPrefix = '\u2514\u2500\u2500'; break;
-      default: storyPrefix = '\u251c\u2500\u2500'; break;
+      case 'CREATED':
+        storyPrefix = fRoot
+          ? '\u250c\u2500\u2500\u2500'
+          : '\u250c\u2500\u252c\u2500';
+        break;
+      case 'CLOSED':
+        storyPrefix = fRoot
+          ? '\u2514\u2500\u2500\u2500'
+          : '\u2514\u2500\u2534\u2500';
+        break;
+      default:
+        storyPrefix = fRoot
+          ? '\u251c\u2500\u2500\u2500'
+          : `\u2502${shortId}\u251c\u2500`;
+        break;
     }
-    msgStr = chalk.bold(`${storyPrefix} ${record.title}`);
+    msgStr = `${chalk.dim(storyPrefix)} ${chalk.bold(record.title)}`;
     actionStr = ` [${chalk.bold(record.action)}]`;
   } else {
     // parents = [storyId];
-    msgStr = record.msg;
+    const prefix = fRoot || record.signalType ? '' : `\u2502${shortId}\u2502  `;
+    msgStr = `${chalk.dim(prefix)}${record.msg}`;
     actionStr = '';
   }
   // const parentsStr = _.padEnd(parents.map(o => o.slice(0,7)).join(', '), 10);
-  const srcStr = ansiColors.getSrcChalkColor(src)(padStart(src, moduleNameLength));
+  const srcStr = ansiColors.getSrcChalkColor(src)(
+    padStart(src, moduleNameLength)
+  );
   let objStr = '';
   const fHasObj = obj != null;
   const deserializedObj = fHasObj ? deserialize(obj) : undefined;
   if (fHasObj && !objExpanded) {
     try {
       objStr = chalk.yellow(` -- ${JSON.stringify(deserializedObj)}`);
-    } catch (err) { /* ignore */ }
+    } catch (err) {
+      /* ignore */
+    }
   }
   if (level >= LEVEL_STR_TO_NUM.ERROR) {
     msgStr = chalk.red.bold(msgStr);
@@ -67,9 +87,14 @@ const recordToLines = (record, options) => {
   if (!colors) finalMsg = chalk.stripColor(finalMsg);
   out.push({ text: finalMsg, level: record.level, fLongDelay });
   if (fHasObj && objExpanded && filters.passesFilter(src, objLevel)) {
-    const lines = treeLines(deserializedObj, merge({ prefix: '  ' }, objOptions));
+    const lines = treeLines(
+      deserializedObj,
+      merge({ prefix: '  ' }, objOptions)
+    );
     const levelStr2 = ansiColors.LEVEL_NUM_TO_COLORED_STR[objLevel];
-    const emptyTimeStr = relativeTime ? TIME_COL_RELATIVE_EMPTY : TIME_COL_ABSOLUTE_EMPTY;
+    const emptyTimeStr = relativeTime
+      ? TIME_COL_RELATIVE_EMPTY
+      : TIME_COL_ABSOLUTE_EMPTY;
     lines.forEach((line) => {
       let text = `${emptyTimeStr} ${srcStr} ${levelStr2}${line}`;
       if (!colors) text = chalk.stripColor(text);
@@ -88,8 +113,8 @@ const getTimeStr = (record, options) => {
     const dif = prevTime ? (newTime - prevTime) / 1000 : 0;
     timeStr = dif < 1 ? dif.toFixed(3) : dif.toFixed(1);
     timeStr = padStart(timeStr, TIME_COL_RELATIVE_LENGTH);
-    fLongDelay = (dif > 1);
-    if (dif < 0.010) timeStr = TIME_COL_RELATIVE_EMPTY;
+    fLongDelay = dif > 1;
+    if (dif < 0.01) timeStr = TIME_COL_RELATIVE_EMPTY;
   } else {
     timeStr = new Date(record.t).toISOString();
   }

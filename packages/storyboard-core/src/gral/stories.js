@@ -13,9 +13,13 @@ const DEFAULT_SRC = 'main';
 const DEFAULT_CHILD_TITLE = '';
 
 /* eslint-disable max-len */
-const REVEAL_SEPARATOR_BEGIN = '\u250c\u2500\u2500 REVEALED PAST LOGS BEGIN HERE (due to warning/error)';
+const REVEAL_SEPARATOR_BEGIN =
+  '\u2500\u2500\u2500\u2500 REVEALED PAST LOGS BEGIN HERE (due to warning/error)';
 /* eslint-enable max-len */
-const REVEAL_SEPARATOR_END = '\u2514\u2500\u2500 REVEALED PAST LOGS END HERE';
+const REVEAL_SEPARATOR_END =
+  '\u2500\u2500\u2500\u2500 REVEALED PAST LOGS END HERE';
+const SHORT_IDS =
+  ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!?,.+-*;:_·$%&()';
 
 // Record formats:
 // * 1 (or undefined): initial version
@@ -25,6 +29,7 @@ const REVEAL_SEPARATOR_END = '\u2514\u2500\u2500 REVEALED PAST LOGS END HERE';
 const RECORD_FORMAT_VERSION = 3;
 
 const hiddenStories = {};
+const activeShortIds = {};
 const hubId = getHubId();
 
 // -----------------------------------------------
@@ -32,6 +37,13 @@ const hubId = getHubId();
 // -----------------------------------------------
 const getStoryId = () => (IS_BROWSER ? 'cs/' : 'ss/') + uuid.v4();
 const getRecordId = () => (IS_BROWSER ? 'c-' : 's-') + uuid.v4();
+const getShortId = () => {
+  for (let i = 0; i < SHORT_IDS.length; i++) {
+    const shortId = SHORT_IDS[i];
+    if (!activeShortIds[shortId]) return shortId;
+  }
+  return ' ';
+};
 
 // -----------------------------------------------
 // Story
@@ -40,6 +52,8 @@ function Story({ parents, src, title, levelNum, fHiddenByFilter }) {
   this.parents = parents;
   this.fRoot = !parents.length;
   this.storyId = (this.fRoot ? '*/' : '') + getStoryId();
+  this.shortId = getShortId();
+  activeShortIds[this.shortId] = true;
   this.src = src;
   this.title = title;
   this.level = levelNum;
@@ -61,6 +75,7 @@ function Story({ parents, src, title, levelNum, fHiddenByFilter }) {
 // -----------------------------------------------
 Story.prototype.close = function close() {
   this.fOpen = false;
+  activeShortIds[this.shortId] = null;
   this.emitAction('CLOSED');
   if (this.fHiddenByFilter) {
     hiddenStories[this.storyId] = null;
@@ -111,7 +126,7 @@ Object.keys(LEVEL_STR_TO_NUM).forEach((levelStr) => {
     if (args.length <= 1) {
       src = DEFAULT_SRC;
       msg = args[0] != null ? args[0] : '';
-    // `log.info msg, options`
+      // `log.info msg, options`
     } else if (_.isObject(args[1])) {
       src = DEFAULT_SRC;
       msg = args[0] != null ? args[0] : '';
@@ -127,7 +142,14 @@ Object.keys(LEVEL_STR_TO_NUM).forEach((levelStr) => {
     if (!passesFilter(src, levelNum)) return;
 
     // Prepare record
-    const record = { storyId: this.storyId, level: levelNum, src, msg };
+    const record = {
+      storyId: this.storyId,
+      shortId: this.shortId,
+      fRoot: this.fRoot,
+      level: levelNum,
+      src,
+      msg,
+    };
     processAttachments(record, options);
     completeRecord(record);
 
@@ -154,6 +176,7 @@ Story.prototype.emitAction = function emitAction(action, t) {
     parents: this.parents,
     fRoot: this.fRoot,
     storyId: this.storyId,
+    shortId: this.shortId,
     src: this.src,
     title: this.title,
     level: this.level,
