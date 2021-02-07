@@ -60,8 +60,9 @@ const recordToLines = (record, options) => {
     actionStr = ` [${chalk.bold(record.action)}]`;
   } else {
     // parents = [storyId];
-    const prefix = fRoot || record.signalType ? '' : `\u2502${shortId}\u2502  `;
-    msgStr = `${chalk.dim(prefix)}${record.msg}`;
+    let prefix = fRoot || record.signalType ? '' : `\u2502${shortId}\u2502  `;
+    if (level < LEVEL_STR_TO_NUM.WARN) prefix = chalk.dim(prefix);
+    msgStr = `${prefix}${record.msg}`;
     actionStr = '';
   }
   // const parentsStr = _.padEnd(parents.map(o => o.slice(0,7)).join(', '), 10);
