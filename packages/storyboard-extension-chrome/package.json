@@ -1,7 +1,7 @@
 {
   "name": "storyboard-extension-chrome",
   "private": true,
-  "version": "3.3.1",
+  "version": "3.3.2",
   "main": "lib/index.js",
   "scripts": {
     "compile": "rm -rf lib && mkdir lib",
@@ -25,7 +25,7 @@
     "redux-logger": "2.6.1",
     "redux-saga": "0.9.4",
     "redux-thunk": "2.1.0",
-    "storyboard-core": "^3.3.1",
+    "storyboard-core": "^3.3.2",
     "timm": "^1.6.1",
     "tinycolor2": "1.4.1"
   },

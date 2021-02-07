@@ -1,12 +1,12 @@
 {
   "name": "storyboard",
-  "version": "3.3.1",
+  "version": "3.3.2",
   "main": "lib/index.js",
   "scripts": {
     "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src && cp src/index.js.flow lib"
   },
   "dependencies": {
-    "storyboard-core": "^3.3.1"
+    "storyboard-core": "^3.3.2"
   },
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
   "keywords": [
