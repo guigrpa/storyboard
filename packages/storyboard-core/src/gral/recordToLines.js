@@ -32,39 +32,39 @@ const recordToLines = (record, options) => {
   let { timeStr } = tmp;
   const { fLongDelay } = tmp;
   const levelStr = ansiColors.LEVEL_NUM_TO_COLORED_STR[level];
+  let prefix;
   let msgStr;
   let actionStr;
   // let parents
   if (fStory) {
     // parents = record.parents;
     timeStr = chalk.bold(timeStr);
-    let storyPrefix;
     switch (record.action) {
       case 'CREATED':
-        storyPrefix = fRoot
-          ? '\u250c\u2500\u2500\u2500'
-          : '\u250c\u2500\u252c\u2500';
+        prefix = fRoot
+          ? '\u250c\u2500\u2500\u2500 '
+          : '\u250c\u2500\u252c\u2500 ';
         break;
       case 'CLOSED':
-        storyPrefix = fRoot
-          ? '\u2514\u2500\u2500\u2500'
-          : '\u2514\u2500\u2534\u2500';
+        prefix = fRoot
+          ? '\u2514\u2500\u2500\u2500 '
+          : '\u2514\u2500\u2534\u2500 ';
         break;
       default:
-        storyPrefix = fRoot
-          ? '\u251c\u2500\u2500\u2500'
-          : `\u2502${shortId}\u251c\u2500`;
+        prefix = fRoot
+          ? '\u251c\u2500\u2500\u2500 '
+          : `\u2502${shortId}\u251c\u2500 `;
         break;
     }
-    msgStr = `${chalk.dim(storyPrefix)} ${chalk.bold(record.title)}`;
+    msgStr = chalk.bold(record.title);
     actionStr = ` [${chalk.bold(record.action)}]`;
   } else {
     // parents = [storyId];
-    let prefix = fRoot || record.signalType ? '' : `\u2502${shortId}\u2502  `;
-    if (level < LEVEL_STR_TO_NUM.WARN) prefix = chalk.dim(prefix);
-    msgStr = `${prefix}${record.msg}`;
+    prefix = fRoot || record.signalType ? '' : `\u2502${shortId}\u2502  `;
+    msgStr = record.msg;
     actionStr = '';
   }
+  prefix = chalk.dim(prefix);
   // const parentsStr = _.padEnd(parents.map(o => o.slice(0,7)).join(', '), 10);
   const srcStr = ansiColors.getSrcChalkColor(src)(
     padStart(src, moduleNameLength)
@@ -84,7 +84,7 @@ const recordToLines = (record, options) => {
   } else if (level >= LEVEL_STR_TO_NUM.WARN) {
     msgStr = chalk.yellow.bold(msgStr);
   }
-  let finalMsg = `${timeStr} ${srcStr} ${levelStr}${msgStr}${actionStr}${objStr}`;
+  let finalMsg = `${timeStr} ${srcStr} ${levelStr}${prefix}${msgStr}${actionStr}${objStr}`;
   if (!colors) finalMsg = chalk.stripColor(finalMsg);
   out.push({ text: finalMsg, level: record.level, fLongDelay });
   if (fHasObj && objExpanded && filters.passesFilter(src, objLevel)) {
@@ -97,7 +97,7 @@ const recordToLines = (record, options) => {
       ? TIME_COL_RELATIVE_EMPTY
       : TIME_COL_ABSOLUTE_EMPTY;
     lines.forEach((line) => {
-      let text = `${emptyTimeStr} ${srcStr} ${levelStr2}${line}`;
+      let text = `${emptyTimeStr} ${srcStr} ${levelStr2}${prefix}${line}`;
       if (!colors) text = chalk.stripColor(text);
       out.push({ text, level: objLevel });
     });
