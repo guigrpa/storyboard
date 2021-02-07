@@ -10,7 +10,7 @@
     "clocksy": "1.1.0",
     "express": "4.14.0",
     "lodash": "^4.17.10",
-    "socket.io": "1.6.0",
+    "socket.io": "2.4.0",
     "timm": "^1.6.1"
   },
   "devDependencies": {
