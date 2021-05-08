@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "clocksy": "1.1.0",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.21",
     "ms": "0.7.2",
     "socket.io-client": "1.6.0",
     "timm": "^1.6.1"
