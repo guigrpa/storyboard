@@ -6,7 +6,7 @@
     "compile": "rm -rf lib && ../../node_modules/.bin/babel -d lib src"
   },
   "dependencies": {
-    "terminal-kit": "^0.26.1",
+    "terminal-kit": "^2.1.8",
     "timm": "^1.6.1"
   },
   "description": "End-to-end, hierarchical, real-time, colorful logs and stories",
